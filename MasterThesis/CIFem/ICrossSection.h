@@ -8,6 +8,7 @@ namespace CIFem
 	class ICrossSection
 	{
 	public:
-		virtual 
+		virtual ISectionProperties CalcSectionProperties() = 0;
 	};
+
 }

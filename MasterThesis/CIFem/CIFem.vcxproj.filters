@@ -16,7 +16,7 @@
     <Filter Include="Header Files\Elements">
       <UniqueIdentifier>{3f333788-c82d-4ac0-8cbb-8b57a71cd368}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Cross sections">
+    <Filter Include="Header Files\Elements\Cross sections">
       <UniqueIdentifier>{cc8f96d8-a50f-481a-8a9b-06eae47ba6d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -46,10 +46,28 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ICrossSection.h">
-      <Filter>Header Files\Cross sections</Filter>
+      <Filter>Header Files\Elements\Cross sections</Filter>
     </ClInclude>
     <ClInclude Include="ISectionProperties.h">
-      <Filter>Header Files\Cross sections</Filter>
+      <Filter>Header Files\Elements\Cross sections</Filter>
+    </ClInclude>
+    <ClInclude Include="SecPropBar.h">
+      <Filter>Header Files\Elements\Cross sections</Filter>
+    </ClInclude>
+    <ClInclude Include="SecPropBeam3d.h">
+      <Filter>Header Files\Elements\Cross sections</Filter>
+    </ClInclude>
+    <ClInclude Include="SecPropBeam2d.h">
+      <Filter>Header Files\Elements\Cross sections</Filter>
+    </ClInclude>
+    <ClInclude Include="RHS3d.h">
+      <Filter>Header Files\Elements\Cross sections</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle3d.h">
+      <Filter>Header Files\Elements\Cross sections</Filter>
+    </ClInclude>
+    <ClInclude Include="CIFemMath.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +84,27 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DOF.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ISectionProperties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SecPropBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SecPropBeam2d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SecPropBeam3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RHS3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CIFemMath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

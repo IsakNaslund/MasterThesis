@@ -3,12 +3,14 @@
 #include <armadillo>;
 
 using namespace arma;
-
-class MatrixTest
+namespace CIFem
 {
-	mat A;
-public:
-	MatrixTest();
-	~MatrixTest();
-};
+	class MatrixTest
+	{
+		mat A;
+	public:
+		MatrixTest();
+		~MatrixTest();
+	};
+}
 

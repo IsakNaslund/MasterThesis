@@ -103,12 +103,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;CIFEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Armadillo\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Armadillo\include;..\Armadillo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>"..\Armadillo\lib_win64\blas_win64_MT.lib";..\Armadillo\lib_win64\lapack_win64_MT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>"..\Armadillo\lib_win64\blas_win64_MT.lib";"..\Armadillo\lib_win64\lapack_win64_MT.lib";%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Armadillo\lib_win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -147,11 +148,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CIFem_dll.h" />
-    <ClInclude Include="MatrixTest.h" />
+    <ClInclude Include="DOF.h" />
+    <ClInclude Include="Element3d.h" />
+    <ClInclude Include="ElementProperty.h" />
+    <ClInclude Include="Structure3d.h" />
     <ClInclude Include="XYZ.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MatrixTest.cpp" />
+    <ClCompile Include="DOF.cpp" />
+    <ClCompile Include="Element3d.cpp" />
+    <ClCompile Include="ElementProperty.cpp" />
+    <ClCompile Include="Structure3d.cpp" />
     <ClCompile Include="XYZ.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

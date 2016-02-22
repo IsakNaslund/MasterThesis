@@ -4,6 +4,7 @@
 #include "DOF.h"
 #include "Element3d.h"
 #include <vector>
+#include <memory>
 
 using namespace std;
 
@@ -12,7 +13,7 @@ namespace CIFem
 	class CIFEM_API Structure3d
 	{
 		vector<DOF> _dofs;				// Degrees of freedom containing boundary conditions and applied forces
-		vector<IElement*> _elements;		// List of elements in structure
+		vector<IElement*> _elements;	// List of elements in structure
 		int _maxDof;					// Highest dof of any element
 
 	public:
@@ -27,6 +28,8 @@ namespace CIFem
 	private:
 		DOF & FindDof(int);		// Finds a dof from an index (by reference)
 		arma::mat AssembleStiffnessMatrix();
+		//std::shared_ptr[DOF] GetOrCreateDof(int);	// Returns a pointer to a DOF and creates it if it doesn't exist
+		
 		
 
 	};

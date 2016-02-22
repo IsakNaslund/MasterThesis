@@ -30,6 +30,28 @@ Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, vector<int>
 	_length = CalcLength(sNode, eNode);
 }
 
+Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, vector<DOF*> dof, ElementProperty ep)
+{
+	Init();			//Initialise
+
+	_sNode = sNode;
+	_eNode = eNode;
+
+	try
+	{
+		SetEdof(dof);
+	}
+	catch (const std::exception& e)
+	{
+		// Possibly handle exception in a more meaningful way here. /CH
+		throw e;
+	}
+
+	_ep = ep;
+
+	_length = CalcLength(sNode, eNode);
+}
+
 
 Element3d::~Element3d()
 {
@@ -158,6 +180,22 @@ void Element3d::SetEdof(vector<int> edof)
 		throw std::invalid_argument("Number of degrees of freedom should be 12.");
 	else
 		_edof = edof;
+}
+
+void Element3d::SetEdof(vector<DOF*> edof)
+{
+	int length = edof.size();
+	
+	if (length != 12)
+		throw std::invalid_argument("Number of degrees of freedom should be 12.");
+	else
+	{
+		_dof.clear();
+		for (int i = 0; i < length; i++)
+		{
+			_dof.push_back(std::shared_ptr<DOF> (edof[i]));
+		}
+	}
 }
 
 

@@ -5,13 +5,14 @@
 #include <vector>
 #include "ElementProperty.h"
 #include "include\armadillo"
+#include "IElement.h";
 
 using namespace std;
 using namespace CIFem;
 
 namespace CIFem
 {
-	class CIFEM_API Element3d
+	class CIFEM_API Element3d : public IElement
 	{
 		XYZ _sNode, _eNode;		// Start and end node
 		vector<int> _edof;		// Element degrees of freedom		
@@ -23,6 +24,7 @@ namespace CIFem
 		Element3d();
 		Element3d(XYZ, XYZ, vector<int>, ElementProperty);
 		~Element3d();
+
 		arma::Mat<double> GetStiffnessMatrix();	// Returns the element stiffness (in global coordinates)
 		vector <int> GetDofs();		// For debug purposes, may not be used later
 

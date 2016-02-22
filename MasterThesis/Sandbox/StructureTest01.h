@@ -12,7 +12,7 @@ public:
 	~StructureTest01();
 
 	void RunTest();
-	std::vector<Element3d> CreateElements();
+	std::vector<IElement*> CreateElements();
 	void AddRestraints(Structure3d&);
 	void AddForces(Structure3d&);
 	void Solve(Structure3d&);

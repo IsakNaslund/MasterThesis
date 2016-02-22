@@ -110,10 +110,6 @@ arma::Mat<double> Element3d::GetStiffnessMatrix()
 
 	arma::mat GMat = GetTransformationMatrix();
 
-	// Debug
-	#include<iostream>
-	GMat.print("G matrix");
-
 	return GMat.t()*Ke*GMat;
 }
 
@@ -135,22 +131,14 @@ arma::mat Element3d::GetTransformationMatrix()
 	n2(1) = -n1(2)*n3(0) + n1(0)*n3(2);
 	n2(2) = n3(0)*n1(1) - n1(0)*n3(1);
 
-	// DEBUG 
-	n1.print("N1");
-	n2.print("N2");
-	n3.print("N3");
-
-
 	arma::mat An(3, 3);
 	An.row(0) = n1r;
 	An.row(1) = n2;
 	An.row(2) = n3;
 
+	// Insert transformation submatrix "along diagonal"
 	for (int i = 0; i < 12; i=i+3)
 		G.submat(i, i, 2+i, 2+i) = An;
-
-	// DEBUG
-	G.print("G matrix:");
 
 	return G;
 }

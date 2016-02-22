@@ -2,6 +2,7 @@
 #include "StructureTest01.h"
 #include "Structure3d.h"
 #include "Element3d.h"
+#include "IElement.h"
 #include "DOF.h"
 #include "XYZ.h"
 #include <iostream>
@@ -24,9 +25,9 @@ void StructureTest01::RunTest()
 	Structure3d testStructure;
 
 	//Create elements
-	vector<Element3d> elements = CreateElements();
-	for each (Element3d elem in elements)
-		testStructure.AddElement(elem);
+	vector<IElement*> elements = CreateElements();
+	for (int i = 0; i < elements.size(); i++)
+		testStructure.AddElement(elements[i]);
 
 	AddRestraints(testStructure);
 	
@@ -37,9 +38,9 @@ void StructureTest01::RunTest()
 	PrintResults(GetResults(testStructure));
 }
 
-std::vector<Element3d> StructureTest01::CreateElements()
+std::vector<IElement*> StructureTest01::CreateElements()
 {
-	std::vector<Element3d> elements;
+	std::vector<IElement*> elements;
 
 	// Nodes
 	XYZ lb(0, 0, 0);
@@ -65,16 +66,16 @@ std::vector<Element3d> StructureTest01::CreateElements()
 	edof.clear();
 	for (int i = 7; i <= 18; i++)
 		edof.push_back(i);
-	Element3d tBeam(lb, lt, edof, ep);
+	Element3d tBeam(lt, rt, edof, ep);
 
 	edof.clear();
 	for (int i = 13; i <= 24; i++)
 		edof.push_back(i);
-	Element3d rCol(lb, lt, edof, ep);
+	Element3d rCol(rt, rb, edof, ep);
 
-	elements.push_back(lCol);
-	elements.push_back(tBeam);
-	elements.push_back(rCol);
+	elements.push_back(&lCol);
+	elements.push_back(&tBeam);
+	elements.push_back(&rCol);
 
 	return elements;
 }

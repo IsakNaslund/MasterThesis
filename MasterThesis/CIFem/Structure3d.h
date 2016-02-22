@@ -12,13 +12,13 @@ namespace CIFem
 	class CIFEM_API Structure3d
 	{
 		vector<DOF> _dofs;				// Degrees of freedom containing boundary conditions and applied forces
-		vector<Element3d> _elements;	// List of elements in structure
+		vector<IElement*> _elements;		// List of elements in structure
 		int _maxDof;					// Highest dof of any element
 
 	public:
 		Structure3d();
 		~Structure3d();
-		void AddElement(Element3d);
+		void AddElement(IElement *);
 		void ApplyForce(int, double);
 		void SetTranslation(int, double);
 		void Solve();

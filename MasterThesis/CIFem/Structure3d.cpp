@@ -1,4 +1,5 @@
 #include "Structure3d.h"
+#include "IElement.h"
 
 using namespace CIFem;
 
@@ -11,13 +12,13 @@ Structure3d::~Structure3d()
 {
 }
 
-void Structure3d::AddElement(Element3d e)
+void Structure3d::AddElement(IElement * e)
 {
 	// Add elements
 	_elements.push_back(e);
 	
 	// Add non-duplicate dofs
-	for each (int edof in e.GetDofs())
+	for each (int edof in e->GetDofs())
 	{
 		bool newDof = true;
 		for each (DOF dof in _dofs)
@@ -91,16 +92,73 @@ DOF & Structure3d::FindDof(int dofIndex)
 // Assembles the stiffness matrix and gives each dof the corresponding index of their row 
 arma::mat Structure3d::AssembleStiffnessMatrix()
 {
+	///////// NEW STUFF /////////
+
+	//// Check dofs and find corresponding indeces in K matrix ////
+
+	// Debugging way of doing this, change to non-index based later /C
+	std::vector<unsigned int> exDofs;
+
+
+	for (int j = 0; j < _elements.size(); j++)
+	{
+		for each (DOF dof in _elements[j]->GetDofs())
+		{
+			bool b = false;
+			unsigned int dIndex = dof.GetIndex();
+			for (int i = 0; i < exDofs.size(); i++)
+				if (dIndex == exDofs[i])
+					b = true;
+
+			if (!b)
+				exDofs.push_back(dIndex);
+		}
+	}
+	std::sort(exDofs.begin(), exDofs.end());
+	int nDof = exDofs.size();	// Number of dofs
+
+	// Set relative index
+	for (int i = 0; i < _dofs.size(); i++)
+		for (int j = 0; j < nDof; j++)
+			if (_dofs[i].GetIndex() == exDofs[j])
+				_dofs[i]._kIndex = j;
+
+
+	// Create K matrix
+	arma::mat K(nDof, nDof);
+
+	// Assemble K matrix
+	for (int e = 0; e < _elements.size(); e++)
+	{
+		std::vector<int> dofs = _elements[e]->GetDofs();
+		arma::mat Ke = _elements[e]->GetStiffnessMatrix();
+
+		// Yeah, I know...
+		// Need to fix this. /C
+		for (int i = 0; i < dofs.size(); i++)
+			for (int di = 0; di < _dofs.size(); di++)
+				if (dofs[i] == _dofs[di].GetIndex())
+					for (int j = 0; j < dofs.size(); j++)
+						for (int dj = 0; dj < _dofs.size(); dj++)
+							if (dofs[j] == _dofs[dj].GetIndex())
+								K(_dofs[di]._kIndex, _dofs[dj]._kIndex) = Ke(i, j);
+	}
+
+
+
+
+
+
+
+	///////// OLD STUFF /////////
+	/*
 	arma::mat K(_maxDof+1, _maxDof+1, arma::fill::zeros);
 
 	// Assemble elements
-	for each (Element3d elem in _elements)
+	for each (IElement elem in _elements)
 	{
 		std::vector<int> dofs = elem.GetDofs();
 		arma::mat Ke = elem.GetStiffnessMatrix();
-
-		// DEBUG
-		Ke.print("Ke ");
 
 		for (int i = 0; i < dofs.size(); i++)
 			for (int j = 0; j < dofs.size(); j++)
@@ -120,7 +178,7 @@ arma::mat Structure3d::AssembleStiffnessMatrix()
 			{
 				exist = true;
 				_dofs[j]._kIndex = kIndex;
-				existingDofs.push_back(i - 1);
+				exDofs.push_back(i - 1);
 				break;
 			}
 		}
@@ -135,8 +193,17 @@ arma::mat Structure3d::AssembleStiffnessMatrix()
 	}
 
 	// Eliminate non-existing rows and columns from K matrix
-	arma::uvec uExDof(existingDofs);
+
+	K.print("K (1):");		// DEBUG!!!
+
+	arma::uvec uExDof(exDofs);
+	uExDof.print("uExDof:");		// DEBUG!!!
 	K = K(uExDof, uExDof);
+
+	K.print("K (2):");		// DEBUG!!!
+	*/
+
+	K.print("K");		// DEBUG!!!
 
 	return K;
 }
@@ -180,7 +247,7 @@ void Structure3d::Solve()
 	arma::colvec fa(fDof.size());
 
 	// Solve deformations
-	fa = solve(K(ufDof, ufDof), f(ufDof) - K(ufDof, upDof)*a(upDof));
+	fa = arma::solve(K(ufDof, ufDof), f(ufDof) - K(ufDof, upDof)*a(upDof));
 	a(ufDof) = fa;
 
 	// Solve forces

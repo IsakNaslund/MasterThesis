@@ -1,10 +1,11 @@
 #pragma once
 
 #include "include\armadillo"
+#include "CIFem_dll.h"
 
 namespace CIFem
 {
-	class IElement
+	class CIFEM_API IElement
 	{
 	public:
 		virtual arma::Mat<double> GetStiffnessMatrix() = 0;

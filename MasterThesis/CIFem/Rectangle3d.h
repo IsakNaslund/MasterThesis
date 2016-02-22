@@ -6,7 +6,6 @@
 
 namespace CIFem
 {
-	
 
 	class Rectangle3d :ISectionProperties
 	{

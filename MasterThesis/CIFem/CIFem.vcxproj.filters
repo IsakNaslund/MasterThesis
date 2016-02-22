@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Elements">
+      <UniqueIdentifier>{3f333788-c82d-4ac0-8cbb-8b57a71cd368}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Cross sections">
+      <UniqueIdentifier>{cc8f96d8-a50f-481a-8a9b-06eae47ba6d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XYZ.h">
@@ -21,16 +27,51 @@
     <ClInclude Include="CIFem_dll.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MatrixTest.h">
+    <ClInclude Include="Element3d.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ElementProperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Structure3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DOF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IElement.h">
+      <Filter>Header Files\Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ICrossSection.h">
+      <Filter>Header Files\Cross sections</Filter>
+    </ClInclude>
+    <ClInclude Include="ISectionProperties.h">
+      <Filter>Header Files\Cross sections</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XYZ.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MatrixTest.cpp">
+    <ClCompile Include="Element3d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ElementProperty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Structure3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DOF.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CIFem.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

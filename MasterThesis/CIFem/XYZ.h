@@ -16,6 +16,9 @@ namespace CIFem
 		~XYZ();
 
 		double DistanceTo(const XYZ other) const;
+		double GetX();
+		double GetY();
+		double GetZ();
 	};
 
 }

@@ -5,10 +5,11 @@
 #include "DOF.h"
 #include <memory>
 #include <vector>
+#include "INode.h"
 
 namespace CIFem
 {
-	class CIFEM_API Node3d
+	class CIFEM_API Node3d : public INode
 	{
 		XYZ _location;
 		std::vector<std::shared_ptr<DOF>> _dof;
@@ -19,6 +20,10 @@ namespace CIFem
 		~Node3d();
 
 		std::vector<std::shared_ptr<DOF>> GetDofs();
+
+		double DistanceTo(const Node3d* other) const;
+		double DistanceTo(const INode* other) const;
+		double DistanceTo(const XYZ& otherPt) const;
 
 	private:
 		void InitNewDofs(int);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ISectionProperties.h"
+#include "SectionProperties.h"
 
 
 namespace CIFem
@@ -8,7 +8,7 @@ namespace CIFem
 	class ICrossSection
 	{
 	public:
-		virtual ISectionProperties CalcSectionProperties() = 0;
+		virtual SectionProperties CalcSectionProperties() = 0;
 	};
 
 }

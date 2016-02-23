@@ -154,7 +154,8 @@
     <ClInclude Include="ICrossSection.h" />
     <ClInclude Include="IElement.h" />
     <ClInclude Include="CIFemMath.h" />
-    <ClInclude Include="ISectionProperties.h" />
+    <ClInclude Include="INode.h" />
+    <ClInclude Include="SectionProperties.h" />
     <ClInclude Include="Node3d.h" />
     <ClInclude Include="Rectangle3d.h" />
     <ClInclude Include="resource.h" />
@@ -171,13 +172,13 @@
     <ClCompile Include="Element3d.cpp" />
     <ClCompile Include="ElementProperty.cpp" />
     <ClCompile Include="CIFemMath.cpp" />
-    <ClCompile Include="ISectionProperties.cpp" />
     <ClCompile Include="Node3d.cpp" />
     <ClCompile Include="Rectangle3d.cpp" />
     <ClCompile Include="RHS3d.cpp" />
     <ClCompile Include="SecPropBar.cpp" />
     <ClCompile Include="SecPropBeam2d.cpp" />
     <ClCompile Include="SecPropBeam3d.cpp" />
+    <ClCompile Include="SectionProperties.cpp" />
     <ClCompile Include="Spring.cpp" />
     <ClCompile Include="Structure3d.cpp" />
     <ClCompile Include="XYZ.cpp" />

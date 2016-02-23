@@ -19,13 +19,13 @@ CIFem::Rectangle3d::~Rectangle3d()
 {
 }
 
-ISectionProperties Rectangle3d::CalcSectionProperties()
+SectionProperties Rectangle3d::CalcSectionProperties()
 {
 	double area = _height*_width;
 	double iz = (_width*_height*_height*_height) / 12;
 	double iy = (_height*_width*_width*_width) / 12;
 
-	return SecPropBeam3d(area, iy, iz, CalcTorsionalStiffness(iy, iz));
+	return SectionProperties(area, iy, iz, CalcTorsionalStiffness(iy, iz));
 
 }
 

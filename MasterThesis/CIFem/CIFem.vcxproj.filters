@@ -48,9 +48,6 @@
     <ClInclude Include="ICrossSection.h">
       <Filter>Header Files\Elements\Cross sections</Filter>
     </ClInclude>
-    <ClInclude Include="ISectionProperties.h">
-      <Filter>Header Files\Elements\Cross sections</Filter>
-    </ClInclude>
     <ClInclude Include="SecPropBar.h">
       <Filter>Header Files\Elements\Cross sections</Filter>
     </ClInclude>
@@ -75,6 +72,12 @@
     <ClInclude Include="Node3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="INode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SectionProperties.h">
+      <Filter>Header Files\Elements\Cross sections</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XYZ.cpp">
@@ -90,9 +93,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DOF.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ISectionProperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SecPropBar.cpp">
@@ -117,6 +117,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Node3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SectionProperties.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

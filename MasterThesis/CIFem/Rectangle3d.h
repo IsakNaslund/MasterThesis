@@ -3,11 +3,12 @@
 //#include "ISectionProperties.h"
 #include "SecPropBeam3d.h"
 #include "CIFemMath.h"
+#include "ICrossSection.h"
 
 namespace CIFem
 {
 
-	class Rectangle3d :ISectionProperties
+	class Rectangle3d :ICrossSection
 	{
 		double _height;
 		double _width;
@@ -15,7 +16,7 @@ namespace CIFem
 		Rectangle3d();
 		Rectangle3d(const double height, const double width);
 		~Rectangle3d();
-		ISectionProperties CalcSectionProperties();
+		SectionProperties CalcSectionProperties();
 
 	private:
 

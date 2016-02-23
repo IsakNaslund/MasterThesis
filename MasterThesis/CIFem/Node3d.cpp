@@ -26,7 +26,7 @@ Node3d::~Node3d()
 	
 }
 
-std::vector<DOF*> CIFem::Node3d::GetDofs()
+std::vector<std::shared_ptr<DOF>> CIFem::Node3d::GetDofs()
 {
 	return _dof;
 }
@@ -35,6 +35,7 @@ void CIFem::Node3d::InitNewDofs(int n)
 {
 	for (int i = 0; i < 6; i++)
 	{
-		_dof.push_back(std::shared_ptr<DOF> (new DOF(n)))
+		std::shared_ptr<DOF> ptr(new DOF(n));
+		_dof.push_back(ptr);
 	}
 }

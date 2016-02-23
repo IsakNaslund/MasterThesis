@@ -18,7 +18,7 @@ namespace CIFem
 		Node3d(const XYZ location, unsigned int startindex);
 		~Node3d();
 
-		std::vector<DOF*> GetDofs();
+		std::vector<std::shared_ptr<DOF>> GetDofs();
 
 	private:
 		void InitNewDofs(int);

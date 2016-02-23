@@ -1,10 +1,14 @@
 #include "ReleaseBeam3d.h"
 
+CIFem::ReleaseBeam3d::ReleaseBeam3d()
+{
+}
+
 CIFem::ReleaseBeam3d::~ReleaseBeam3d()
 {
 }
 
-void CIFem::ReleaseBeam3d::SetNumberOfReleases()
+int CIFem::ReleaseBeam3d::GetNumberOfReleases()
 {
-	_nReleases = 6;
+	return 6;
 }

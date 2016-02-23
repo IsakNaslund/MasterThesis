@@ -2,16 +2,20 @@
 
 CIFem::IRelease::IRelease()
 {
-	_nReleases = -1;		// Should be overridden in subclass method SetNumberOfReleases();
+
 }
 
 // Sets the dof releases
 void CIFem::IRelease::SetReleases(std::vector<DofRelease> releases)
 {
-	SetNumberOfReleases();
 
-	if (_releases.size() != _nReleases)
+	if (_releases.size() != GetNumberOfReleases())
 		throw std::invalid_argument("Wrong number of releases submitted");
+}
+
+std::vector<CIFem::DofRelease> CIFem::IRelease::GetReleases()
+{
+	return _releases;
 }
 
 CIFem::IRelease::~IRelease()

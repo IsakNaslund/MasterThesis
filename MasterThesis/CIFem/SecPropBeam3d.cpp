@@ -1,5 +1,5 @@
 #include "SecPropBeam3d.h"
-
+/*
 
 
 CIFem::SecPropBeam3d::SecPropBeam3d()
@@ -18,3 +18,4 @@ CIFem::SecPropBeam3d::SecPropBeam3d(const double area, const double iy, const do
 CIFem::SecPropBeam3d::~SecPropBeam3d()
 {
 }
+*/

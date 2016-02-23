@@ -1,6 +1,6 @@
 #pragma once
-
-#include "ISectionProperties.h"
+/*
+#include "SectionProperties.h"
 
 namespace CIFem
 {
@@ -14,3 +14,4 @@ namespace CIFem
 
 }
 
+*/

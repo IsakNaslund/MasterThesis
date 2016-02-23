@@ -1,5 +1,5 @@
 #include "SecPropBar.h"
-
+/*
 
 
 CIFem::SecPropBar::SecPropBar()
@@ -15,3 +15,4 @@ CIFem::SecPropBar::SecPropBar(const double area)
 CIFem::SecPropBar::~SecPropBar()
 {
 }
+*/

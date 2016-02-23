@@ -1,5 +1,5 @@
 #pragma once
-
+/*
 #include "ISectionProperties.h"
 
 namespace CIFem
@@ -15,4 +15,4 @@ namespace CIFem
 		~SecPropBeam3d();
 	};
 }
-
+*/

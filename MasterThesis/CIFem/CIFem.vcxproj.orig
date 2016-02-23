@@ -156,10 +156,14 @@
     <ClInclude Include="ICrossSection.h" />
     <ClInclude Include="IElement.h" />
     <ClInclude Include="CIFemMath.h" />
-    <ClInclude Include="INode.h" />
+<<<<<<< HEAD
     <ClInclude Include="IElementRcp.h" />
-    <ClInclude Include="SectionProperties.h" />
     <ClInclude Include="IRelease.h" />
+    <ClInclude Include="ISectionProperties.h" />
+=======
+    <ClInclude Include="INode.h" />
+    <ClInclude Include="SectionProperties.h" />
+>>>>>>> e349f041a398f9fd41da9b6852190bff002d2c8b
     <ClInclude Include="Node3d.h" />
     <ClInclude Include="Rectangle3d.h" />
     <ClInclude Include="ReleaseBeam3d.h" />
@@ -179,8 +183,12 @@
     <ClCompile Include="Element3dRcp.cpp" />
     <ClCompile Include="ElementProperty.cpp" />
     <ClCompile Include="CIFemMath.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="IElementRcp.cpp" />
     <ClCompile Include="IRelease.cpp" />
+    <ClCompile Include="ISectionProperties.cpp" />
+=======
+>>>>>>> e349f041a398f9fd41da9b6852190bff002d2c8b
     <ClCompile Include="Node3d.cpp" />
     <ClCompile Include="Rectangle3d.cpp" />
     <ClCompile Include="ReleaseBeam3d.cpp" />

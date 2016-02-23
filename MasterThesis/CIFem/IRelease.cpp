@@ -17,3 +17,9 @@ void CIFem::IRelease::SetReleases(std::vector<DofRelease> releases)
 CIFem::IRelease::~IRelease()
 {
 }
+
+CIFem::IRelease::IRelease(std::vector<DofRelease> releases)
+	:IRelease()
+{
+	SetReleases(releases);
+}

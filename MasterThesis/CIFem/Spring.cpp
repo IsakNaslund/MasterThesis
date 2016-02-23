@@ -7,6 +7,17 @@ Spring::Spring()
 {
 }
 
+CIFem::Spring::Spring(double k)
+{
+	_k = k;
+}
+
+CIFem::Spring::Spring(double k, std::vector<std::shared_ptr<DOF>> dofs)
+{
+	_k = k;
+	SetEdof(dofs);
+}
+
 
 Spring::~Spring()
 {

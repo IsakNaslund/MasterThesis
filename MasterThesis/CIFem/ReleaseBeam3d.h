@@ -1,17 +1,19 @@
 #pragma once
 #include "IRelease.h"
 #include <vector>
+#include "CIFem_dll.h"
 
 namespace CIFem
 {
-	class ReleaseBeam3d :
+	class CIFEM_API ReleaseBeam3d :
 		public CIFem::IRelease
 	{
 	public:
+		ReleaseBeam3d();
 		~ReleaseBeam3d();
 
 	protected:
-		void SetNumberOfReleases();
+		int GetNumberOfReleases();
 	};
 }
 

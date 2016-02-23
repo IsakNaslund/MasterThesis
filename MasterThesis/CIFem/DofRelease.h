@@ -12,6 +12,9 @@ namespace CIFem
 		DofRelease(bool);		// True = fixed, false = pinned
 		DofRelease(double);		// Connection stiffness
 		~DofRelease();
+
+		bool IsFixed();
+		double Stiffness();
 	};
 }
 

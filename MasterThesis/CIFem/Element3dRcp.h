@@ -1,14 +1,17 @@
 #pragma once
+#include "CIFem_dll.h"
 #include "IElementRcp.h"
 #include "ReleaseBeam3d.h"
 #include "ICrossSection.h"
 #include "GlobalSettings.h"
+#include <memory>
+#include "Spring.h"
 
 using namespace CIFem;
 
 namespace CIFem
 {
-	class Element3dRcp :
+	class CIFEM_API Element3dRcp :
 		public IElementRcp
 	{
 		XYZ _stPos, _enPos;

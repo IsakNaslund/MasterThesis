@@ -114,11 +114,13 @@
     <ClInclude Include="GlobalSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Element3d.h">
       <Filter>Header Files\Elements</Filter>
-    </ClInclude>
+=======
     <ClInclude Include="Structure.h">
       <Filter>Header Files</Filter>
+>>>>>>> c300fa631a290f4afbf539d032c3b5fa3610ee2b
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

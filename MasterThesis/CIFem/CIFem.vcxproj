@@ -182,6 +182,7 @@
     <ClCompile Include="Element3dRcp.cpp" />
     <ClCompile Include="ElementProperty.cpp" />
     <ClCompile Include="CIFemMath.cpp" />
+    <ClCompile Include="IElement.cpp" />
     <ClCompile Include="IElementRcp.cpp" />
     <ClCompile Include="INode.cpp" />
     <ClCompile Include="IRelease.cpp" />

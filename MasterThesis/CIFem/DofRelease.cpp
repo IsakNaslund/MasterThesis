@@ -17,3 +17,13 @@ CIFem::DofRelease::DofRelease(double stiffness)
 CIFem::DofRelease::~DofRelease()
 {
 }
+
+bool CIFem::DofRelease::IsFixed()
+{
+	return _isFixed;
+}
+
+double CIFem::DofRelease::Stiffness()
+{
+	return _stiffness;
+}

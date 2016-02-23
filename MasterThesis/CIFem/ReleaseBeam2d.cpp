@@ -4,7 +4,7 @@ CIFem::ReleaseBeam2d::~ReleaseBeam2d()
 {
 }
 
-void CIFem::ReleaseBeam2d::SetNumberOfReleases()
+int CIFem::ReleaseBeam2d::GetNumberOfReleases()
 {
-	_nReleases = 3;
+	return 3;
 }

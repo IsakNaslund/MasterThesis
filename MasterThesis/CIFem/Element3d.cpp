@@ -1,6 +1,5 @@
 #include "Element3d.h"
 
-using namespace arma;
 using namespace CIFem;
 
 Element3d::Element3d()
@@ -8,6 +7,7 @@ Element3d::Element3d()
 	Init();			//Initialise
 }
 
+/*
 Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, vector<int> edof, ElementProperty ep)
 {
 	Init();			//Initialise
@@ -28,9 +28,9 @@ Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, vector<int>
 	_ep = ep;
 
 	_length = CalcLength(sNode, eNode);
-}
+}*/
 
-Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, vector<DOF*> dof, ElementProperty ep)
+Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, ElementProperty ep)
 {
 	Init();			//Initialise
 
@@ -82,7 +82,7 @@ arma::Mat<double> Element3d::GetStiffnessMatrix()
 	double k2 = G*Kv / l;
 
 	////// Define matrix //////
-	arma::Mat<double> Ke = zeros(12,12);
+	arma::Mat<double> Ke = arma::zeros(12,12);
 
 	// Row 1
 	Ke(0, 0) = k1;				Ke(0, 6) = -k1;
@@ -139,7 +139,7 @@ arma::Mat<double> Element3d::GetStiffnessMatrix()
 // Creates and returns the transformation matrix G
 arma::mat Element3d::GetTransformationMatrix()
 {
-	arma::mat G(12,12, fill::zeros);
+	arma::mat G(12,12, arma::fill::zeros);
 
 	std::vector<double> bVec = { _eNode.GetX() - _sNode.GetX(), _eNode.GetY() - _sNode.GetY(), _eNode.GetZ() - _sNode.GetZ() };
 	arma::vec b(bVec);
@@ -172,7 +172,7 @@ void Element3d::Init()
 	SetElementOrientation({ 0, 0, 1 });
 }
 
-
+/*
 void Element3d::SetEdof(vector<int> edof)
 {
 	int length = edof.size();
@@ -180,23 +180,9 @@ void Element3d::SetEdof(vector<int> edof)
 		throw std::invalid_argument("Number of degrees of freedom should be 12.");
 	else
 		_edof = edof;
-}
+}*/
 
-void Element3d::SetEdof(vector<DOF*> edof)
-{
-	int length = edof.size();
-	
-	if (length != 12)
-		throw std::invalid_argument("Number of degrees of freedom should be 12.");
-	else
-	{
-		_dof.clear();
-		for (int i = 0; i < length; i++)
-		{
-			_dof.push_back(std::shared_ptr<DOF> (edof[i]));
-		}
-	}
-}
+
 
 
 // Element orientation is the direction of the local z axis

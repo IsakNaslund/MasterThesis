@@ -11,7 +11,7 @@ namespace CIFem
 		~ReleaseBeam2d();
 
 	protected:
-		void SetNumberOfReleases();
+		int GetNumberOfReleases();
 	};
 }
 

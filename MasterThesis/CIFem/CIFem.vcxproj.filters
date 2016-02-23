@@ -114,6 +114,9 @@
     <ClInclude Include="ReleaseBeam2d.h">
       <Filter>Header Files\Releases</Filter>
     </ClInclude>
+    <ClInclude Include="Structure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XYZ.cpp">
@@ -170,13 +173,16 @@
     <ClCompile Include="IRelease.cpp">
       <Filter>Source Files\Releases</Filter>
     </ClCompile>
-    <ClCompile Include="ReleaseBeam3d.cpp">
+    <ClCompile Include="INode.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ReleaseBeam3d.cpp">
+      <Filter>Source Files\Releases</Filter>
     </ClCompile>
     <ClCompile Include="ReleaseBeam2d.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Releases</Filter>
     </ClCompile>
-    <ClCompile Include="INode.cpp">
+    <ClCompile Include="Structure.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

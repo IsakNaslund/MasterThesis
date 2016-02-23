@@ -72,7 +72,7 @@ void Structure3d::SetTranslation(int dofIndex, double a)
 }
 
 // Find a dof
-DOF & Structure3d::FindDof(int dofIndex)
+CIFem::DOF& Structure3d::FindDof(int dofIndex)
 {
 	//for each (DOF & dof in _dofs)
 	for (int i = 0; i < _dofs.size(); i++)
@@ -208,6 +208,17 @@ arma::mat Structure3d::AssembleStiffnessMatrix()
 	return K;
 }
 
+
+/*
+std::shared_ptr[DOF] CIFem::Structure3d::GetOrCreateDof(int index)
+{
+	for (int i = 0; i < _dofs.size(); i++)
+		if (index == _dofs[i].GetIndex())
+			return &_dofs[i];
+
+	return nullptr;
+}
+*/
 
 void Structure3d::Solve()
 {

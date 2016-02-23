@@ -10,6 +10,7 @@ namespace CIFem
 {
 	class CIFEM_API IElement
 	{
+	protected:
 		std::vector<std::shared_ptr<DOF>> _dof;
 	public:
 		virtual arma::Mat<double> GetStiffnessMatrix() = 0;

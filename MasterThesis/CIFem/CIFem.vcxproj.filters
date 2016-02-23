@@ -114,6 +114,9 @@
     <ClInclude Include="ReleaseBeam2d.h">
       <Filter>Header Files\Releases</Filter>
     </ClInclude>
+    <ClInclude Include="GlobalSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XYZ.cpp">

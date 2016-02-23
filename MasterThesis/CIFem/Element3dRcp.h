@@ -2,6 +2,7 @@
 #include "IElementRcp.h"
 #include "ReleaseBeam3d.h"
 #include "ICrossSection.h"
+#include "GlobalSettings.h"
 
 using namespace CIFem;
 
@@ -20,7 +21,7 @@ namespace CIFem
 		Element3dRcp();
 		Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, ICrossSection* xSec, double matStiff, std::vector<double> normal);
 
-		std::vector<IElement*> CreateElement(std::vector<INode> systemNodes);
+		std::vector<IElement*> CreateElement(std::vector<INode*> systemNodes);
 		~Element3dRcp();
 	};
 }

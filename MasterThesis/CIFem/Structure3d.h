@@ -5,6 +5,8 @@
 #include "Element3d.h"
 #include <vector>
 #include <memory>
+#include "Node3d.h"
+#include "Element3dRcp.h"
 
 using namespace std;
 

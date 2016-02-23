@@ -153,6 +153,7 @@
     <ClInclude Include="Element3d.h" />
     <ClInclude Include="Element3dRcp.h" />
     <ClInclude Include="ElementProperty.h" />
+    <ClInclude Include="GlobalSettings.h" />
     <ClInclude Include="ICrossSection.h" />
     <ClInclude Include="IElement.h" />
     <ClInclude Include="CIFemMath.h" />

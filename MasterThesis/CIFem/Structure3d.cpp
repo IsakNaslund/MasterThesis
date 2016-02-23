@@ -274,6 +274,7 @@ void Structure3d::Solve()
 
 vector<double> CIFem::Structure3d::GetDisplacements()
 {
+
 	vector<double> a;
 	for each (DOF dof in _dofs)
 		a.push_back(dof.GetTranslation());

@@ -180,6 +180,7 @@
     <ClCompile Include="ElementProperty.cpp" />
     <ClCompile Include="CIFemMath.cpp" />
     <ClCompile Include="IElementRcp.cpp" />
+    <ClCompile Include="INode.cpp" />
     <ClCompile Include="IRelease.cpp" />
     <ClCompile Include="Node3d.cpp" />
     <ClCompile Include="Rectangle3d.cpp" />

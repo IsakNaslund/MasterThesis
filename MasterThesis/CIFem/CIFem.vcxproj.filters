@@ -170,6 +170,9 @@
     <ClCompile Include="ReleaseBeam3d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="INode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CIFem.rc">

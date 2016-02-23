@@ -11,10 +11,9 @@ namespace CIFem
 	class CIFEM_API IElementRcp
 	{
 	public:
-		IElementRcp(Node3d, Node3d, std::vector<IRelease>, std::vector<IRelease>, ElementProperty);
-		~IElementRcp();
+		virtual ~IElementRcp();
 
-		virtual IElement* CreateElement() = 0;
+		virtual std::vector<IElement*> CreateElement(std::vector<INode> systemNodes) = 0;
 	};
 }
 

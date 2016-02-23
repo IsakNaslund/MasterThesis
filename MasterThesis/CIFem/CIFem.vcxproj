@@ -149,14 +149,19 @@
   <ItemGroup>
     <ClInclude Include="CIFem_dll.h" />
     <ClInclude Include="DOF.h" />
+    <ClInclude Include="DofRelease.h" />
     <ClInclude Include="Element3d.h" />
+    <ClInclude Include="Element3dRcp.h" />
     <ClInclude Include="ElementProperty.h" />
     <ClInclude Include="ICrossSection.h" />
     <ClInclude Include="IElement.h" />
     <ClInclude Include="CIFemMath.h" />
+    <ClInclude Include="IElementRcp.h" />
+    <ClInclude Include="IRelease.h" />
     <ClInclude Include="ISectionProperties.h" />
     <ClInclude Include="Node3d.h" />
     <ClInclude Include="Rectangle3d.h" />
+    <ClInclude Include="ReleaseBeam3d.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RHS3d.h" />
     <ClInclude Include="SecPropBar.h" />
@@ -168,12 +173,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DOF.cpp" />
+    <ClCompile Include="DofRelease.cpp" />
     <ClCompile Include="Element3d.cpp" />
+    <ClCompile Include="Element3dRcp.cpp" />
     <ClCompile Include="ElementProperty.cpp" />
     <ClCompile Include="CIFemMath.cpp" />
+    <ClCompile Include="IElementRcp.cpp" />
+    <ClCompile Include="IRelease.cpp" />
     <ClCompile Include="ISectionProperties.cpp" />
     <ClCompile Include="Node3d.cpp" />
     <ClCompile Include="Rectangle3d.cpp" />
+    <ClCompile Include="ReleaseBeam3d.cpp" />
     <ClCompile Include="RHS3d.cpp" />
     <ClCompile Include="SecPropBar.cpp" />
     <ClCompile Include="SecPropBeam2d.cpp" />

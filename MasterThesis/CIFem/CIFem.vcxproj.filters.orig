@@ -90,7 +90,12 @@
     <ClInclude Include="Node3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-<<<<<<< HEAD
+    <ClInclude Include="INode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SectionProperties.h">
+      <Filter>Header Files\Elements\Cross sections</Filter>
+    </ClInclude>
     <ClInclude Include="IElementRcp.h">
       <Filter>Header Files\Elements\Recipes</Filter>
     </ClInclude>
@@ -105,13 +110,9 @@
     </ClInclude>
     <ClInclude Include="ReleaseBeam3d.h">
       <Filter>Header Files\Releases</Filter>
-=======
-    <ClInclude Include="INode.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SectionProperties.h">
-      <Filter>Header Files\Elements\Cross sections</Filter>
->>>>>>> e349f041a398f9fd41da9b6852190bff002d2c8b
+    <ClInclude Include="ReleaseBeam2d.h">
+      <Filter>Header Files\Releases</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -154,7 +155,9 @@
     <ClCompile Include="Node3d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< HEAD
+    <ClCompile Include="SectionProperties.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="IElementRcp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -168,9 +171,13 @@
       <Filter>Source Files\Releases</Filter>
     </ClCompile>
     <ClCompile Include="ReleaseBeam3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="INode.cpp">
 =======
-    <ClCompile Include="SectionProperties.cpp">
->>>>>>> e349f041a398f9fd41da9b6852190bff002d2c8b
+    <ClCompile Include="ReleaseBeam2d.cpp">
+>>>>>>> 536df585382259a584dc55b11d9ef396ad70eead
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

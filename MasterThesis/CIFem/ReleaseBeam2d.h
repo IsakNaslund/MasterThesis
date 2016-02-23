@@ -4,11 +4,11 @@
 
 namespace CIFem
 {
-	class ReleaseBeam3d :
+	class ReleaseBeam2d :
 		public CIFem::IRelease
 	{
 	public:
-		~ReleaseBeam3d();
+		~ReleaseBeam2d();
 
 	protected:
 		void SetNumberOfReleases();

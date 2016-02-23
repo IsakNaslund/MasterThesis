@@ -155,6 +155,7 @@
     <ClInclude Include="IElement.h" />
     <ClInclude Include="CIFemMath.h" />
     <ClInclude Include="ISectionProperties.h" />
+    <ClInclude Include="Node3d.h" />
     <ClInclude Include="Rectangle3d.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RHS3d.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="ElementProperty.cpp" />
     <ClCompile Include="CIFemMath.cpp" />
     <ClCompile Include="ISectionProperties.cpp" />
+    <ClCompile Include="Node3d.cpp" />
     <ClCompile Include="Rectangle3d.cpp" />
     <ClCompile Include="RHS3d.cpp" />
     <ClCompile Include="SecPropBar.cpp" />

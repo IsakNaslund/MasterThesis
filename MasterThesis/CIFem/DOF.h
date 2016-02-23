@@ -10,6 +10,7 @@ namespace CIFem
 		bool _hasSetTranslation;
 
 	public:
+		DOF();
 		DOF(unsigned int);
 		~DOF();
 

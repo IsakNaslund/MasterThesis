@@ -45,9 +45,6 @@
     <ClInclude Include="CIFem_dll.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Element3d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ElementProperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -114,6 +111,17 @@
     <ClInclude Include="ReleaseBeam2d.h">
       <Filter>Header Files\Releases</Filter>
     </ClInclude>
+    <ClInclude Include="GlobalSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="Element3d.h">
+      <Filter>Header Files\Elements</Filter>
+=======
+    <ClInclude Include="Structure.h">
+      <Filter>Header Files</Filter>
+>>>>>>> c300fa631a290f4afbf539d032c3b5fa3610ee2b
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XYZ.cpp">
@@ -170,14 +178,19 @@
     <ClCompile Include="IRelease.cpp">
       <Filter>Source Files\Releases</Filter>
     </ClCompile>
-    <ClCompile Include="ReleaseBeam3d.cpp">
+    <ClCompile Include="INode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="INode.cpp">
-=======
+    <ClCompile Include="ReleaseBeam3d.cpp">
+      <Filter>Source Files\Releases</Filter>
+    </ClCompile>
     <ClCompile Include="ReleaseBeam2d.cpp">
->>>>>>> 536df585382259a584dc55b11d9ef396ad70eead
+      <Filter>Source Files\Releases</Filter>
+    </ClCompile>
+    <ClCompile Include="Structure.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

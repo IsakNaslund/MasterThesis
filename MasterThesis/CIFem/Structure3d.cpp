@@ -281,3 +281,8 @@ vector<double> CIFem::Structure3d::GetDisplacements()
 
 	return a;
 }
+
+void CIFem::Structure3d::BuildStructure()
+{
+
+}

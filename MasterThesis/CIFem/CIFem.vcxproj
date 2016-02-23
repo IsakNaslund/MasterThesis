@@ -171,6 +171,7 @@
     <ClInclude Include="SecPropBeam2d.h" />
     <ClInclude Include="SecPropBeam3d.h" />
     <ClInclude Include="Spring.h" />
+    <ClInclude Include="Structure.h" />
     <ClInclude Include="Structure3d.h" />
     <ClInclude Include="XYZ.h" />
   </ItemGroup>
@@ -195,6 +196,7 @@
     <ClCompile Include="SecPropBeam3d.cpp" />
     <ClCompile Include="SectionProperties.cpp" />
     <ClCompile Include="Spring.cpp" />
+    <ClCompile Include="Structure.cpp" />
     <ClCompile Include="Structure3d.cpp" />
     <ClCompile Include="XYZ.cpp" />
   </ItemGroup>

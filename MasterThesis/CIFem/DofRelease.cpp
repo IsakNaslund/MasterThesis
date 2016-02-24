@@ -11,8 +11,17 @@ CIFem::DofRelease::DofRelease(bool isFixed)
 
 CIFem::DofRelease::DofRelease(double stiffness)
 {
-	_stiffness = stiffness;
-	_isFixed = false;
+	if (stiffness < 0)
+	{
+		_isFixed = true;
+		_stiffness = 0;
+	}
+	else
+	{
+		_stiffness = stiffness;
+		_isFixed = false;
+	}
+
 	_index = 0;
 }
 

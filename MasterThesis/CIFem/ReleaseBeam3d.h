@@ -10,6 +10,12 @@ namespace CIFem
 	{
 	public:
 		ReleaseBeam3d();
+		ReleaseBeam3d(bool x, bool y, bool z, bool xx, bool yy, bool zz);
+		ReleaseBeam3d(double x, double y, double z, double xx, double yy, double zz);
+		ReleaseBeam3d(std::vector<bool> rels);
+		ReleaseBeam3d(std::vector<double> spRel);
+		ReleaseBeam3d(std::vector<DofRelease> dofRel);
+
 		~ReleaseBeam3d();
 
 	protected:

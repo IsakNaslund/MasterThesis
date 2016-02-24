@@ -28,7 +28,6 @@ namespace CIFem
 		~Element3d();
 
 		arma::Mat<double> GetStiffnessMatrix();	// Returns the element stiffness (in global coordinates)
-		vector <int> GetDofs();		// For debug purposes, may not be used later
 
 	private:
 		void Init();				// Initialises class, call from all constructors

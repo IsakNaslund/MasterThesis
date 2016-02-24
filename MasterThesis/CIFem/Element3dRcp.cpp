@@ -7,7 +7,7 @@ CIFem::Element3dRcp::Element3dRcp()
 {
 }
 
-CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, ICrossSection * xSec, double matStiff, std::vector<double> normal)
+CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, ICrossSection * xSec, double matStiff, double poisonRatio, std::vector<double> normal)
 {
 	_stPos = stPos;
 	_enPos = enPos;
@@ -15,6 +15,7 @@ CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, Rel
 	_enRel = enRel;
 	_xSec = xSec;
 	_matStiff = matStiff;
+	_poisonsRatio = poisonRatio;
 	_normal = normal;
 
 }
@@ -98,7 +99,14 @@ std::vector<IElement*> CIFem::Element3dRcp::CreateElement(std::vector<INode*> sy
 		}
 	}
 
-	return std::vector<IElement*>();
+	SectionProperties secProp = _xSec->CalcSectionProperties();
+	double G = _matStiff / (2 * (_poisonsRatio + 1));
+	ElementProperty ep =ElementProperty(_matStiff, G, secProp._area, secProp._Iy, secProp._Iz, secProp._Kv);
+	IElement* beam = new Element3d(_stPos, _enPos, dof, ep);
+
+	newElements.push_back(beam);
+
+	return newElements;
 }
 
 Element3dRcp::~Element3dRcp()

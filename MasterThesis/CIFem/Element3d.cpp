@@ -57,10 +57,12 @@ Element3d::~Element3d()
 {
 }
 
+/*
 vector<int> Element3d::GetDofs()
 {
 	return _edof;
 }
+*/
 
 // Creates and returns a global element stiffness matrix
 arma::Mat<double> Element3d::GetStiffnessMatrix()

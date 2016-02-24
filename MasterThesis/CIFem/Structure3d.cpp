@@ -18,7 +18,7 @@ void Structure3d::AddElement(IElement * e)
 	_elements.push_back(e);
 	
 	// Add non-duplicate dofs
-	for each (int edof in e->GetDofs())
+	for each (int edof in e->GetDofIndecies())
 	{
 		bool newDof = true;
 		for each (DOF dof in _dofs)
@@ -102,7 +102,7 @@ arma::mat Structure3d::AssembleStiffnessMatrix()
 
 	for (int j = 0; j < _elements.size(); j++)
 	{
-		for each (DOF dof in _elements[j]->GetDofs())
+		for each (DOF dof in _elements[j]->GetDofIndecies())
 		{
 			bool b = false;
 			unsigned int dIndex = dof.GetIndex();
@@ -130,7 +130,7 @@ arma::mat Structure3d::AssembleStiffnessMatrix()
 	// Assemble K matrix
 	for (int e = 0; e < _elements.size(); e++)
 	{
-		std::vector<int> dofs = _elements[e]->GetDofs();
+		std::vector<int> dofs = _elements[e]->GetDofIndecies();
 		arma::mat Ke = _elements[e]->GetStiffnessMatrix();
 
 		// Yeah, I know...

@@ -16,3 +16,15 @@ void CIFem::IElement::SetEdof(std::vector<std::shared_ptr<DOF> > edof)
 		}
 	}
 }
+
+std::vector<int> CIFem::IElement::GetDofIndecies()
+{
+	std::vector<int> ind;
+
+	for (int i = 0; i < GetSize(); i++)
+	{
+		ind.push_back(_dof[i]->_kIndex);
+	}
+
+	return ind;
+}

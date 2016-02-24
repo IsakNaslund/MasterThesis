@@ -5,7 +5,7 @@
 namespace CIFem_wrapper
 {
 
-	ref class WR_Node3d : public WR_INode
+	public ref class WR_Node3d : public WR_INode
 	{
 	public:
 		WR_Node3d();

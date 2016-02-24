@@ -5,6 +5,12 @@ CIFem::ReleaseBeam3d::ReleaseBeam3d()
 	
 }
 
+CIFem::ReleaseBeam3d::ReleaseBeam3d(const ReleaseBeam3d * other)
+{
+	if(other != nullptr)
+		SetReleases(other->GetReleases());
+}
+
 CIFem::ReleaseBeam3d::ReleaseBeam3d(bool x, bool y, bool z, bool xx, bool yy, bool zz)
 {
 	std::vector<DofRelease> rel;

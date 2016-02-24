@@ -8,7 +8,7 @@
 namespace CIFem_wrapper
 {
 
-	ref class WR_Elem3dRcp : public WR_IElemRcp
+	public ref class WR_Elem3dRcp : public WR_IElemRcp
 	{
 	public:
 		WR_Elem3dRcp();

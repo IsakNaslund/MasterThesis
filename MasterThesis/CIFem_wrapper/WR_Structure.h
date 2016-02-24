@@ -2,10 +2,11 @@
 
 #include "Structure.h"
 #include "WR_INode.h"
+#include "WR_IElemRcp.h"
 
 namespace CIFem_wrapper
 {
-	ref class WR_Structure
+	public ref class WR_Structure
 	{
 		CIFem::Structure* _structure;
 	public:
@@ -13,9 +14,9 @@ namespace CIFem_wrapper
 		~WR_Structure();
 
 		void AddNode(WR_INode wrNode);
-		void AddNode(std::vector<WR_INode> wrNodeList);
-		void AddElementRcp(IElementRcp *);
-		void AddElementRcp(std::vector<IElementRcp *>);
+		//void AddNode(std::vector<WR_INode> wrNodeList);
+		void AddElementRcp(WR_IElemRcp wrRcp);
+		//void AddElementRcp(std::vector<IElementRcp *>);
 
 		void Solve();
 	};

@@ -9,7 +9,7 @@ WR_INode::~WR_INode()
 	_node = 0;
 }
 
-CIFem::INode * WR_INode::GetNode()
+CIFem::INode* WR_INode::GetNode()
 {
 	return _node;
 }

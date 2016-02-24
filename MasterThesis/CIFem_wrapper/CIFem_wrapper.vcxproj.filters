@@ -27,6 +27,27 @@
     <ClInclude Include="WR_Structure.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WR_INode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WR_Node3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WR_IElemRcp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WR_Elem3dRcp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WR_ReleaseBeam3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WR_IXSec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WR_XSecRect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -39,6 +60,27 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WR_Structure.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WR_INode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WR_Node3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WR_IElemRcp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WR_Elem3dRcp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WR_ReleaseBeam3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WR_IXSec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WR_XSecRect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

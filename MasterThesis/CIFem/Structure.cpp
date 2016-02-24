@@ -40,7 +40,7 @@ void CIFem::Structure::Solve()
 	// Build structure
 	BuildStructure();
 
-	// Sort dofs and update their kIndex
+	// Update dof kIndex
 
 
 	// Create K matrix

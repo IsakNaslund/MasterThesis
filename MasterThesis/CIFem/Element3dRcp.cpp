@@ -47,6 +47,8 @@ std::vector<IElement*> CIFem::Element3dRcp::CreateElement(std::vector<INode*> sy
 		}
 	}
 
+	
+
 	std::vector<std::shared_ptr<DOF> > stNodDof = stNode->GetDofs();
 	std::vector<std::shared_ptr<DOF> > enNodDof = enNode->GetDofs();
 

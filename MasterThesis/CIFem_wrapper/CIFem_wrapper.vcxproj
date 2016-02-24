@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
+    <ClInclude Include="WR_Structure.h" />
     <ClInclude Include="WR_XYZ.h" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +146,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="WR_Structure.cpp" />
     <ClCompile Include="WR_XYZ.cpp" />
   </ItemGroup>
   <ItemGroup>

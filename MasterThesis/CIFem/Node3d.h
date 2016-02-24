@@ -13,6 +13,7 @@ namespace CIFem
 	{
 		XYZ _location;
 		std::vector<std::shared_ptr<DOF>> _dof;
+		
 	public:
 		Node3d();
 		Node3d(const XYZ location);

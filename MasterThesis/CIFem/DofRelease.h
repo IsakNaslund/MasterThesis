@@ -7,6 +7,7 @@ namespace CIFem
 	{
 		bool _isFixed;
 		double _stiffness;
+		int _index;
 
 	public:
 		DofRelease(bool);		// True = fixed, false = pinned

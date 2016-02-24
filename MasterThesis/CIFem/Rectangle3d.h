@@ -1,14 +1,15 @@
 #pragma once
-
-//#include "ISectionProperties.h"
-#include "SecPropBeam3d.h"
+#include "CIFem_dll.h"
+#include "SectionProperties.h"
 #include "CIFemMath.h"
 #include "ICrossSection.h"
+
+
 
 namespace CIFem
 {
 
-	class Rectangle3d :ICrossSection
+	class CIFEM_API Rectangle3d :public ICrossSection
 	{
 		double _height;
 		double _width;

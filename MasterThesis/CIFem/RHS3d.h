@@ -1,17 +1,21 @@
 #pragma once
 
 #include "ICrossSection.h"
+#include <math.h>
+#include <stdexcept>
 
 namespace CIFem
 {
-	class RHS3d : ICrossSection
+	class CIFEM_API RHS3d : public ICrossSection
 	{
 		double _height;
 		double _width;
 		double _thickness;
 	public:
 		RHS3d();
+		RHS3d(double height, double width, double thickness);
 		~RHS3d();
+		SectionProperties CalcSectionProperties();
 	};
 }
 

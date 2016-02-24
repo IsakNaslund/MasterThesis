@@ -39,7 +39,7 @@ double CIFem::Rectangle3d::CalcTorsionalStiffness(const double iy, const double 
 double CIFem::Rectangle3d::CalcAlphaFactor()
 {
 	double ratio = _height / _width;
-
+	
 	if (ratio < 1)
 	{	
 		//Failure, height needs to be greater than width

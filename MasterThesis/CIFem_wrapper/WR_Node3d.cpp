@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "WR_Node3d.h"
 
+using namespace CIFem_wrapper;
 
 WR_Node3d::WR_Node3d()
 {

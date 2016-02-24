@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "WR_XSecRect.h"
-
+using namespace CIFem_wrapper;
 
 WR_XSecRect::WR_XSecRect()
 {

@@ -13,7 +13,7 @@ namespace CIFem_wrapper
 		WR_XYZ();
 		WR_XYZ(double x, double y, double z);
 		~WR_XYZ();
-
+		XYZ* GetPos();
 	};
 
 }

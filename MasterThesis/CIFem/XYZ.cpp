@@ -6,6 +6,13 @@ XYZ::XYZ()
 {
 }
 
+CIFem::XYZ::XYZ(const XYZ * other)
+{
+	_x = other->_x;
+	_y = other->_y;
+	_z = other->_z;
+}
+
 CIFem::XYZ::XYZ(const double x, const double y, const double z)
 {
 	_x = x;

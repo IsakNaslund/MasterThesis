@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "WR_ReleaseBeam3d.h"
 
+using namespace CIFem_wrapper;
 
 WR_ReleaseBeam3d::WR_ReleaseBeam3d()
 {

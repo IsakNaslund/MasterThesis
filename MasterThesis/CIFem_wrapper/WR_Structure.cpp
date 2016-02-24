@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "WR_Structure.h"
 
+using namespace CIFem_wrapper;
 
 WR_Structure::WR_Structure()
 {

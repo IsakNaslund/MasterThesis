@@ -12,6 +12,7 @@ namespace CIFem
 		double _x, _y, _z;
 	public:
 		XYZ();
+		XYZ(const XYZ * other);
 		XYZ(const double x, const double y, const double z);
 		~XYZ();
 

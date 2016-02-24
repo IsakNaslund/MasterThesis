@@ -18,3 +18,8 @@ WR_XYZ::~WR_XYZ()
 	delete _xyz;
 	_xyz = 0;
 }
+
+XYZ * CIFem_wrapper::WR_XYZ::GetPos()
+{
+	return _xyz;
+}

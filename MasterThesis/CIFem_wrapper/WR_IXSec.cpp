@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "WR_IXSec.h"
 
-
+using namespace CIFem_wrapper;
 
 WR_IXSec::~WR_IXSec()
 {

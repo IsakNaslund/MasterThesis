@@ -29,9 +29,14 @@ namespace CIFem
 	private:
 		std::vector<IElement *> CreateElements(std::vector<IElementRcp *>, std::vector<INode *>);
 		void BuildStructure();
-		void SortAndIndexDofs();
-		arma::sp_mat AssembleStiffnessMatrix();
-		void StoreResultsInDofs(arma::colvec, arma::colvec);
+		std::vector<std::shared_ptr<CIFem::DOF>> GetDofs(std::vector<INode *>);
+		void SetDofKMatIndex(std::vector<std::shared_ptr<CIFem::DOF>>);
+		arma::sp_mat AssembleStiffnessMatrix(std::vector<std::shared_ptr<CIFem::DOF>>);
+		void AssembleElementsInKMat(arma::sp_mat * K, arma::mat * Ke, std::vector<std::shared_ptr<DOF>>);
+		arma::colvec GetForceVector(std::vector<std::shared_ptr<DOF>>);
+		arma::colvec GetDisplacementVector(std::vector<std::shared_ptr<DOF>>);
+		void LinEqSolve(arma::sp_mat & K, arma::colvec & a, arma::colvec & f, std::vector<std::shared_ptr<DOF>>);
+		void StoreResultsInDofs(arma::colvec a, arma::colvec f, std::vector<std::shared_ptr<DOF>>);
 	};
 }
 

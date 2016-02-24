@@ -5,6 +5,7 @@
 #include "IElement.h"
 #include "DOF.h"
 #include "XYZ.h"
+#include "Node3d.h"
 #include <iostream>
 
 using namespace CIFem;
@@ -42,11 +43,18 @@ std::vector<IElement*> StructureTest01::CreateElements()
 {
 	std::vector<IElement*> elements;
 
-	// Nodes
+	// Positions
 	XYZ lb(0, 0, 0);
 	XYZ lt(0, 1, 0);
 	XYZ rt(1, 1, 0);
 	XYZ rb(1, 0, 0);
+
+	// Nodes
+	Node3d nLB(lb);
+	Node3d nLT(lt);
+	Node3d nRT(rt);
+	Node3d nRB(rb);
+
 
 	// Element property
 	double E = 210;
@@ -58,6 +66,7 @@ std::vector<IElement*> StructureTest01::CreateElements()
 	ElementProperty ep(E, G, A, Iy, Iz, Kv);
 
 	// Elements
+	Element3dRcp()
 	vector<int> edof;
 	for (int i = 1; i <= 12; i++)
 		edof.push_back(i);

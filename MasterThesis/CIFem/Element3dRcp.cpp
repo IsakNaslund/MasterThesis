@@ -16,8 +16,7 @@ CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, Rel
 	_xSec = xSec;
 	_matStiff = matStiff;
 	_poisonsRatio = poisonRatio;
-	_normal = normal;
-
+	SetNormal(normal);	// Set normal with format check
 }
 
 std::vector<IElement*> CIFem::Element3dRcp::CreateElement(std::vector<INode*> systemNodes)
@@ -113,4 +112,10 @@ std::vector<IElement*> CIFem::Element3dRcp::CreateElement(std::vector<INode*> sy
 
 Element3dRcp::~Element3dRcp()
 {
+}
+
+void CIFem::Element3dRcp::SetNormal(std::vector<double> normal)
+{
+	if (normal.size() != 3)
+		std::invalid_argument("Input error, element normal should contain 3 elements [X Y Z]");
 }

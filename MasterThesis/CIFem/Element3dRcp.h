@@ -24,10 +24,13 @@ namespace CIFem
 
 	public:
 		Element3dRcp();
-		Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, ICrossSection* xSec, double matStiff,double poisonRatio, std::vector<double> normal);
+		Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, ICrossSection* xSec, double matStiff, double poisonRatio, std::vector<double> normal);
 
 		std::vector<IElement*> CreateElement(std::vector<INode*> systemNodes);
 		~Element3dRcp();
+
+	private:
+		void SetNormal(std::vector<double>);
 	};
 }
 

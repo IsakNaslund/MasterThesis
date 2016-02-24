@@ -86,8 +86,11 @@ std::vector<std::shared_ptr<CIFem::DOF>> CIFem::Structure::GetDofs(std::vector<I
 {
 	std::vector<std::shared_ptr<CIFem::DOF>> dofs;
 	for (int i = 0; i < nodes.size(); i++)
-		for (int j = 0; j < nodes[i]->GetDofs().size(); j++)
-			dofs.push_back(nodes[i]->GetDofs[j]);
+	{
+		std::vector<std::shared_ptr<CIFem::DOF>> nDofs = nodes[i]->GetDofs();
+		for (int j = 0; j < nDofs.size(); j++)
+			dofs.push_back(nDofs[j]);
+	}
 
 	return dofs;
 }
@@ -189,8 +192,9 @@ void CIFem::Structure::LinEqSolve(
 	arma::colvec fa(fDof.size());
 
 	// Solve deformations
-	arma::sp_mat Kff = K.at[ufDof, ufDof];
-	arma::mat f_fsolved = f(ufDof)-K.at[ufDof, upDof] * a(upDof);
+	arma::mat Kmat(K); // Debugging, workaround this to improve speed
+	arma::sp_mat Kff(Kmat(ufDof, ufDof));
+	arma::mat f_fsolved = f(ufDof)- Kmat(ufDof, upDof) * a(upDof);
 	fa = arma::spsolve(Kff, f_fsolved);
 
 	a(ufDof) = fa;

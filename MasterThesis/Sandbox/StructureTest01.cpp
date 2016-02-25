@@ -1,12 +1,15 @@
 #include "stdafx.h"
 #include "StructureTest01.h"
-#include "Structure3d.h"
+#include "Structure.h"
 #include "Element3d.h"
 #include "IElement.h"
 #include "DOF.h"
 #include "XYZ.h"
 #include "Node3d.h"
 #include <iostream>
+#include "Rectangle3d.h"
+#include "ReleaseBeam3d.h"
+#include "Element3dRcp.h"
 
 using namespace CIFem;
 
@@ -23,27 +26,9 @@ StructureTest01::~StructureTest01()
 void StructureTest01::RunTest()
 {
 	// Create structure
-	Structure3d testStructure;
+	Structure testStructure;
 
-	//Create elements
-	vector<IElement*> elements = CreateElements();
-	for (int i = 0; i < elements.size(); i++)
-		testStructure.AddElement(elements[i]);
-
-	AddRestraints(testStructure);
-	
-	AddForces(testStructure);
-
-	Solve(testStructure);
-
-	PrintResults(GetResults(testStructure));
-}
-
-std::vector<IElement*> StructureTest01::CreateElements()
-{
-	std::vector<IElement*> elements;
-
-	// Positions
+	// Coordinates
 	XYZ lb(0, 0, 0);
 	XYZ lt(0, 1, 0);
 	XYZ rt(1, 1, 0);
@@ -55,6 +40,26 @@ std::vector<IElement*> StructureTest01::CreateElements()
 	Node3d nRT(rt);
 	Node3d nRB(rb);
 
+	testStructure.AddNode(&nLB);
+	testStructure.AddNode(&nLT);
+	testStructure.AddNode(&nRT);
+	testStructure.AddNode(&nRB);
+
+	//Create elements
+	vector<IElementRcp*> elements = CreateElements(lb, lt, rt, rb);
+	for (int i = 0; i < elements.size(); i++)
+		testStructure.AddElementRcp(elements[i]);
+	
+	//AddForces(testStructure);
+
+	Solve(testStructure);
+
+	//PrintResults(GetResults(testStructure));
+}
+
+std::vector<IElementRcp*> StructureTest01::CreateElements(XYZ lb, XYZ lt, XYZ rt, XYZ rb)
+{
+	std::vector<IElementRcp*> elements;
 
 	// Element property
 	double E = 210;
@@ -65,8 +70,33 @@ std::vector<IElement*> StructureTest01::CreateElements()
 	double Kv = 1;						// Change in case of 3d test
 	ElementProperty ep(E, G, A, Iy, Iz, Kv);
 
+
 	// Elements
-	Element3dRcp()
+	ReleaseBeam3d relFixed(true, true, true, true, true, true);
+	Rectangle3d * pXSec = new Rectangle3d(0.20, 0.10);
+	//std::shared_ptr<DOF> ptr(new DOF(n+i));
+	std::vector<double> orientation = { 0, 0, 1 };
+
+	Element3dRcp * ptr;
+
+	ptr= new Element3dRcp (lb, lt, relFixed, relFixed, pXSec, E, 0.3, orientation);
+
+	elements.push_back(ptr);
+
+	ptr = new Element3dRcp (lt, rt, relFixed, relFixed, pXSec, E, 0.3, orientation);
+
+	elements.push_back(ptr);
+
+	ptr = new Element3dRcp (rt, rb, relFixed, relFixed, pXSec, E, 0.3, orientation);
+
+	elements.push_back(ptr);
+
+	//elements.push_back(&lCol);
+	//elements.push_back(&tBeam);
+	//elements.push_back(&rCol);
+
+	// OLD STUFF //
+	/*	
 	vector<int> edof;
 	for (int i = 1; i <= 12; i++)
 		edof.push_back(i);
@@ -85,12 +115,14 @@ std::vector<IElement*> StructureTest01::CreateElements()
 	elements.push_back(&lCol);
 	elements.push_back(&tBeam);
 	elements.push_back(&rCol);
+	*/
 
 	return elements;
 }
 
-void StructureTest01::AddRestraints(Structure3d &structure)
+void StructureTest01::AddRestraints(Structure &structure)
 {
+	/*
 	// Bottom left corner
 	structure.SetTranslation(1, 0);
 	structure.SetTranslation(2, 0);
@@ -110,14 +142,15 @@ void StructureTest01::AddRestraints(Structure3d &structure)
 	structure.SetTranslation(22, 0);
 	structure.SetTranslation(23, 0);
 	structure.SetTranslation(24, 0);
+	*/
 }
 
-void StructureTest01::AddForces(Structure3d &structure)
+void StructureTest01::AddForces(Structure &structure)
 {
-	structure.ApplyForce(7, 1000);
+	//structure.ApplyForce(7, 1000);
 }
 
-void StructureTest01::Solve(Structure3d &structure)
+void StructureTest01::Solve(Structure &structure)
 {
 	structure.Solve();
 }
@@ -131,9 +164,9 @@ void StructureTest01::PrintResults(vector<double> a)
 	}
 }
 
-std::vector<double> StructureTest01::GetResults(Structure3d &structure)
+std::vector<double> StructureTest01::GetResults(Structure &structure)
 {
-	return structure.GetDisplacements();
+	return std::vector<double> {-1};//structure.GetDisplacements();
 }
 
 

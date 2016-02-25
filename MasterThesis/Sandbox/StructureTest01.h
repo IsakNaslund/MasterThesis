@@ -2,7 +2,7 @@
 
 # include <vector>
 # include "Element3d.h"
-# include "Structure3d.h"
+# include "Structure.h"
 
 class StructureTest01
 {
@@ -12,11 +12,11 @@ public:
 	~StructureTest01();
 
 	void RunTest();
-	std::vector<IElement*> CreateElements();
-	void AddRestraints(Structure3d&);
-	void AddForces(Structure3d&);
-	void Solve(Structure3d&);
-	std::vector<double> GetResults(Structure3d&);
+	std::vector<IElementRcp*> CreateElements(XYZ, XYZ, XYZ, XYZ);
+	void AddRestraints(Structure&);
+	void AddForces(Structure&);
+	void Solve(Structure&);
+	std::vector<double> GetResults(Structure&);
 	void PrintResults(vector<double>);
 };
 

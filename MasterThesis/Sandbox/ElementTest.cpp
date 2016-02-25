@@ -18,7 +18,7 @@ ElementTest::~ElementTest()
 
 void ElementTest::EdofTest()
 {
-	
+	/*
 	XYZ sNode(0, 0, 0);
 	XYZ eNode(1, 1, 0);
 
@@ -40,6 +40,7 @@ void ElementTest::EdofTest()
 	cout << endl;
 
 	cout << "Element test complete" << endl << endl << endl;
+	*/
 }
 
 

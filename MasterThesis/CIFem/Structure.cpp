@@ -118,23 +118,27 @@ arma::sp_mat CIFem::Structure::AssembleStiffnessMatrix(std::vector<std::shared_p
 	// Assemble K matrix
 	for each (IElement * pElem in _elements)
 	{
-		arma::mat * Ke = &pElem->GetStiffnessMatrix();
+		arma::mat Ke = pElem->GetStiffnessMatrix();
 
-		AssembleElementsInKMat(&K, Ke, pElem->GetDofs());
+		AssembleElementsInKMat(K, Ke, pElem->GetDofs());
 	}
 	
 	return K;
 }
 
-void CIFem::Structure::AssembleElementsInKMat(arma::sp_mat * K, arma::mat * Ke, std::vector<std::shared_ptr<DOF>> spEDofs)
+void CIFem::Structure::AssembleElementsInKMat(arma::sp_mat & K, arma::mat & Ke, std::vector<std::shared_ptr<DOF>> spEDofs)
 {
+	//DEBUG
+	K.print("K:");
+	Ke.print("Ke");
+
 	// Check inputs
-	int n = K->n_rows;
+	int n = K.n_rows;
 	for each (std::shared_ptr<DOF> spDof in spEDofs)
 		if (spDof->_kIndex > n - 1)
 			throw std::invalid_argument("Error in k matrix numbering");
 
-	int nKe = Ke->n_rows;
+	int nKe = Ke.n_rows;
 	if (nKe != spEDofs.size())
 		throw std::invalid_argument("Element dofs and Ke matrix rows mismatch!");
 
@@ -145,7 +149,7 @@ void CIFem::Structure::AssembleElementsInKMat(arma::sp_mat * K, arma::mat * Ke, 
 		for (int j = 0; j < nKe; j++)
 		{
 			int jKIndex = spEDofs[j]->_kIndex;
-			K->at(iKIndex, jKIndex) = Ke->at(i, j);
+			K.at(iKIndex, jKIndex) = Ke.at(i, j);
 		}
 	}
 }

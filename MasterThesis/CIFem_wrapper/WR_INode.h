@@ -5,7 +5,7 @@
 namespace CIFem_wrapper
 {
 
-	ref class WR_INode
+	public ref class WR_INode
 	{
 	protected:
 		CIFem::INode* _node;

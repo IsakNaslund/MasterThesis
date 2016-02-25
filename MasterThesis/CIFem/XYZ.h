@@ -2,6 +2,7 @@
 
 #include "CIFem_dll.h"
 #include <math.h>
+#include <exception>
 
 
 namespace CIFem

@@ -4,7 +4,7 @@
 namespace CIFem_wrapper
 {
 
-	ref class WR_ReleaseBeam3d
+	public ref class WR_ReleaseBeam3d
 	{
 		CIFem::ReleaseBeam3d* _release;
 

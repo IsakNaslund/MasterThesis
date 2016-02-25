@@ -5,7 +5,7 @@
 
 namespace CIFem_wrapper
 {
-	ref class WR_XSecRect : public WR_IXSec
+	public ref class WR_XSecRect : public WR_IXSec
 	{
 
 	public:

@@ -19,7 +19,13 @@ void WR_Structure::AddNode(WR_INode wrNode)
 	_structure->AddNode(wrNode.GetNode());
 }
 
-void WR_Structure::AddNode(std::vector<WR_INode> wrNodeList)
+void CIFem_wrapper::WR_Structure::AddElementRcp(WR_IElemRcp wrRcp)
 {
-	throw gcnew System::NotImplementedException();
+	_structure->AddElementRcp(wrRcp.GetRecipe());
 }
+
+void CIFem_wrapper::WR_Structure::Solve()
+{
+	_structure->Solve();
+}
+

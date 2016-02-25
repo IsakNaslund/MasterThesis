@@ -9,8 +9,9 @@ CIFem::IRelease::IRelease()
 	}*/
 }
 
+
 // Sets the dof releases
-void CIFem::IRelease::SetReleases(std::vector<DofRelease> releases)
+void CIFem::IRelease::SetReleases(const std::vector<DofRelease> releases)
 {
 	if (releases.size() != GetNumberOfReleases())
 		throw std::invalid_argument("Wrong number of releases submitted");
@@ -18,7 +19,7 @@ void CIFem::IRelease::SetReleases(std::vector<DofRelease> releases)
 	_releases = releases;
 }
 
-std::vector<CIFem::DofRelease> CIFem::IRelease::GetReleases()
+std::vector<CIFem::DofRelease> CIFem::IRelease::GetReleases() const
 {
 	return _releases;
 }

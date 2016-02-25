@@ -9,12 +9,12 @@ namespace CIFem
 	{
 	public:
 
-		std::vector<DofRelease> GetReleases();
+		std::vector<DofRelease> GetReleases() const;
 
 	protected:
 		IRelease();
 		~IRelease();
-		void SetReleases(std::vector<DofRelease>);
+		void SetReleases(const std::vector<DofRelease>);
 		virtual int GetNumberOfReleases() = 0;		// Sets number of releases, used in order to avoid coding errors
 		
 

@@ -4,7 +4,7 @@
 namespace CIFem_wrapper
 {
 
-	ref class WR_IXSec
+	public ref class WR_IXSec
 	{
 	protected:
 		CIFem::ICrossSection* _xSec;

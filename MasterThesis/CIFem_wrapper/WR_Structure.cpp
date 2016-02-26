@@ -14,14 +14,14 @@ WR_Structure::~WR_Structure()
 	_structure = 0;
 }
 
-void WR_Structure::AddNode(WR_INode wrNode)
+void WR_Structure::AddNode(WR_INode^ wrNode)
 {
-	_structure->AddNode(wrNode.GetNode());
+	_structure->AddNode(wrNode->GetNode());
 }
 
-void CIFem_wrapper::WR_Structure::AddElementRcp(WR_IElemRcp wrRcp)
+void CIFem_wrapper::WR_Structure::AddElementRcp(WR_IElemRcp^ wrRcp)
 {
-	_structure->AddElementRcp(wrRcp.GetRecipe());
+	_structure->AddElementRcp(wrRcp->GetRecipe());
 }
 
 void CIFem_wrapper::WR_Structure::Solve()

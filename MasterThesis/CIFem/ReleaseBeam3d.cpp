@@ -17,8 +17,8 @@ CIFem::ReleaseBeam3d::ReleaseBeam3d(bool x, bool y, bool z, bool xx, bool yy, bo
 
 	rel.push_back(DofRelease(x));
 	rel.push_back(DofRelease(y));
-	rel.push_back(DofRelease(zz));
-	rel.push_back(DofRelease(x));
+	rel.push_back(DofRelease(z));
+	rel.push_back(DofRelease(xx));
 	rel.push_back(DofRelease(yy));
 	rel.push_back(DofRelease(zz));
 
@@ -31,8 +31,8 @@ CIFem::ReleaseBeam3d::ReleaseBeam3d(double x, double y, double z, double xx, dou
 
 	rel.push_back(DofRelease(x));
 	rel.push_back(DofRelease(y));
-	rel.push_back(DofRelease(zz));
-	rel.push_back(DofRelease(x));
+	rel.push_back(DofRelease(z));
+	rel.push_back(DofRelease(xx));
 	rel.push_back(DofRelease(yy));
 	rel.push_back(DofRelease(zz));
 

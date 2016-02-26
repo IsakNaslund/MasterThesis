@@ -35,6 +35,11 @@ void CIFem::Structure::AddElementRcp(std::vector<IElementRcp *> elements)
 		AddElementRcp(elements[i]);
 }
 
+void CIFem::Structure::AddDisplacementRestraint(DisplacementRestraint dispRest)
+{
+	_displacementRestraints.push_back(dispRest);
+}
+
 void CIFem::Structure::Solve()
 {
 	// Build structure
@@ -46,10 +51,15 @@ void CIFem::Structure::Solve()
 	// Update dof kIndex
 	SetDofKMatIndex(spDofs);
 
-	// Create K matrix, a and f vectors
+	// Create K matrix
 	arma::sp_mat K = AssembleStiffnessMatrix(spDofs);
-	arma::colvec f = GetForceVector(spDofs);
-	arma::colvec a = GetDisplacementVector(spDofs);
+	
+	// Get a and f vectors 
+														// Get transformation vector for restraints
+	arma::colvec a = GetDisplacementVector(spDofs);		// Get displacement vector
+	arma::colvec f = GetForceVector(spDofs);			// Get force vector
+
+	// Transform matrices and vectors to allow for non-global restraints
 
 	// Solve K matrix
 	LinEqSolve(K, a, f, spDofs);

@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CIFem_dll.h" />
+    <ClInclude Include="DisplacementRestraint.h" />
     <ClInclude Include="DOF.h" />
     <ClInclude Include="DofRelease.h" />
     <ClInclude Include="Element3d.h" />
@@ -173,9 +174,11 @@
     <ClInclude Include="Spring.h" />
     <ClInclude Include="Structure.h" />
     <ClInclude Include="Structure3d.h" />
+    <ClInclude Include="Vector3d.h" />
     <ClInclude Include="XYZ.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DisplacementRestraint.cpp" />
     <ClCompile Include="DOF.cpp" />
     <ClCompile Include="DofRelease.cpp" />
     <ClCompile Include="Element3d.cpp" />
@@ -198,6 +201,7 @@
     <ClCompile Include="Spring.cpp" />
     <ClCompile Include="Structure.cpp" />
     <ClCompile Include="Structure3d.cpp" />
+    <ClCompile Include="Vector3d.cpp" />
     <ClCompile Include="XYZ.cpp" />
   </ItemGroup>
   <ItemGroup>

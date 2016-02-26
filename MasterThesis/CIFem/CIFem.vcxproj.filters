@@ -37,6 +37,9 @@
     <Filter Include="Source Files\Releases">
       <UniqueIdentifier>{8149a203-0932-4b4a-8c81-efd36a2b92c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Restraints">
+      <UniqueIdentifier>{bf197bf0-5b2c-4c16-beb6-0da73041251c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XYZ.h">
@@ -120,6 +123,12 @@
     <ClInclude Include="Structure.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DisplacementRestraint.h">
+      <Filter>Header Files\Restraints</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XYZ.cpp">
@@ -189,6 +198,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DisplacementRestraint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

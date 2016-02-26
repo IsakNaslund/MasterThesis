@@ -4,6 +4,7 @@
 #include "INode.h"
 #include "IElementRcp.h"
 #include "IElement.h"
+#include "DisplacementRestraint.h"
 
 namespace CIFem
 {
@@ -11,6 +12,7 @@ namespace CIFem
 	{
 		std::vector<INode *> _nodes;
 		std::vector<IElementRcp *> _elementRcps;
+		std::vector<DisplacementRestraint> _displacementRestraints;
 
 	public:
 		Structure();
@@ -20,6 +22,7 @@ namespace CIFem
 		void AddNode(std::vector<INode *>);
 		void AddElementRcp(IElementRcp *);
 		void AddElementRcp(std::vector<IElementRcp *>);
+		void AddDisplacementRestraint(DisplacementRestraint dispRest);
 
 		void Solve();
 

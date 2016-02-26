@@ -13,7 +13,7 @@ CIFem::IRelease::IRelease()
 // Sets the dof releases
 void CIFem::IRelease::SetReleases(const std::vector<DofRelease> releases)
 {
-	if (_releases.size() != GetNumberOfReleases())
+	if (releases.size() != GetNumberOfReleases())
 		throw std::invalid_argument("Wrong number of releases submitted");
 	else
 	_releases = releases;

@@ -13,9 +13,9 @@ namespace CIFem_wrapper
 		WR_Structure();
 		~WR_Structure();
 
-		void AddNode(WR_INode wrNode);
+		void AddNode(WR_INode^ wrNode);
 		//void AddNode(std::vector<WR_INode> wrNodeList);
-		void AddElementRcp(WR_IElemRcp wrRcp);
+		void AddElementRcp(WR_IElemRcp^ wrRcp);
 		//void AddElementRcp(std::vector<IElementRcp *>);
 
 		void Solve();

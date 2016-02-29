@@ -1,7 +1,15 @@
 #include "Structure.h"
+#include "GlobalSettings.h"
+
 
 CIFem::Structure::Structure()
 {
+	// Structure orientation (standard XYZ plane)
+	Vector3d x(1, 0, 0);
+	Vector3d y(0, 1, 0);
+	Vector3d z(0, 0, 1);
+	XYZ origin(0, 0, 0);
+	_structureOrientation = Plane(x, y, z, origin);
 }
 
 
@@ -55,7 +63,7 @@ void CIFem::Structure::Solve()
 	arma::sp_mat K = AssembleStiffnessMatrix(spDofs);
 	
 	// Get a and f vectors 
-	arma::sp_mat C = 									// Get transformation vector for restraints
+	//arma::sp_mat C = 									// Get transformation vector for restraints
 	arma::colvec a = GetDisplacementVector(spDofs);		// Get displacement vector
 	arma::colvec f = GetForceVector(spDofs);			// Get force vector
 
@@ -227,14 +235,38 @@ void CIFem::Structure::StoreResultsInDofs(arma::colvec a, arma::colvec f, std::v
 	}
 }
 
-arma::sp_mat CIFem::Structure::AssembleStiffnessMatrix(
-	std::vector<INode> nodes, std::vector<DisplacementRestraint> restraints)
+arma::mat CIFem::Structure::GetCMatrix(
+	std::vector<INode *> nodes, std::vector<DisplacementRestraint> restraints)
 {
+	// Count dofs
+	int nDofs = 0;
+	for each (INode * node in nodes)
+		nDofs += node->GetDofs().size();
 
-	for each (INode node in nodes)
+	// Create C matrix
+	arma::mat C(nDofs, nDofs, arma::fill::zeros);
+
+	// Populate C matrix
+	for each (INode * node in nodes)
 	{
+		for each (DisplacementRestraint dr in restraints)
+		{
+			if (node->DistanceTo(dr.GetXYZ()) < GlobalTol)
+			{
+				// Get local C matrix
+				arma::mat CN = dr.GetCMatrix(this->_structureOrientation);
 
+				// Populate global C matrix
+				std::vector<std::shared_ptr<DOF>> nDofs = node->GetDofs();
+				for (int i = 0; i < 6; i++)
+					for (int j = 0; j < 6; j++)
+						C(nDofs[i]->_kIndex, nDofs[j]->_kIndex) = CN(i, j);
+				
+				// Break, since it is assumed that no two nodes are in the same place.
+				break;
+			}
+		}
 	}
 
-	return arma::sp_mat();
+	return C;
 }

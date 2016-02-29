@@ -7,6 +7,7 @@
 #include <memory>
 #include "Node3d.h"
 #include "Element3dRcp.h"
+#include "DisplacementRestraint.h"
 
 using namespace std;
 
@@ -16,12 +17,15 @@ namespace CIFem
 	{
 		vector<DOF> _dofs;				// Degrees of freedom containing boundary conditions and applied forces
 		vector<IElement*> _elements;	// List of elements in structure
+		vector<DisplacementRestraint> 
+			_displacementRestraints;	// Restraints
 		int _maxDof;					// Highest dof of any element
 
 	public:
 		Structure3d();
 		~Structure3d();
 		void AddElement(IElement *);
+		void AddDisplacementRestraints(DisplacementRestraint);
 		void ApplyForce(int, double);
 		void SetTranslation(int, double);
 		void Solve();

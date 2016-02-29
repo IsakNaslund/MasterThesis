@@ -5,6 +5,7 @@
 #include "IElementRcp.h"
 #include "IElement.h"
 #include "DisplacementRestraint.h"
+#include "Plane.h"
 
 namespace CIFem
 {
@@ -13,6 +14,7 @@ namespace CIFem
 		std::vector<INode *> _nodes;
 		std::vector<IElementRcp *> _elementRcps;
 		std::vector<DisplacementRestraint> _displacementRestraints;
+		Plane _structureOrientation;
 
 	public:
 		Structure();
@@ -40,7 +42,7 @@ namespace CIFem
 		arma::colvec GetDisplacementVector(std::vector<std::shared_ptr<DOF>>);
 		void LinEqSolve(arma::sp_mat & K, arma::colvec & a, arma::colvec & f, std::vector<std::shared_ptr<DOF>>);
 		void StoreResultsInDofs(arma::colvec a, arma::colvec f, std::vector<std::shared_ptr<DOF>>);
-		arma::sp_mat AssembleStiffnessMatrix(std::vector<INode>, std::vector<DisplacementRestraint>);
+		arma::mat GetCMatrix(std::vector<INode *>, std::vector<DisplacementRestraint>);
 	};
 }
 

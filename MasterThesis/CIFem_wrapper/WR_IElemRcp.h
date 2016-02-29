@@ -6,11 +6,9 @@ namespace CIFem_wrapper
 
 	public ref class WR_IElemRcp
 	{
-	protected:
-		CIFem::IElementRcp* _eleRcp;
+
 	public:
-		~WR_IElemRcp();
-		CIFem::IElementRcp* GetRecipe();
+		virtual CIFem::IElementRcp* GetRecipe()= 0;
 	};
 
 }

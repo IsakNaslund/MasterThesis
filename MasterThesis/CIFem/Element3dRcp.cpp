@@ -7,6 +7,21 @@ CIFem::Element3dRcp::Element3dRcp()
 {
 }
 
+CIFem::Element3dRcp::Element3dRcp(Element3dRcp * other)
+{
+	if (other != nullptr)
+	{
+		this->_stPos = other->_stPos;
+		this->_enPos = other->_enPos;
+		this->_stRel = other->_stRel;
+		this->_enRel = other->_enRel;
+		this->_matStiff = other->_matStiff;
+		this->_poisonsRatio = other->_poisonsRatio;
+		this->_xSec = other->_xSec;
+		this->SetNormal(other->_normal);
+	}
+}
+
 CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, ICrossSection * xSec, double matStiff, double poisonRatio, std::vector<double> normal)
 {
 	_stPos = stPos;

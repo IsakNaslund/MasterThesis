@@ -3,6 +3,11 @@
 
 using namespace CIFem_wrapper;
 
+CIFem_wrapper::WR_Elem3dRcp::WR_Elem3dRcp(Element3dRcp elem)
+{
+	_eleRcp = &elem;
+}
+
 WR_Elem3dRcp::WR_Elem3dRcp()
 {
 	_eleRcp = new Element3dRcp();
@@ -22,3 +27,16 @@ CIFem_wrapper::WR_Elem3dRcp::WR_Elem3dRcp(WR_XYZ^ stPos, WR_XYZ^ enPos, WR_Relea
 {
 	_eleRcp = new Element3dRcp(stPos->GetPos(), enPos->GetPos(), stRel->GetRelease(), enRel->GetRelease(), xSec->GetCrossSection(), matStiff, poisonRatio, normal->GetAsCppVector());
 }
+
+WR_Elem3dRcp^ CIFem_wrapper::WR_Elem3dRcp::Copy()
+{
+	
+	return gcnew WR_Elem3dRcp(new Element3dRcp(_eleRcp));
+}
+
+CIFem::IElementRcp * CIFem_wrapper::WR_Elem3dRcp::GetRecipe()
+{
+	return _eleRcp;
+}
+
+

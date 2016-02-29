@@ -66,15 +66,6 @@
     <ClInclude Include="ICrossSection.h">
       <Filter>Header Files\Elements\Cross sections</Filter>
     </ClInclude>
-    <ClInclude Include="SecPropBar.h">
-      <Filter>Header Files\Elements\Cross sections</Filter>
-    </ClInclude>
-    <ClInclude Include="SecPropBeam3d.h">
-      <Filter>Header Files\Elements\Cross sections</Filter>
-    </ClInclude>
-    <ClInclude Include="SecPropBeam2d.h">
-      <Filter>Header Files\Elements\Cross sections</Filter>
-    </ClInclude>
     <ClInclude Include="RHS3d.h">
       <Filter>Header Files\Elements\Cross sections</Filter>
     </ClInclude>
@@ -147,15 +138,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DOF.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SecPropBar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SecPropBeam2d.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SecPropBeam3d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RHS3d.cpp">

@@ -55,7 +55,7 @@ void CIFem::Structure::Solve()
 	arma::sp_mat K = AssembleStiffnessMatrix(spDofs);
 	
 	// Get a and f vectors 
-														// Get transformation vector for restraints
+	arma::sp_mat C = 									// Get transformation vector for restraints
 	arma::colvec a = GetDisplacementVector(spDofs);		// Get displacement vector
 	arma::colvec f = GetForceVector(spDofs);			// Get force vector
 
@@ -225,4 +225,16 @@ void CIFem::Structure::StoreResultsInDofs(arma::colvec a, arma::colvec f, std::v
 		spDofs[i]->_resA = a(spDofs[i]->_kIndex);
 		spDofs[i]->_resF = f(spDofs[i]->_kIndex);
 	}
+}
+
+arma::sp_mat CIFem::Structure::AssembleStiffnessMatrix(
+	std::vector<INode> nodes, std::vector<DisplacementRestraint> restraints)
+{
+
+	for each (INode node in nodes)
+	{
+
+	}
+
+	return arma::sp_mat();
 }

@@ -160,6 +160,7 @@
     <ClInclude Include="CIFemMath.h" />
     <ClInclude Include="INode.h" />
     <ClInclude Include="IElementRcp.h" />
+    <ClInclude Include="Plane.h" />
     <ClInclude Include="ReleaseBeam2d.h" />
     <ClInclude Include="SectionProperties.h" />
     <ClInclude Include="IRelease.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="INode.cpp" />
     <ClCompile Include="IRelease.cpp" />
     <ClCompile Include="Node3d.cpp" />
+    <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Rectangle3d.cpp" />
     <ClCompile Include="ReleaseBeam2d.cpp" />
     <ClCompile Include="ReleaseBeam3d.cpp" />

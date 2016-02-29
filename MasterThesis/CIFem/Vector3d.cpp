@@ -2,45 +2,58 @@
 
 
 
-Vector3d::Vector3d()
+CIFem::Vector3d::Vector3d()
 {
 }
 
 
-Vector3d::Vector3d(double x, double y, double z)
+CIFem::Vector3d::Vector3d(double x, double y, double z)
 {
 	_x = x;
 	_y = y;
 	_z = z;
 }
 
-Vector3d::Vector3d(double x, double y, double z, bool unitize)
+CIFem::Vector3d::Vector3d(double x, double y, double z, bool unitize)
+	: Vector3d(x, y, z)
 {
-	double length = GetLength(x, y, z);
-
-	Vector3d(x / length, y / length, z / length);	//Does this work? /C
+	Unitize();
 }
 
-double Vector3d::GetX()
+double CIFem::Vector3d::GetX()
 {
 	return _x;
 }
 
-double Vector3d::GetY()
+double CIFem::Vector3d::GetY()
 {
 	return _y;
 }
 
-double Vector3d::GetZ()
+double CIFem::Vector3d::GetZ()
 {
 	return _z;
 }
 
-double Vector3d::GetLength(double x, double y, double z)
+double CIFem::Vector3d::GetLength(double x, double y, double z)
 {
 	return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
 }
 
-Vector3d::~Vector3d()
+double CIFem::Vector3d::DotProduct(Vector3d other)
+{
+	return _x * other.GetX() + _y * other.GetY() + _z * other.GetZ();
+}
+
+void CIFem::Vector3d::Unitize()
+{
+	double length = GetLength(_x, _y, _z);
+
+	_x = _x / length;
+	_y = _y / length;
+	_z = _z / length;
+}
+
+CIFem::Vector3d::~Vector3d()
 {
 }

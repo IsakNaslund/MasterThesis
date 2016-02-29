@@ -7,6 +7,7 @@
 #include "DOF.h"
 
 
+
 namespace CIFem
 {
 	class CIFEM_API INode
@@ -17,6 +18,8 @@ namespace CIFem
 
 		virtual double DistanceTo(const INode* other) const = 0;
 		virtual std::vector<std::shared_ptr<DOF> > GetDofs() = 0;
+		virtual std::vector<std::shared_ptr<DOF> > GetTranslationDofs() = 0;
+		virtual std::vector<std::shared_ptr<DOF> > GetRotationDofs() = 0;
 		virtual double DistanceTo(const XYZ other) const;
 	};
 

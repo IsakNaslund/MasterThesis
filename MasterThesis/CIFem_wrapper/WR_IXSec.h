@@ -6,11 +6,9 @@ namespace CIFem_wrapper
 
 	public ref class WR_IXSec
 	{
-	protected:
-		CIFem::ICrossSection* _xSec;
 	public:
-		~WR_IXSec();
-		CIFem::ICrossSection* GetCrossSection();
+		virtual CIFem::ICrossSection* GetCrossSection() = 0;
+		virtual System::String^ ToString() override { return "Undefined Crossection"; }
 	};
 
 }

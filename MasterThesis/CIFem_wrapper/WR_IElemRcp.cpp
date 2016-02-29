@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "WR_IElemRcp.h"
-
+/*
 using namespace CIFem_wrapper;
 
 WR_IElemRcp::~WR_IElemRcp()
@@ -13,3 +13,4 @@ CIFem::IElementRcp * WR_IElemRcp::GetRecipe()
 {
 	return _eleRcp;
 }
+*/

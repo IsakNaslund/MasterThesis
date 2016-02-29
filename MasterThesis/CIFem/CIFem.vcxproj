@@ -168,9 +168,6 @@
     <ClInclude Include="ReleaseBeam3d.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RHS3d.h" />
-    <ClInclude Include="SecPropBar.h" />
-    <ClInclude Include="SecPropBeam2d.h" />
-    <ClInclude Include="SecPropBeam3d.h" />
     <ClInclude Include="Spring.h" />
     <ClInclude Include="Structure.h" />
     <ClInclude Include="Structure3d.h" />
@@ -194,9 +191,6 @@
     <ClCompile Include="ReleaseBeam2d.cpp" />
     <ClCompile Include="ReleaseBeam3d.cpp" />
     <ClCompile Include="RHS3d.cpp" />
-    <ClCompile Include="SecPropBar.cpp" />
-    <ClCompile Include="SecPropBeam2d.cpp" />
-    <ClCompile Include="SecPropBeam3d.cpp" />
     <ClCompile Include="SectionProperties.cpp" />
     <ClCompile Include="Spring.cpp" />
     <ClCompile Include="Structure.cpp" />

@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,12 +33,15 @@
   <ItemGroup>
     <Reference Include="GH_IO">
       <HintPath>..\Rhino_Grasshopper_dlls\GH_IO.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Grasshopper">
       <HintPath>..\Rhino_Grasshopper_dlls\Grasshopper.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="RhinoCommon">
       <HintPath>..\Rhino_Grasshopper_dlls\RhinoCommon.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,13 +53,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="BeamProperties.cs" />
+    <Compile Include="Components\BeamPropertiesComponent.cs" />
+    <Compile Include="Wrappers and parameters\BeamReleaseParameter.cs" />
+    <Compile Include="Wrappers and parameters\BeamReleaseGoo.cs" />
+    <Compile Include="Components\BeamReleaseComponent.cs" />
+    <Compile Include="Wrappers and parameters\BeamPropertiesParam.cs" />
+    <Compile Include="Wrappers and parameters\BeamPropertiesGoo.cs" />
+    <Compile Include="Wrappers and parameters\BeamParam.cs" />
+    <Compile Include="Wrappers and parameters\BeamGoo.cs" />
+    <Compile Include="Components\ConstructBeam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CIFem_wrapper\CIFem_wrapper.vcxproj">
       <Project>{6a7e91a4-d2d8-4915-98cf-e3345b0997b3}</Project>
       <Name>CIFem_wrapper</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

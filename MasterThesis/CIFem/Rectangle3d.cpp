@@ -29,6 +29,16 @@ SectionProperties Rectangle3d::CalcSectionProperties()
 
 }
 
+double CIFem::Rectangle3d::GetHeight() const
+{
+	return _height;
+}
+
+double CIFem::Rectangle3d::GetWidth() const 
+{
+	return _width;
+}
+
 double CIFem::Rectangle3d::CalcTorsionalStiffness(const double iy, const double iz)
 {
 	return CalcAlphaFactor()*(iy + iz);

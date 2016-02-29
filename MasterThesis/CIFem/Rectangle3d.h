@@ -19,6 +19,9 @@ namespace CIFem
 		~Rectangle3d();
 		SectionProperties CalcSectionProperties();
 
+		double GetHeight() const;
+		double GetWidth() const;
+
 	private:
 
 		double CalcTorsionalStiffness(const double iy, const double iz);

@@ -8,6 +8,7 @@ namespace CIFem_wrapper
 	{
 		CIFem::ReleaseBeam3d* _release;
 
+
 	public:
 		WR_ReleaseBeam3d();
 		WR_ReleaseBeam3d(CIFem::ReleaseBeam3d _release);
@@ -16,6 +17,9 @@ namespace CIFem_wrapper
 		WR_ReleaseBeam3d(std::vector<bool> rels);
 		WR_ReleaseBeam3d(std::vector<double> spRel);
 		~WR_ReleaseBeam3d();
+
+		WR_ReleaseBeam3d^ Copy();
+		System::String^ ToString() override;
 
 		CIFem::ReleaseBeam3d* GetRelease();
 	};

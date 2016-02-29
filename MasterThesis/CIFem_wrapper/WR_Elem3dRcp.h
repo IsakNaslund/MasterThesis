@@ -11,11 +11,17 @@ namespace CIFem_wrapper
 
 	public ref class WR_Elem3dRcp : public WR_IElemRcp
 	{
+	private:
+		CIFem::Element3dRcp* _eleRcp;
+		WR_Elem3dRcp(Element3dRcp eleRcp);
+
 	public:
 		WR_Elem3dRcp();
 		~WR_Elem3dRcp();
 		WR_Elem3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, ICrossSection* xSec, double matStiff, double poisonRatio, std::vector<double> normal);
 		WR_Elem3dRcp(WR_XYZ^ stPos, WR_XYZ^ enPos, WR_ReleaseBeam3d^ stRel, WR_ReleaseBeam3d^ enRel, WR_IXSec^ xSec, double matStiff, double poisonRatio, WR_Vector^ normal);
+		WR_Elem3dRcp^ Copy();
+		virtual CIFem::IElementRcp* GetRecipe() override;
 	};
 
 }

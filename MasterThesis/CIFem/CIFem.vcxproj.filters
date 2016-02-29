@@ -51,9 +51,6 @@
     <ClInclude Include="ElementProperty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Structure3d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DOF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -114,14 +111,14 @@
     <ClInclude Include="Structure.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DisplacementRestraint.h">
-      <Filter>Header Files\Restraints</Filter>
-    </ClInclude>
     <ClInclude Include="Vector3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Plane.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Restraint.h">
+      <Filter>Header Files\Restraints</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -132,9 +129,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ElementProperty.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Structure3d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DOF.cpp">
@@ -185,13 +179,13 @@
     <ClCompile Include="IElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DisplacementRestraint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Vector3d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Restraint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

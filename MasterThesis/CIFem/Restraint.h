@@ -6,7 +6,7 @@
 
 namespace CIFem
 {
-	class CIFEM_API DisplacementRestraint
+	class CIFEM_API Restraint
 	{
 		XYZ _coord;
 		Plane _orientation;
@@ -14,8 +14,8 @@ namespace CIFem
 		double _displacement[3];
 
 	public:
-		DisplacementRestraint(XYZ, Plane, bool[3], double[3]);
-		~DisplacementRestraint();
+		Restraint(XYZ, Plane, bool[6], double[6]);
+		~Restraint();
 
 		XYZ GetXYZ();
 		Vector3d GetXDir();

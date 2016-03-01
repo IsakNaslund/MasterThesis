@@ -1,8 +1,8 @@
-#include "DisplacementRestraint.h"
+#include "Restraint.h"
 
 namespace CIFem
 {
-	DisplacementRestraint::DisplacementRestraint(XYZ coord, Plane orientation, bool restraints[3], double displacement[3])
+	Restraint::Restraint(XYZ coord, Plane orientation, bool restraints[6], double displacement[6])
 	{
 		// Set restraint coordinate
 		_coord = coord;
@@ -11,38 +11,38 @@ namespace CIFem
 		_orientation = orientation;
 
 		// Set restraints
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 6; i++)
 		{
 			_restraints[i] = restraints[i];
 			_displacement[i] = displacement[i];
 		}
 	}
 
-	DisplacementRestraint::~DisplacementRestraint()
+	Restraint::~Restraint()
 	{
 	}
 
-	XYZ DisplacementRestraint::GetXYZ()
+	XYZ Restraint::GetXYZ()
 	{
 		return _coord;
 	}
 
-	Vector3d DisplacementRestraint::GetXDir()
+	Vector3d Restraint::GetXDir()
 	{
 		return _orientation.GetX();
 	}
 
-	Vector3d DisplacementRestraint::GetYDir()
+	Vector3d Restraint::GetYDir()
 	{
 		return _orientation.GetY();
 	}
 
-	Vector3d DisplacementRestraint::GetZDir()
+	Vector3d Restraint::GetZDir()
 	{
 		return _orientation.GetZ();
 	}
 
-	arma::mat DisplacementRestraint::GetCMatrix(Plane structureOrientation)
+	arma::mat Restraint::GetCMatrix(Plane structureOrientation)
 	{
 		arma::mat CN(6, 6, arma::fill::zeros);
 

@@ -6,25 +6,21 @@ namespace CIFem
 	class CIFEM_API DOF
 	{
 		unsigned int _index;
-		double _a;
-		bool _hasSetTranslation;
 
 	public:
 		DOF();
 		DOF(unsigned int);
 		~DOF();
 
-		int _kIndex;					// (Renumbered) index in K matrix
+		int _kIndex;				// (Renumbered) index in K matrix
 		double _f;
+		bool _hasTransformedBC;		// Indicator to identify elements that has transformed bc (for C matrix calc)
 
 		// Results (maybe create results class? /C)
 		double _resA;
 		double _resF;
 
-		bool HasSetTranslation();
-		double GetTranslation();
 		int GetIndex();
-		void SetTranslation(double);
 	};
 }
 

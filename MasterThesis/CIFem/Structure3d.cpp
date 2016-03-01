@@ -41,9 +41,9 @@ void Structure3d::AddElement(IElement * e)
 	}
 }
 
-void CIFem::Structure3d::AddDisplacementRestraints(DisplacementRestraint dr)
+void CIFem::Structure3d::AddRestraint(Restraint r)
 {
-	_displacementRestraints.push_back(dr);
+	_restraints.push_back(r);
 }
 
 // Apply force or a moment on a dof

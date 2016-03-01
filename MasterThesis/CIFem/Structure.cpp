@@ -43,9 +43,9 @@ void CIFem::Structure::AddElementRcp(std::vector<IElementRcp *> elements)
 		AddElementRcp(elements[i]);
 }
 
-void CIFem::Structure::AddDisplacementRestraint(DisplacementRestraint dispRest)
+void CIFem::Structure::AddRestraint(Restraint r)
 {
-	_displacementRestraints.push_back(dispRest);
+	_restraints.push_back(r);
 }
 
 void CIFem::Structure::Solve()
@@ -54,7 +54,7 @@ void CIFem::Structure::Solve()
 	BuildStructure();
 
 	// Get dofs
-	std::vector<std::shared_ptr<CIFem::DOF>> spDofs = GetDofs(_nodes);
+	std::vector<std::shared_ptr<CIFem::DOF>> spDofs = GetDofs(this->_nodes);
 
 	// Update dof kIndex
 	SetDofKMatIndex(spDofs);
@@ -63,14 +63,15 @@ void CIFem::Structure::Solve()
 	arma::sp_mat K = AssembleStiffnessMatrix(spDofs);
 	
 	// Get a and f vectors 
-	//arma::sp_mat C = 									// Get transformation vector for restraints
+	arma::mat C = GetCMatrix(
+		this->_nodes, this->_restraints);				// Get transformation vector for restraints
 	arma::colvec a = GetDisplacementVector(spDofs);		// Get displacement vector
 	arma::colvec f = GetForceVector(spDofs);			// Get force vector
 
 	// Transform matrices and vectors to allow for non-global restraints
 
 	// Solve K matrix
-	LinEqSolve(K, a, f, spDofs);
+	LinEqSolve(K, a, f, C, spDofs);
 
 	// Store results in dofs
 	StoreResultsInDofs(a, f, spDofs);
@@ -184,25 +185,36 @@ arma::colvec CIFem::Structure::GetForceVector(std::vector<std::shared_ptr<DOF>> 
 arma::colvec CIFem::Structure::GetDisplacementVector(std::vector<std::shared_ptr<DOF>> spDofs)
 {
 	arma::colvec a(spDofs.size(), arma::fill::zeros);
-
+	/*
 	for each (std::shared_ptr<DOF> spDof in spDofs)
 		a(spDof->_kIndex) = spDof->GetTranslation();
+		*/
+
+	throw std::exception("Not implemented! Use  restraint class!");
 
 	return a;
 }
 
 void CIFem::Structure::LinEqSolve(
-	arma::sp_mat & K, arma::colvec & a, arma::colvec & f, std::vector<std::shared_ptr<DOF>> spDofs)
+	arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::vector<std::shared_ptr<DOF>> spDofs)
 {
 	// Check prescribed deformations
+	std::vector<unsigned int> transBCDof;
 	std::vector<unsigned int> fDof;
 	std::vector<unsigned int> pDof;
 	for each (std::shared_ptr<DOF> dof in spDofs)
 	{
+		// Check transformed bcs
+		if (dof->_hasTransformedBC)
+			transBCDof.push_back(dof->_kIndex);
+
+		/*
+		// Check prescribed deformations
 		if (dof->HasSetTranslation())
 			pDof.push_back(dof->_kIndex);
 		else
 			fDof.push_back(dof->_kIndex);
+		*/
 	}
 
 	// There must be a way to do this from the start,
@@ -235,7 +247,7 @@ void CIFem::Structure::StoreResultsInDofs(arma::colvec a, arma::colvec f, std::v
 }
 
 arma::mat CIFem::Structure::GetCMatrix(
-	std::vector<INode *> nodes, std::vector<DisplacementRestraint> restraints)
+	std::vector<INode *> nodes, std::vector<Restraint> restraints)
 {
 	// Count dofs
 	int nDofs = 0;
@@ -248,7 +260,7 @@ arma::mat CIFem::Structure::GetCMatrix(
 	// Populate C matrix
 	for each (INode * node in nodes)
 	{
-		for each (DisplacementRestraint dr in restraints)
+		for each (Restraint dr in restraints)
 		{
 			if (node->DistanceTo(dr.GetXYZ()) < GlobalTol)
 			{
@@ -258,9 +270,14 @@ arma::mat CIFem::Structure::GetCMatrix(
 				// Populate global C matrix
 				std::vector<std::shared_ptr<DOF>> nDofs = node->GetDofs();
 				for (int i = 0; i < 6; i++)
+				{
 					for (int j = 0; j < 6; j++)
 						C(nDofs[i]->_kIndex, nDofs[j]->_kIndex) = CN(i, j);
-				
+
+					// Set transformed BC flag
+					nDofs[i]->_hasTransformedBC = true;
+				}
+
 				// Break, since it is assumed that no two nodes are in the same place.
 				break;
 			}

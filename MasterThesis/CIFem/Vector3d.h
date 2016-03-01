@@ -13,10 +13,10 @@ namespace CIFem
 		Vector3d();
 		Vector3d(double x, double y, double z);
 		Vector3d(double x, double y, double z, bool unitize);
-		double GetX();
-		double GetY();
-		double GetZ();
-		double GetLength(double x, double y, double z);
+		double GetX() const;
+		double GetY() const;
+		double GetZ() const;
+		double GetLength() const;
 		double DotProduct(Vector3d other);
 		void Unitize();
 		~Vector3d();

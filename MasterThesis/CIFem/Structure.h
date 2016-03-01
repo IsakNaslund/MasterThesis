@@ -4,7 +4,6 @@
 #include "INode.h"
 #include "IElementRcp.h"
 #include "IElement.h"
-#include "Restraint.h"
 #include "Plane.h"
 
 namespace CIFem
@@ -43,7 +42,7 @@ namespace CIFem
 		void LinEqSolve(
 			arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::vector<std::shared_ptr<DOF>>);
 		void StoreResultsInDofs(arma::colvec a, arma::colvec f, std::vector<std::shared_ptr<DOF>>);
-		arma::mat GetCMatrix(std::vector<INode *>, std::vector<Restraint>);
+		arma::mat GetCMatrix(std::vector<INode *>);
 	};
 }
 

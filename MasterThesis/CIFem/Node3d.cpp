@@ -84,3 +84,14 @@ void CIFem::Node3d::InitNewDofs(int n)
 		_dof.push_back(ptr);
 	}
 }
+
+// Returns true if node has transformed coordinate system, false if not 
+bool CIFem::Node3d::GetNodeCMatrix(const Plane globalOrientation, arma::mat & CN)
+{
+	if (_restraint.IsValid())
+	{
+		return this->_restraint.GetCMatrix(globalOrientation, CN);
+	}
+	else
+		return false;
+}

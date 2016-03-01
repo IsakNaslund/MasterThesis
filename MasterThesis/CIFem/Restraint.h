@@ -8,19 +8,20 @@ namespace CIFem
 {
 	class CIFEM_API Restraint
 	{
-		XYZ _coord;
 		Plane _orientation;
-		bool _restraints[3];
-		double _displacement[3];
+		bool _restraints[6];
+		double _displacement[6];
+		bool _isValid;
 
 	public:
-		Restraint(XYZ, Plane, bool[6], double[6]);
+		Restraint();
+		Restraint(Plane, bool[6], double[6]);
 		~Restraint();
 
-		XYZ GetXYZ();
 		Vector3d GetXDir();
 		Vector3d GetYDir();
 		Vector3d GetZDir();
-		arma::mat GetCMatrix(Plane);
+		bool IsValid();
+		bool GetCMatrix(const Plane, arma::mat &);
 	};
 }

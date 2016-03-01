@@ -63,8 +63,7 @@ void CIFem::Structure::Solve()
 	arma::sp_mat K = AssembleStiffnessMatrix(spDofs);
 	
 	// Get a and f vectors 
-	arma::mat C = GetCMatrix(
-		this->_nodes, this->_restraints);				// Get transformation vector for restraints
+	arma::mat C = GetCMatrix(this->_nodes);				// Get transformation vector for restraints
 	arma::colvec a = GetDisplacementVector(spDofs);		// Get displacement vector
 	arma::colvec f = GetForceVector(spDofs);			// Get force vector
 
@@ -186,12 +185,15 @@ arma::colvec CIFem::Structure::GetForceVector(std::vector<std::shared_ptr<DOF>> 
 arma::colvec CIFem::Structure::GetDisplacementVector(std::vector<std::shared_ptr<DOF>> spDofs)
 {
 	arma::colvec a(spDofs.size(), arma::fill::zeros);
+	
+	
+
 	/*
 	for each (std::shared_ptr<DOF> spDof in spDofs)
 		a(spDof->_kIndex) = spDof->GetTranslation();
 		*/
 
-	throw std::exception("Not implemented! Use  restraint class!");
+	throw std::exception("Not implemented! Use restraint class!");
 
 	return a;
 }
@@ -247,8 +249,7 @@ void CIFem::Structure::StoreResultsInDofs(arma::colvec a, arma::colvec f, std::v
 	}
 }
 
-arma::mat CIFem::Structure::GetCMatrix(
-	std::vector<INode *> nodes, std::vector<Restraint> restraints)
+arma::mat CIFem::Structure::GetCMatrix(std::vector<INode *> nodes)
 {
 	// Count dofs
 	int nDofs = 0;
@@ -261,26 +262,19 @@ arma::mat CIFem::Structure::GetCMatrix(
 	// Populate C matrix
 	for each (INode * node in nodes)
 	{
-		for each (Restraint dr in restraints)
+		// Get local C matrix
+		arma::mat CN(1,1);
+		if (node->GetNodeCMatrix(this->_structureOrientation, CN))
 		{
-			if (node->DistanceTo(dr.GetXYZ()) < GlobalTol)
+			// Populate global C matrix
+			std::vector<std::shared_ptr<DOF>> nDofs = node->GetDofs();
+			for (int i = 0; i < nDofs.size(); i++)
 			{
-				// Get local C matrix
-				arma::mat CN = dr.GetCMatrix(this->_structureOrientation);
+				for (int j = 0; j < nDofs.size(); j++)
+					C(nDofs[i]->_kIndex, nDofs[j]->_kIndex) = CN(i, j);
 
-				// Populate global C matrix
-				std::vector<std::shared_ptr<DOF>> nDofs = node->GetDofs();
-				for (int i = 0; i < 6; i++)
-				{
-					for (int j = 0; j < 6; j++)
-						C(nDofs[i]->_kIndex, nDofs[j]->_kIndex) = CN(i, j);
-
-					// Set transformed BC flag
-					nDofs[i]->_hasTransformedBC = true;
-				}
-
-				// Break, since it is assumed that no two nodes are in the same place.
-				break;
+				// Set transformed BC flag
+				nDofs[i]->_hasTransformedBC = true;
 			}
 		}
 	}

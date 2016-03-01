@@ -46,18 +46,56 @@ namespace CIFem
 			return true;
 	}
 
-	Vector3d CIFem::Plane::GetX()
+	Vector3d CIFem::Plane::GetX() const
 	{
 		return _x;
 	}
 
-	Vector3d Plane::GetY()
+	Vector3d Plane::GetY() const
 	{
 		return _y;
 	}
 
-	Vector3d Plane::GetZ()
+	Vector3d Plane::GetZ() const
 	{
 		return _z;
+	}
+
+	// Checks if two planes are the same (within a tolerance, currently 1e-6).
+	// Returns true if same, false otherwise
+	// Does not compare origins
+	bool Plane::CompareTo(const Plane other) const
+	{
+		return CompareTo(other, false);
+	}
+
+	// Checks if two planes are the same (within a tolerance, currently 1e-6).
+	// Returns true if same, false otherwise
+	// Compares origin (optionally)
+	bool Plane::CompareTo(const Plane other, bool checkOrigin) const
+	{
+		bool b;
+
+		// Check plane alignment
+		double tol = 1e-6;
+		if (fabs(this->_x.GetLength() - other.GetX().GetLength()) < tol &&
+			fabs(this->_y.GetLength() - other.GetY().GetLength()) < tol &&
+			fabs(this->_z.GetLength() - other.GetZ().GetLength()) < tol)
+		{
+			b = true;
+		}
+		else
+			b = false;
+
+		// Check origin
+		if (b && checkOrigin)
+		{
+			if (this->_origin.DistanceTo(other._origin) < tol)
+				b = true;
+			else
+				b = false;
+		}
+
+		return b;
 	}
 }

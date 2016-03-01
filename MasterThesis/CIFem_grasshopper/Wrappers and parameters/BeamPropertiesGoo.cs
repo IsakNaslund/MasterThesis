@@ -61,5 +61,40 @@ namespace CIFem_grasshopper
         {
             return Value.ToString();
         }
+
+        #region casting methods
+
+        public override bool CastTo<Q>(ref Q target)
+        {
+            //Cast to BeamProperties.
+            if (typeof(Q).IsAssignableFrom(typeof(BeamProperties)))
+            {
+                if (Value == null)
+                    target = default(Q);
+                else
+                    target = (Q)(object)Value;
+                return true;
+            }
+
+            target = default(Q);
+            return false;
+        }
+
+
+
+        public override bool CastFrom(object source)
+        {
+            if (source == null) { return false; }
+
+            //Cast from BeamProperties
+            if (typeof(BeamProperties).IsAssignableFrom(source.GetType()))
+            {
+                Value = (BeamProperties)source;
+                return true;
+            }
+
+            return false;
+        }
+        #endregion
     }
 }

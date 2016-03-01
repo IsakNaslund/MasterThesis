@@ -34,7 +34,7 @@ CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, Rel
 	SetNormal(normal);	// Set normal with format check
 }
 
-std::vector<IElement*> CIFem::Element3dRcp::CreateElement(std::vector<INode*> systemNodes)
+std::vector<IElement*> CIFem::Element3dRcp::CreateElement(std::vector<INode*> & systemNodes)
 {
 	INode* stNode, *enNode;
 	std::vector<IElement*> newElements;
@@ -63,8 +63,23 @@ std::vector<IElement*> CIFem::Element3dRcp::CreateElement(std::vector<INode*> sy
 
 	
 
+	//Adds nodes to the list of system nodes if no corresponding node is found
+	//Feels a little bit dangerous, with the new pointers... might be worth considering smart pointers here...
+	if(!stFound)
+	{
+		stNode = new Node3d(_stPos);
+		systemNodes.push_back(stNode);
+	}
+	if(!enFound)
+	{
+		enNode = new Node3d(_enPos);
+		systemNodes.push_back(stNode);
+	}
+
+
 	std::vector<std::shared_ptr<DOF> > stNodDof = stNode->GetDofs();
 	std::vector<std::shared_ptr<DOF> > enNodDof = enNode->GetDofs();
+
 
 	std::vector<std::shared_ptr<DOF> > dof;
 
@@ -133,4 +148,12 @@ void CIFem::Element3dRcp::SetNormal(std::vector<double> normal)
 {
 	if (normal.size() != 3)
 		std::invalid_argument("Input error, element normal should contain 3 elements [X Y Z]");
+	else
+	{
+		_normal.clear();
+		for (int i = 0; i < 3; i++)
+		{
+			_normal.push_back(normal[i]);
+		}
+	}
 }

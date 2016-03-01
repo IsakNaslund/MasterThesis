@@ -15,7 +15,8 @@ WR_Elem3dRcp::WR_Elem3dRcp()
 
 WR_Elem3dRcp::~WR_Elem3dRcp()
 {
-
+	delete _eleRcp;
+	_eleRcp = 0;
 }
 
 WR_Elem3dRcp::WR_Elem3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, ICrossSection * xSec, double matStiff, double poisonRatio, std::vector<double> normal)

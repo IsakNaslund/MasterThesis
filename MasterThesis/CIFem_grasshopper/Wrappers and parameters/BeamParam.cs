@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Grasshopper.Kernel.Types;
+using Grasshopper.Kernel;
 
 namespace CIFem_grasshopper
 {
     public class BeamParam : Grasshopper.Kernel.GH_Param<BeamGoo>
     {
 
-        public BeamParam():base("3d beam", "3db", "3d beam used in frame structures","CIFem","Elements", Grasshopper.Kernel.GH_ParamAccess.item)
+        public BeamParam():base(new GH_InstanceDescription("3d beam", "3db", "3d beam used in frame structures","CIFem","Elements"))
         {
         }
 

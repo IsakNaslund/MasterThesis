@@ -8,9 +8,9 @@ using Grasshopper.Kernel.Expressions;
 
 namespace CIFem_grasshopper
 {
-    public class BeamReleaseParameter : Grasshopper.Kernel.GH_Param<BeamReleaseGoo>
+    public class BeamReleaseParameter : GH_Param<BeamReleaseGoo>
     {
-        public BeamReleaseParameter():base("BeamRelease", "BR", "Release for 3d beam", "CIFem", "Elements", Grasshopper.Kernel.GH_ParamAccess.item)
+        public BeamReleaseParameter():base(new GH_InstanceDescription("BeamRelease", "BR", "Release for 3d beam", "CIFem", "Elements"))
         { }
 
 

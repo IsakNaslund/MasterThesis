@@ -9,18 +9,20 @@ using Grasshopper.Kernel.Types;
 
 namespace CIFem_grasshopper
 {
-    public class BeamReleaseGoo : Grasshopper.Kernel.Types.GH_Goo<WR_ReleaseBeam3d>
+    public class BeamReleaseGoo : GH_Goo<WR_ReleaseBeam3d>
     {
-
 
         public BeamReleaseGoo()
         {
-            m_value = new WR_ReleaseBeam3d();
+            this.Value = new WR_ReleaseBeam3d();
         }
 
         public BeamReleaseGoo(WR_ReleaseBeam3d value)
         {
-            m_value = value;
+            if (value == null)
+                this.Value = new WR_ReleaseBeam3d();
+            else
+                this.Value = value;
         }
 
         public override bool IsValid
@@ -59,5 +61,42 @@ namespace CIFem_grasshopper
         {
             return Value.ToString();
         }
+
+        #region casting methods
+
+        public override bool CastTo<Q>(ref Q target)
+        {
+            //Cast to WR_ReleaseBeam3d.
+            if (typeof(Q).IsAssignableFrom(typeof(WR_ReleaseBeam3d)))
+            {
+                if (Value == null)
+                    target = default(Q);
+                else
+                    target = (Q)(object)Value;
+                return true;
+            }
+
+            target = default(Q);
+            return false;
+        }
+
+
+
+        public override bool CastFrom(object source)
+        {
+            if (source == null) { return false; }
+
+            //Cast from WR_ReleaseBeam3d
+            if (typeof(WR_ReleaseBeam3d).IsAssignableFrom(source.GetType()))
+            {
+                Value = (WR_ReleaseBeam3d)source;
+                return true;
+            }
+
+            return false;
+        }
+        #endregion
+
     }
+
 }

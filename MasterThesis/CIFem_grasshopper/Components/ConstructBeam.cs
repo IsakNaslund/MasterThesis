@@ -13,7 +13,7 @@ namespace CIFem_grasshopper
 {
     public class ConstructBeam : GH_Component
     {
-        protected ConstructBeam() : base("ConstructBeam Beam", "Beam", "Constructs a structual beam", "CIFem", "Elements")
+        public ConstructBeam() : base("ConstructBeam Beam", "Beam", "Constructs a structual beam", "CIFem", "Elements")
         {
         }
 

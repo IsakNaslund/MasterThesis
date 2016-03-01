@@ -32,7 +32,7 @@ namespace CIFem
 		std::vector<CIFem::IElement *> _elements;
 
 	private:
-		std::vector<IElement *> CreateElements(std::vector<IElementRcp *>, std::vector<INode *>);
+		std::vector<IElement *> CreateElements();
 		void BuildStructure();
 		std::vector<std::shared_ptr<CIFem::DOF>> GetDofs(std::vector<INode *>);
 		void SetDofKMatIndex(std::vector<std::shared_ptr<CIFem::DOF>>);

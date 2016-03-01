@@ -44,22 +44,29 @@ WR_ReleaseBeam3d ^ CIFem_wrapper::WR_ReleaseBeam3d::Copy()
 	return gcnew WR_ReleaseBeam3d(new CIFem::ReleaseBeam3d(_release));
 }
 
+/*System::String ^ CIFem_wrapper::WR_ReleaseBeam3d::ToString()
+{
+	throw gcnew System::NotImplementedException();
+	// TODO: insert return statement here
+}*/
+
 System::String ^ CIFem_wrapper::WR_ReleaseBeam3d::ToString()
 {
 	std::vector<CIFem::DofRelease> rels = _release->GetReleases();
 
-	System::String^ str = "";
+	System::String^ str = gcnew System::String("");
 
 	for (int i = 0; i < rels.size(); i++)
 	{
-		if (rels[i].IsFixed)
+		if (rels[i].IsFixed())
 			str += gcnew System::String("f");
-		else if(rels[i].Stiffness > 0)
+		else if(rels[i].Stiffness() > 0)
 			str += gcnew System::String("s");
 		else
 			str += gcnew System::String("r");
 	}
-
+	return str;
+	
 }
 
 CIFem::ReleaseBeam3d*  WR_ReleaseBeam3d::GetRelease()

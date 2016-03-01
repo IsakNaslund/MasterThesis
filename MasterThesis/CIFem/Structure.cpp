@@ -77,15 +77,14 @@ void CIFem::Structure::Solve()
 }
 
 
-std::vector<CIFem::IElement *> CIFem::Structure::CreateElements(
-	std::vector<IElementRcp *> elRcps, std::vector<INode *> nodes)
+std::vector<CIFem::IElement *> CIFem::Structure::CreateElements()
 {
 	std::vector<IElement *> elements;
 	std::vector<IElement *> outElems;
-	for (int i = 0; i < elRcps.size(); i++)
+	for (int i = 0; i < _elementRcps.size(); i++)
 	{
 		outElems.clear();
-		outElems = elRcps[i]->CreateElement(nodes);
+		outElems = _elementRcps[i]->CreateElement(_nodes);
 
 		for (int j = 0; j < outElems.size(); j++)
 			elements.push_back(outElems[j]);
@@ -97,7 +96,7 @@ std::vector<CIFem::IElement *> CIFem::Structure::CreateElements(
 void CIFem::Structure::BuildStructure()
 {
 	// Create elements from recipes and assign
-	_elements = CreateElements(_elementRcps, _nodes);
+	_elements = CreateElements();
 }
 
 std::vector<std::shared_ptr<CIFem::DOF>> CIFem::Structure::GetDofs(std::vector<INode *> nodes)

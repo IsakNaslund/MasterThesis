@@ -17,12 +17,12 @@ namespace CIFem_grasshopper
 
         public BeamGoo()
         {
-            this.m_value = new WR_Elem3dRcp();
+            this.Value = new WR_Elem3dRcp();
         }
 
         public BeamGoo(WR_Elem3dRcp value)
         {
-            this.m_value = value;
+            this.Value = value;
         }
 
         public override bool IsValid
@@ -62,5 +62,41 @@ namespace CIFem_grasshopper
         {
             return "Beam 3d element";
         }
+
+        #region casting methods
+
+        public override bool CastTo<Q>(ref Q target)
+        {
+            //Cast to WR_Elem3dRcp.
+            if (typeof(Q).IsAssignableFrom(typeof(WR_Elem3dRcp)))
+            {
+                if (Value == null)
+                    target = default(Q);
+                else
+                    target = (Q)(object)Value;
+                return true;
+            }
+
+            target = default(Q);
+            return false;
+        }
+
+
+
+        public override bool CastFrom(object source)
+        {
+            if (source == null) { return false; }
+
+            //Cast from WR_Elem3dRcp
+            if (typeof(WR_Elem3dRcp).IsAssignableFrom(source.GetType()))
+            {
+                Value = (WR_Elem3dRcp)source;
+                return true;
+            }
+
+            return false;
+        }
+
+        #endregion
     }
 }

@@ -65,7 +65,7 @@ namespace CIFem_grasshopper
 
             double height, width;
 
-            if (numbers.Length < 2 || !double.TryParse(numbers[0], out height) || !double.TryParse(numbers[1], out width))
+            if (numbers.Length < 3 || !double.TryParse(numbers[1], out height) || !double.TryParse(numbers[2], out width))
             {
                 throw new Exception("Wrong string format for cross section");
             }

@@ -8,19 +8,23 @@ namespace CIFem
 	}
 
 
-	Restraint::Restraint(Plane orientation, bool restraints[6], double displacement[6])
+	Restraint::Restraint(Plane orientation, std::vector<bool> releases, std::vector<double> displacements)
 	{
 		// Set plane
 		_orientation = orientation;
 
 		// Set restraints
-		for (int i = 0; i < 6; i++)
+		if (releases.size() != 6 || displacements.size() != 6)
 		{
-			_restraints[i] = restraints[i];
-			_displacement[i] = displacement[i];
+			throw std::invalid_argument("Error, number of releases and displacements should be 6!");
 		}
+		else
+		{
+			_releases = releases;
+			_displacement = displacements;
 
-		_isValid = true;
+			_isValid = true;
+		}
 	}
 
 	Restraint::~Restraint()
@@ -94,6 +98,16 @@ namespace CIFem
 		}
 
 		return true;
+	}
+
+	std::vector<bool> Restraint::GetReleases()
+	{
+		return _releases;
+	}
+
+	std::vector<double> Restraint::GetDisplacements()
+	{
+		return _displacement;
 	}
 
 }

@@ -6,13 +6,13 @@ CIFem::DOF::DOF()
 {
 	_index = 0;
 	_hasTransformedBC = false;
+	_hasSetTranslation = false;
 	_f = 0;
 }
 
 DOF::DOF(unsigned int index)
 {
 	_index = index;
-	_f = 0;
 }
 
 

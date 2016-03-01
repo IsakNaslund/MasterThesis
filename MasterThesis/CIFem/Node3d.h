@@ -19,6 +19,7 @@ namespace CIFem
 		Node3d();
 		Node3d(const XYZ location);
 		Node3d(const XYZ location, unsigned int startindex);
+		Node3d(const XYZ location, Restraint restraint);
 		~Node3d();
 
 		std::vector<std::shared_ptr<DOF>> GetDofs();
@@ -33,6 +34,7 @@ namespace CIFem
 
 	private:
 		void InitNewDofs(int);
+		void SetRestraint(Restraint r);
 	};
 
 }

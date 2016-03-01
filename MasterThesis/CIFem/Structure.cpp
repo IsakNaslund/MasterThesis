@@ -43,10 +43,6 @@ void CIFem::Structure::AddElementRcp(std::vector<IElementRcp *> elements)
 		AddElementRcp(elements[i]);
 }
 
-void CIFem::Structure::AddRestraint(Restraint r)
-{
-	_restraints.push_back(r);
-}
 
 void CIFem::Structure::Solve()
 {
@@ -54,7 +50,7 @@ void CIFem::Structure::Solve()
 	BuildStructure();
 
 	// Get dofs
-	std::vector<std::shared_ptr<CIFem::DOF>> spDofs = GetDofs(this->_nodes);
+	std::vector<std::shared_ptr<CIFem::DOF>> spDofs = GetDofs(this->_nodes, this->_elements);
 
 	// Update dof kIndex
 	SetDofKMatIndex(spDofs);
@@ -64,16 +60,16 @@ void CIFem::Structure::Solve()
 	
 	// Get a and f vectors 
 	arma::mat C = GetCMatrix(this->_nodes);				// Get transformation vector for restraints
-	arma::colvec a = GetDisplacementVector(spDofs);		// Get displacement vector
+	arma::colvec am = GetDisplacementVector(spDofs);	// Get displacement vector
 	arma::colvec f = GetForceVector(spDofs);			// Get force vector
 
 	// Transform matrices and vectors to allow for non-global restraints
 
 	// Solve K matrix
-	LinEqSolve(K, a, f, C, spDofs);
+	LinEqSolve(K, am, f, C, spDofs);
 
 	// Store results in dofs
-	StoreResultsInDofs(a, f, spDofs);
+	StoreResultsInDofs(am, f, spDofs);
 }
 
 
@@ -99,9 +95,13 @@ void CIFem::Structure::BuildStructure()
 	_elements = CreateElements();
 }
 
-std::vector<std::shared_ptr<CIFem::DOF>> CIFem::Structure::GetDofs(std::vector<INode *> nodes)
+std::vector<std::shared_ptr<CIFem::DOF>> CIFem::Structure::GetDofs(
+	const std::vector<INode *> nodes, const std::vector<IElement *> elems)
 {
+	// Create pointer list of dofs
 	std::vector<std::shared_ptr<CIFem::DOF>> dofs;
+
+	// Add all dofs in nodes
 	for (int i = 0; i < nodes.size(); i++)
 	{
 		std::vector<std::shared_ptr<CIFem::DOF>> nDofs = nodes[i]->GetDofs();
@@ -109,8 +109,30 @@ std::vector<std::shared_ptr<CIFem::DOF>> CIFem::Structure::GetDofs(std::vector<I
 			dofs.push_back(nDofs[j]);
 	}
 
+	// Add non-duplicate dofs in elements
+	for (int i = 0; i < elems.size(); i++)
+	{
+		std::vector<std::shared_ptr<CIFem::DOF>> eDofs = elems[i]->GetDofs();
+		for (int j = 0; j < eDofs.size(); j++)
+		{
+			bool unique = true;
+			for (int k = 0; k < dofs.size(); k++)
+			{
+				if (eDofs[j] == dofs[k])
+				{
+					unique = false;
+					break;
+				}
+			}
+
+			if (unique)
+				dofs.push_back(eDofs[j]);
+		}
+	}
+
 	return dofs;
 }
+
 
 
 void CIFem::Structure::SetDofKMatIndex(std::vector<std::shared_ptr<CIFem::DOF>> spDofs)
@@ -181,21 +203,20 @@ arma::colvec CIFem::Structure::GetForceVector(std::vector<std::shared_ptr<DOF>> 
 	return f;
 }
 
+// Creates a displacement vector from the dofs.
+// N.B. the displacement vector is in transformed coordinates (am, rather than as)
 arma::colvec CIFem::Structure::GetDisplacementVector(std::vector<std::shared_ptr<DOF>> spDofs)
 {
 	arma::colvec a(spDofs.size(), arma::fill::zeros);
 	
-	
-
-	/*
 	for each (std::shared_ptr<DOF> spDof in spDofs)
-		a(spDof->_kIndex) = spDof->GetTranslation();
-		*/
-
-	throw std::exception("Not implemented! Use restraint class!");
+		if (spDof->_hasSetTranslation)
+			a(spDof->_kIndex) = spDof->_Am;
 
 	return a;
 }
+
+
 
 void CIFem::Structure::LinEqSolve(
 	arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::vector<std::shared_ptr<DOF>> spDofs)
@@ -243,7 +264,7 @@ void CIFem::Structure::StoreResultsInDofs(arma::colvec a, arma::colvec f, std::v
 	// Set results in dofs
 	for (int i = 0; i < spDofs.size(); i++)
 	{
-		spDofs[i]->_resA = a(spDofs[i]->_kIndex);
+		spDofs[i]->_resAs = a(spDofs[i]->_kIndex);
 		spDofs[i]->_resF = f(spDofs[i]->_kIndex);
 	}
 }
@@ -280,3 +301,4 @@ arma::mat CIFem::Structure::GetCMatrix(std::vector<INode *> nodes)
 
 	return C;
 }
+

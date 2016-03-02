@@ -16,6 +16,11 @@ WR_Vector::WR_Vector(const double x, const double y, const double z)
 	_z = z;
 }
 
+CIFem::Vector3d WR_Vector::GetAsVector3d()
+{
+	return CIFem::Vector3d(_x, _y, _z);
+}
+
 std::vector<double> WR_Vector::GetAsCppVector()
 {
 	std::vector<double> v;

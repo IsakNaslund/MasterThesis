@@ -1,6 +1,7 @@
 #pragma once
 #include "Node3d.h"
 #include "WR_INode.h"
+#include "WR_Restraint.h"
 
 namespace CIFem_wrapper
 {
@@ -13,6 +14,7 @@ namespace CIFem_wrapper
 		WR_Node3d(CIFem::XYZ location, int index);
 		WR_Node3d(const double x, const double y, const double z);
 		WR_Node3d(const double x, const double y, const double z, int index);
+		WR_Node3d(const double x, const double y, const double z, WR_Restraint^ wr_Rest);
 		~WR_Node3d();
 	};
 

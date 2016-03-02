@@ -20,24 +20,24 @@ CIFem::Vector3d::Vector3d(double x, double y, double z, bool unitize)
 	Unitize();
 }
 
-double CIFem::Vector3d::GetX()
+double CIFem::Vector3d::GetX() const
 {
 	return _x;
 }
 
-double CIFem::Vector3d::GetY()
+double CIFem::Vector3d::GetY() const
 {
 	return _y;
 }
 
-double CIFem::Vector3d::GetZ()
+double CIFem::Vector3d::GetZ() const
 {
 	return _z;
 }
 
-double CIFem::Vector3d::GetLength(double x, double y, double z)
+double CIFem::Vector3d::GetLength() const
 {
-	return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
+	return sqrt(pow(this->_x, 2) + pow(this->_y, 2) + pow(this->_z, 2));
 }
 
 double CIFem::Vector3d::DotProduct(Vector3d other)
@@ -47,7 +47,7 @@ double CIFem::Vector3d::DotProduct(Vector3d other)
 
 void CIFem::Vector3d::Unitize()
 {
-	double length = GetLength(_x, _y, _z);
+	double length = GetLength();
 
 	_x = _x / length;
 	_y = _y / length;

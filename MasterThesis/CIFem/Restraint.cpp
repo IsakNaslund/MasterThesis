@@ -2,19 +2,28 @@
 
 namespace CIFem
 {
-	Restraint::Restraint(XYZ coord, Plane orientation, bool restraints[6], double displacement[6])
+	Restraint::Restraint()
 	{
-		// Set restraint coordinate
-		_coord = coord;
-		
+		_isValid = false;
+	}
+
+
+	Restraint::Restraint(Plane orientation, std::vector<bool> releases, std::vector<double> displacements)
+	{
 		// Set plane
 		_orientation = orientation;
 
 		// Set restraints
-		for (int i = 0; i < 6; i++)
+		if (releases.size() != 6 || displacements.size() != 6)
 		{
-			_restraints[i] = restraints[i];
-			_displacement[i] = displacement[i];
+			throw std::invalid_argument("Error, number of releases and displacements should be 6!");
+		}
+		else
+		{
+			_releases = releases;
+			_displacement = displacements;
+
+			_isValid = true;
 		}
 	}
 
@@ -22,10 +31,6 @@ namespace CIFem
 	{
 	}
 
-	XYZ Restraint::GetXYZ()
-	{
-		return _coord;
-	}
 
 	Vector3d Restraint::GetXDir()
 	{
@@ -42,9 +47,19 @@ namespace CIFem
 		return _orientation.GetZ();
 	}
 
-	arma::mat Restraint::GetCMatrix(Plane structureOrientation)
+	bool Restraint::IsValid()
 	{
-		arma::mat CN(6, 6, arma::fill::zeros);
+		return _isValid;
+	}
+
+	bool Restraint::GetCMatrix(const Plane structureOrientation, arma::mat & CN)
+	{
+		// Check if restraint plane differs from global plane
+		if (structureOrientation.CompareTo(this->_orientation))
+			return false;
+
+		// If different
+		CN = arma::mat(6, 6, arma::fill::zeros);
 
 		Vector3d drX = this->GetXDir();
 		Vector3d drY = this->GetYDir();
@@ -82,7 +97,17 @@ namespace CIFem
 			CN[2 + i * 3, 2 + i * 3] = nyz;
 		}
 
-		return arma::mat();
+		return true;
+	}
+
+	std::vector<bool> Restraint::GetReleases()
+	{
+		return _releases;
+	}
+
+	std::vector<double> Restraint::GetDisplacements()
+	{
+		return _displacement;
 	}
 
 }

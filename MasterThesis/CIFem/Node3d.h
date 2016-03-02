@@ -13,11 +13,13 @@ namespace CIFem
 	{
 		XYZ _location;
 		std::vector<std::shared_ptr<DOF>> _dof;
-		
+		Restraint _restraint;
+
 	public:
 		Node3d();
 		Node3d(const XYZ location);
 		Node3d(const XYZ location, unsigned int startindex);
+		Node3d(const XYZ location, Restraint restraint);
 		~Node3d();
 
 		std::vector<std::shared_ptr<DOF>> GetDofs();
@@ -28,8 +30,11 @@ namespace CIFem
 		double DistanceTo(const INode* other) const;
 		double DistanceTo(const XYZ& otherPt) const;
 
+		virtual bool GetNodeCMatrix(Plane, arma::mat &);
+
 	private:
 		void InitNewDofs(int);
+		void SetRestraint(Restraint r);
 	};
 
 }

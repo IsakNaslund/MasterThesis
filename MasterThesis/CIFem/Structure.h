@@ -4,7 +4,6 @@
 #include "INode.h"
 #include "IElementRcp.h"
 #include "IElement.h"
-#include "Restraint.h"
 #include "Plane.h"
 
 namespace CIFem
@@ -13,7 +12,6 @@ namespace CIFem
 	{
 		std::vector<INode *> _nodes;
 		std::vector<IElementRcp *> _elementRcps;
-		std::vector<Restraint> _restraints;
 		Plane _structureOrientation;
 
 	public:
@@ -24,7 +22,6 @@ namespace CIFem
 		void AddNode(std::vector<INode *>);
 		void AddElementRcp(IElementRcp *);
 		void AddElementRcp(std::vector<IElementRcp *>);
-		void AddRestraint(Restraint);
 
 		void Solve();
 
@@ -34,7 +31,7 @@ namespace CIFem
 	private:
 		std::vector<IElement *> CreateElements();
 		void BuildStructure();
-		std::vector<std::shared_ptr<CIFem::DOF>> GetDofs(std::vector<INode *>);
+		std::vector<std::shared_ptr<CIFem::DOF>> GetDofs(const std::vector<INode *>, const std::vector<IElement *>);
 		void SetDofKMatIndex(std::vector<std::shared_ptr<CIFem::DOF>>);
 		arma::sp_mat AssembleStiffnessMatrix(std::vector<std::shared_ptr<CIFem::DOF>>);
 		void AssembleElementsInKMat(arma::sp_mat & K, arma::mat & Ke, std::vector<std::shared_ptr<DOF>>);
@@ -43,7 +40,7 @@ namespace CIFem
 		void LinEqSolve(
 			arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::vector<std::shared_ptr<DOF>>);
 		void StoreResultsInDofs(arma::colvec a, arma::colvec f, std::vector<std::shared_ptr<DOF>>);
-		arma::mat GetCMatrix(std::vector<INode *>, std::vector<Restraint>);
+		arma::mat GetCMatrix(std::vector<INode *>);
 	};
 }
 

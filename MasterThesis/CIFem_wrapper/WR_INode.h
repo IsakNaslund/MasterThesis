@@ -14,6 +14,7 @@ namespace CIFem_wrapper
 		~WR_INode();
 		std::shared_ptr<CIFem::INode> GetNode();
 
+		WR_INode^ Copy();
 	};
 
 }

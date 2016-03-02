@@ -35,7 +35,6 @@ CIFem_wrapper::WR_Elem3dRcp::WR_Elem3dRcp(WR_XYZ^ stPos, WR_XYZ^ enPos, WR_Relea
 
 WR_Elem3dRcp^ CIFem_wrapper::WR_Elem3dRcp::Copy()
 {
-	
 	return gcnew WR_Elem3dRcp(std::shared_ptr<Element3dRcp>(new Element3dRcp(*_eleRcp.share())));
 }
 

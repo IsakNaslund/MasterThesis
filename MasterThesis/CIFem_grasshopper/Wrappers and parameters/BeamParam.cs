@@ -11,7 +11,6 @@ namespace CIFem_grasshopper
 {
     public class BeamParam : Grasshopper.Kernel.GH_Param<BeamGoo>
     {
-
         public BeamParam():base(new GH_InstanceDescription("3d beam", "3db", "3d beam used in frame structures","CIFem","Elements"))
         {
         }

@@ -1,5 +1,6 @@
 #pragma once
 #include "INode.h"
+#include "m_shared_ptr.h"
 
 
 namespace CIFem_wrapper
@@ -8,10 +9,10 @@ namespace CIFem_wrapper
 	public ref class WR_INode
 	{
 	protected:
-		CIFem::INode* _node;
+		m_shared_ptr<CIFem::INode> _node;
 	public:
 		~WR_INode();
-		CIFem::INode* GetNode();
+		std::shared_ptr<CIFem::INode> GetNode();
 
 	};
 

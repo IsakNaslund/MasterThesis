@@ -5,9 +5,9 @@ CIFem::ReleaseBeam3d::ReleaseBeam3d()
 	
 }
 
-CIFem::ReleaseBeam3d::ReleaseBeam3d(const ReleaseBeam3d * other)
+CIFem::ReleaseBeam3d::ReleaseBeam3d(const std::shared_ptr<ReleaseBeam3d> other)
 {
-	if(other != nullptr)
+	if(other.get() != nullptr)
 		SetReleases(other->GetReleases());
 }
 

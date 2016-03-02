@@ -7,7 +7,7 @@ CIFem::Element3dRcp::Element3dRcp()
 {
 }
 
-CIFem::Element3dRcp::Element3dRcp(Element3dRcp * other)
+CIFem::Element3dRcp::Element3dRcp(std::shared_ptr<Element3dRcp> other)
 {
 	if (other != nullptr)
 	{
@@ -22,7 +22,7 @@ CIFem::Element3dRcp::Element3dRcp(Element3dRcp * other)
 	}
 }
 
-CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, ICrossSection * xSec, double matStiff, double poisonRatio, std::vector<double> normal)
+CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, std::shared_ptr<ICrossSection> xSec, double matStiff, double poisonRatio, std::vector<double> normal)
 {
 	_stPos = stPos;
 	_enPos = enPos;

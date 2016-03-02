@@ -1,12 +1,13 @@
 #pragma once
 #include "ReleaseBeam3d.h"
+#include "m_shared_ptr.h"
 
 namespace CIFem_wrapper
 {
 
 	public ref class WR_ReleaseBeam3d
 	{
-		CIFem::ReleaseBeam3d* _release;
+		m_shared_ptr<CIFem::ReleaseBeam3d> _release;
 
 
 	public:
@@ -21,7 +22,7 @@ namespace CIFem_wrapper
 		WR_ReleaseBeam3d^ Copy();
 		System::String^ ToString() override;
 
-		CIFem::ReleaseBeam3d* GetRelease();
+		std::shared_ptr<CIFem::ReleaseBeam3d> GetRelease();
 	};
 
 }

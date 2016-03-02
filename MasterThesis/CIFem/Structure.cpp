@@ -18,6 +18,12 @@ CIFem::Structure::~Structure()
 	for (int i = 0; i < _elements.size(); i++)
 		delete _elements[i];
 
+	for (int i = 0; i < _nodes.size(); i++)
+	{
+		delete _nodes[i];
+	}
+
+	_nodes.clear();
 	_elements.clear();
 }
 

@@ -1,19 +1,20 @@
 #pragma once
 
 #include "XYZ.h"
+#include "m_shared_ptr.h"
 
 using namespace CIFem;
 namespace CIFem_wrapper
 {
 	public ref class WR_XYZ
 	{
-		XYZ* _xyz;
+		m_shared_ptr<XYZ> _xyz;
 
 	public:
 		WR_XYZ();
 		WR_XYZ(double x, double y, double z);
 		~WR_XYZ();
-		XYZ* GetPos();
+		std::shared_ptr<XYZ> GetPos();
 	};
 
 }

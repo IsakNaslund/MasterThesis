@@ -3,12 +3,13 @@
 #include "Structure.h"
 #include "WR_INode.h"
 #include "WR_IElemRcp.h"
+#include "m_shared_ptr.h"
 
 namespace CIFem_wrapper
 {
 	public ref class WR_Structure
 	{
-		CIFem::Structure* _structure;
+		m_shared_ptr<CIFem::Structure> _structure;
 	public:
 		WR_Structure();
 		~WR_Structure();

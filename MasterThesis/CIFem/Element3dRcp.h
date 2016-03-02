@@ -17,15 +17,15 @@ namespace CIFem
 	{
 		XYZ _stPos, _enPos;
 		ReleaseBeam3d _stRel, _enRel;
-		ICrossSection * _xSec;
+		std::shared_ptr<ICrossSection> _xSec;
 		double _matStiff;
 		double _poisonsRatio;
 		std::vector<double> _normal;
 
 	public:
 		Element3dRcp();
-		Element3dRcp(Element3dRcp* other);
-		Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, ICrossSection* xSec, double matStiff, double poisonRatio, std::vector<double> normal);
+		Element3dRcp(std::shared_ptr<Element3dRcp> other);
+		Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, std::shared_ptr<ICrossSection> xSec, double matStiff, double poisonRatio, std::vector<double> normal);
 
 		std::vector<IElement*> CreateElement(std::vector<INode*> & systemNodes);
 		~Element3dRcp();

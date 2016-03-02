@@ -1,5 +1,6 @@
 #pragma once
 #include "IElementRcp.h"
+#include <memory>
 
 namespace CIFem_wrapper
 {
@@ -8,7 +9,7 @@ namespace CIFem_wrapper
 	{
 
 	public:
-		virtual CIFem::IElementRcp* GetRecipe()= 0;
+		virtual std::shared_ptr<CIFem::IElementRcp> GetRecipe()= 0;
 	};
 
 }

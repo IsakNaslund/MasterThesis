@@ -21,6 +21,7 @@ namespace CIFem
 		double GetX();
 		double GetY();
 		double GetZ();
+
 	};
 
 }

@@ -47,3 +47,4 @@ XYZ::~XYZ()
  {
 	 return _z;
  }
+

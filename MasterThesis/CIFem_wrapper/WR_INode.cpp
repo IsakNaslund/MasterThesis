@@ -5,11 +5,9 @@ using namespace CIFem_wrapper;
 
 WR_INode::~WR_INode()
 {
-	delete _node;
-	_node = 0;
 }
 
-CIFem::INode* WR_INode::GetNode()
+std::shared_ptr<CIFem::INode> WR_INode::GetNode()
 {
-	return _node;
+	return *_node.share();
 }

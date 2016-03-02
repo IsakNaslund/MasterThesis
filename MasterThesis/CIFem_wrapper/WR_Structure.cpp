@@ -15,16 +15,16 @@ WR_Structure::~WR_Structure()
 
 void WR_Structure::AddNode(WR_INode^ wrNode)
 {
-	//_structure.operator std::shared_ptr<CIFem::Structure>()->AddNode(wrNode->GetNode());
+	_structure.operator std::shared_ptr<CIFem::Structure>()->AddNode(wrNode->GetNode());
 }
 
 void CIFem_wrapper::WR_Structure::AddElementRcp(WR_IElemRcp^ wrRcp)
 {
-	//_structure.operator std::shared_ptr<CIFem::Structure>()->AddElementRcp(wrRcp->GetRecipe());
+	_structure.operator std::shared_ptr<CIFem::Structure>()->AddElementRcp(wrRcp->GetRecipe());
 }
 
 void CIFem_wrapper::WR_Structure::Solve()
 {
-	//_structure.operator std::shared_ptr<CIFem::Structure>()->Solve();
+	_structure.operator std::shared_ptr<CIFem::Structure>()->Solve();
 }
 

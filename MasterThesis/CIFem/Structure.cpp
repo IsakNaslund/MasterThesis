@@ -18,32 +18,26 @@ CIFem::Structure::~Structure()
 	for (int i = 0; i < _elements.size(); i++)
 		delete _elements[i];
 
-	for (int i = 0; i < _nodes.size(); i++)
-	{
-		delete _nodes[i];
-	}
-
-	_nodes.clear();
 	_elements.clear();
 }
 
-void CIFem::Structure::AddNode(INode * node)
+void CIFem::Structure::AddNode(std::shared_ptr<INode> node)
 {
 	_nodes.push_back(node);
 }
 
-void CIFem::Structure::AddNode(std::vector<INode *> nodes)
+void CIFem::Structure::AddNode(std::vector<std::shared_ptr<INode>> nodes)
 {
 	for (int i = 0; i < nodes.size(); i++)
 		AddNode(nodes[i]);
 }
 
-void CIFem::Structure::AddElementRcp(IElementRcp * elementRcp)
+void CIFem::Structure::AddElementRcp(std::shared_ptr<IElementRcp> elementRcp)
 {
 	_elementRcps.push_back(elementRcp);
 }
 
-void CIFem::Structure::AddElementRcp(std::vector<IElementRcp *> elements)
+void CIFem::Structure::AddElementRcp(std::vector<std::shared_ptr<IElementRcp>> elements)
 {
 	for (int i = 0; i < elements.size(); i++)
 		AddElementRcp(elements[i]);
@@ -56,7 +50,7 @@ void CIFem::Structure::Solve()
 	BuildStructure();
 
 	// Get dofs
-	std::vector<std::shared_ptr<CIFem::DOF>> spDofs = GetDofs(this->_nodes, this->_elements);
+	std::vector<std::shared_ptr<CIFem::DOF>> spDofs = GetDofs();
 
 	// Update dof kIndex
 	SetDofKMatIndex(spDofs);
@@ -65,7 +59,7 @@ void CIFem::Structure::Solve()
 	arma::sp_mat K = AssembleStiffnessMatrix(spDofs);
 	
 	// Get a and f vectors 
-	arma::mat C = GetCMatrix(this->_nodes);				// Get transformation vector for restraints
+	arma::mat C = GetCMatrix();				// Get transformation vector for restraints
 	arma::colvec am = GetDisplacementVector(spDofs);	// Get displacement vector
 	arma::colvec f = GetForceVector(spDofs);			// Get force vector
 
@@ -101,24 +95,23 @@ void CIFem::Structure::BuildStructure()
 	_elements = CreateElements();
 }
 
-std::vector<std::shared_ptr<CIFem::DOF>> CIFem::Structure::GetDofs(
-	const std::vector<INode *> nodes, const std::vector<IElement *> elems)
+std::vector<std::shared_ptr<CIFem::DOF>> CIFem::Structure::GetDofs()
 {
 	// Create pointer list of dofs
 	std::vector<std::shared_ptr<CIFem::DOF>> dofs;
 
 	// Add all dofs in nodes
-	for (int i = 0; i < nodes.size(); i++)
+	for (int i = 0; i < _nodes.size(); i++)
 	{
-		std::vector<std::shared_ptr<CIFem::DOF>> nDofs = nodes[i]->GetDofs();
+		std::vector<std::shared_ptr<CIFem::DOF>> nDofs = _nodes[i]->GetDofs();
 		for (int j = 0; j < nDofs.size(); j++)
 			dofs.push_back(nDofs[j]);
 	}
 
 	// Add non-duplicate dofs in elements
-	for (int i = 0; i < elems.size(); i++)
+	for (int i = 0; i < _elements.size(); i++)
 	{
-		std::vector<std::shared_ptr<CIFem::DOF>> eDofs = elems[i]->GetDofs();
+		std::vector<std::shared_ptr<CIFem::DOF>> eDofs = _elements[i]->GetDofs();
 		for (int j = 0; j < eDofs.size(); j++)
 		{
 			bool unique = true;
@@ -275,18 +268,18 @@ void CIFem::Structure::StoreResultsInDofs(arma::colvec a, arma::colvec f, std::v
 	}
 }
 
-arma::mat CIFem::Structure::GetCMatrix(std::vector<INode *> nodes)
+arma::mat CIFem::Structure::GetCMatrix()
 {
 	// Count dofs
 	int nDofs = 0;
-	for each (INode * node in nodes)
+	for each (std::shared_ptr<INode> node in _nodes)
 		nDofs += node->GetDofs().size();
 
 	// Create C matrix
 	arma::mat C(nDofs, nDofs, arma::fill::zeros);
 
 	// Populate C matrix
-	for each (INode * node in nodes)
+	for each (std::shared_ptr<INode> node in _nodes)
 	{
 		// Get local C matrix
 		arma::mat CN(1,1);

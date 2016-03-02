@@ -27,7 +27,7 @@ namespace CIFem
 		Element3dRcp(std::shared_ptr<Element3dRcp> other);
 		Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, std::shared_ptr<ICrossSection> xSec, double matStiff, double poisonRatio, std::vector<double> normal);
 
-		std::vector<IElement*> CreateElement(std::vector<INode*> & systemNodes);
+		std::vector<IElement*> CreateElement(std::vector<std::shared_ptr<INode>> & systemNodes);
 		~Element3dRcp();
 
 	private:

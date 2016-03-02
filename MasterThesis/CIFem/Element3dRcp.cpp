@@ -34,15 +34,15 @@ CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, Rel
 	SetNormal(normal);	// Set normal with format check
 }
 
-std::vector<IElement*> CIFem::Element3dRcp::CreateElement(std::vector<INode*> & systemNodes)
+std::vector<IElement*> CIFem::Element3dRcp::CreateElement(std::vector<std::shared_ptr<INode>> & systemNodes)
 {
-	INode* stNode, *enNode;
+	std::shared_ptr<INode> stNode, enNode;
 	std::vector<IElement*> newElements;
 
 	bool stFound = false;
 	bool enFound = false;
 
-	for each (INode* n in systemNodes)
+	for each (std::shared_ptr<INode> n in systemNodes)
 	{
 		if (!stFound && n->DistanceTo(_stPos) < GlobalTol)
 		{
@@ -67,12 +67,12 @@ std::vector<IElement*> CIFem::Element3dRcp::CreateElement(std::vector<INode*> & 
 	//Feels a little bit dangerous, with the new pointers... might be worth considering smart pointers here...
 	if(!stFound)
 	{
-		stNode = new Node3d(_stPos);
+		stNode = shared_ptr<INode>(new Node3d(_stPos));
 		systemNodes.push_back(stNode);
 	}
 	if(!enFound)
 	{
-		enNode = new Node3d(_enPos);
+		enNode = shared_ptr<INode>(new Node3d(_enPos));
 		systemNodes.push_back(stNode);
 	}
 

@@ -5,23 +5,24 @@
 #include "IElementRcp.h"
 #include "IElement.h"
 #include "Plane.h"
+#include <memory>
 
 namespace CIFem
 {
 	class CIFEM_API Structure
 	{
-		std::vector<INode *> _nodes;
-		std::vector<IElementRcp *> _elementRcps;
+		std::vector<std::shared_ptr<INode>> _nodes;
+		std::vector<std::shared_ptr<IElementRcp>> _elementRcps;
 		Plane _structureOrientation;
 
 	public:
 		Structure();
 		~Structure();
 
-		void AddNode(INode *);
-		void AddNode(std::vector<INode *>);
-		void AddElementRcp(IElementRcp *);
-		void AddElementRcp(std::vector<IElementRcp *>);
+		void AddNode(std::shared_ptr<INode>);
+		void AddNode(std::vector<std::shared_ptr<INode>>);
+		void AddElementRcp(std::shared_ptr<IElementRcp>);
+		void AddElementRcp(std::vector<std::shared_ptr<IElementRcp>>);
 
 		void Solve();
 
@@ -31,7 +32,7 @@ namespace CIFem
 	private:
 		std::vector<IElement *> CreateElements();
 		void BuildStructure();
-		std::vector<std::shared_ptr<CIFem::DOF>> GetDofs(const std::vector<INode *>, const std::vector<IElement *>);
+		std::vector<std::shared_ptr<CIFem::DOF>> GetDofs();
 		void SetDofKMatIndex(std::vector<std::shared_ptr<CIFem::DOF>>);
 		arma::sp_mat AssembleStiffnessMatrix(std::vector<std::shared_ptr<CIFem::DOF>>);
 		void AssembleElementsInKMat(arma::sp_mat & K, arma::mat & Ke, std::vector<std::shared_ptr<DOF>>);
@@ -40,7 +41,7 @@ namespace CIFem
 		void LinEqSolve(
 			arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::vector<std::shared_ptr<DOF>>);
 		void StoreResultsInDofs(arma::colvec a, arma::colvec f, std::vector<std::shared_ptr<DOF>>);
-		arma::mat GetCMatrix(std::vector<INode *>);
+		arma::mat GetCMatrix();
 	};
 }
 

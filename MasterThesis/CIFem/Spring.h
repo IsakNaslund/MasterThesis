@@ -22,6 +22,9 @@ namespace CIFem
 		arma::Mat<double> GetStiffnessMatrix();
 		std::vector <int> GetDofs();
 
+		arma::Col<double> GravityLoad(Vector3d direction) { return arma::vec(); }
+
+
 	protected:
 		int GetSize() { return 2; };
 	};

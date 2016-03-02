@@ -1,7 +1,6 @@
 #include "ElementProperty.h"
 
-using namespace CIFem;
-using namespace CIFem;
+/*using namespace CIFem;
 
 ElementProperty::ElementProperty()
 {
@@ -58,4 +57,4 @@ double ElementProperty::GetIz()
 double ElementProperty::GetKv()
 {
 	return _Kv;
-}
+}*/

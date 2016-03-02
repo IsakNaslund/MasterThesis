@@ -20,6 +20,13 @@ CIFem::Vector3d::Vector3d(double x, double y, double z, bool unitize)
 	Unitize();
 }
 
+CIFem::Vector3d::Vector3d(XYZ st, XYZ en)
+{
+	_x = en.GetX() - st.GetX();
+	_y = en.GetY() - st.GetY();
+	_z = en.GetZ() - st.GetZ();
+}
+
 double CIFem::Vector3d::GetX() const
 {
 	return _x;

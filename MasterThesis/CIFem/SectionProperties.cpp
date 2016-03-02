@@ -31,3 +31,23 @@ CIFem::SectionProperties::SectionProperties(const double area, const double iy, 
 CIFem::SectionProperties::~SectionProperties()
 {
 }
+
+double CIFem::SectionProperties::A()
+{
+	return _area;
+}
+
+double CIFem::SectionProperties::Iy()
+{
+	return _Iy;
+}
+
+double CIFem::SectionProperties::Iz()
+{
+	return _Iz;
+}
+
+double CIFem::SectionProperties::Kv()
+{
+	return _Kv;
+}

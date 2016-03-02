@@ -15,8 +15,7 @@ CIFem::Element3dRcp::Element3dRcp(std::shared_ptr<Element3dRcp> other)
 		this->_enPos = other->_enPos;
 		this->_stRel = other->_stRel;
 		this->_enRel = other->_enRel;
-		this->_matStiff = other->_matStiff;
-		this->_poisonsRatio = other->_poisonsRatio;
+		this->_mat = other->_mat;
 		this->_xSec = other->_xSec;
 		this->SetNormal(other->_normal);
 	}
@@ -29,8 +28,29 @@ CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, Rel
 	_stRel = stRel;
 	_enRel = enRel;
 	_xSec = xSec;
-	_matStiff = matStiff;
-	_poisonsRatio = poisonRatio;
+	_mat = Material(matStiff, poisonRatio, 0);
+	SetNormal(normal);	// Set normal with format check
+}
+
+CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, std::shared_ptr<ICrossSection> xSec, double matStiff, double poisonRatio, double density, std::vector<double> normal)
+{
+	_stPos = stPos;
+	_enPos = enPos;
+	_stRel = stRel;
+	_enRel = enRel;
+	_xSec = xSec;
+	_mat = Material(matStiff, poisonRatio, density);
+	SetNormal(normal);	// Set normal with format check
+}
+
+CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, std::shared_ptr<ICrossSection> xSec, Material material, std::vector<double> normal)
+{
+	_stPos = stPos;
+	_enPos = enPos;
+	_stRel = stRel;
+	_enRel = enRel;
+	_xSec = xSec;
+	_mat = material;
 	SetNormal(normal);	// Set normal with format check
 }
 
@@ -131,9 +151,8 @@ std::vector<IElement*> CIFem::Element3dRcp::CreateElement(std::vector<std::share
 	}
 
 	SectionProperties secProp = _xSec->CalcSectionProperties();
-	double G = _matStiff / (2 * (_poisonsRatio + 1));
-	ElementProperty ep =ElementProperty(_matStiff, G, secProp._area, secProp._Iy, secProp._Iz, secProp._Kv);
-	IElement* beam = new Element3d(_stPos, _enPos, dof, ep);
+	//ElementProperty ep =ElementProperty(_mat.E(), _mat.G(), secProp._area, secProp._Iy, secProp._Iz, secProp._Kv);
+	IElement* beam = new Element3d(_stPos, _enPos, dof, secProp,_mat);
 
 	newElements.push_back(beam);
 

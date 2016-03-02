@@ -1,6 +1,7 @@
 #pragma once
 #include "CIFem_dll.h"
 #include <math.h>
+#include "XYZ.h"
 
 namespace CIFem
 {
@@ -13,6 +14,7 @@ namespace CIFem
 		Vector3d();
 		Vector3d(double x, double y, double z);
 		Vector3d(double x, double y, double z, bool unitize);
+		Vector3d(XYZ st, XYZ en);
 		double GetX() const;
 		double GetY() const;
 		double GetZ() const;

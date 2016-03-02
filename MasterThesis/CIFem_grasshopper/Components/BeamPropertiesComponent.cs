@@ -52,6 +52,7 @@ namespace CIFem_grasshopper
 
             BeamProperties beamProp = new BeamProperties(E, poi, crossSection, stREl, enREl);
             
+            
 
             DA.SetData(0, beamProp);
 

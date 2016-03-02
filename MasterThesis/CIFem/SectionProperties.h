@@ -2,7 +2,7 @@
 
 namespace CIFem
 {
-	struct SectionProperties
+	class SectionProperties
 	{
 		double _area;
 		double _Iy;
@@ -14,6 +14,11 @@ namespace CIFem
 		SectionProperties(const double area, const double i);
 		SectionProperties(const double area, const double iy, const double iz, const double kv);
 		~SectionProperties();
+
+		double A();
+		double Iy();
+		double Iz();
+		double Kv();
 
 	};
 

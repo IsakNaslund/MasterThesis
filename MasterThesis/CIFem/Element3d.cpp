@@ -30,7 +30,7 @@ Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, vector<int>
 	_length = CalcLength(sNode, eNode);
 }*/
 
-Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, ElementProperty ep)
+Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, SectionProperties secProp, Material mat)
 {
 	Init();			//Initialise
 
@@ -47,7 +47,8 @@ Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector
 		throw e;
 	}
 
-	_ep = ep;
+	_secProp = secProp;
+	_mat = mat;
 
 	_length = CalcLength(sNode, eNode);
 }
@@ -68,12 +69,12 @@ vector<int> Element3d::GetDofs()
 arma::Mat<double> Element3d::GetStiffnessMatrix()
 {
 	// Get indata from element properties
-	double A = _ep.GetA();
-	double E = _ep.GetE();
-	double G = _ep.GetG();
-	double Iy = _ep.GetIy();
-	double Iz = _ep.GetIz();
-	double Kv = _ep.GetKv();
+	double A = _secProp.A();
+	double E = _mat.E();
+	double G = _mat.G();
+	double Iy = _secProp.Iy();
+	double Iz = _secProp.Iz();
+	double Kv = _secProp.Kv();
 
 	// Simplify definitions
 	double l = _length;
@@ -135,6 +136,64 @@ arma::Mat<double> Element3d::GetStiffnessMatrix()
 	arma::mat GMat = GetTransformationMatrix();
 
 	return GMat.t()*Ke*GMat;
+}
+
+arma::Col<double> CIFem::Element3d::GravityLoad(Vector3d direction)
+{
+	//empty force vector
+	//arma::vec f(12, arma::fill::zeros);
+
+	//volume times density
+	double volDens = _mat.Rho()*_secProp.A()*_length;
+
+	//temporary variables to fill the force vector
+	double qx, qy, qz, mx, my, mz;
+
+	qx = direction.GetX()*volDens / 2;
+	qy = direction.GetY()*volDens / 2;
+	qz = direction.GetZ()*volDens / 2;
+
+	//to get leaverarms for moments
+	Vector3d part(_sNode, _eNode);
+
+
+	//End moments. calculated as g (gravity coefficients) times volumeDensity times leaverarms in diffrent directions divided by 12
+	//Need to check that the signs of these gets correct...
+	mx = volDens*(-direction.GetY()*part.GetZ() + direction.GetZ()*part.GetY()) / 12;
+	my = volDens*(direction.GetX()*part.GetZ() - direction.GetZ()*part.GetX()) / 12;
+	mz = volDens*(direction.GetY()*part.GetX() - direction.GetX()*part.GetY()) / 12;
+
+
+	//Add load to the beams degees of freedom
+
+	_dof[0]->AddLoad(qx);
+	_dof[1]->AddLoad(qy);
+	_dof[2]->AddLoad(qz);
+	_dof[3]->AddLoad(mx);
+	_dof[4]->AddLoad(my);
+	_dof[5]->AddLoad(mz);
+	_dof[6]->AddLoad(qx);
+	_dof[7]->AddLoad(qy);
+	_dof[8]->AddLoad(qz);
+	_dof[9]->AddLoad(-mx);
+	_dof[10]->AddLoad(-my);
+	_dof[11]->AddLoad(-mz);
+
+
+
+	/*f(0) = f(6) = qx;
+	f(1) = f(7) = qy;
+	f(2) = f(8) = qz;
+	f(7) = mx;
+	f(8) = my;
+	f(9) = mz;
+	f(9) = -mx;
+	f(10) = -my;
+	f(11) = -mz;
+
+	return f;*/
+
+	return arma::vec();
 }
 
 

@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CIFem_dll.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Restraint.h" />
     <ClInclude Include="DOF.h" />
     <ClInclude Include="DofRelease.h" />
@@ -175,6 +176,7 @@
     <ClInclude Include="XYZ.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Restraint.cpp" />
     <ClCompile Include="DOF.cpp" />
     <ClCompile Include="DofRelease.cpp" />

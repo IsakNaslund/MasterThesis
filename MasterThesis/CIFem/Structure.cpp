@@ -197,7 +197,7 @@ arma::colvec CIFem::Structure::GetForceVector(std::vector<std::shared_ptr<DOF>> 
 	arma::colvec f(spDofs.size(), arma::fill::zeros);
 
 	for each (std::shared_ptr<DOF> spDof in spDofs)
-		f(spDof->_kIndex) = spDof->_f;
+		f(spDof->_kIndex) = spDof->GetLoad();
 
 	return f;
 }

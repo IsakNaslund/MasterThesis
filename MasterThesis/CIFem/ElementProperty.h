@@ -2,7 +2,7 @@
 
 #include "CIFem_dll.h"
 
-namespace CIFem
+/*namespace CIFem
 {
 	class CIFEM_API ElementProperty
 	{
@@ -20,5 +20,5 @@ namespace CIFem
 		double GetIz();		// Second moment of area in minor direction (element Z)
 		double GetKv();
 	};
-}
+}*/
 

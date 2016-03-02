@@ -40,12 +40,12 @@ namespace CIFem_grasshopper
         {
             ///// INPUTS /////
             Rhino.Geometry.Point3d pt = Rhino.Geometry.Point3d.Unset;
-            List<bool> rels = null;
+            List<bool> rels = new List<bool>();
             Rhino.Geometry.Plane pl = Rhino.Geometry.Plane.Unset;
 
             if (!DA.GetData(0, ref pt)) { return; }
 
-            if (!DA.GetData(1, ref rels)) { return; }
+            if (!DA.GetDataList<bool>(1, rels)) { return; }
             if (rels.Count != 6)
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Number of bools in input should be 6");
@@ -62,11 +62,30 @@ namespace CIFem_grasshopper
 
             ///// SOLVE /////
 
-            WR_INode node = new WR_Node3d();
+
+            WR_XYZ wrXYZ = new WR_XYZ(pt.X, pt.Y, pt.Z);
+            WR_Vector wrX = GetUnitizedWR_Vector(pl.XAxis);
+            WR_Vector wrY = GetUnitizedWR_Vector(pl.YAxis);
+            WR_Vector wrZ = GetUnitizedWR_Vector(pl.ZAxis);
+
+            WR_Plane wrPl = new WR_Plane(wrX, wrY, wrZ, wrXYZ);
+
+            //WR_Restraint rest = new WR_Restraint(wrPl, rels, ;
+
+            // FORTSÄTT HÄR IMORGON CARL
+
+            //WR_INode node = new WR_Node3d(pt.X, pt.Y, pt.Z, );
 
 
             ///// OUTPUTS /////
 
+        }
+
+
+        private WR_Vector GetUnitizedWR_Vector(Rhino.Geometry.Vector3d rhVec)
+        {
+            rhVec.Unitize();
+            return new WR_Vector(rhVec.X, rhVec.Y, rhVec.Z);
         }
     }
 }

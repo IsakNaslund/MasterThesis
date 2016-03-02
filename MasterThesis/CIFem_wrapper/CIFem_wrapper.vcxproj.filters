@@ -57,6 +57,9 @@
     <ClInclude Include="WR_Restraint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WR_Plane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -96,6 +99,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WR_Restraint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WR_Plane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

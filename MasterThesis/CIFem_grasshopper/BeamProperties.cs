@@ -80,9 +80,9 @@ namespace CIFem_grasshopper
 
         public override string ToString()
         {
-            string str = "Stiffness:" + _matStiff + "\n";
-            str += "Poissons Ratio:" + _poison + "\n";
-            str += _section.ToString() + "\n";
+            //string str = "Stiffness:" + _matStiff + "\n";
+            //str += "Poissons Ratio:" + _poison + "\n";
+            string str = _section.ToString() + "\n";
             str += "Start release:" + _stRel.ToString() + "\n";
             str += "End release" + _enRel.ToString();
 
@@ -96,11 +96,14 @@ namespace CIFem_grasshopper
 
         //Getters
 
-        public double MaterialStiffness
+        /*public double MaterialStiffness
         { get { return _matStiff; } }
 
         public double PoissonsRatio
-        { get { return _poison; } }
+        { get { return _poison; } }*/
+
+        public WR_Material Material
+        { get { return _mat; } }
 
         public WR_IXSec CrossSection
         { get { return _section; } }

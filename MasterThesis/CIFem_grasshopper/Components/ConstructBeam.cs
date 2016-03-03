@@ -54,7 +54,7 @@ namespace CIFem_grasshopper
             WR_XYZ st = new WR_XYZ(ln.FromX, ln.FromY, ln.FromZ);
             WR_XYZ en = new WR_XYZ(ln.ToX, ln.ToY, ln.ToZ);
 
-            WR_Elem3dRcp beam = new WR_Elem3dRcp(st, en, prop.StartRelease, prop.EndRelease, prop.CrossSection, prop.MaterialStiffness, prop.PoissonsRatio, wrNorm);
+            WR_Elem3dRcp beam = new WR_Elem3dRcp(st, en, prop.StartRelease, prop.EndRelease, prop.CrossSection, prop.Material, wrNorm);
             
             DA.SetData(0, beam);
 

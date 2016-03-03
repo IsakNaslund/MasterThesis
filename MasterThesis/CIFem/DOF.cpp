@@ -28,6 +28,18 @@ void CIFem::DOF::AddLoad(const double load)
 	_f += load;
 }
 
+void CIFem::DOF::SetUpBoundaryCondition(bool isRestrained, double dist)
+{
+	_hasSetTranslation = isRestrained;
+	_Am = dist;
+}
+
+inline void CIFem::DOF::SetResults(double a, double f)
+{
+	_resAs = a;
+	_resF = f;
+}
+
 int DOF::GetIndex()
 {
 	return _index;

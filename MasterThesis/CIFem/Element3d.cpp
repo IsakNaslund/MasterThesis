@@ -196,6 +196,10 @@ arma::Col<double> CIFem::Element3d::GravityLoad(Vector3d direction)
 	return arma::vec();
 }
 
+void CIFem::Element3d::CalculateSectionForces()
+{
+}
+
 
 // Creates and returns the transformation matrix G
 arma::mat Element3d::GetTransformationMatrix()

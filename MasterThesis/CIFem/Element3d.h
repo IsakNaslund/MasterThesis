@@ -35,6 +35,9 @@ namespace CIFem
 		arma::Col<double> GravityLoad(Vector3d direction);
 
 
+		void CalculateSectionForces();
+
+
 	private:
 		void Init();				// Initialises class, call from all constructors
 		//void SetEdof(vector<int>);	// Sets the element dofs

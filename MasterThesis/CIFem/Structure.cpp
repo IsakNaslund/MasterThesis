@@ -140,7 +140,7 @@ void CIFem::Structure::SetDofKMatIndex(std::vector<std::shared_ptr<CIFem::DOF>> 
 	int dofCounter = 0;
 	for each (std::shared_ptr<DOF> dof in spDofs)
 	{
-		dof->_kIndex = dofCounter;
+		dof->UpdateKIndex(dofCounter);
 		dofCounter++;
 	}
 }
@@ -173,7 +173,7 @@ void CIFem::Structure::AssembleElementsInKMat(arma::sp_mat & K, arma::mat & Ke, 
 	// Check inputs
 	int n = K.n_rows;
 	for each (std::shared_ptr<DOF> spDof in spEDofs)
-		if (spDof->_kIndex > n - 1)
+		if (spDof->GetKIndex() > n - 1)
 			throw std::invalid_argument("Error in k matrix numbering");
 
 	int nKe = Ke.n_rows;
@@ -183,10 +183,10 @@ void CIFem::Structure::AssembleElementsInKMat(arma::sp_mat & K, arma::mat & Ke, 
 	// Assemble K matrix
 	for (int i = 0; i < nKe; i++)
 	{
-		int iKIndex = spEDofs[i]->_kIndex;
+		int iKIndex = spEDofs[i]->GetKIndex();
 		for (int j = 0; j < nKe; j++)
 		{
-			int jKIndex = spEDofs[j]->_kIndex;
+			int jKIndex = spEDofs[j]->GetKIndex();
 			K.at(iKIndex, jKIndex) = Ke.at(i, j);
 		}
 	}
@@ -197,7 +197,7 @@ arma::colvec CIFem::Structure::GetForceVector(std::vector<std::shared_ptr<DOF>> 
 	arma::colvec f(spDofs.size(), arma::fill::zeros);
 
 	for each (std::shared_ptr<DOF> spDof in spDofs)
-		f(spDof->_kIndex) = spDof->GetLoad();
+		f(spDof->GetKIndex()) = spDof->GetLoad();
 
 	return f;
 }
@@ -209,8 +209,8 @@ arma::colvec CIFem::Structure::GetDisplacementVector(std::vector<std::shared_ptr
 	arma::colvec a(spDofs.size(), arma::fill::zeros);
 	
 	for each (std::shared_ptr<DOF> spDof in spDofs)
-		if (spDof->_hasSetTranslation)
-			a(spDof->_kIndex) = spDof->_Am;
+		if (spDof->HasSetTranslation())
+			a(spDof->GetKIndex()) = spDof->GetTranslation();
 
 	return a;
 }
@@ -227,8 +227,8 @@ void CIFem::Structure::LinEqSolve(
 	for each (std::shared_ptr<DOF> dof in spDofs)
 	{
 		// Check transformed bcs
-		if (dof->_hasTransformedBC)
-			transBCDof.push_back(dof->_kIndex);
+		if (dof->HasTransformedBc())
+			transBCDof.push_back(dof->GetKIndex());
 
 		/*
 		// Check prescribed deformations
@@ -263,8 +263,7 @@ void CIFem::Structure::StoreResultsInDofs(arma::colvec a, arma::colvec f, std::v
 	// Set results in dofs
 	for (int i = 0; i < spDofs.size(); i++)
 	{
-		spDofs[i]->_resAs = a(spDofs[i]->_kIndex);
-		spDofs[i]->_resF = f(spDofs[i]->_kIndex);
+		spDofs[i]->SetResults(a(spDofs[i]->GetKIndex()), f(spDofs[i]->GetKIndex()));
 	}
 }
 
@@ -290,10 +289,10 @@ arma::mat CIFem::Structure::GetCMatrix()
 			for (int i = 0; i < nDofs.size(); i++)
 			{
 				for (int j = 0; j < nDofs.size(); j++)
-					C(nDofs[i]->_kIndex, nDofs[j]->_kIndex) = CN(i, j);
+					C(nDofs[i]->GetKIndex(), nDofs[j]->GetKIndex()) = CN(i, j);
 
 				// Set transformed BC flag
-				nDofs[i]->_hasTransformedBC = true;
+				nDofs[i]->SetTransformedBC(true);
 			}
 		}
 	}

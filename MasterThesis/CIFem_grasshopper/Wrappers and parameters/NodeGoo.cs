@@ -61,5 +61,41 @@ namespace CIFem_grasshopper
         {
             return "Node";
         }
+
+        #region casting methods
+
+        public override bool CastTo<Q>(ref Q target)
+        {
+            //Cast to WR_Node3d.
+            if (typeof(Q).IsAssignableFrom(typeof(WR_Node3d)))
+            {
+                if (Value == null)
+                    target = default(Q);
+                else
+                    target = (Q)(object)Value;
+                return true;
+            }
+
+            target = default(Q);
+            return false;
+        }
+
+
+
+        public override bool CastFrom(object source)
+        {
+            if (source == null) { return false; }
+
+            //Cast from WR_Node3d
+            if (typeof(WR_Node3d).IsAssignableFrom(source.GetType()))
+            {
+                Value = (WR_Node3d)source;
+                return true;
+            }
+
+            return false;
+        }
+
+        #endregion
     }
 }

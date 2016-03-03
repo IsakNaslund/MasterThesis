@@ -28,8 +28,11 @@ namespace CIFem_grasshopper
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(
-                new BeamParam(), "Beams", "B", "Beams that the structure should consist of", GH_ParamAccess.list);
+            pManager.AddParameter(new NodeParam(), "Restraint Nodes", "RN",
+                "A list of nodes that may contain restraints", GH_ParamAccess.list);
+
+            pManager.AddParameter(new BeamParam(), "Beams", "B", 
+                "Beams that the structure should consist of", GH_ParamAccess.list);
 
             // Woops, should be restraints!
             //pManager.AddParameter(
@@ -49,10 +52,12 @@ namespace CIFem_grasshopper
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             bool go = false;
-            List<WR_IElemRcp> beams = null;
+            List<WR_Node3d> nodes = new List<WR_Node3d>();
+            List<WR_IElemRcp> beams = new List<WR_IElemRcp>();
 
-            if (!DA.GetData(0, ref beams)) { return; }
-            if (!DA.GetData(1, ref go)) { return; }
+            if (!DA.GetDataList(0, nodes)) { return; }
+            if (!DA.GetDataList(1, beams)) { return; }
+            if (!DA.GetData(2, ref go)) { return; }
 
             if (go)
             {
@@ -62,13 +67,15 @@ namespace CIFem_grasshopper
                 // Create structure wrapper
                 WR_Structure structure = new WR_Structure();
 
-                // Add restraints
-                for (int i = 0; i < beams.Count; i++)
-                {
-                //    structure.AddElementRcp(beams[i].)
-                }
+                // Add restraint nodes
+                foreach (WR_Node3d n in nodes)
+                    structure.AddNode(n);
+                log.Add("" + nodes.Count + " nodes added to structure");
 
                 // Add elements
+                foreach (WR_Elem3dRcp e in beams)
+                    structure.AddElementRcp(e);
+                log.Add("" + beams.Count + " elements added to structure");
 
                 // Add forces
 

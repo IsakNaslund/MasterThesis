@@ -69,16 +69,12 @@ namespace CIFem_grasshopper
             WR_Vector wrZ = GetUnitizedWR_Vector(pl.ZAxis);
 
             WR_Plane wrPl = new WR_Plane(wrX, wrY, wrZ, wrXYZ);
+            WR_Restraint rest = new WR_Restraint(wrPl, rels[0], rels[1], rels[2], rels[3], rels[4], rels[5]);
 
-            //WR_Restraint rest = new WR_Restraint(wrPl, rels, ;
-
-            
-
-            //WR_INode node = new WR_Node3d(pt.X, pt.Y, pt.Z, );
-
+            WR_INode node = new WR_Node3d(pt.X, pt.Y, pt.Z, rest);
 
             ///// OUTPUTS /////
-
+            DA.SetData(0, node);
         }
 
 

@@ -10,6 +10,8 @@
 #include "Rectangle3d.h"
 #include "ReleaseBeam3d.h"
 #include "Element3dRcp.h"
+#include <memory>
+#include "Material.h"
 
 using namespace CIFem;
 
@@ -34,32 +36,41 @@ void StructureTest01::RunTest()
 	XYZ rt(1, 1, 0);
 	XYZ rb(1, 0, 0);
 
+	CIFem::Plane pl;
+	Restraint r(pl, true, true, true, true, true, true);
+
 	// Nodes
-	Node3d nLB(lb);
+	Node3d nLB(lb, r);
 	Node3d nLT(lt);
 	Node3d nRT(rt);
-	Node3d nRB(rb);
+	Node3d nRB(rb, r);
 
-	testStructure.AddNode(&nLB);
-	testStructure.AddNode(&nLT);
-	testStructure.AddNode(&nRT);
-	testStructure.AddNode(&nRB);
+	std::shared_ptr<Node3d> sp_nLB(&nLB);
+	std::shared_ptr<Node3d> sp_nLT(&nLT);
+	std::shared_ptr<Node3d> sp_nRT(&nRT);
+	std::shared_ptr<Node3d> sp_nRB(&nRB);
+	
+	testStructure.AddNode(sp_nLB);
+	testStructure.AddNode(sp_nLT);
+	testStructure.AddNode(sp_nRT);
+	testStructure.AddNode(sp_nRB);
 
 	//Create elements
-	vector<IElementRcp*> elements = CreateElements(lb, lt, rt, rb);
+	vector<std::shared_ptr<IElementRcp>> elements = CreateElements(lb, lt, rt, rb);
+
 	for (int i = 0; i < elements.size(); i++)
 		testStructure.AddElementRcp(elements[i]);
 	
 	//AddForces(testStructure);
 
 	Solve(testStructure);
-
+	
 	//PrintResults(GetResults(testStructure));
 }
 
-std::vector<IElementRcp*> StructureTest01::CreateElements(XYZ lb, XYZ lt, XYZ rt, XYZ rb)
+std::vector<std::shared_ptr<IElementRcp>> StructureTest01::CreateElements(XYZ lb, XYZ lt, XYZ rt, XYZ rb)
 {
-	std::vector<IElementRcp*> elements;
+	vector<std::shared_ptr<IElementRcp>> elements;
 
 	// Element property
 	double E = 210;
@@ -68,26 +79,29 @@ std::vector<IElementRcp*> StructureTest01::CreateElements(XYZ lb, XYZ lt, XYZ rt
 	double Iy = 0.20*0.20*0.20*0.10;
 	double Iz = 0.10*0.10*0.10*0.20;
 	double Kv = 1;						// Change in case of 3d test
-	ElementProperty ep(E, G, A, Iy, Iz, Kv);
+	//ElementProperty ep(E, G, A, Iy, Iz, Kv);
 
+	Material mat(210e9, 0.3, 7800);
+	std::shared_ptr<Rectangle3d> rec(new Rectangle3d(0.150, 0.150));
 
+	
 	// Elements
 	ReleaseBeam3d relFixed(true, true, true, true, true, true);
 	Rectangle3d * pXSec = new Rectangle3d(0.20, 0.10);
 	//std::shared_ptr<DOF> ptr(new DOF(n+i));
 	std::vector<double> orientation = { 0, 0, 1 };
 
-	Element3dRcp * ptr;
+	std::shared_ptr<Element3dRcp> ptr;
 
-	ptr= new Element3dRcp (lb, lt, relFixed, relFixed, pXSec, E, 0.3, orientation);
-
-	elements.push_back(ptr);
-
-	ptr = new Element3dRcp (lt, rt, relFixed, relFixed, pXSec, E, 0.3, orientation);
+	ptr = std::shared_ptr<Element3dRcp>(new Element3dRcp(lb, lt, relFixed, relFixed, rec, mat, orientation));
 
 	elements.push_back(ptr);
 
-	ptr = new Element3dRcp (rt, rb, relFixed, relFixed, pXSec, E, 0.3, orientation);
+	ptr = std::shared_ptr<Element3dRcp>(new Element3dRcp (lt, rt, relFixed, relFixed, rec, mat, orientation));
+
+	elements.push_back(ptr);
+
+	ptr = std::shared_ptr<Element3dRcp>(new Element3dRcp(rt, rb, relFixed, relFixed, rec, mat, orientation));
 
 	elements.push_back(ptr);
 

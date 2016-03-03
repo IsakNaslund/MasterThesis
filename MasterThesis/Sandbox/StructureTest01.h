@@ -12,7 +12,7 @@ public:
 	~StructureTest01();
 
 	void RunTest();
-	std::vector<IElementRcp*> CreateElements(XYZ, XYZ, XYZ, XYZ);
+	vector<std::shared_ptr<IElementRcp>> CreateElements(XYZ, XYZ, XYZ, XYZ);
 	void AddRestraints(Structure&);
 	void AddForces(Structure&);
 	void Solve(Structure&);

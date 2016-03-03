@@ -88,11 +88,11 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(TargetDir)$(ProjectName).dll" "C:\Users\isakn\AppData\Roaming\Grasshopper\Libraries\$(ProjectName).gha"
-copy /Y "$(SolutionDir)x64\Debug\CIFem.dll" "C:\Users\isakn\AppData\Roaming\Grasshopper\Libraries\CIFem.dll"
-copy /Y "$(SolutionDir)x64\Debug\CIFem.pdb" "C:\Users\isakn\AppData\Roaming\Grasshopper\Libraries\CIFem.pdb"
-copy /Y "$(SolutionDir)x64\Debug\CIFem_wrapper.dll" "C:\Users\isakn\AppData\Roaming\Grasshopper\Libraries\CIFem_wrapper.dll"
-copy /Y "$(SolutionDir)x64\Debug\CIFem_wrapper.pdb" "C:\Users\isakn\AppData\Roaming\Grasshopper\Libraries\CIFem_wrapper.pdb"
+    <PostBuildEvent>copy /Y "$(TargetDir)$(ProjectName).dll" "C:\Users\carlh\AppData\Roaming\Grasshopper\Libraries\$(ProjectName).gha"
+copy /Y "$(SolutionDir)x64\Debug\CIFem.dll" "C:\Users\carlh\AppData\Roaming\Grasshopper\Libraries\CIFem.dll"
+copy /Y "$(SolutionDir)x64\Debug\CIFem.pdb" "C:\Users\carlh\AppData\Roaming\Grasshopper\Libraries\CIFem.pdb"
+copy /Y "$(SolutionDir)x64\Debug\CIFem_wrapper.dll" "C:\Users\carlh\AppData\Roaming\Grasshopper\Libraries\CIFem_wrapper.dll"
+copy /Y "$(SolutionDir)x64\Debug\CIFem_wrapper.pdb" "C:\Users\carlh\AppData\Roaming\Grasshopper\Libraries\CIFem_wrapper.pdb"
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

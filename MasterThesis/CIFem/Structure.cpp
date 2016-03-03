@@ -85,7 +85,7 @@ void CIFem::Structure::Solve()
 	arma::sp_mat K = AssembleStiffnessMatrix(spDofs);
 	
 	// Get a and f vectors 
-	arma::mat C = GetCMatrix();				// Get transformation vector for restraints
+	arma::mat C = GetCMatrix();							// Get transformation vector for restraints
 	arma::colvec am = GetDisplacementVector(spDofs);	// Get displacement vector
 	arma::colvec f = GetForceVector(spDofs);			// Get force vector
 

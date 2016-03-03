@@ -71,7 +71,9 @@ namespace CIFem_grasshopper
             WR_Plane wrPl = new WR_Plane(wrX, wrY, wrZ, wrXYZ);
             WR_Restraint rest = new WR_Restraint(wrPl, rels[0], rels[1], rels[2], rels[3], rels[4], rels[5]);
 
-            WR_INode node = new WR_Node3d(pt.X, pt.Y, pt.Z, rest);
+            double factor = Utilities.GetScalingFactorFromRhino();
+
+            WR_INode node = new WR_Node3d(pt.X* factor, pt.Y* factor, pt.Z* factor, rest);
 
             ///// OUTPUTS /////
             DA.SetData(0, node);

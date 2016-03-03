@@ -55,7 +55,7 @@ namespace CIFem_grasshopper
                 return RectangularCrossSection(section);
             }
 
-
+            
 
             throw new NotImplementedException();
 
@@ -73,8 +73,9 @@ namespace CIFem_grasshopper
                 throw new Exception("Wrong string format for cross section");
             }
 
+            double factor = Utilities.GetScalingFactorFromRhino();
 
-            return new WR_XSecRect(height, width);
+            return new WR_XSecRect(height* factor, width* factor);
 
         }
 

@@ -274,10 +274,10 @@ void CIFem::Structure::LinEqSolve(
 
 	// Solve deformations
 	arma::mat Kmat(K); // Debugging, workaround this to improve speed
-	arma::sp_mat Kff(Kmat(ufDof, ufDof));
+	//arma::sp_mat Kff(Kmat(ufDof, ufDof));
 	arma::mat f_fsolved = f(ufDof)- Kmat(ufDof, upDof) * a(upDof);
-	fa = arma::spsolve(Kff, f_fsolved);
-
+	//fa = arma::spsolve(Kff, f_fsolved);
+	fa = arma::solve(Kmat(ufDof, ufDof), f_fsolved);
 	a(ufDof) = fa;
 
 	// Solve forces

@@ -2,7 +2,7 @@
 
 
 
-double CIFem::INode::DistanceTo(const XYZ other) const
+double CIFem::INode::DistanceTo(const XYZ & other) const
 {
 	return -1;
 }

@@ -20,7 +20,7 @@ namespace CIFem
 		virtual std::vector<std::shared_ptr<DOF> > GetDofs() = 0;
 		virtual std::vector<std::shared_ptr<DOF> > GetTranslationDofs() = 0;
 		virtual std::vector<std::shared_ptr<DOF> > GetRotationDofs() = 0;
-		virtual double DistanceTo(const XYZ other) const;
+		virtual double DistanceTo(const XYZ& other) const;
 
 		virtual bool GetNodeCMatrix(Plane, arma::mat &) { return false; };
 	};

@@ -44,6 +44,28 @@ void CIFem::Structure::AddElementRcp(std::vector<std::shared_ptr<IElementRcp>> e
 }
 
 
+// Not implemented!
+CIFem::Structure CIFem::Structure::Copy()
+{
+	// Create new structure
+	CIFem::Structure s();
+
+	// Copy orientation
+	// Not necessary atm since orientation is standard and set in constructor
+
+	// Copy nodes
+	throw std::exception("Not implemented yet!");
+
+	// Copy ElementRecipes
+
+	// Copy Elements
+
+	// Remap dofs (maybe, maybe needs to be done while copying the other stuff)
+
+	return Structure();
+}
+
+
 void CIFem::Structure::Solve()
 {
 	// Build structure

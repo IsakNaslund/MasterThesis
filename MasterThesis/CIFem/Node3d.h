@@ -23,8 +23,8 @@ namespace CIFem
 		~Node3d();
 
 		std::vector<std::shared_ptr<DOF>> GetDofs();
-		std::vector<std::shared_ptr<DOF> > GetTranslationDofs();
-		std::vector<std::shared_ptr<DOF> > GetRotationDofs();
+		std::vector<std::shared_ptr<DOF>> GetTranslationDofs();
+		std::vector<std::shared_ptr<DOF>> GetRotationDofs();
 
 		double DistanceTo(const Node3d* other) const;
 		double DistanceTo(const INode* other) const;

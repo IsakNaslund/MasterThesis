@@ -24,6 +24,8 @@ namespace CIFem
 		void AddElementRcp(std::shared_ptr<IElementRcp>);
 		void AddElementRcp(std::vector<std::shared_ptr<IElementRcp>>);
 
+		// Not implemented!
+		Structure Copy();
 		void Solve();
 
 	protected:

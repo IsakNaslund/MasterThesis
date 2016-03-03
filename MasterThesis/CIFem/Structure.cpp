@@ -256,13 +256,13 @@ void CIFem::Structure::LinEqSolve(
 		if (dof->HasTransformedBc())
 			transBCDof.push_back(dof->GetKIndex());
 
-		/*
+		
 		// Check prescribed deformations
 		if (dof->HasSetTranslation())
-			pDof.push_back(dof->_kIndex);
+			pDof.push_back(dof->GetKIndex());
 		else
-			fDof.push_back(dof->_kIndex);
-		*/
+			fDof.push_back(dof->GetKIndex());
+		
 	}
 
 	// There must be a way to do this from the start,

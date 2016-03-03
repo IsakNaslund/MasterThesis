@@ -26,6 +26,7 @@ namespace CIFem
 		std::vector<double> GetDisplacements();
 
 	private:
+		void SetReleases(std::vector<bool> rel, std::vector<double> dist);
 		std::vector<bool> _releases;		// True = fixed, False = free
 		std::vector<double> _displacement;
 	};

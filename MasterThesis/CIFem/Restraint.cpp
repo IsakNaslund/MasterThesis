@@ -9,10 +9,12 @@ namespace CIFem
 
 	Restraint::Restraint(Plane orientation, bool x, bool y, bool z, bool xx, bool yy, bool zz)
 	{
+		_orientation = orientation;
+
 		std::vector<bool> releases = { x, y, z, xx, yy, zz };
 		std::vector<double> displacements = { 0, 0, 0, 0, 0, 0 };
 
-		Restraint(orientation, releases, displacements);
+		SetReleases(releases, displacements);
 	}
 
 	Restraint::Restraint(Plane orientation, std::vector<bool> releases, std::vector<double> displacements)
@@ -20,15 +22,20 @@ namespace CIFem
 		// Set plane
 		_orientation = orientation;
 
+		SetReleases(releases, displacements);
+	}
+
+	void Restraint::SetReleases(std::vector<bool> rel, std::vector<double> disp)
+	{
 		// Set restraints
-		if (releases.size() != 6 || displacements.size() != 6)
+		if (rel.size() != 6 || disp.size() != 6)
 		{
 			throw std::invalid_argument("Error, number of releases and displacements should be 6!");
 		}
 		else
 		{
-			_releases = releases;
-			_displacement = displacements;
+			_releases = rel;
+			_displacement = disp;
 
 			_isValid = true;
 		}
@@ -116,5 +123,7 @@ namespace CIFem
 	{
 		return _displacement;
 	}
+
+
 
 }

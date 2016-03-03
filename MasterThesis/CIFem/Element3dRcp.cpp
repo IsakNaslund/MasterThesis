@@ -93,7 +93,7 @@ std::vector<IElement*> CIFem::Element3dRcp::CreateElement(std::vector<std::share
 	if(!enFound)
 	{
 		enNode = shared_ptr<INode>(new Node3d(_enPos));
-		systemNodes.push_back(stNode);
+		systemNodes.push_back(enNode);
 	}
 
 

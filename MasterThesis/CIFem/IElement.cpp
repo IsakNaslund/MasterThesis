@@ -23,7 +23,7 @@ std::vector<int> CIFem::IElement::GetDofIndecies()
 
 	for (int i = 0; i < GetSize(); i++)
 	{
-		ind.push_back(_dof[i]->_kIndex);
+		ind.push_back(_dof[i]->GetKIndex());
 	}
 
 	return ind;

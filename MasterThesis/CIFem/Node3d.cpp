@@ -102,8 +102,7 @@ void CIFem::Node3d::SetRestraint(Restraint r)
 	for (int i = 0; i < releases.size(); i++)
 		if (releases[i]) // If fixed
 		{
-			this->_dof[i]->_Am = displacements[i];
-			this->_dof[i]->_hasSetTranslation = true;
+			this->_dof[i]->SetUpBoundaryCondition(true, displacements[i]);
 		}
 }
 
@@ -116,7 +115,7 @@ bool CIFem::Node3d::GetNodeCMatrix(const Plane globalOrientation, arma::mat & CN
 		{
 			std::vector<std::shared_ptr<DOF>> dofs = this->GetDofs();
 			for (int i = 0; i < dofs.size(); i++)
-				dofs[i]->_hasTransformedBC = true;
+				dofs[i]->SetTransformedBC( true);
 
 			return true;
 		}

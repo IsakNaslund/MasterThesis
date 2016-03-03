@@ -25,6 +25,8 @@ namespace CIFem
 		virtual arma::Col<double> GravityLoad() {  return GravityLoad(-9.82); }
 		virtual arma::Col<double> GravityLoad(double factor) { return GravityLoad(Vector3d(0, 0, factor)); }
 		virtual arma::Col<double> GravityLoad(Vector3d direction) = 0;
+
+		virtual void CalculateSectionForces() = 0;
 	};
 }
 

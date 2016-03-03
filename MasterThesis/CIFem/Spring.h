@@ -24,6 +24,7 @@ namespace CIFem
 
 		arma::Col<double> GravityLoad(Vector3d direction) { return arma::vec(); }
 
+		void CalculateSectionForces();
 
 	protected:
 		int GetSize() { return 2; };

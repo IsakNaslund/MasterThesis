@@ -72,7 +72,7 @@ namespace CIFem_grasshopper
 
             //WR_Restraint rest = new WR_Restraint(wrPl, rels, ;
 
-            // FORTSÄTT HÄR IMORGON CARL
+            
 
             //WR_INode node = new WR_Node3d(pt.X, pt.Y, pt.Z, );
 

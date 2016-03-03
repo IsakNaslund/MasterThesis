@@ -100,7 +100,7 @@ void CIFem::Node3d::SetRestraint(Restraint r)
 	std::vector<bool> releases = r.GetReleases();
 	std::vector<double> displacements = r.GetDisplacements();
 	for (int i = 0; i < releases.size(); i++)
-		if (!releases[i])
+		if (releases[i]) // If fixed
 		{
 			this->_dof[i]->_Am = displacements[i];
 			this->_dof[i]->_hasSetTranslation = true;

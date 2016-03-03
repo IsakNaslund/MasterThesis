@@ -8,8 +8,9 @@ namespace CIFem_wrapper
 	{
 	}
 
-	WR_Restraint::WR_Restraint(WR_Plane^ plane, std::vector<bool> releases, std::vector<double> ae)
+	WR_Restraint::WR_Restraint(WR_Plane^ plane, bool x, bool y, bool z, bool xx, bool yy, bool zz)
 	{
+
 		_restraint = gcnew m_shared_ptr<CIFem::Restraint>(new CIFem::Restraint(*plane->GetPlane(), releases, ae));
 	}
 

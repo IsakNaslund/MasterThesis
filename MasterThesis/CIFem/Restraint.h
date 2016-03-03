@@ -13,6 +13,7 @@ namespace CIFem
 
 	public:
 		Restraint();
+		Restraint(Plane, bool x, bool y, bool z, bool xx, bool yy, bool zz);
 		Restraint(Plane, std::vector<bool>, std::vector<double>);
 		~Restraint();
 
@@ -25,7 +26,7 @@ namespace CIFem
 		std::vector<double> GetDisplacements();
 
 	private:
-		std::vector<bool> _releases;		// True = free, false = fixed
+		std::vector<bool> _releases;		// True = fixed, False = free
 		std::vector<double> _displacement;
 	};
 }

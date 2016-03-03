@@ -1,16 +1,18 @@
-﻿using Grasshopper.Kernel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Grasshopper.Kernel.Types;
+using Grasshopper.Kernel;
+
 namespace CIFem_grasshopper
 {
-    public class BeamPropertiesParam : Grasshopper.Kernel.GH_Param<BeamPropertiesGoo>
+    public class MaterialParam : GH_Param<MaterialGoo>
     {
 
-        public BeamPropertiesParam():base(new GH_InstanceDescription("3d Beam Prop", "3dbP", "Properties for a 3d beam","CIFem","Elements"))
+        public MaterialParam() :base(new GH_InstanceDescription("Material", "M", "Material to use in structures","CIFem","Elements"))
         {
         }
 
@@ -18,7 +20,7 @@ namespace CIFem_grasshopper
         {
             get
             {
-                return new Guid("0adfad12-b0fa-40af-82f7-4b8a92bd5339");
+                return new Guid("4e49f22b-7fca-41d0-8938-42857c169787");
             }
         }
 

@@ -10,40 +10,43 @@ namespace CIFem_grasshopper
 {
     public class BeamProperties
     {
-        private double _matStiff, _poison;
         private WR_IXSec _section;
         private WR_ReleaseBeam3d _stRel, _enRel;
+        private WR_Material _mat;
 
         public BeamProperties()
         {
-            _matStiff = 0;
-            _poison = 0;
             _section = null;
             _stRel = null;
             _enRel = null;
+            _mat = null;
 
         }
 
-        public BeamProperties(double matStiff, double poison, string section, WR_ReleaseBeam3d stRel, WR_ReleaseBeam3d enRel)
-        {
-            _matStiff = matStiff;
-            _poison = poison;
-            _stRel = stRel;
-            _enRel = enRel;
-            _section = CrossSectionFormString(section);
-        }
+        //public BeamProperties(double matStiff, double poison, string section, WR_ReleaseBeam3d stRel, WR_ReleaseBeam3d enRel)
+        //{
+//
+ //           _stRel = stRel;
+ //           _enRel = enRel;
+ //           _section = CrossSectionFormString(section);
+ //       }
 
         public BeamProperties(BeamProperties other)
         {
-            _matStiff = other._matStiff;
-            _poison = other._poison;
+            _mat = other._mat.Copy();
             _section = other._section;
             _stRel = other._stRel.Copy();
             _enRel = other._enRel.Copy();
 
         }
 
-
+        public BeamProperties(WR_Material mat, string section, WR_ReleaseBeam3d stRel, WR_ReleaseBeam3d enRel)
+        {
+            _mat = mat;
+            _stRel = stRel;
+            _enRel = enRel;
+            _section = CrossSectionFormString(section);
+        }
 
         private WR_IXSec CrossSectionFormString(string section)
         {

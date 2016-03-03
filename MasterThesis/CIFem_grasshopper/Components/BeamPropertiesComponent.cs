@@ -27,8 +27,7 @@ namespace CIFem_grasshopper
             pManager.AddTextParameter("Cross section", "XS", "Cross section for the beam on string form", GH_ParamAccess.item);
             pManager.AddParameter(new BeamReleaseParameter(), "Start Release", "SR", "Release at the start point fo the beam", GH_ParamAccess.item);
             pManager.AddParameter(new BeamReleaseParameter(), "End Release", "ER", "Release at the end point fo the beam", GH_ParamAccess.item);
-            pManager.AddNumberParameter("Material Stiffness", "E", "Youngs modulus for the beam, set to steel by deafault", GH_ParamAccess.item, 210000000000);
-            pManager.AddNumberParameter("Poisons ratio", "p", "Poisons ration for the material of the beam, set to steel by default", GH_ParamAccess.item, 0.3);
+            pManager.AddParameter(new MaterialParam(), "Material", "M", "Material to use in the beam", GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -41,16 +40,17 @@ namespace CIFem_grasshopper
             string crossSection = "";
             WR_ReleaseBeam3d stREl = null;
             WR_ReleaseBeam3d enREl = null;
+            WR_Material mat = null;
             double E = double.NaN;
             double poi = double.NaN;
 
             if (!DA.GetData(0, ref crossSection)) { return; }
             if (!DA.GetData(1, ref stREl)) { return; }
             if (!DA.GetData(2, ref enREl)) { return; }
-            if (!DA.GetData(3, ref E)) { return; }
-            if (!DA.GetData(4, ref poi)) { return; }
+            if (!DA.GetData(3, ref mat)) { return; }
 
-            BeamProperties beamProp = new BeamProperties(E, poi, crossSection, stREl, enREl);
+
+            BeamProperties beamProp = new BeamProperties(mat, crossSection, stREl, enREl);
             
             
 

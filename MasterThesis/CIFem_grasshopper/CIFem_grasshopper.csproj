@@ -60,6 +60,8 @@
     <Compile Include="Components\BeamPropertiesComponent.cs" />
     <Compile Include="Components\NodeComponent.cs" />
     <Compile Include="Components\StructureComponent.cs" />
+    <Compile Include="Components\MaterialComponent.cs" />
+    <Compile Include="Wrappers and parameters\MaterialParam.cs" />
     <Compile Include="Wrappers and parameters\BeamReleaseParameter.cs" />
     <Compile Include="Wrappers and parameters\BeamReleaseGoo.cs" />
     <Compile Include="Components\BeamReleaseComponent.cs" />
@@ -69,6 +71,7 @@
     <Compile Include="Wrappers and parameters\BeamGoo.cs" />
     <Compile Include="Components\ConstructBeam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Wrappers and parameters\MaterialGoo.cs" />
     <Compile Include="Wrappers and parameters\NodeGoo.cs" />
     <Compile Include="Wrappers and parameters\NodeParam.cs" />
   </ItemGroup>

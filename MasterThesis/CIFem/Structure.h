@@ -40,8 +40,7 @@ namespace CIFem
 		void AssembleElementsInKMat(arma::sp_mat & K, arma::mat & Ke, std::vector<std::shared_ptr<DOF>>);
 		arma::colvec GetForceVector(std::vector<std::shared_ptr<DOF>>);
 		arma::colvec GetDisplacementVector(std::vector<std::shared_ptr<DOF>>);
-		void LinEqSolve(
-			arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::vector<std::shared_ptr<DOF>>);
+		void LinEqSolve(arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::vector<std::shared_ptr<DOF>>, arma::colvec & s);
 		void StoreResultsInDofs(arma::colvec a, arma::colvec f, std::vector<std::shared_ptr<DOF>>);
 		arma::mat GetCMatrix();
 		void CalculateElemetForces();

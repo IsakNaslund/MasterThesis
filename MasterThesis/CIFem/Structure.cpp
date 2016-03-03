@@ -91,11 +91,17 @@ void CIFem::Structure::Solve()
 
 	// Transform matrices and vectors to allow for non-global restraints
 
+	// Debug
+	arma::mat Kwrite(K);
+	Kwrite.print("Kwrite: ");
+	f.print("f: ");
+
 	// Solve K matrix
-	LinEqSolve(K, am, f, C, spDofs);
+	arma::colvec s;		// Resulting forces
+	LinEqSolve(K, am, f, C, spDofs, s);
 
 	// Store results in dofs
-	StoreResultsInDofs(am, f, spDofs);
+	StoreResultsInDofs(am, s, spDofs);
 }
 
 
@@ -213,7 +219,7 @@ void CIFem::Structure::AssembleElementsInKMat(arma::sp_mat & K, arma::mat & Ke, 
 		for (int j = 0; j < nKe; j++)
 		{
 			int jKIndex = spEDofs[j]->GetKIndex();
-			K.at(iKIndex, jKIndex) = Ke.at(i, j);
+			K.at(iKIndex, jKIndex) += Ke.at(i, j);
 		}
 	}
 }
@@ -243,8 +249,8 @@ arma::colvec CIFem::Structure::GetDisplacementVector(std::vector<std::shared_ptr
 
 
 
-void CIFem::Structure::LinEqSolve(
-	arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::vector<std::shared_ptr<DOF>> spDofs)
+void CIFem::Structure::LinEqSolve(arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, 
+	std::vector<std::shared_ptr<DOF>> spDofs, arma::colvec & s)
 {
 	// Check prescribed deformations
 	std::vector<unsigned int> transBCDof;
@@ -281,7 +287,7 @@ void CIFem::Structure::LinEqSolve(
 	a(ufDof) = fa;
 
 	// Solve forces
-	f = K*a;
+	s = K*a - f;
 }
 
 void CIFem::Structure::StoreResultsInDofs(arma::colvec a, arma::colvec f, std::vector<std::shared_ptr<DOF>> spDofs)

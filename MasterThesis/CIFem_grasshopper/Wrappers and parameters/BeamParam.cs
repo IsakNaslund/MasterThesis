@@ -22,5 +22,13 @@ namespace CIFem_grasshopper
                 return new Guid("71f3db8f-7b0d-4b3e-9b36-9f6d25766712");
             }
         }
+
+        public override GH_Exposure Exposure
+        {
+            get
+            {
+                return GH_Exposure.hidden;
+            }
+        }
     }
 }

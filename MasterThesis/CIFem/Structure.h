@@ -42,6 +42,8 @@ namespace CIFem
 			arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::vector<std::shared_ptr<DOF>>);
 		void StoreResultsInDofs(arma::colvec a, arma::colvec f, std::vector<std::shared_ptr<DOF>>);
 		arma::mat GetCMatrix();
+		void CalculateElemetForces();
+
 	};
 }
 

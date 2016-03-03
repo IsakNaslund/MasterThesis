@@ -50,9 +50,11 @@ namespace CIFem_grasshopper
 
             norm.Unitize();
 
+            double factor = Utilities.GetScalingFactorFromRhino();
+
             WR_Vector wrNorm = new WR_Vector(norm.X, norm.Y, norm.Z);
-            WR_XYZ st = new WR_XYZ(ln.FromX, ln.FromY, ln.FromZ);
-            WR_XYZ en = new WR_XYZ(ln.ToX, ln.ToY, ln.ToZ);
+            WR_XYZ st = new WR_XYZ(ln.FromX* factor, ln.FromY* factor, ln.FromZ* factor);
+            WR_XYZ en = new WR_XYZ(ln.ToX* factor, ln.ToY* factor, ln.ToZ* factor);
 
             WR_Elem3dRcp beam = new WR_Elem3dRcp(st, en, prop.StartRelease, prop.EndRelease, prop.CrossSection, prop.Material, wrNorm);
             

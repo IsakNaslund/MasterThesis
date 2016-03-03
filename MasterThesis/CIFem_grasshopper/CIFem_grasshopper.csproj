@@ -61,6 +61,7 @@
     <Compile Include="Components\NodeComponent.cs" />
     <Compile Include="Components\StructureComponent.cs" />
     <Compile Include="Components\MaterialComponent.cs" />
+    <Compile Include="Utilities.cs" />
     <Compile Include="Wrappers and parameters\MaterialParam.cs" />
     <Compile Include="Wrappers and parameters\BeamReleaseParameter.cs" />
     <Compile Include="Wrappers and parameters\BeamReleaseGoo.cs" />

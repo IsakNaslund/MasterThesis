@@ -80,6 +80,7 @@ namespace CIFem_grasshopper
                 // Add forces
 
                 // Solve
+                structure.Solve();
             }
 
             DA.SetData(0, log);

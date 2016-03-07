@@ -16,6 +16,13 @@ namespace CIFem
 {
 	class CIFEM_API Element3d : public IElement
 	{
+
+		struct Results
+		{
+			//List of results
+			std::vector<double> _N1, _Vy, _Vz, _T, _My, _Mz, _u, _v, _w, _fi, pos;
+		};
+
 		XYZ _sNode, _eNode;		// Start and end node
 		vector<int> _edof;		// Element degrees of freedom		
 		double _length;			// Element length
@@ -23,6 +30,7 @@ namespace CIFem
 		SectionProperties _secProp;
 		Material _mat;
 		std::vector<double> _eo;// Element orientation
+		Results _results;
 
 	public:
 		Element3d();
@@ -35,7 +43,8 @@ namespace CIFem
 		arma::Col<double> GravityLoad(Vector3d direction);
 
 
-		void CalculateSectionForces();
+		void CalculateSectionForces() {  CalculateSectionForces(5); }
+		void CalculateSectionForces(int n);   //n is the number of evaluation points
 
 
 	private:
@@ -46,6 +55,12 @@ namespace CIFem
 		void SetElementOrientation(std::vector<double>);
 		double CalcLength(XYZ sNode, XYZ eNode);	// Calculates and sets the element length
 		arma::mat GetTransformationMatrix();
+		arma::mat & GetCMatrix();
+
+
+ 
+
+
 	protected:
 		int GetSize() { return 12; };
 	};

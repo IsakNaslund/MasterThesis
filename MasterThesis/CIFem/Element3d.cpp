@@ -196,8 +196,60 @@ arma::Col<double> CIFem::Element3d::GravityLoad(Vector3d direction)
 	return arma::vec();
 }
 
-void CIFem::Element3d::CalculateSectionForces()
+void CIFem::Element3d::CalculateSectionForces(int n)
 {
+	//solving without taking ito acount deformations from internal ditributed loads first.
+
+	arma::mat G = GetTransformationMatrix();
+
+	arma::vec ed(12);
+
+	for (int i = 0; i < _dof.size(); i++)
+	{
+		ed[i] = _dof[i]->GetResultingTranslation;
+	}
+
+	arma::vec u = G*ed;
+
+	arma::mat C = GetCMatrix();
+
+	arma::vec m = arma::solve(C, u);
+
+	//_N1, _Vy, _Vz, _T, _My, _Mz, _u, _v, _w, _fi, pos;
+
+	double EA, EIz, EIy, GKv;
+
+	EA = _secProp.A()*_mat.E();
+	EIz = _secProp.Iz()*_mat.E();
+	EIz = _secProp.Iz()*_mat.E();
+	EIz = _secProp.Kv()*_mat.G();
+
+	for (int i = 0; i < n; i++)
+	{
+		//position on the beam
+		double x = (double)i * _length / ((double)(n - 1));
+		
+		_results.pos.push_back(x);
+
+		double x2, x3;
+
+		x2 = pow(x, 2);
+		x3 = pow(x, 3);
+																	//Values ignored for now..
+		_results._N1.push_back(EA*m(0));							//-qx*x
+		_results._Vy.push_back(-6 * EIz*m(2));						//-qy*x
+		_results._Vz.push_back(-6 * EIy*m(6));						//-qz*x
+		_results._T.push_back(GKv*m(10));							//-qw*x
+		_results._My.push_back(-6 * EIz*x*m(6) - 2 * EIy*m(7));		//-qz*x^2/2
+		_results._Mz.push_back(6 * EIz*x*m(2) + 2 * EIz*m(3));		//qy*x^2/2
+
+		_results._u.push_back(x*m(0) + m(1));						//-qx*x^2/2/EA;
+		_results._v.push_back(x3*m(2) + x2*m(3) + x*m(4) + m(5));	//qy*x^4/24/EIz;
+		_results._w.push_back(x3*m(6) + x2*m(7) + x*m(8) + m(9));	//qz*x^4/24/EIy;
+		_results._fi.push_back(x*m(10) + m(11));					//-qw*x^2/2/GKv
+
+	}
+
 }
 
 
@@ -230,11 +282,69 @@ arma::mat Element3d::GetTransformationMatrix()
 	return G;
 }
 
+arma::mat & CIFem::Element3d::GetCMatrix()
+{
+	arma::mat C(12, 12, arma::fill::zeros);
+
+	double L, L2, L3;
+
+	L = _length;
+	L2 = pow(_length, 2);
+	L3 = pow(_length, 3);
+
+	C(0, 1) = 1;
+	C(1, 5) = 1;
+	C(2, 9) = 1;
+	C(3, 11) = 1;
+	C(4, 18) = -1;
+	C(5, 4) = 1;
+
+	C(6, 0) = L;
+	C(6, 1) = 1;
+
+	C(7, 2) = L3;
+	C(7, 3) = L2;
+	C(7, 4) = L;
+	C(7, 5) = 1;
+
+	C(8, 6) = L3;
+	C(8, 7) = L2;
+	C(8, 8) = L;
+	C(8, 9) = 1;
+
+	C(9, 10) = L;
+	C(9, 11) = 1;
+
+	C(10, 6) = -3*L2;
+	C(10, 7) = -2*L;
+	C(10, 8) = -1;
+
+	C(10, 2) = 3*L2;
+	C(10, 3) = 2*L;
+	C(10, 4) = 1;
+
+	return C;
+
+	/*C = [0 1   0    0  0 0    0     0   0 0 0 0;
+		 0 0   0    0  0 1    0     0   0 0 0 0;
+		 0 0   0    0  0 0    0     0   0 1 0 0;
+		 0 0   0    0  0 0    0     0   0 0 0 1;
+		 0 0   0    0  0 0    0     0 - 1 0 0 0;
+		 0 0   0    0  1 0    0     0   0 0 0 0;
+		 L 1   0    0  0 0    0     0   0 0 0 0;
+		 0 0  L^3  L^2 L 1    0     0   0 0 0 0;
+		 0 0   0    0  0 0   L^3   L^2  L 1 0 0;
+		 0 0   0    0  0 0    0     0   0 0 L 1;
+		 0 0   0    0  0 0 -3*L^2 -2*L -1 0 0 0;
+		 0 0 3*L^2 2*L 1 0    0     0   0 0 0 0];*/
+}
+
 // Initiates the element
 void Element3d::Init()
 {
 	// Set element orientation to global z
 	SetElementOrientation({ 0, 0, 1 });
+
 }
 
 /*

@@ -15,7 +15,7 @@ namespace CIFem
 	public:
 		virtual ~IElementRcp();
 
-		virtual std::vector<IElement*> CreateElement(std::vector<std::shared_ptr<INode>> & systemNodes) = 0;
+		virtual std::vector<std::shared_ptr<CIFem::IElement>> CreateElement(std::vector<std::shared_ptr<INode>> & systemNodes) = 0;
 	};
 }
 

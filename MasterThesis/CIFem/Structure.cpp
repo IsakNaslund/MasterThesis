@@ -15,8 +15,11 @@ CIFem::Structure::Structure()
 
 CIFem::Structure::~Structure()
 {
+	// Should not be necessary to do anymore, since elements were changed to smart pointers
+	/*
 	for (int i = 0; i < _elements.size(); i++)
 		delete _elements[i];
+	*/
 
 	_elements.clear();
 }
@@ -104,11 +107,16 @@ void CIFem::Structure::Solve()
 	StoreResultsInDofs(am, s, spDofs);
 }
 
-
-std::vector<CIFem::IElement *> CIFem::Structure::CreateElements()
+std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Structure::GetElements()
 {
-	std::vector<IElement *> elements;
-	std::vector<IElement *> outElems;
+	return _elements;
+}
+
+
+std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Structure::CreateElements()
+{
+	std::vector<std::shared_ptr<CIFem::IElement>> elements;
+	std::vector<std::shared_ptr<CIFem::IElement>> outElems;
 	for (int i = 0; i < _elementRcps.size(); i++)
 	{
 		outElems.clear();
@@ -186,7 +194,7 @@ arma::sp_mat CIFem::Structure::AssembleStiffnessMatrix(std::vector<std::shared_p
 	arma::sp_mat K(dofCount, dofCount);
 
 	// Assemble K matrix
-	for each (IElement * pElem in _elements)
+	for each (std::shared_ptr<CIFem::IElement> pElem in _elements)
 	{
 		arma::mat Ke = pElem->GetStiffnessMatrix();
 

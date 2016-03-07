@@ -20,7 +20,7 @@ namespace CIFem
 
 		~Spring();
 		arma::Mat<double> GetStiffnessMatrix();
-		std::vector <int> GetDofs();
+		std::vector<int> GetDofs();
 
 		arma::Col<double> GravityLoad(Vector3d direction) { return arma::vec(); }
 

@@ -4,6 +4,7 @@
 #include "WR_INode.h"
 #include "WR_IElemRcp.h"
 #include "m_shared_ptr.h"
+#include "WR_IElement.h"
 
 namespace CIFem_wrapper
 {
@@ -18,6 +19,7 @@ namespace CIFem_wrapper
 		//void AddNode(std::vector<WR_INode> wrNodeList);
 		void AddElementRcp(WR_IElemRcp^ wrRcp);
 		//void AddElementRcp(std::vector<IElementRcp *>);
+		System::Collections::Generic::List<WR_IElement^>^ GetElements();
 
 		void Solve();
 	};

@@ -54,10 +54,10 @@ CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, Rel
 	SetNormal(normal);	// Set normal with format check
 }
 
-std::vector<IElement*> CIFem::Element3dRcp::CreateElement(std::vector<std::shared_ptr<INode>> & systemNodes)
+std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Element3dRcp::CreateElement(std::vector<std::shared_ptr<INode>> & systemNodes)
 {
 	std::shared_ptr<INode> stNode, enNode;
-	std::vector<IElement*> newElements;
+	std::vector<std::shared_ptr<CIFem::IElement>> newElements;
 
 	bool stFound = false;
 	bool enFound = false;
@@ -121,7 +121,7 @@ std::vector<IElement*> CIFem::Element3dRcp::CreateElement(std::vector<std::share
 				std::vector<std::shared_ptr<DOF> > sprDof;
 				sprDof.push_back(ptr);
 				sprDof.push_back(stNodDof[i]);
-				IElement* spring = new Spring(_stRel.GetReleases()[i].Stiffness(), sprDof);
+				std::shared_ptr<CIFem::IElement> spring(new Spring(_stRel.GetReleases()[i].Stiffness(), sprDof));
 				newElements.push_back(spring);
 			}
 		}
@@ -144,7 +144,7 @@ std::vector<IElement*> CIFem::Element3dRcp::CreateElement(std::vector<std::share
 				std::vector<std::shared_ptr<DOF> > sprDof;
 				sprDof.push_back(ptr);
 				sprDof.push_back(enNodDof[i]);
-				IElement* spring = new Spring(_stRel.GetReleases()[i].Stiffness(), sprDof);
+				std::shared_ptr<CIFem::IElement> spring(new Spring(_stRel.GetReleases()[i].Stiffness(), sprDof));
 				newElements.push_back(spring);
 			}
 		}
@@ -152,7 +152,7 @@ std::vector<IElement*> CIFem::Element3dRcp::CreateElement(std::vector<std::share
 
 	SectionProperties secProp = _xSec->CalcSectionProperties();
 	//ElementProperty ep =ElementProperty(_mat.E(), _mat.G(), secProp._area, secProp._Iy, secProp._Iz, secProp._Kv);
-	IElement* beam = new Element3d(_stPos, _enPos, dof, secProp,_mat);
+	std::shared_ptr<CIFem::IElement> beam(new Element3d(_stPos, _enPos, dof, secProp,_mat));
 
 	newElements.push_back(beam);
 

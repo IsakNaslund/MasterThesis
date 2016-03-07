@@ -28,11 +28,13 @@ namespace CIFem
 		Structure Copy();
 		void Solve();
 
+		std::vector<std::shared_ptr<CIFem::IElement>> GetElements();
+
 	protected:
-		std::vector<CIFem::IElement *> _elements;
+		std::vector<std::shared_ptr<CIFem::IElement>> _elements;
 
 	private:
-		std::vector<IElement *> CreateElements();
+		std::vector<std::shared_ptr<CIFem::IElement>> CreateElements();
 		void BuildStructure();
 		std::vector<std::shared_ptr<CIFem::DOF>> GetDofs();
 		void SetDofKMatIndex(std::vector<std::shared_ptr<CIFem::DOF>>);

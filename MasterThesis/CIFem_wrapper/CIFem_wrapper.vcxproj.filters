@@ -63,6 +63,12 @@
     <ClInclude Include="WR_Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WR_IElement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WR_Element3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -108,6 +114,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WR_Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WR_IElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WR_Element3d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

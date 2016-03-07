@@ -137,6 +137,8 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="WR_Elem3dRcp.h" />
+    <ClInclude Include="WR_Element3d.h" />
+    <ClInclude Include="WR_IElement.h" />
     <ClInclude Include="WR_IElemRcp.h" />
     <ClInclude Include="WR_INode.h" />
     <ClInclude Include="WR_IXSec.h" />
@@ -159,6 +161,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="WR_Elem3dRcp.cpp" />
+    <ClCompile Include="WR_Element3d.cpp" />
+    <ClCompile Include="WR_IElement.cpp" />
     <ClCompile Include="WR_IElemRcp.cpp" />
     <ClCompile Include="WR_INode.cpp" />
     <ClCompile Include="WR_IXSec.cpp" />

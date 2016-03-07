@@ -10,7 +10,6 @@ ref class WR_IElement
 
 public:
 	WR_IElement();
-	WR_IElement(m_shared_ptr<CIFem::IElement> element);
 
 };
 

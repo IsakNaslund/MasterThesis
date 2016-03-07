@@ -206,7 +206,7 @@ void CIFem::Element3d::CalculateSectionForces(int n)
 
 	for (int i = 0; i < _dof.size(); i++)
 	{
-		ed[i] = _dof[i]->GetResultingTranslation;
+		ed[i] = _dof[i]->GetResultingTranslation();
 	}
 
 	arma::vec u = G*ed;

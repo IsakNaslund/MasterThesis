@@ -5,6 +5,8 @@
 #include "WR_IElemRcp.h"
 #include "m_shared_ptr.h"
 #include "WR_IElement.h"
+#include "WR_Element3d.h"
+#include "Spring.h"
 
 namespace CIFem_wrapper
 {
@@ -19,8 +21,12 @@ namespace CIFem_wrapper
 		//void AddNode(std::vector<WR_INode> wrNodeList);
 		void AddElementRcp(WR_IElemRcp^ wrRcp);
 		//void AddElementRcp(std::vector<IElementRcp *>);
-		System::Collections::Generic::List<WR_IElement^>^ GetElements();
+		System::Collections::Generic::List<WR_IElement^>^ GetAllElements();
+		//System::Collections::Generic::List<WR_Element3d^>^ GetElements3d();
 
 		void Solve();
+
+	private:
+		
 	};
 }

@@ -12,6 +12,7 @@ namespace CIFem_grasshopper
     public class StructureComponent : GH_Component
     {
         public List<string> log { get; set; }
+        private List<ResultElement> resElems { get; set; }
 
         public StructureComponent(): base("Structure", "Structure", "A structure to hold beams, releases, forces etc.", "CIFem", "Structure")
         {
@@ -47,10 +48,13 @@ namespace CIFem_grasshopper
 
             pManager.AddTextParameter(
                 "Messageboard", "log", "Outputs a log of the performed calculation", GH_ParamAccess.list);
+
+            pManager.AddParameter(new ResultElementParam(), "Result Elements", "RE", "Result elements, storing results from the calculation", GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            // Indata
             bool go = false;
             List<WR_Node3d> nodes = new List<WR_Node3d>();
             List<WR_IElemRcp> beams = new List<WR_IElemRcp>();
@@ -61,6 +65,8 @@ namespace CIFem_grasshopper
 
             if (go)
             {
+                resElems = new List<ResultElement>();
+
                 log.Clear();
                 log.Add("Structure invokation started");
 
@@ -81,9 +87,23 @@ namespace CIFem_grasshopper
 
                 // Solve
                 structure.Solve();
+
+                // Extract results
+                List<WR_IElement> elems = structure.GetAllElements();
+                for (int i = 0; i < elems.Count; i++)
+                {
+
+                    if (elems[i] is WR_Element3d)
+                    {
+                        WR_Element3d el3d = (WR_Element3d)elems[i];
+                        ResultElement re = new ResultElement(el3d);
+                        resElems.Add(re);
+                    }
+                }
             }
 
             DA.SetData(0, log);
+            DA.SetDataList(1, resElems);
         }
     }
 }

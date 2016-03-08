@@ -52,6 +52,15 @@ double CIFem::Vector3d::DotProduct(Vector3d other)
 	return _x * other.GetX() + _y * other.GetY() + _z * other.GetZ();
 }
 
+std::vector<double> CIFem::Vector3d::ToStandardVector() const
+{
+	std::vector<double> v(3);
+	v.push_back(_x);
+	v.push_back(_y);
+	v.push_back(_z);
+	return v;
+}
+
 void CIFem::Vector3d::Unitize()
 {
 	double length = GetLength();

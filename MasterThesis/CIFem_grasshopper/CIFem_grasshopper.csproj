@@ -63,6 +63,7 @@
     <Compile Include="Components\ResultElementComponent.cs" />
     <Compile Include="Components\StructureComponent.cs" />
     <Compile Include="Components\MaterialComponent.cs" />
+    <Compile Include="Components\DisplacementComponent.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Wrappers and parameters\MaterialParam.cs" />
     <Compile Include="Wrappers and parameters\BeamReleaseParameter.cs" />

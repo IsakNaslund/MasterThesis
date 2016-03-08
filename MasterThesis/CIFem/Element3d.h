@@ -29,13 +29,13 @@ namespace CIFem
 		//SectionProperties _secProp;
 		
 		Material _mat;
-		std::vector<double> _eo;// Element orientation
+		Vector3d _eo;// Element orientation
 		Results _results;
 
 	public:
 		Element3d();
 		//Element3d(XYZ, XYZ, vector<int>, ElementProperty);
-		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, std::shared_ptr<ICrossSection> crossSec, Material mat);
+		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, std::shared_ptr<ICrossSection> crossSec, Material mat, Vector3d normal);
 		~Element3d();
 
 		arma::Mat<double> GetStiffnessMatrix();	// Returns the element stiffness (in global coordinates)
@@ -47,6 +47,10 @@ namespace CIFem
 		void CalculateSectionForces(int n);   //n is the number of evaluation points
 
 
+		//Geometric data getters
+		XYZ StartPosition() const { return _sNode; }
+		XYZ EndPosition() const { return _eNode; }
+		Vector3d Orientation() const { return _eo; }
 
 		//Result outputs:
 		//Section Forces

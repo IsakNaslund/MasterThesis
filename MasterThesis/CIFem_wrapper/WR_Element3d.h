@@ -3,6 +3,7 @@
 #include "WR_IElement.h"
 #include "Element3d.h"
 #include "m_shared_ptr.h"
+#include "Utilities.h"
 
 namespace CIFem_wrapper
 {
@@ -14,7 +15,21 @@ namespace CIFem_wrapper
 		WR_Element3d();
 		WR_Element3d(shared_ptr<CIFem::Element3d> const element);
 
-		System::Collections::Generic::List<double> ^ GetElementForces_N1();
+		System::Collections::Generic::List<double> ^ NormalForce();
+		System::Collections::Generic::List<double> ^ ShearForceZ();
+		System::Collections::Generic::List<double> ^ ShearForceY();
+		System::Collections::Generic::List<double> ^ MomentY();
+		System::Collections::Generic::List<double> ^ MomentZ();
+		System::Collections::Generic::List<double> ^ TorsionalForce();
+
+		System::Collections::Generic::List<double> ^ DisplacementX();
+		System::Collections::Generic::List<double> ^ DisplacementY();
+		System::Collections::Generic::List<double> ^ DisplacementZ();
+		System::Collections::Generic::List<double> ^ DisplacementTorsion();
+
+		System::Collections::Generic::List<double> ^ ResultPosition();
+
+
 	};
 }
 

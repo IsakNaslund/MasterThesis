@@ -6,7 +6,7 @@
 //////////////   C++ to C# conversion functions   //////////////
 
 // Convert a vector of doubles to a list managed pointer
-System::Collections::Generic::List<double> ^ GetListFromVector(std::vector<double> vec)
+System::Collections::Generic::List<double> ^ Utilities::GetListFromVector(std::vector<double> vec)
 {
 	System::Collections::Generic::List<double> ^ l = gcnew System::Collections::Generic::List<double>(vec.size());
 

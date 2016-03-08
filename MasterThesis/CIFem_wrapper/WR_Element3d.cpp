@@ -3,5 +3,10 @@
 
 CIFem_wrapper::WR_Element3d::WR_Element3d()
 {
-	throw gcnew System::NotImplementedException();
+	// do nothing
+}
+
+CIFem_wrapper::WR_Element3d::WR_Element3d(shared_ptr<CIFem::Element3d> const element)
+{
+	_element = element;
 }

@@ -6,13 +6,14 @@
 
 namespace CIFem_wrapper
 {
-	ref class WR_Element3d : public WR_IElement
+	public ref class WR_Element3d : public WR_IElement
 	{
 		m_shared_ptr<CIFem::Element3d> _element;
 
 	public:
 		WR_Element3d();
-		
+		WR_Element3d(shared_ptr<CIFem::Element3d> const element);
+
 	};
 }
 

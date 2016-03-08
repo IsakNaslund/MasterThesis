@@ -21,7 +21,7 @@ CIFem::Structure::~Structure()
 		delete _elements[i];
 	*/
 
-	_elements.clear();
+	//_elements.clear();
 }
 
 void CIFem::Structure::AddNode(std::shared_ptr<INode> node)

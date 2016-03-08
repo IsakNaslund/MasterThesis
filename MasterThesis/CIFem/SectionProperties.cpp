@@ -32,22 +32,22 @@ CIFem::SectionProperties::~SectionProperties()
 {
 }
 
-double CIFem::SectionProperties::A()
+double CIFem::SectionProperties::A() const
 {
 	return _area;
 }
 
-double CIFem::SectionProperties::Iy()
+double CIFem::SectionProperties::Iy() const
 {
 	return _Iy;
 }
 
-double CIFem::SectionProperties::Iz()
+double CIFem::SectionProperties::Iz() const
 {
 	return _Iz;
 }
 
-double CIFem::SectionProperties::Kv()
+double CIFem::SectionProperties::Kv() const
 {
 	return _Kv;
 }

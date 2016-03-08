@@ -17,13 +17,14 @@ namespace CIFem
 		Rectangle3d();
 		Rectangle3d(const double height, const double width);
 		~Rectangle3d();
-		SectionProperties CalcSectionProperties();
+		
 
 		double GetHeight() const;
 		double GetWidth() const;
 
-	private:
 
+	private:
+		void CalcSectionProperties();
 		double CalcTorsionalStiffness(const double iy, const double iz);
 		double CalcAlphaFactor();
 	};

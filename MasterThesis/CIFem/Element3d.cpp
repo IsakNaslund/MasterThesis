@@ -30,7 +30,7 @@ Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, vector<int>
 	_length = CalcLength(sNode, eNode);
 }*/
 
-Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, SectionProperties secProp, Material mat)
+Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, std::shared_ptr<ICrossSection> crossSec, Material mat)
 {
 	Init();			//Initialise
 
@@ -47,7 +47,7 @@ Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector
 		throw e;
 	}
 
-	_secProp = secProp;
+	_crossSection = crossSec;
 	_mat = mat;
 
 	_length = CalcLength(sNode, eNode);
@@ -69,12 +69,12 @@ vector<int> Element3d::GetDofs()
 arma::Mat<double> Element3d::GetStiffnessMatrix()
 {
 	// Get indata from element properties
-	double A = _secProp.A();
+	double A = _crossSection->GetArea();
 	double E = _mat.E();
 	double G = _mat.G();
-	double Iy = _secProp.Iy();
-	double Iz = _secProp.Iz();
-	double Kv = _secProp.Kv();
+	double Iy = _crossSection->GetIy();
+	double Iz = _crossSection->GetIz();
+	double Kv = _crossSection->GetKv();
 
 	// Simplify definitions
 	double l = _length;
@@ -144,7 +144,7 @@ arma::Col<double> CIFem::Element3d::GravityLoad(Vector3d direction)
 	//arma::vec f(12, arma::fill::zeros);
 
 	//volume times density
-	double volDens = _mat.Rho()*_secProp.A()*_length;
+	double volDens = _mat.Rho()*_crossSection->GetArea()*_length;
 
 	//temporary variables to fill the force vector
 	double qx, qy, qz, mx, my, mz;
@@ -219,10 +219,10 @@ void CIFem::Element3d::CalculateSectionForces(int n)
 
 	double EA, EIz, EIy, GKv;
 
-	EA = _secProp.A()*_mat.E();
-	EIz = _secProp.Iz()*_mat.E();
-	EIz = _secProp.Iz()*_mat.E();
-	EIz = _secProp.Kv()*_mat.G();
+	EA = _crossSection->GetArea()*_mat.E();
+	EIz = _crossSection->GetIy()*_mat.E();
+	EIz = _crossSection->GetIz()*_mat.E();
+	EIz = _crossSection->GetKv()*_mat.G();
 
 	for (int i = 0; i < n; i++)
 	{

@@ -1,8 +1,9 @@
 #pragma once
+#include "CIFem_dll.h"
 
 namespace CIFem
 {
-	class SectionProperties
+	class CIFEM_API SectionProperties
 	{
 		double _area;
 		double _Iy;
@@ -15,10 +16,10 @@ namespace CIFem
 		SectionProperties(const double area, const double iy, const double iz, const double kv);
 		~SectionProperties();
 
-		double A();
-		double Iy();
-		double Iz();
-		double Kv();
+		inline double A() const;
+		inline double Iy() const;
+		inline double Iz() const;
+		inline double Kv() const;
 
 	};
 

@@ -29,11 +29,13 @@ public:
 
 	!m_shared_ptr() 
 	{
+		pPtr->reset();
 		delete pPtr;
 	}
 
 	~m_shared_ptr() 
 	{
+		pPtr->reset();
 		delete pPtr;
 	}
 

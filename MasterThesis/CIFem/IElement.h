@@ -6,6 +6,7 @@
 #include <vector>
 #include "DOF.h"
 #include "Vector3d.h"
+#include "ICrossSection.h"
 
 namespace CIFem
 {
@@ -15,8 +16,10 @@ namespace CIFem
 		std::vector<std::shared_ptr<DOF>> _dof;
 		virtual int GetSize() =0;
 		void SetEdof(std::vector<std::shared_ptr<DOF> > edof);
-
+		std::shared_ptr<ICrossSection> _crossSection;
 	public:
+
+		virtual ~IElement();
 		virtual arma::Mat<double> GetStiffnessMatrix() = 0;
 		const std::vector<std::shared_ptr<DOF>> & GetDofs() { return _dof; }
 		std::vector<int> GetDofIndecies();

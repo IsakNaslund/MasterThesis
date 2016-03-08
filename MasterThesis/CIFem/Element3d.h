@@ -3,7 +3,6 @@
 #include "CIFem_dll.h"
 #include "XYZ.h"
 #include <vector>
-#include "SectionProperties.h"
 #include "Material.h"
 #include "include\armadillo"
 #include "IElement.h";
@@ -19,7 +18,7 @@ namespace CIFem
 
 		struct Results
 		{
-			//List of results
+			//Lists of results
 			std::vector<double> _N1, _Vy, _Vz, _T, _My, _Mz, _u, _v, _w, _fi, pos;
 		};
 
@@ -27,7 +26,8 @@ namespace CIFem
 		vector<int> _edof;		// Element degrees of freedom		
 		double _length;			// Element length
 		//ElementProperty _ep;	// Element property
-		SectionProperties _secProp;
+		//SectionProperties _secProp;
+		
 		Material _mat;
 		std::vector<double> _eo;// Element orientation
 		Results _results;
@@ -35,7 +35,7 @@ namespace CIFem
 	public:
 		Element3d();
 		//Element3d(XYZ, XYZ, vector<int>, ElementProperty);
-		Element3d(XYZ sNode, XYZ eNode, vector<shared_ptr<DOF> > dof, SectionProperties secProp, Material mat);
+		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, std::shared_ptr<ICrossSection> crossSec, Material mat);
 		~Element3d();
 
 		arma::Mat<double> GetStiffnessMatrix();	// Returns the element stiffness (in global coordinates)

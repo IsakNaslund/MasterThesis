@@ -15,7 +15,9 @@ namespace CIFem
 		RHS3d();
 		RHS3d(double height, double width, double thickness);
 		~RHS3d();
-		SectionProperties CalcSectionProperties();
+
+	private:
+		void CalcSectionProperties();
 	};
 }
 

@@ -66,6 +66,8 @@ namespace CIFem
 		//Location along the element
 		std::vector<double> ResultPosition() const { return _results._pos; }
 
+		//Utilization
+		//TODO: Implement utilization calculations
 
 
 

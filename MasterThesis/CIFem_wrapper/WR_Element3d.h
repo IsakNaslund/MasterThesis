@@ -14,6 +14,7 @@ namespace CIFem_wrapper
 		WR_Element3d();
 		WR_Element3d(shared_ptr<CIFem::Element3d> const element);
 
+		System::Collections::Generic::List<double> ^ GetElementForces_N1();
 	};
 }
 

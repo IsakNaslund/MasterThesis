@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
@@ -13,10 +15,12 @@ namespace CIFem_grasshopper
     {
 
         List<Curve> _dispCrvs;
+        BoundingBox _bb;
 
         public DisplacementComponent() : base("Element displacement", "eDisp", "Displays the displacement of the elements", "CIFem", "Results")
         {
             _dispCrvs = new List<Curve>();
+            _bb = new BoundingBox();
         }
 
         public override Guid ComponentGuid
@@ -52,6 +56,8 @@ namespace CIFem_grasshopper
             Point3d stPos, enPos;
             Vector3d norm, tan, yDir;
 
+            List<Point3d> allPts = new List<Point3d>();
+
             foreach (ResultElement re in res)
             {
                 stPos = re.sPos;
@@ -74,19 +80,35 @@ namespace CIFem_grasshopper
                 {
                     Point3d curvePt = stPos + tan * (re.pos[i]+re.u[i])+norm*re.w[i]+yDir*re.v[i];
                     curvePts.Add(curvePt);
+                    allPts.Add(curvePt);
                 }
 
 
                 _dispCrvs.Add(Rhino.Geometry.Curve.CreateInterpolatedCurve(curvePts, 3));
             }
 
-
+            _bb = new BoundingBox(allPts);
         }
 
 
         public override void DrawViewportWires(IGH_PreviewArgs args)
         {
+
+            for (int i = 0; i < _dispCrvs.Count; i++)
+            {
+                args.Display.DrawCurve(_dispCrvs[i], System.Drawing.Color.BurlyWood);
+
+            }
+
             base.DrawViewportWires(args);
+        }
+
+        public override BoundingBox ClippingBox
+        {
+            get
+            {
+                return base.ClippingBox;
+            }
         }
     }
 }

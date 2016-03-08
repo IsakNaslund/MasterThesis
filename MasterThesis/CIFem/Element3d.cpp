@@ -33,9 +33,8 @@ Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, vector<int>
 Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, std::shared_ptr<ICrossSection> crossSec, Material mat, Vector3d normal)
 {
 	//Init();			//Initialise
+	
 
-	_eo = normal;
-	_eo.Unitize();
 
 	_sNode = sNode;
 	_eNode = eNode;
@@ -54,6 +53,9 @@ Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector
 	_mat = mat;
 
 	_length = CalcLength(sNode, eNode);
+
+	//Needs to be called after start and endnode has been initialized
+	SetElementOrientation(normal);
 }
 
 
@@ -381,6 +383,19 @@ void Element3d::SetEdof(vector<int> edof)
 	}
 }*/
 
+
+void CIFem::Element3d::SetElementOrientation(Vector3d eo)
+{
+	Vector3d tan(_sNode, _eNode);
+	
+	tan.Unitize();
+	eo.Unitize();
+
+	_eo = eo - tan*tan.DotProduct(eo);
+	_eo.Unitize();
+
+
+}
 
 double Element3d::CalcLength(XYZ sNode, XYZ eNode)
 {

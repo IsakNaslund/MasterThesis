@@ -73,3 +73,13 @@ void CIFem::Vector3d::Unitize()
 CIFem::Vector3d::~Vector3d()
 {
 }
+
+CIFem::Vector3d CIFem::Vector3d::operator* (double t)
+{
+	return Vector3d(_x*t, _y*t, _z*t);
+}
+
+CIFem::Vector3d CIFem::Vector3d::operator- (CIFem::Vector3d other)
+{
+	return Vector3d(_x-other._x, _y-other._y, _z-other._z);
+}

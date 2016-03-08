@@ -10,3 +10,9 @@ CIFem_wrapper::WR_Element3d::WR_Element3d(shared_ptr<CIFem::Element3d> const ele
 {
 	_element = element;
 }
+
+System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::GetElementForces_N1()
+{
+	//std::vector<double> N1 = _element.get()->
+	// do stuff
+}

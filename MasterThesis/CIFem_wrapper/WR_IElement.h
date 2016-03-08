@@ -11,5 +11,6 @@ public ref class WR_IElement
 public:
 	WR_IElement();
 	WR_IElement(std::shared_ptr<CIFem::IElement> const& element);
+
 };
 

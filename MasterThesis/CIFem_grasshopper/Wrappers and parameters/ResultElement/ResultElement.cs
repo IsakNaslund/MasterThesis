@@ -28,8 +28,9 @@ namespace CIFem_grasshopper
         public List<double> fi { get; private set; }
 
         // Element data
-        public WR_XYZ sPos { get; private set; }
-        public WR_XYZ ePos { get; private set; }
+        public Rhino.Geometry.Point3d sPos { get; private set; }
+        public Rhino.Geometry.Point3d ePos { get; private set; }
+        public Rhino.Geometry.Vector3d elNormal { get; private set; }
 
         public ResultElement()
         {
@@ -74,7 +75,14 @@ namespace CIFem_grasshopper
         private void GetElementData(WR_Element3d elem)
         {
             // Node positions
-            //sPos = elem.
+
+            sPos = CreateRhinoPt(elem.GetStartPos());
+            ePos = CreateRhinoPt(elem.GetEndPos());
+        }
+
+        private Rhino.Geometry.Point3d CreateRhinoPt(WR_XYZ iPt)
+        {
+            return new Rhino.Geometry.Point3d(iPt.X, iPt.Y, iPt.Z);
         }
 
         public ResultElement Copy()

@@ -152,7 +152,7 @@ std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Element3dRcp::CreateElement
 
 	//SectionProperties secProp = _xSec->CalcSectionProperties();
 	//ElementProperty ep =ElementProperty(_mat.E(), _mat.G(), secProp._area, secProp._Iy, secProp._Iz, secProp._Kv);
-	std::shared_ptr<CIFem::IElement> beam(new Element3d(_stPos, _enPos, dof, _xSec,_mat));
+	std::shared_ptr<CIFem::IElement> beam(new Element3d(_stPos, _enPos, dof, _xSec,_mat, Vector3d(_normal[0],_normal[1],_normal[2])));
 
 	newElements.push_back(beam);
 

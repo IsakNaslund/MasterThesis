@@ -2,6 +2,7 @@
 #include "CIFem_dll.h"
 #include <math.h>
 #include "XYZ.h"
+#include <vector>
 
 namespace CIFem
 {
@@ -20,6 +21,7 @@ namespace CIFem
 		double GetZ() const;
 		double GetLength() const;
 		double DotProduct(Vector3d other);
+		std::vector<double> ToStandardVector() const;
 		void Unitize();
 		~Vector3d();
 	};

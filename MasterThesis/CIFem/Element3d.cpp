@@ -4,7 +4,7 @@ using namespace CIFem;
 
 Element3d::Element3d()
 {
-	Init();			//Initialise
+	//Init();			//Initialise
 }
 
 /*
@@ -30,9 +30,12 @@ Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, vector<int>
 	_length = CalcLength(sNode, eNode);
 }*/
 
-Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, std::shared_ptr<ICrossSection> crossSec, Material mat)
+Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, std::shared_ptr<ICrossSection> crossSec, Material mat, Vector3d normal)
 {
-	Init();			//Initialise
+	//Init();			//Initialise
+
+	_eo = normal;
+	_eo.Unitize();
 
 	_sNode = sNode;
 	_eNode = eNode;
@@ -263,7 +266,7 @@ arma::mat Element3d::GetTransformationMatrix()
 
 	arma::vec n1 = b / _length;
 	arma::rowvec n1r = n1.t();
-	arma::rowvec n3(_eo);
+	arma::rowvec n3(_eo.ToStandardVector());
 	arma::rowvec n2(3);
 
 	n2(0) = n3(1)*n1(2) - n3(2)*n1(1);
@@ -340,12 +343,12 @@ arma::mat & CIFem::Element3d::GetCMatrix()
 }
 
 // Initiates the element
-void Element3d::Init()
+/*void Element3d::Init()
 {
 	// Set element orientation to global z
 	SetElementOrientation({ 0, 0, 1 });
 
-}
+}*/
 
 /*
 void Element3d::SetEdof(vector<int> edof)
@@ -361,7 +364,7 @@ void Element3d::SetEdof(vector<int> edof)
 
 
 // Element orientation is the direction of the local z axis
-void Element3d::SetElementOrientation(std::vector<double> eo)
+/*void Element3d::SetElementOrientation(std::vector<double> eo)
 {
 	if (eo.size() != 3)
 		throw invalid_argument("Element orientation vector should have length 3, [x y z]");
@@ -371,7 +374,7 @@ void Element3d::SetElementOrientation(std::vector<double> eo)
 		eo = { eo[0] / eoLength, eo[1] / eoLength, eo[2] / eoLength };
 		_eo = eo;
 	}
-}
+}*/
 
 
 double Element3d::CalcLength(XYZ sNode, XYZ eNode)

@@ -37,10 +37,11 @@ namespace CIFem_grasshopper
             
         }
 
+
         public ResultElement(WR_Element3d elem)
         {
             // Element data
-            GetElementData(elem);
+            GetElementGeometricData(elem);
 
             // Positions
             pos = elem.ResultPosition();
@@ -72,17 +73,35 @@ namespace CIFem_grasshopper
             fi = elem.DisplacementTorsion();
         }
 
-        private void GetElementData(WR_Element3d elem)
+        private void GetElementGeometricData(WR_Element3d elem)
         {
             // Node positions
-
             sPos = CreateRhinoPt(elem.GetStartPos());
             ePos = CreateRhinoPt(elem.GetEndPos());
+
+            // Orientation
+            elNormal = CreateRhinoVector(elem.GetElementNormal());
         }
 
+        /// <summary>
+        /// Takes a WR_XYZ and creates a Rhino Point3d
+        /// </summary>
+        /// <param name="iPt"></param>
+        /// <returns></returns>
         private Rhino.Geometry.Point3d CreateRhinoPt(WR_XYZ iPt)
         {
             return new Rhino.Geometry.Point3d(iPt.X, iPt.Y, iPt.Z);
+        }
+
+
+        /// <summary>
+        /// Takes a WR_Vector and creates a Rhino Vector3d
+        /// </summary>
+        /// <param name="vec"></param>
+        /// <returns></returns>
+        private Rhino.Geometry.Vector3d CreateRhinoVector(WR_Vector vec)
+        {
+            return new Rhino.Geometry.Vector3d(vec.X, vec.Y, vec.Z);
         }
 
         public ResultElement Copy()

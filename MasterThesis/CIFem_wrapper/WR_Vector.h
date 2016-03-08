@@ -14,5 +14,8 @@ public:
 	CIFem::Vector3d GetAsVector3d();
 	std::vector<double> GetAsCppVector();
 	
+	property double X {double get() { return _x; }}
+	property double Y {double get() { return _y; }}
+	property double Z {double get() { return _z; }}
 };
 

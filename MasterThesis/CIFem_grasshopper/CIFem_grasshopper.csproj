@@ -102,8 +102,7 @@ copy /Y "$(TargetDir)$(ProjectName).dll" "C:\Users\%25user%25\AppData\Roaming\Gr
 copy /Y "$(SolutionDir)x64\Debug\CIFem.dll" "C:\Users\%25user%25\AppData\Roaming\Grasshopper\Libraries\CIFem.dll"
 copy /Y "$(SolutionDir)x64\Debug\CIFem.pdb" "C:\Users\%25user%25\AppData\Roaming\Grasshopper\Libraries\CIFem.pdb"
 copy /Y "$(SolutionDir)x64\Debug\CIFem_wrapper.dll" "C:\Users\%25user%25\AppData\Roaming\Grasshopper\Libraries\CIFem_wrapper.dll"
-copy /Y "$(SolutionDir)x64\Debug\CIFem_wrapper.pdb" "C:\Users\%25user%25\AppData\Roaming\Grasshopper\Libraries\CIFem_wrapper.pdb"
-</PostBuildEvent>
+copy /Y "$(SolutionDir)x64\Debug\CIFem_wrapper.pdb" "C:\Users\%25user%25\AppData\Roaming\Grasshopper\Libraries\CIFem_wrapper.pdb"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

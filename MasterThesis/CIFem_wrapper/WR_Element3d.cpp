@@ -81,4 +81,10 @@ namespace CIFem_wrapper
 		return gcnew WR_XYZ(ePos.GetX(), ePos.GetY(), ePos.GetZ());
 	}
 
+	WR_Vector ^ WR_Element3d::GetElementNormal()
+	{
+		CIFem::Vector3d v = _element.operator std::shared_ptr<CIFem::Element3d>()->Orientation();
+		return gcnew WR_Vector(v.GetX(), v.GetY(), v.GetZ());
+	}
+
 }

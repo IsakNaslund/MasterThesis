@@ -1,6 +1,7 @@
 #pragma once
 
 #include "WR_IElement.h"
+#include "WR_Vector.h"
 #include "Element3d.h"
 #include "m_shared_ptr.h"
 #include "Utilities.h"
@@ -31,6 +32,7 @@ namespace CIFem_wrapper
 
 		WR_XYZ ^ GetStartPos();
 		WR_XYZ ^ GetEndPos();
+		WR_Vector ^ GetElementNormal();
 	};
 }
 

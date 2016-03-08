@@ -75,7 +75,7 @@ void CIFem::Structure::Solve()
 	BuildStructure();
 
 	// Get dofs
-	std::vector<std::shared_ptr<CIFem::DOF>> spDofs = GetDofs();
+	std::set<std::shared_ptr<CIFem::DOF>> spDofs = GetDofs();
 
 	// Update dof kIndex
 	SetDofKMatIndex(spDofs);
@@ -96,8 +96,8 @@ void CIFem::Structure::Solve()
 
 	// Debug
 	arma::mat Kwrite(K);
-	Kwrite.print("Kwrite: ");
-	f.print("f: ");
+	//Kwrite.print("Kwrite: ");
+	//f.print("f: ");
 
 	// Solve K matrix
 	arma::colvec s;		// Resulting forces
@@ -135,21 +135,45 @@ void CIFem::Structure::BuildStructure()
 	_elements = CreateElements();
 }
 
-std::vector<std::shared_ptr<CIFem::DOF>> CIFem::Structure::GetDofs()
+std::set<std::shared_ptr<CIFem::DOF>> CIFem::Structure::GetDofs()
 {
 	// Create pointer list of dofs
-	std::vector<std::shared_ptr<CIFem::DOF>> dofs;
-
+	//std::vector<std::shared_ptr<CIFem::DOF>> dofs;
+	std::set<std::shared_ptr<CIFem::DOF>> dofs;
 	// Add all dofs in nodes
-	for (int i = 0; i < _nodes.size(); i++)
+	GetNodeDofs(dofs);
+
+	// Add non-duplicate dofs in elements
+	GetUniqueElementDofs(dofs);
+
+	return dofs;
+}
+
+void CIFem::Structure::GetNodeDofs(std::set<std::shared_ptr<CIFem::DOF>>& dofs)
+{
+	// Add all dofs in nodes
+	/*for (int i = 0; i < _nodes.size(); i++)
 	{
 		std::vector<std::shared_ptr<CIFem::DOF>> nDofs = _nodes[i]->GetDofs();
 		for (int j = 0; j < nDofs.size(); j++)
 			dofs.push_back(nDofs[j]);
+	}*/
+
+	//Test using set instead of vector
+	for (int i = 0; i < _nodes.size(); i++)
+	{
+		std::vector<std::shared_ptr<CIFem::DOF>> nDofs = _nodes[i]->GetDofs();
+		for (int j = 0; j < nDofs.size(); j++)
+			dofs.insert(nDofs[j]);
 	}
 
+
+}
+
+void CIFem::Structure::GetUniqueElementDofs(std::set<std::shared_ptr<CIFem::DOF>>& dofs)
+{
 	// Add non-duplicate dofs in elements
-	for (int i = 0; i < _elements.size(); i++)
+	/*for (int i = 0; i < _elements.size(); i++)
 	{
 		std::vector<std::shared_ptr<CIFem::DOF>> eDofs = _elements[i]->GetDofs();
 		for (int j = 0; j < eDofs.size(); j++)
@@ -167,14 +191,24 @@ std::vector<std::shared_ptr<CIFem::DOF>> CIFem::Structure::GetDofs()
 			if (unique)
 				dofs.push_back(eDofs[j]);
 		}
-	}
+	}*/
 
-	return dofs;
+	//Test using set
+	for (int i = 0; i < _elements.size(); i++)
+	{
+		std::vector<std::shared_ptr<CIFem::DOF>> eDofs = _elements[i]->GetDofs();
+		for (int j = 0; j < eDofs.size(); j++)
+		{
+			//a set can only hold one unique instance, hence no check needs to be done prior insertion. The dof will only be inserted if it it does not allready
+			//exist in the set.
+			dofs.insert(eDofs[j]);
+		}
+	}
 }
 
 
 
-void CIFem::Structure::SetDofKMatIndex(std::vector<std::shared_ptr<CIFem::DOF>> spDofs)
+void CIFem::Structure::SetDofKMatIndex(std::set<std::shared_ptr<CIFem::DOF>>& spDofs)
 {
 	//Counting dofs, assuming all dofs exists in the nodes
 	int dofCounter = 0;
@@ -185,7 +219,7 @@ void CIFem::Structure::SetDofKMatIndex(std::vector<std::shared_ptr<CIFem::DOF>> 
 	}
 }
 
-arma::sp_mat CIFem::Structure::AssembleStiffnessMatrix(std::vector<std::shared_ptr<CIFem::DOF>> spDofs)
+arma::sp_mat CIFem::Structure::AssembleStiffnessMatrix(std::set<std::shared_ptr<CIFem::DOF>> spDofs)
 {
 	// Count dofs
 	int dofCount = spDofs.size();
@@ -204,11 +238,11 @@ arma::sp_mat CIFem::Structure::AssembleStiffnessMatrix(std::vector<std::shared_p
 	return K;
 }
 
-void CIFem::Structure::AssembleElementsInKMat(arma::sp_mat & K, arma::mat & Ke, std::vector<std::shared_ptr<DOF>> spEDofs)
+void CIFem::Structure::AssembleElementsInKMat(arma::sp_mat & K, arma::mat & Ke, const std::vector<std::shared_ptr<DOF>> & spEDofs)
 {
 	//DEBUG
-	K.print("K:");
-	Ke.print("Ke");
+	//K.print("K:");
+	//Ke.print("Ke");
 
 	// Check inputs
 	int n = K.n_rows;
@@ -232,7 +266,7 @@ void CIFem::Structure::AssembleElementsInKMat(arma::sp_mat & K, arma::mat & Ke, 
 	}
 }
 
-arma::colvec CIFem::Structure::GetForceVector(std::vector<std::shared_ptr<DOF>> spDofs)
+arma::colvec CIFem::Structure::GetForceVector(std::set<std::shared_ptr<DOF>> spDofs)
 {
 	arma::colvec f(spDofs.size(), arma::fill::zeros);
 
@@ -244,7 +278,7 @@ arma::colvec CIFem::Structure::GetForceVector(std::vector<std::shared_ptr<DOF>> 
 
 // Creates a displacement vector from the dofs.
 // N.B. the displacement vector is in transformed coordinates (am, rather than as)
-arma::colvec CIFem::Structure::GetDisplacementVector(std::vector<std::shared_ptr<DOF>> spDofs)
+arma::colvec CIFem::Structure::GetDisplacementVector(std::set<std::shared_ptr<DOF>> spDofs)
 {
 	arma::colvec a(spDofs.size(), arma::fill::zeros);
 	
@@ -258,7 +292,7 @@ arma::colvec CIFem::Structure::GetDisplacementVector(std::vector<std::shared_ptr
 
 
 void CIFem::Structure::LinEqSolve(arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, 
-	std::vector<std::shared_ptr<DOF>> spDofs, arma::colvec & s)
+	std::set<std::shared_ptr<DOF>> spDofs, arma::colvec & s)
 {
 	// Check prescribed deformations
 	std::vector<unsigned int> transBCDof;
@@ -298,13 +332,68 @@ void CIFem::Structure::LinEqSolve(arma::sp_mat & K, arma::colvec & a, arma::colv
 	s = K*a - f;
 }
 
-void CIFem::Structure::StoreResultsInDofs(arma::colvec a, arma::colvec f, std::vector<std::shared_ptr<DOF>> spDofs)
+void CIFem::Structure::EigenSolve(arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::set<std::shared_ptr<DOF>> spDofs, arma::colvec & s)
+{
+
+	/////////////////////////////////////////////////////////////////////////////
+	////////////////////////Uncompleted Eigensolver!!!!!!!!!!!!!!!///////////////
+	/////////////////////////////////////////////////////////////////////////////
+
+
+	// Check prescribed deformations
+	std::vector<unsigned int> transBCDof;
+	std::vector<unsigned int> fDof;
+	std::vector<unsigned int> pDof;
+	for each (std::shared_ptr<DOF> dof in spDofs)
+	{
+		// Check transformed bcs
+		if (dof->HasTransformedBc())
+			transBCDof.push_back(dof->GetKIndex());
+
+
+		// Check prescribed deformations
+		if (dof->HasSetTranslation())
+			pDof.push_back(dof->GetKIndex());
+		else
+			fDof.push_back(dof->GetKIndex());
+
+	}
+
+	// There must be a way to do this from the start,
+	// however, I think uvec is fixed size
+	arma::uvec ufDof(fDof);
+	arma::uvec upDof(pDof);
+
+	arma::colvec fa(fDof.size());
+
+	arma::vec eigVal;
+	arma::mat eigVec;
+
+	
+
+	// Solve deformations
+	arma::mat Kmat(K); // Debugging, workaround this to improve speed
+					   //arma::sp_mat Kff(Kmat(ufDof, ufDof));
+
+	arma::eig_sym(eigVal, eigVec, Kmat(ufDof, ufDof));
+
+	// Solve forces
+	s = K*a - f;
+}
+
+void CIFem::Structure::StoreResultsInDofs(arma::colvec a, arma::colvec f, std::set<std::shared_ptr<DOF>> spDofs)
 {
 	// Set results in dofs
-	for (int i = 0; i < spDofs.size(); i++)
+	//for (int i = 0; i < spDofs.size(); i++)
+	//{
+	//	spDofs[i]->SetResults(a(spDofs[i]->GetKIndex()), f(spDofs[i]->GetKIndex()));
+	//}
+
+	for each (std::shared_ptr<DOF> spDof in spDofs)
 	{
-		spDofs[i]->SetResults(a(spDofs[i]->GetKIndex()), f(spDofs[i]->GetKIndex()));
+		spDof->SetResults(a(spDof->GetKIndex()), f(spDof->GetKIndex()));
 	}
+
 }
 
 arma::mat CIFem::Structure::GetCMatrix()

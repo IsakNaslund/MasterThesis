@@ -83,7 +83,7 @@ namespace CIFem
 		void SetElementOrientation(std::vector<double>);
 		double CalcLength(XYZ sNode, XYZ eNode);	// Calculates and sets the element length
 		arma::mat GetTransformationMatrix();
-		arma::mat & GetCMatrix();
+		arma::mat GetCMatrix();
 
 
  

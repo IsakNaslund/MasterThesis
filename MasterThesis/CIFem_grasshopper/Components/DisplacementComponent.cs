@@ -50,10 +50,34 @@ namespace CIFem_grasshopper
             _dispCrvs.Clear();
 
             Point3d stPos, enPos;
+            Vector3d norm, tan, yDir;
 
             foreach (ResultElement re in res)
             {
-                
+                stPos = re.sPos;
+                enPos = re.ePos;
+                norm = re.elNormal;
+
+                norm.Unitize();
+
+                tan = enPos - stPos;
+                tan.Unitize();
+
+                yDir = Vector3d.CrossProduct(norm, tan);
+                yDir.Unitize();
+
+                List<Point3d> curvePts = new List<Point3d>();
+
+                int nbEval = re.pos.Count;
+
+                for (int i = 0; i < nbEval; i++)
+                {
+                    Point3d curvePt = stPos + tan * (re.pos[i]+re.u[i])+norm*re.w[i]+yDir*re.v[i];
+                    curvePts.Add(curvePt);
+                }
+
+
+                _dispCrvs.Add(Rhino.Geometry.Curve.CreateInterpolatedCurve(curvePts, 3));
             }
 
 

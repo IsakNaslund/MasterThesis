@@ -1,5 +1,6 @@
 #pragma once
 
+#include "WR_XYZ.h"
 #include "IElement.h"
 #include "m_shared_ptr.h"
 
@@ -11,6 +12,5 @@ public ref class WR_IElement
 public:
 	WR_IElement();
 	WR_IElement(std::shared_ptr<CIFem::IElement> const& element);
-
 };
 

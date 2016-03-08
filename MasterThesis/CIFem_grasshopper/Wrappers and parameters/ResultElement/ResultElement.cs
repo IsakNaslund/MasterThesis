@@ -10,6 +10,10 @@ namespace CIFem_grasshopper
 {
     public class ResultElement
     {
+        // Positions
+        public List<double> pos { get; private set; }
+
+        // Forces
         public List<double> N1 { get; private set; }
         public List<double> Vy { get; private set; }
         public List<double> Vz { get; private set; }
@@ -17,11 +21,16 @@ namespace CIFem_grasshopper
         public List<double> My { get; private set; }
         public List<double> Mz { get; private set; }
 
+        // Displacements
         public List<double> u { get; private set; }
         public List<double> v { get; private set; }
         public List<double> w { get; private set; }
         public List<double> fi { get; private set; }
-        public List<int> pos { get; private set; }
+
+        // Element data
+        public Rhino.Geometry.Point3d sPos { get; private set; }
+        public Rhino.Geometry.Point3d ePos { get; private set; }
+        public Rhino.Geometry.Vector3d elNormal { get; private set; }
 
         public ResultElement()
         {
@@ -30,12 +39,50 @@ namespace CIFem_grasshopper
 
         public ResultElement(WR_Element3d elem)
         {
-            
+            // Element data
+            GetElementData(elem);
+
+            // Positions
+            pos = elem.ResultPosition();
+
+            // Forces
+            GetForces(elem);
+
+            // Displacements
+            GetDisplacements(elem);
         }
+
 
         private void GetForces(WR_Element3d elem)
         {
-            //N1 = elem.
+            N1 = elem.NormalForce();
+            Vy = elem.ShearForceY();
+            Vz = elem.ShearForceZ();
+            T = elem.TorsionalForce();
+            My = elem.MomentY();
+            Mz = elem.MomentZ();
+        }
+
+
+        private void GetDisplacements(WR_Element3d elem)
+        {
+            u = elem.DisplacementX();
+            v = elem.DisplacementY();
+            w = elem.DisplacementZ();
+            fi = elem.DisplacementTorsion();
+        }
+
+        private void GetElementData(WR_Element3d elem)
+        {
+            // Node positions
+
+            sPos = CreateRhinoPt(elem.GetStartPos());
+            ePos = CreateRhinoPt(elem.GetEndPos());
+        }
+
+        private Rhino.Geometry.Point3d CreateRhinoPt(WR_XYZ iPt)
+        {
+            return new Rhino.Geometry.Point3d(iPt.X, iPt.Y, iPt.Z);
         }
 
         public ResultElement Copy()

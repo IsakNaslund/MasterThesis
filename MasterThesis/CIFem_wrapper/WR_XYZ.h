@@ -15,6 +15,10 @@ namespace CIFem_wrapper
 		WR_XYZ(double x, double y, double z);
 		~WR_XYZ();
 		std::shared_ptr<XYZ> GetPos();
+
+		property double X {double get() { return _xyz.operator std::shared_ptr<CIFem::XYZ>()->GetX(); }}
+		property double Y {double get() { return _xyz.operator std::shared_ptr<CIFem::XYZ>()->GetY(); }}
+		property double Z {double get() { return _xyz.operator std::shared_ptr<CIFem::XYZ>()->GetZ(); }}
 	};
 
 }

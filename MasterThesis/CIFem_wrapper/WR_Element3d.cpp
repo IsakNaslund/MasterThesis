@@ -66,4 +66,3 @@ System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::ResultP
 	return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->ResultPosition());
 }
 
-

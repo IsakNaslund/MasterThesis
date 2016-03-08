@@ -12,6 +12,7 @@ CIFem::Rectangle3d::Rectangle3d(const double height, const double width)
 {
 	_height = height;
 	_width = width;
+	CalcSectionProperties();
 }
 
 
@@ -19,13 +20,13 @@ CIFem::Rectangle3d::~Rectangle3d()
 {
 }
 
-SectionProperties Rectangle3d::CalcSectionProperties()
+void Rectangle3d::CalcSectionProperties()
 {
 	double area = _height*_width;
 	double iz = (_width*_height*_height*_height) / 12;
 	double iy = (_height*_width*_width*_width) / 12;
 
-	return SectionProperties(area, iy, iz, CalcTorsionalStiffness(iy, iz));
+	_secProp = SectionProperties(area, iy, iz, CalcTorsionalStiffness(iy, iz));
 
 }
 

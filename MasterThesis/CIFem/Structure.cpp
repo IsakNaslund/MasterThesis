@@ -105,6 +105,9 @@ void CIFem::Structure::Solve()
 
 	// Store results in dofs
 	StoreResultsInDofs(am, s, spDofs);
+
+	//Calculate section forces for the elements
+	CalculateElementSectionForces();
 }
 
 std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Structure::GetElements()
@@ -436,5 +439,13 @@ void CIFem::Structure::CalculateElemetForces()
 		_elements[i]->GravityLoad();
 	}
 
+}
+
+void CIFem::Structure::CalculateElementSectionForces()
+{
+	for (int i = 0; i < _elements.size(); i++)
+	{
+		_elements[i]->CalculateSectionForces();
+	}
 }
 

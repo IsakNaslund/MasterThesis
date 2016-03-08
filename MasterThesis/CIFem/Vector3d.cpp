@@ -54,7 +54,7 @@ double CIFem::Vector3d::DotProduct(Vector3d other)
 
 std::vector<double> CIFem::Vector3d::ToStandardVector() const
 {
-	std::vector<double> v(3);
+	std::vector<double> v;
 	v.push_back(_x);
 	v.push_back(_y);
 	v.push_back(_z);

@@ -12,8 +12,11 @@ namespace CIFem_grasshopper
     public class DisplacementComponent : GH_Component
     {
 
+        List<Curve> _dispCrvs;
+
         public DisplacementComponent() : base("Element displacement", "eDisp", "Displays the displacement of the elements", "CIFem", "Results")
         {
+            _dispCrvs = new List<Curve>();
         }
 
         public override Guid ComponentGuid
@@ -32,12 +35,58 @@ namespace CIFem_grasshopper
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            
+
+
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            throw new NotImplementedException();
+            List<ResultElement> res = new List<ResultElement>();
+            double sFac = double.NaN;
+
+            if (!DA.GetDataList(0, res)) { return; }
+            if (!DA.GetData(1, ref sFac)) { return; }
+
+            _dispCrvs.Clear();
+
+            Point3d stPos, enPos;
+            Vector3d norm, tan, yDir;
+
+            foreach (ResultElement re in res)
+            {
+                stPos = re.sPos;
+                enPos = re.ePos;
+                norm = re.elNormal;
+
+                norm.Unitize();
+
+                tan = enPos - stPos;
+                tan.Unitize();
+
+                yDir = Vector3d.CrossProduct(norm, tan);
+                yDir.Unitize();
+
+                List<Point3d> curvePts = new List<Point3d>();
+
+                int nbEval = re.pos.Count;
+
+                for (int i = 0; i < nbEval; i++)
+                {
+                    Point3d curvePt = stPos + tan * (re.pos[i]+re.u[i])+norm*re.w[i]+yDir*re.v[i];
+                    curvePts.Add(curvePt);
+                }
+
+
+                _dispCrvs.Add(Rhino.Geometry.Curve.CreateInterpolatedCurve(curvePts, 3));
+            }
+
+
+        }
+
+
+        public override void DrawViewportWires(IGH_PreviewArgs args)
+        {
+            base.DrawViewportWires(args);
         }
     }
 }

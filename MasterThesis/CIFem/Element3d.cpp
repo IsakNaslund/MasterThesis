@@ -223,14 +223,19 @@ void CIFem::Element3d::CalculateSectionForces(int n)
 	double EA, EIz, EIy, GKv;
 
 	EA = _crossSection->GetArea()*_mat.E();
-	EIz = _crossSection->GetIy()*_mat.E();
+	EIy = _crossSection->GetIy()*_mat.E();
 	EIz = _crossSection->GetIz()*_mat.E();
-	EIz = _crossSection->GetKv()*_mat.G();
+	GKv = _crossSection->GetKv()*_mat.G();
 
 	for (int i = 0; i < n; i++)
 	{
 		//position on the beam
-		double x = (double)i * _length / ((double)(n - 1));
+		double x;
+
+		if (n == 1)
+			x = _length / 2;
+		else
+			x = (double)i * _length / ((double)(n - 1));
 		
 		_results._pos.push_back(x);
 
@@ -239,11 +244,11 @@ void CIFem::Element3d::CalculateSectionForces(int n)
 		x2 = pow(x, 2);
 		x3 = pow(x, 3);
 																	//Values ignored for now..
-		_results._N.push_back(EA*m(0));							//-qx*x
+		_results._N.push_back(EA*m(0));								//-qx*x
 		_results._Vy.push_back(-6 * EIz*m(2));						//-qy*x
 		_results._Vz.push_back(-6 * EIy*m(6));						//-qz*x
 		_results._T.push_back(GKv*m(10));							//-qw*x
-		_results._My.push_back(-6 * EIz*x*m(6) - 2 * EIy*m(7));		//-qz*x^2/2
+		_results._My.push_back(-6 * EIy*x*m(6) - 2 * EIy*m(7));		//-qz*x^2/2
 		_results._Mz.push_back(6 * EIz*x*m(2) + 2 * EIz*m(3));		//qy*x^2/2
 
 		_results._u.push_back(x*m(0) + m(1));						//-qx*x^2/2/EA;
@@ -285,7 +290,7 @@ arma::mat Element3d::GetTransformationMatrix()
 	return G;
 }
 
-arma::mat & CIFem::Element3d::GetCMatrix()
+arma::mat CIFem::Element3d::GetCMatrix()
 {
 	arma::mat C(12, 12, arma::fill::zeros);
 
@@ -299,7 +304,7 @@ arma::mat & CIFem::Element3d::GetCMatrix()
 	C(1, 5) = 1;
 	C(2, 9) = 1;
 	C(3, 11) = 1;
-	C(4, 18) = -1;
+	C(4, 8) = -1;
 	C(5, 4) = 1;
 
 	C(6, 0) = L;

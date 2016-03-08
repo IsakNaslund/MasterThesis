@@ -54,6 +54,8 @@ namespace CIFem
 		arma::mat GetCMatrix();
 		void CalculateElemetForces();
 
+		void CalculateElementSectionForces();
+
 	};
 }
 

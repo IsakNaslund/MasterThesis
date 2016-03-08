@@ -29,7 +29,8 @@ namespace CIFem_wrapper
 
 		System::Collections::Generic::List<double> ^ ResultPosition();
 
-
+		WR_XYZ ^ GetStartPos();
+		WR_XYZ ^ GetEndPos();
 	};
 }
 

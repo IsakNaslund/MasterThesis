@@ -90,7 +90,8 @@ namespace CIFem_grasshopper
         /// <returns></returns>
         private Rhino.Geometry.Point3d CreateRhinoPt(WR_XYZ iPt)
         {
-            return new Rhino.Geometry.Point3d(iPt.X, iPt.Y, iPt.Z);
+            double factor = Utilities.GetScalingFactorFromRhino();
+            return new Rhino.Geometry.Point3d(iPt.X / factor, iPt.Y / factor, iPt.Z / factor);
         }
 
 
@@ -101,7 +102,8 @@ namespace CIFem_grasshopper
         /// <returns></returns>
         private Rhino.Geometry.Vector3d CreateRhinoVector(WR_Vector vec)
         {
-            return new Rhino.Geometry.Vector3d(vec.X, vec.Y, vec.Z);
+            double factor = Utilities.GetScalingFactorFromRhino();
+            return new Rhino.Geometry.Vector3d(vec.X / factor, vec.Y / factor, vec.Z / factor);
         }
 
         public ResultElement Copy()

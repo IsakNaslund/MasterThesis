@@ -10,7 +10,11 @@ namespace CIFem_grasshopper
 {
     static class Utilities
     {
-
+        /// <summary>
+        /// When reading inputs - Multiply with the factor 
+        /// When writing outputs - Divide with the factor
+        /// </summary>
+        /// <returns></returns>
         public static double GetScalingFactorFromRhino()
         {
             double factor = 1;

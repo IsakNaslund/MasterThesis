@@ -24,6 +24,10 @@ namespace CIFem
 		std::vector<double> ToStandardVector() const;
 		void Unitize();
 		~Vector3d();
+
+		//Operators
+		Vector3d operator * (double t);
+		Vector3d operator - (Vector3d other);
 	};
 
 }

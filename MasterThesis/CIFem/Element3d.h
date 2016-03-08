@@ -76,11 +76,12 @@ namespace CIFem
 
 
 	private:
-		void Init();				// Initialises class, call from all constructors
+		//void Init();				// Initialises class, call from all constructors
 		//void SetEdof(vector<int>);	// Sets the element dofs
 		
+		void SetElementOrientation(Vector3d eo);
 
-		void SetElementOrientation(std::vector<double>);
+		//void SetElementOrientation(std::vector<double>);
 		double CalcLength(XYZ sNode, XYZ eNode);	// Calculates and sets the element length
 		arma::mat GetTransformationMatrix();
 		arma::mat GetCMatrix();

@@ -229,14 +229,14 @@ void CIFem::Element3d::CalculateSectionForces(int n)
 		//position on the beam
 		double x = (double)i * _length / ((double)(n - 1));
 		
-		_results.pos.push_back(x);
+		_results._pos.push_back(x);
 
 		double x2, x3;
 
 		x2 = pow(x, 2);
 		x3 = pow(x, 3);
 																	//Values ignored for now..
-		_results._N1.push_back(EA*m(0));							//-qx*x
+		_results._N.push_back(EA*m(0));							//-qx*x
 		_results._Vy.push_back(-6 * EIz*m(2));						//-qy*x
 		_results._Vz.push_back(-6 * EIy*m(6));						//-qz*x
 		_results._T.push_back(GKv*m(10));							//-qw*x

@@ -19,7 +19,7 @@ namespace CIFem
 		struct Results
 		{
 			//Lists of results
-			std::vector<double> _N1, _Vy, _Vz, _T, _My, _Mz, _u, _v, _w, _fi, pos;
+			std::vector<double> _N, _Vy, _Vz, _T, _My, _Mz, _u, _v, _w, _fi, _pos;
 		};
 
 		XYZ _sNode, _eNode;		// Start and end node
@@ -45,6 +45,28 @@ namespace CIFem
 
 		void CalculateSectionForces() {  CalculateSectionForces(5); }
 		void CalculateSectionForces(int n);   //n is the number of evaluation points
+
+
+
+		//Result outputs:
+		//Section Forces
+		std::vector<double> NormalForce() const { return _results._N; }
+		std::vector<double> ShearForceZ() const { return _results._Vz; }
+		std::vector<double> ShearForceY() const { return _results._Vy; }
+		std::vector<double> MomentY() const { return _results._My; }
+		std::vector<double> MomentZ() const { return _results._Mz; }
+		std::vector<double> TorsionalForce() const { return _results._T; }
+
+		//Displacements
+		std::vector<double> DisplacementX() const { return _results._u; }
+		std::vector<double> DisplacementY() const { return _results._v; }
+		std::vector<double> DisplacementZ() const { return _results._w; }
+		std::vector<double> DisplacementTorsion() const { return _results._fi; }
+
+		//Location along the element
+		std::vector<double> ResultPosition() const { return _results._pos; }
+
+
 
 
 	private:

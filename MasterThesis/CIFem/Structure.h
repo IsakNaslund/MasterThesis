@@ -6,6 +6,7 @@
 #include "IElement.h"
 #include "Plane.h"
 #include <memory>
+#include <set>
 
 namespace CIFem
 {
@@ -36,14 +37,20 @@ namespace CIFem
 	private:
 		std::vector<std::shared_ptr<CIFem::IElement>> CreateElements();
 		void BuildStructure();
-		std::vector<std::shared_ptr<CIFem::DOF>> GetDofs();
-		void SetDofKMatIndex(std::vector<std::shared_ptr<CIFem::DOF>>);
-		arma::sp_mat AssembleStiffnessMatrix(std::vector<std::shared_ptr<CIFem::DOF>>);
-		void AssembleElementsInKMat(arma::sp_mat & K, arma::mat & Ke, std::vector<std::shared_ptr<DOF>>);
-		arma::colvec GetForceVector(std::vector<std::shared_ptr<DOF>>);
-		arma::colvec GetDisplacementVector(std::vector<std::shared_ptr<DOF>>);
-		void LinEqSolve(arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::vector<std::shared_ptr<DOF>>, arma::colvec & s);
-		void StoreResultsInDofs(arma::colvec a, arma::colvec f, std::vector<std::shared_ptr<DOF>>);
+		std::set<std::shared_ptr<CIFem::DOF>> GetDofs();
+		void GetNodeDofs(std::set<std::shared_ptr<CIFem::DOF>> & dofs);
+		void GetUniqueElementDofs(std::set<std::shared_ptr<CIFem::DOF>> & dofs);
+
+		void SetDofKMatIndex(std::set<std::shared_ptr<CIFem::DOF>>&);
+		arma::sp_mat AssembleStiffnessMatrix(std::set<std::shared_ptr<CIFem::DOF>>);
+		void AssembleElementsInKMat(arma::sp_mat & K, arma::mat & Ke, const std::vector<std::shared_ptr<DOF>>&);
+		arma::colvec GetForceVector(std::set<std::shared_ptr<DOF>>);
+		arma::colvec GetDisplacementVector(std::set<std::shared_ptr<DOF>>);
+		void LinEqSolve(arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::set<std::shared_ptr<DOF>>, arma::colvec & s);
+
+		void EigenSolve(arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::set<std::shared_ptr<DOF>> spDofs, arma::colvec & s);
+
+		void StoreResultsInDofs(arma::colvec a, arma::colvec f, std::set<std::shared_ptr<DOF>>);
 		arma::mat GetCMatrix();
 		void CalculateElemetForces();
 

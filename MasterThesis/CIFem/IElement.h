@@ -18,7 +18,7 @@ namespace CIFem
 
 	public:
 		virtual arma::Mat<double> GetStiffnessMatrix() = 0;
-		std::vector<std::shared_ptr<DOF>> GetDofs() { return _dof; }
+		const std::vector<std::shared_ptr<DOF>> & GetDofs() { return _dof; }
 		std::vector<int> GetDofIndecies();
 
 

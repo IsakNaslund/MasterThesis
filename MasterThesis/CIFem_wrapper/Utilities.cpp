@@ -1,6 +1,4 @@
-//Maybe need to include this
-//#include "stdafx.h"
-
+#include "stdafx.h"
 #include "Utilities.h"
 
 //////////////   C++ to C# conversion functions   //////////////

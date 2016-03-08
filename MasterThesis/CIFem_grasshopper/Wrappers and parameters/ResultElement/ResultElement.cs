@@ -33,6 +33,11 @@ namespace CIFem_grasshopper
             
         }
 
+        private void GetForces(WR_Element3d elem)
+        {
+            //N1 = elem.
+        }
+
         public ResultElement Copy()
         {
             //TODO fix this

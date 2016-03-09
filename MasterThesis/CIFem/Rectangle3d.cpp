@@ -57,31 +57,31 @@ double CIFem::Rectangle3d::CalcAlphaFactor()
 	}
 	else if (ratio < 1.5)
 	{
-		return CIFem::Interpolate(ratio, 0.724, 0.846, 1, 1.5);
+		return CIFem::Interpolate(ratio, 0.846, 0.724, 1, 1.5);
 	}
 	else if (ratio < 2)
 	{
-		return CIFem::Interpolate(ratio, 0.550, 0.724, 1.5, 2);
+		return CIFem::Interpolate(ratio, 0.724, 0.550, 1.5, 2);
 	}
 	else if (ratio < 2.5)
 	{
-		return CIFem::Interpolate(ratio, 0.412, 0.550, 2, 2.5);
+		return CIFem::Interpolate(ratio, 0.550, 0.412, 2, 2.5);
 	}
 	else if (ratio < 3)
 	{
-		return CIFem::Interpolate(ratio, 0.316, 0.412, 2.5, 3);
+		return CIFem::Interpolate(ratio, 0.412, 0.316, 2.5, 3);
 	}
 	else if (ratio < 4)
 	{
-		return CIFem::Interpolate(ratio, 0.198, 0.316, 3, 4);
+		return CIFem::Interpolate(ratio, 0.316, 0.198, 3, 4);
 	}
 	else if (ratio < 6)
 	{
-		return CIFem::Interpolate(ratio, 0.097, 0.198, 4, 6);
+		return CIFem::Interpolate(ratio, 0.198, 0.097, 4, 6);
 	}
 	else if (ratio < 10)
 	{
-		return CIFem::Interpolate(ratio, 0.037, 0.097, 6, 10);
+		return CIFem::Interpolate(ratio, 0.097, 0.037, 6, 10);
 	}
 	else
 	{

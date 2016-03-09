@@ -77,7 +77,7 @@ void CIFem::Structure::Solve()
 	// Get dofs
 	std::set<std::shared_ptr<CIFem::DOF>> spDofs = GetDofs();
 
-	// Update dof kIndex
+	// Update dof kIndex and clear dof loads
 	SetDofKMatIndex(spDofs);
 
 	//Calculate elemet forces
@@ -214,10 +214,12 @@ void CIFem::Structure::GetUniqueElementDofs(std::set<std::shared_ptr<CIFem::DOF>
 void CIFem::Structure::SetDofKMatIndex(std::set<std::shared_ptr<CIFem::DOF>>& spDofs)
 {
 	//Counting dofs, assuming all dofs exists in the nodes
+	//Clear loads from dofs
 	int dofCounter = 0;
 	for each (std::shared_ptr<DOF> dof in spDofs)
 	{
 		dof->UpdateKIndex(dofCounter);
+		dof->ClearLoad();
 		dofCounter++;
 	}
 }

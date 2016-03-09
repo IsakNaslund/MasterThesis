@@ -81,8 +81,11 @@ void CIFem::Structure::Solve()
 	SetDofKMatIndex(spDofs);
 
 	//Calculate elemet forces
-	CalculateElemetForces();
+	//CalculateElemetForces();
 
+
+	//Apply Node forces
+	ApplyNodalForces();
 
 	// Create K matrix
 	arma::sp_mat K = AssembleStiffnessMatrix(spDofs);
@@ -441,6 +444,14 @@ void CIFem::Structure::CalculateElemetForces()
 		_elements[i]->GravityLoad();
 	}
 
+}
+
+void CIFem::Structure::ApplyNodalForces()
+{
+	for (int i = 0; i < _nodes.size(); i++)
+	{
+		_nodes[i]->ApplyPointLoads();
+	}
 }
 
 void CIFem::Structure::CalculateElementSectionForces()

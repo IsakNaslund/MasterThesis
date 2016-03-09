@@ -83,3 +83,23 @@ CIFem::Vector3d CIFem::Vector3d::operator- (CIFem::Vector3d other)
 {
 	return Vector3d(_x-other._x, _y-other._y, _z-other._z);
 }
+
+CIFem::Vector3d CIFem::Vector3d::ZeroVec()
+{
+	return Vector3d(0,0,0);
+}
+
+CIFem::Vector3d CIFem::Vector3d::X()
+{
+	return Vector3d(1,0,0);
+}
+
+CIFem::Vector3d CIFem::Vector3d::Y()
+{
+	return Vector3d(0,1,0);
+}
+
+CIFem::Vector3d CIFem::Vector3d::Z()
+{
+	return Vector3d(0,0,1);
+}

@@ -15,6 +15,7 @@ namespace CIFem_wrapper
 		WR_Node3d(const double x, const double y, const double z);
 		WR_Node3d(const double x, const double y, const double z, int index);
 		WR_Node3d(const double x, const double y, const double z, WR_Restraint^ wr_Rest);
+		WR_Node3d(const double x, const double y, const double z, WR_Restraint^ wr_Rest, WR_Vector^ ptLoad, WR_Vector^ ptMoment);
 		~WR_Node3d();
 	};
 

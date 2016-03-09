@@ -94,7 +94,7 @@ namespace CIFem_grasshopper
             ePos = CreateRhinoPt(elem.GetEndPos());
 
             // Orientation
-            elNormal = CreateRhinoVector(elem.GetElementNormal());
+            elNormal = CreateRhinoVector(elem.GetElementNormal(), false);
         }
 
         /// <summary>
@@ -139,10 +139,14 @@ namespace CIFem_grasshopper
         /// Takes a WR_Vector and creates a Rhino Vector3d
         /// </summary>
         /// <param name="vec"></param>
+        /// <param name="scaleToRhinoUnits"></param>
         /// <returns></returns>
-        private Rhino.Geometry.Vector3d CreateRhinoVector(WR_Vector vec)
+        private Rhino.Geometry.Vector3d CreateRhinoVector(WR_Vector vec, bool scaleToRhinoUnits)
         {
-            double factor = Utilities.GetScalingFactorFromRhino();
+            double factor = 1;
+            if (scaleToRhinoUnits)
+                factor = Utilities.GetScalingFactorFromRhino();
+
             return new Rhino.Geometry.Vector3d(vec.X / factor, vec.Y / factor, vec.Z / factor);
         }
 

@@ -11,12 +11,24 @@ namespace CIFem_grasshopper.Components
     public class DisplayResultElementsComponent : GH_Component
     {
         BoundingBox _bb;
-        List<Curve> _dispCrvs;
+        List<Point3d> _bbPts;
+        List<Curve> _dispCrvN;
+        List<Curve> _dispCrvVy;
+        List<Curve> _dispCrvVz;
+        List<Curve> _dispCrvT;
+        List<Curve> _dispCrvMyy;
+        List<Curve> _dispCrvMzz;
 
         public DisplayResultElementsComponent(): base("DisplayElementResults", "ER", "Displays the element results", "CIFem", "Results")
         {
             _bb = new BoundingBox();
-            _dispCrvs = new List<Curve>();
+            _bbPts = new List<Point3d>();
+            _dispCrvN = new List<Curve>();
+            _dispCrvVy = new List<Curve>();
+            _dispCrvVz = new List<Curve>();
+            _dispCrvT = new List<Curve>();
+            _dispCrvMyy = new List<Curve>();
+            _dispCrvMzz = new List<Curve>();
         }
 
         public override Guid ComponentGuid
@@ -29,7 +41,7 @@ namespace CIFem_grasshopper.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new ResultElementParam(), "Result Element", "RE", "Result element", GH_ParamAccess.item);
+            pManager.AddParameter(new ResultElementParam(), "Result Element", "RE", "Result element", GH_ParamAccess.list);
             pManager.AddBooleanParameter("DisplayToggles", "DT", "Toggles the forces to display. Input should be a list of 6 booleans (N, Vy, Vz, T, Myy, Mzz). [Normal force, shear in weak axis, shear in strong axis, torsion, bending in strong direction, bending in weak direction]", GH_ParamAccess.list);
             pManager.AddNumberParameter("ScalingFactor", "sfac", "Scaling factor for the drawing. Input should be either one 'global' scaling factor or a list of 6 individual ones.", GH_ParamAccess.list);
         }
@@ -41,16 +53,22 @@ namespace CIFem_grasshopper.Components
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            _dispCrvs.Clear();
+            // Clear lists
+            _dispCrvN.Clear();
+            _dispCrvVy.Clear();
+            _dispCrvVz.Clear();
+            _dispCrvT.Clear();
+            _dispCrvMyy.Clear();
+            _dispCrvMzz.Clear();
+            _bbPts.Clear();
 
             ////// INDATA //////
-            ResultElement re = null;
+            List<ResultElement> res = new List<ResultElement>();
             List<bool> dispToggles = new List<bool>();
             List<double> sFacs = new List<double>();
 
             // Result element
-            if (!DA.GetData(0, ref re)) { return; }
-            _bb = new BoundingBox(re.sPos, re.ePos);
+            if (!DA.GetDataList(0, res)) { return; }
 
             // Display toggles
             if (!DA.GetDataList(1, dispToggles)) { return; }
@@ -72,7 +90,7 @@ namespace CIFem_grasshopper.Components
             }
             if (!sFacInputCorrect)
             {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Number of scal in input should be 6");
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Number of scale factors in input should be 1 or 6");
                 return;
             }
 
@@ -86,53 +104,45 @@ namespace CIFem_grasshopper.Components
             bool bMyy = dispToggles[4];     double sfMyy = sFacs[4];
             bool bMzz = dispToggles[5];     double sfMzz = sFacs[5];
 
-            // Get element information
-            Rhino.Geometry.Vector3d normal = re.elNormal;
 
-
-
-            ////// START DRAWING STUFF //////
-
-            // Normal force
-            if (bN)
-                CreateCurvesFromResults(re, re.N1, normal, sfN);
-
-            // Shear force in weak direction
-            if (bVy)
+            foreach (ResultElement re in res)
             {
+                // Get element orientation
+                Rhino.Geometry.Vector3d elX = re.GetLocalXVec();
+                Rhino.Geometry.Vector3d elZ = re.elNormal;
+                Vector3d elY = Vector3d.CrossProduct(elZ, elX);
 
 
+                ////// START DRAWING STUFF //////
+
+                // Normal force
+                if (bN)
+                    _dispCrvN.AddRange(CreateCurvesFromResults(re, re.N1, elZ, sfN));
+
+                // Shear force in weak direction
+                if (bVy)
+                    _dispCrvVy.AddRange(CreateCurvesFromResults(re, re.Vy, elY, sfVy));
+
+                // Shear force in strong direction
+                if (bVz)
+                    _dispCrvVz.AddRange(CreateCurvesFromResults(re, re.Vz, elZ, sfVz));
+
+                // Torsion
+                if (bT)
+                    _dispCrvT.AddRange(CreateCurvesFromResults(re, re.T, elZ, sfT));
+
+                // Moment around minor axis (bending in strong direction)
+                if (bMyy)
+                    _dispCrvMyy.AddRange(CreateCurvesFromResults(re, re.My, elZ, sfMyy));
+
+                // Moment around major axis (bending in weak direction)
+                if (bMzz)
+                    _dispCrvMzz.AddRange(CreateCurvesFromResults(re, re.Mz, elY, sfMzz));
             }
 
-            // Shear force in strong direction
-            if (bVz)
-            {
-
-
-            }
-
-            // Torsion
-            if (bT)
-            {
-
-
-            }
-
-            // Moment around minor axis (bending in strong direction)
-            if (bMyy)
-            {
-
-
-            }
-
-            // Moment around major axis (bending in weak direction)
-            if (bMzz)
-            {
-
-
-            }
-
-            
+            // Set bounding box
+            _bb = new BoundingBox(_bbPts);
+            _bb.Inflate(1.2); //Increase size by 20% to include all parts of all curves
         }
 
         /// <summary>
@@ -142,9 +152,12 @@ namespace CIFem_grasshopper.Components
         /// <param name="values">The values to be plotted</param>
         /// <param name="dir">The direction in which the plot should go</param>
         /// <param name="sFac">Scaling factor for the graph</param>
-        private void CreateCurvesFromResults(ResultElement re, List<double> values, Vector3d dir, double sFac)
+        private List<Curve> CreateCurvesFromResults(ResultElement re, List<double> values, Vector3d dir, double sFac)
         {
+            List<Curve> crvs = new List<Curve>();
+
             // Get points on original element
+            List<Point3d> basePts = new List<Point3d>();
             List<Point3d> pts = new List<Point3d>();
             Rhino.Geometry.Vector3d elX = re.GetLocalXVec(true);
             List<double> lengths = re.pos;
@@ -153,6 +166,7 @@ namespace CIFem_grasshopper.Components
                 Vector3d vec = l * elX;
                 Point3d pt = new Point3d(re.sPos.X + vec.X, re.sPos.Y + vec.Y, re.sPos.Z + vec.Z);
                 pts.Add(pt);
+                basePts.Add(pt);
             }
 
             // Move points to get curve points
@@ -160,18 +174,34 @@ namespace CIFem_grasshopper.Components
                 pts[i] = pts[i] + dir * sFac * values[i];
 
             // Create curve and add it to _dispCrvs
-            _dispCrvs.Add(Rhino.Geometry.Curve.CreateInterpolatedCurve(pts, 3));
+            crvs.Add(Rhino.Geometry.Curve.CreateInterpolatedCurve(pts, 3));
+            crvs.Add(Rhino.Geometry.Curve.CreateInterpolatedCurve(basePts, 1));
+            for (int i = 0; i < pts.Count; i++)
+                crvs.Add(new Rhino.Geometry.Line(basePts[i], pts[i]).ToNurbsCurve());
+
+            // Add points to bounding box
+            _bbPts.AddRange(pts);
+
+            return crvs;
         }
 
 
         public override void DrawViewportWires(IGH_PreviewArgs args)
         {
-            for (int i = 0; i < _dispCrvs.Count; i++)
-            {
-                args.Display.DrawCurve(_dispCrvs[i], System.Drawing.Color.BurlyWood);
-            }
+            DrawCurves(args, _dispCrvN, System.Drawing.Color.OldLace);
+            DrawCurves(args, _dispCrvVy, System.Drawing.Color.OldLace);
+            DrawCurves(args, _dispCrvVz, System.Drawing.Color.OldLace);
+            DrawCurves(args, _dispCrvT, System.Drawing.Color.OldLace);
+            DrawCurves(args, _dispCrvMyy, System.Drawing.Color.OldLace);
+            DrawCurves(args, _dispCrvMzz, System.Drawing.Color.OldLace);
 
             base.DrawViewportWires(args);
+        }
+
+        private void DrawCurves(IGH_PreviewArgs args, List<Curve> crvs, System.Drawing.Color color)
+        {
+            for (int i = 0; i < crvs.Count; i++)
+                args.Display.DrawCurve(crvs[i], color);
         }
 
         public override BoundingBox ClippingBox

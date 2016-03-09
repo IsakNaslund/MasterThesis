@@ -53,6 +53,7 @@ namespace CIFem
 		void StoreResultsInDofs(arma::colvec a, arma::colvec f, std::set<std::shared_ptr<DOF>>);
 		arma::mat GetCMatrix();
 		void CalculateElemetForces();
+		void ApplyNodalForces();
 
 		void CalculateElementSectionForces();
 

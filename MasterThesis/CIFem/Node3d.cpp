@@ -10,6 +10,8 @@ Node3d::Node3d()
 CIFem::Node3d::Node3d(const XYZ location)
 {
 	_location = location;
+	_ptLoad = Vector3d::ZeroVec();
+	_ptMoment = Vector3d::ZeroVec();
 	InitNewDofs(0);
 }
 
@@ -22,6 +24,23 @@ CIFem::Node3d::Node3d(const XYZ location, unsigned int startIndex)
 CIFem::Node3d::Node3d(const XYZ location, Restraint restraint)
 	:Node3d(location)
 {
+	SetRestraint(restraint);
+}
+
+CIFem::Node3d::Node3d(const XYZ location, Vector3d pointLoad, Vector3d pointMoment)
+{
+	_location = location;
+	_ptLoad = pointLoad;
+	_ptMoment = pointMoment;
+	InitNewDofs(0);
+}
+
+CIFem::Node3d::Node3d(const XYZ location, Restraint restraint, Vector3d pointLoad, Vector3d pointMoment)
+{
+	_location = location;
+	_ptLoad = pointLoad;
+	_ptMoment = pointMoment;
+	InitNewDofs(0);
 	SetRestraint(restraint);
 }
 
@@ -123,4 +142,17 @@ bool CIFem::Node3d::GetNodeCMatrix(const Plane globalOrientation, arma::mat & CN
 
 	// If checks fail
 	return false;
+}
+
+void CIFem::Node3d::ApplyPointLoads()
+{
+
+	_dof[0]->AddLoad(_ptLoad.GetX());
+	_dof[1]->AddLoad(_ptLoad.GetY());
+	_dof[2]->AddLoad(_ptLoad.GetZ());
+
+	_dof[3]->AddLoad(_ptMoment.GetX());
+	_dof[4]->AddLoad(_ptMoment.GetY());
+	_dof[5]->AddLoad(_ptMoment.GetZ());
+
 }

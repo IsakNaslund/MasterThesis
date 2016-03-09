@@ -28,6 +28,14 @@ namespace CIFem
 		//Operators
 		Vector3d operator * (double t);
 		Vector3d operator - (Vector3d other);
+
+
+		//Static vector setups
+		static Vector3d ZeroVec();
+
+		static Vector3d X();
+		static Vector3d Y();
+		static Vector3d Z();
 	};
 
 }

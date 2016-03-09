@@ -23,6 +23,8 @@ namespace CIFem
 		virtual double DistanceTo(const XYZ& other) const;
 
 		virtual bool GetNodeCMatrix(Plane, arma::mat &) { return false; };
+
+		virtual void ApplyPointLoads() = 0;
 	};
 
 }

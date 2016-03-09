@@ -13,7 +13,8 @@ namespace CIFem
 	class CIFEM_API Structure
 	{
 		std::vector<std::shared_ptr<INode>> _nodes;
-		std::vector<std::shared_ptr<IElementRcp>> _elementRcps;
+		std::vector<std::shared_ptr<CIFem::IElement>> _elements;
+		//std::vector<std::shared_ptr<IElementRcp>> _elementRcps;
 		Plane _structureOrientation;
 
 	public:
@@ -25,18 +26,22 @@ namespace CIFem
 		void AddElementRcp(std::shared_ptr<IElementRcp>);
 		void AddElementRcp(std::vector<std::shared_ptr<IElementRcp>>);
 
-		// Not implemented!
+		// Not implemented, probably shouldnt be either....!
 		Structure Copy();
+
+
+
 		void Solve();
+
+		double SolveEigenvalue(int mode);
 
 		std::vector<std::shared_ptr<CIFem::IElement>> GetElements();
 
-	protected:
-		std::vector<std::shared_ptr<CIFem::IElement>> _elements;
+		void ResetStructure();
 
 	private:
-		std::vector<std::shared_ptr<CIFem::IElement>> CreateElements();
-		void BuildStructure();
+		//std::vector<std::shared_ptr<CIFem::IElement>> CreateElements();
+		//void BuildStructure();
 		std::set<std::shared_ptr<CIFem::DOF>> GetDofs();
 		void GetNodeDofs(std::set<std::shared_ptr<CIFem::DOF>> & dofs);
 		void GetUniqueElementDofs(std::set<std::shared_ptr<CIFem::DOF>> & dofs);
@@ -48,7 +53,7 @@ namespace CIFem
 		arma::colvec GetDisplacementVector(std::set<std::shared_ptr<DOF>>);
 		void LinEqSolve(arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::set<std::shared_ptr<DOF>>, arma::colvec & s);
 
-		void EigenSolve(arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::set<std::shared_ptr<DOF>> spDofs, arma::colvec & s);
+		double EigenSolve(arma::sp_mat & K, arma::colvec & am, arma::mat & C, std::set<std::shared_ptr<DOF>> spDofs, arma::colvec & s, int mode);
 
 		void StoreResultsInDofs(arma::colvec a, arma::colvec f, std::set<std::shared_ptr<DOF>>);
 		arma::mat GetCMatrix();

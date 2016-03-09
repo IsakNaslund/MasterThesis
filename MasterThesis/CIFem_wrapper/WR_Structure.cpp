@@ -58,6 +58,11 @@ void CIFem_wrapper::WR_Structure::Solve()
 	_structure.operator std::shared_ptr<CIFem::Structure>()->Solve();
 }
 
+double CIFem_wrapper::WR_Structure::EigenSolve(int mode)
+{
+	return _structure.operator std::shared_ptr<CIFem::Structure>()->SolveEigenvalue(mode);
+}
+
 // Currently only implemented to return Element3d
 System::Collections::Generic::List<WR_IElement^>^ CIFem_wrapper::WR_Structure::GetAllElements()
 {

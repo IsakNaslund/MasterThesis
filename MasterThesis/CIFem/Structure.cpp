@@ -37,7 +37,16 @@ void CIFem::Structure::AddNode(std::vector<std::shared_ptr<INode>> nodes)
 
 void CIFem::Structure::AddElementRcp(std::shared_ptr<IElementRcp> elementRcp)
 {
-	_elementRcps.push_back(elementRcp);
+	//_elementRcps.push_back(elementRcp);
+
+	std::vector<std::shared_ptr<CIFem::IElement>> outElems;
+
+	outElems.clear();
+	outElems = elementRcp->CreateElement(_nodes);
+
+	for (int j = 0; j < outElems.size(); j++)
+		_elements.push_back(outElems[j]);
+
 }
 
 void CIFem::Structure::AddElementRcp(std::vector<std::shared_ptr<IElementRcp>> elements)
@@ -72,7 +81,7 @@ CIFem::Structure CIFem::Structure::Copy()
 void CIFem::Structure::Solve()
 {
 	// Build structure
-	BuildStructure();
+	//BuildStructure();
 
 	// Get dofs
 	std::set<std::shared_ptr<CIFem::DOF>> spDofs = GetDofs();
@@ -113,13 +122,47 @@ void CIFem::Structure::Solve()
 	CalculateElementSectionForces();
 }
 
+double CIFem::Structure::SolveEigenvalue(int mode)
+{
+	// Get dofs
+	std::set<std::shared_ptr<CIFem::DOF>> spDofs = GetDofs();
+
+	// Update dof kIndex and clear dof loads
+	SetDofKMatIndex(spDofs);
+
+	// Create K matrix
+	arma::sp_mat K = AssembleStiffnessMatrix(spDofs);
+
+	// Get a and f vectors 
+	arma::mat C = GetCMatrix();							// Get transformation vector for restraints
+
+	// Solve K matrix
+	arma::colvec s;		// Resulting forces
+	arma::colvec am;
+	double eigenVal = EigenSolve(K, am, C, spDofs, s,mode);
+
+	// Store results in dofs
+	StoreResultsInDofs(am, s, spDofs);
+
+	//Calculate section forces for the elements
+	CalculateElementSectionForces();
+
+	return eigenVal;
+}
+
 std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Structure::GetElements()
 {
 	return _elements;
 }
 
+void CIFem::Structure::ResetStructure()
+{
+	_elements.clear();
+	_nodes.clear();
+}
 
-std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Structure::CreateElements()
+
+/*std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Structure::CreateElements()
 {
 	std::vector<std::shared_ptr<CIFem::IElement>> elements;
 	std::vector<std::shared_ptr<CIFem::IElement>> outElems;
@@ -138,8 +181,8 @@ std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Structure::CreateElements()
 void CIFem::Structure::BuildStructure()
 {
 	// Create elements from recipes and assign
-	_elements = CreateElements();
-}
+	//_elements = CreateElements();
+}*/
 
 std::set<std::shared_ptr<CIFem::DOF>> CIFem::Structure::GetDofs()
 {
@@ -179,27 +222,6 @@ void CIFem::Structure::GetNodeDofs(std::set<std::shared_ptr<CIFem::DOF>>& dofs)
 void CIFem::Structure::GetUniqueElementDofs(std::set<std::shared_ptr<CIFem::DOF>>& dofs)
 {
 	// Add non-duplicate dofs in elements
-	/*for (int i = 0; i < _elements.size(); i++)
-	{
-		std::vector<std::shared_ptr<CIFem::DOF>> eDofs = _elements[i]->GetDofs();
-		for (int j = 0; j < eDofs.size(); j++)
-		{
-			bool unique = true;
-			for (int k = 0; k < dofs.size(); k++)
-			{
-				if (eDofs[j] == dofs[k])
-				{
-					unique = false;
-					break;
-				}
-			}
-
-			if (unique)
-				dofs.push_back(eDofs[j]);
-		}
-	}*/
-
-	//Test using set
 	for (int i = 0; i < _elements.size(); i++)
 	{
 		std::vector<std::shared_ptr<CIFem::DOF>> eDofs = _elements[i]->GetDofs();
@@ -340,7 +362,7 @@ void CIFem::Structure::LinEqSolve(arma::sp_mat & K, arma::colvec & a, arma::colv
 	s = K*a - f;
 }
 
-void CIFem::Structure::EigenSolve(arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::set<std::shared_ptr<DOF>> spDofs, arma::colvec & s)
+double CIFem::Structure::EigenSolve(arma::sp_mat & K, arma::colvec & a, arma::mat & C, std::set<std::shared_ptr<DOF>> spDofs, arma::colvec & s, int mode)
 {
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -372,12 +394,10 @@ void CIFem::Structure::EigenSolve(arma::sp_mat & K, arma::colvec & a, arma::colv
 	arma::uvec ufDof(fDof);
 	arma::uvec upDof(pDof);
 
-	arma::colvec fa(fDof.size());
-
 	arma::vec eigVal;
 	arma::mat eigVec;
 
-	
+	a = arma::colvec(spDofs.size(), arma::fill::zeros);
 
 	// Solve deformations
 	arma::mat Kmat(K); // Debugging, workaround this to improve speed
@@ -385,8 +405,12 @@ void CIFem::Structure::EigenSolve(arma::sp_mat & K, arma::colvec & a, arma::colv
 
 	arma::eig_sym(eigVal, eigVec, Kmat(ufDof, ufDof));
 
+	a(ufDof) = eigVec.col(mode);
+
 	// Solve forces
-	s = K*a - f;
+	s = K*a;
+
+	return eigVal(mode);
 }
 
 void CIFem::Structure::StoreResultsInDofs(arma::colvec a, arma::colvec f, std::set<std::shared_ptr<DOF>> spDofs)

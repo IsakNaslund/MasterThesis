@@ -26,6 +26,8 @@ namespace CIFem_wrapper
 
 		void Solve();
 
+		double EigenSolve(int mode);
+
 	private:
 		
 	};

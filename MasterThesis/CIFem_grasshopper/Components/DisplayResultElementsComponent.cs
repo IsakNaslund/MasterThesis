@@ -43,7 +43,7 @@ namespace CIFem_grasshopper.Components
         {
             pManager.AddParameter(new ResultElementParam(), "Result Element", "RE", "Result element", GH_ParamAccess.list);
             pManager.AddBooleanParameter("DisplayToggles", "DT", "Toggles the forces to display. Input should be a list of 6 booleans (N, Vy, Vz, T, Myy, Mzz). [Normal force, shear in weak axis, shear in strong axis, torsion, bending in strong direction, bending in weak direction]", GH_ParamAccess.list);
-            pManager.AddNumberParameter("ScalingFactor", "sfac", "Scaling factor for the drawing. Input should be either one 'global' scaling factor or a list of 6 individual ones.", GH_ParamAccess.list);
+            pManager.AddNumberParameter("ScalingFactor", "sfac", "Scaling factor for the drawing. Input should be either one 'global' scaling factor or a list of 6 individual ones.", GH_ParamAccess.list, 1);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)

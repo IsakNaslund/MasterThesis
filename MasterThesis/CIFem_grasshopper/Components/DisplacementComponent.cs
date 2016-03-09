@@ -40,7 +40,7 @@ namespace CIFem_grasshopper
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
 
-
+            pManager.AddCurveParameter("Displacement Curves", "C", "Displacement curve", GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -78,7 +78,7 @@ namespace CIFem_grasshopper
 
                 for (int i = 0; i < nbEval; i++)
                 {
-                    Point3d curvePt = stPos + tan * (re.pos[i]+re.u[i])+norm*re.w[i]+yDir*re.v[i];
+                    Point3d curvePt = stPos + tan * (re.pos[i]+re.u[i]* sFac) +norm*re.w[i]* sFac + yDir*re.v[i]* sFac;
                     curvePts.Add(curvePt);
                     allPts.Add(curvePt);
                 }
@@ -88,10 +88,12 @@ namespace CIFem_grasshopper
             }
 
             _bb = new BoundingBox(allPts);
+
+            DA.SetDataList(0, _dispCrvs);
         }
 
 
-        public override void DrawViewportWires(IGH_PreviewArgs args)
+        /*public override void DrawViewportWires(IGH_PreviewArgs args)
         {
 
             for (int i = 0; i < _dispCrvs.Count; i++)
@@ -109,6 +111,6 @@ namespace CIFem_grasshopper
             {
                 return base.ClippingBox;
             }
-        }
+        }*/
     }
 }

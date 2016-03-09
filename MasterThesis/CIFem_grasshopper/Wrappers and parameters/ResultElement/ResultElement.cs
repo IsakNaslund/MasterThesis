@@ -44,7 +44,7 @@ namespace CIFem_grasshopper
             GetElementGeometricData(elem);
 
             // Positions
-            pos = elem.ResultPosition();
+            ScalePositionList(elem);
 
             // Forces
             GetForces(elem);
@@ -53,6 +53,20 @@ namespace CIFem_grasshopper
             GetDisplacements(elem);
         }
 
+        private void ScalePositionList(WR_Element3d elem)
+        {
+            List<double> unScaled = elem.ResultPosition();
+            double sFac = 1/Utilities.GetScalingFactorFromRhino();
+
+            pos = new List<double>();
+
+            for (int i = 0; i < unScaled.Count; i++)
+            {
+                pos.Add(unScaled[i] * sFac);
+
+            }
+
+        }
 
         private void GetForces(WR_Element3d elem)
         {

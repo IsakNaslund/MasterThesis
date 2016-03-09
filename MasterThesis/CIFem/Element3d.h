@@ -32,6 +32,9 @@ namespace CIFem
 		Vector3d _eo;// Element orientation
 		Results _results;
 
+		//Distributed loads
+		double _qx, _qy, _qz,_qw;
+
 	public:
 		Element3d();
 		//Element3d(XYZ, XYZ, vector<int>, ElementProperty);
@@ -43,7 +46,7 @@ namespace CIFem
 		arma::Col<double> GravityLoad(Vector3d direction);
 
 
-		void CalculateSectionForces() {  CalculateSectionForces(5); }
+		void CalculateSectionForces() {  CalculateSectionForces(11); }
 		void CalculateSectionForces(int n);   //n is the number of evaluation points
 
 
@@ -83,8 +86,12 @@ namespace CIFem
 
 		//void SetElementOrientation(std::vector<double>);
 		double CalcLength(XYZ sNode, XYZ eNode);	// Calculates and sets the element length
-		arma::mat GetTransformationMatrix();
-		arma::mat GetCMatrix();
+
+		arma::mat GetTransformationMatrix();		//12x12 big transformation matrix
+		arma::mat GetSmallTransMatrix();			//3x3 small transformation matrix 
+
+
+		arma::mat GetCMatrix();						//Used for section forces
 
 
  

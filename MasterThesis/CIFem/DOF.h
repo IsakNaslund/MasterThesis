@@ -28,6 +28,7 @@ namespace CIFem
 
 		inline void AddLoad(const double load);
 		inline double GetLoad() const { return _f; }
+		inline void ClearLoad() { _f = 0; }
 
 
 		void SetUpBoundaryCondition(bool isRestrained) { SetUpBoundaryCondition(isRestrained, 0); }

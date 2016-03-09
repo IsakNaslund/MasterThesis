@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="BeamProperties.cs" />
     <Compile Include="Components\BeamPropertiesComponent.cs" />
+    <Compile Include="Components\DisplayResultElementsComponent.cs" />
     <Compile Include="Components\ElementForcesComponent.cs" />
     <Compile Include="Components\NodeComponent.cs" />
     <Compile Include="Components\ResultElementComponent.cs" />

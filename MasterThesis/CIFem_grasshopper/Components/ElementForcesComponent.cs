@@ -32,7 +32,7 @@ namespace CIFem_grasshopper
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddIntegerParameter("Position", "pos", "The relative position along the element. 0 indicates the start node.", GH_ParamAccess.list);
+            pManager.AddNumberParameter("Position", "pos", "The relative position along the element. 0 indicates the start node.", GH_ParamAccess.list);
             pManager.AddNumberParameter("AxialForce", "Nx", "Axial force", GH_ParamAccess.list);
             pManager.AddNumberParameter("ShearForceMinor", "Vy", "Shear force along weak axis", GH_ParamAccess.list);
             pManager.AddNumberParameter("ShearForceMajor", "Vz", "Shear force along strong axis", GH_ParamAccess.list);

@@ -84,6 +84,32 @@ namespace CIFem_grasshopper
         }
 
         /// <summary>
+        /// Returns a (unitized) vector from start node to end node
+        /// </summary>
+        /// <returns></returns>
+        public Rhino.Geometry.Vector3d GetLocalXVec()
+        {
+            return GetLocalXVec(true);
+        }
+
+
+        /// <summary>
+        /// Returns a vector from start node to end node
+        /// </summary>
+        /// <param name="unitize">True = return unitised vector, false = return non-unitised vector</param>
+        /// <returns></returns>
+        public Rhino.Geometry.Vector3d GetLocalXVec(bool unitize)
+        {
+            Rhino.Geometry.Vector3d v = new Rhino.Geometry.Vector3d(ePos.X - sPos.X, ePos.Y - sPos.Y, ePos.Z - sPos.Z);
+
+            if (unitize)
+                v.Unitize();
+
+            return v;
+        }
+
+
+        /// <summary>
         /// Takes a WR_XYZ and creates a Rhino Point3d
         /// </summary>
         /// <param name="iPt"></param>

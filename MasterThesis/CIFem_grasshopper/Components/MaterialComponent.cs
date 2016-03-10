@@ -28,6 +28,7 @@ namespace CIFem_grasshopper
             pManager.AddNumberParameter("Material Stiffness", "E", "Youngs modulus for the beam, set to steel by deafault", GH_ParamAccess.item, 210000000000);
             pManager.AddNumberParameter("Poisons ratio", "p", "Poisons ration for the material of the beam, set to steel by default", GH_ParamAccess.item, 0.3);
             pManager.AddNumberParameter("Density", "d", "Density of the material. Given in kg/m3", GH_ParamAccess.item, 7800);
+            pManager.AddNumberParameter("Ultimate Stress", "fu", "The ultimate stress for the material, used for utilisation checks", GH_ParamAccess.item, 275e9);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -37,16 +38,18 @@ namespace CIFem_grasshopper
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            double E, p, rho;
+            double E, p, rho, fu;
             E = 0;
             p = 0;
             rho = 0;
+            fu = 0;
 
             if (!DA.GetData(0, ref E)) { return; }
             if (!DA.GetData(1, ref p)) { return; }
             if (!DA.GetData(2, ref rho)) { return; }
+            if (!DA.GetData(3, ref fu)) { return; }
 
-            WR_Material mat = new WR_Material(E, p, rho);
+            WR_Material mat = new WR_Material(E, p, rho, fu);
 
 
             DA.SetData(0, mat);

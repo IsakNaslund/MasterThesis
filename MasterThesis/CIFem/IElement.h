@@ -22,7 +22,7 @@ namespace CIFem
 	public:
 
 		virtual ~IElement();
-		virtual arma::Mat<double> GetStiffnessMatrix() = 0;
+		virtual const arma::Mat<double> & GetStiffnessMatrix() = 0;
 		const std::vector<std::shared_ptr<DOF>> & GetDofs() { return _dof; }
 		std::vector<int> GetDofIndecies();
 

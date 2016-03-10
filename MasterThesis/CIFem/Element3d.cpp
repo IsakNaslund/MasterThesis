@@ -282,6 +282,12 @@ void CIFem::Element3d::DoSectionChecks()
 	//IMPLEMENT
 }
 
+// Updates the utilisation if the new is greater than the one stored.
+void CIFem::Element3d::UpdateUtilisation(double u)
+{
+	_results.UpdateUtilisation(u);
+}
+
 
 // Creates and returns the transformation matrix G
 arma::mat Element3d::GetTransformationMatrix()

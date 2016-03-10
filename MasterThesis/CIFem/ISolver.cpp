@@ -20,6 +20,8 @@ void CIFem::ISolver::StoreResultsInDofs(arma::colvec a, arma::colvec f, DofSet s
 
 	for each (std::shared_ptr<DOF> spDof in spDofs)
 	{
+		arma::mat amat(24, 1);
+		amat = amat + a;
 		spDof->SetResults(a(spDof->GetKIndex()), f(spDof->GetKIndex()));
 	}
 

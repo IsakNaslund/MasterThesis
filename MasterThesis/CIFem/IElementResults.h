@@ -11,6 +11,14 @@ namespace CIFem
 	public:
 		IElementResults();
 		~IElementResults();
+
+		virtual void Reset() = 0;
+		double GetMaxAbsolute(std::vector<double> forces);
+		void UpdateUtilisation(double u);
+
+	protected:
+		//Utilisation
+		double _maxUtil = 0;	// Initialise to 0
 	};
 }
 

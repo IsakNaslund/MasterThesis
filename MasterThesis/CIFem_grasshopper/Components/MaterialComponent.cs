@@ -53,7 +53,6 @@ namespace CIFem_grasshopper
 
 
             DA.SetData(0, mat);
-
         }
     }
 }

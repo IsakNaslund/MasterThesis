@@ -14,7 +14,7 @@ namespace CIFem
 		UtilCheck3dBasic();
 		~UtilCheck3dBasic();
 
-		void CheckElementUtilisations(ICrossSection xSec, Material mat, ElementResults3d results) override;
+		void CheckElementUtilisations(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results) override;
 		double AxialCheck(Element3d * elem);
 	
 	

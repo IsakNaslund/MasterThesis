@@ -12,7 +12,7 @@ namespace CIFem
 	public:
 		IUtilCheck3d();
 		~IUtilCheck3d();
-		virtual void CheckElementUtilisations(ICrossSection xSec, Material mat, ElementResults3d results) = 0;
+		virtual void CheckElementUtilisations(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results) = 0;
 	};
 }
 

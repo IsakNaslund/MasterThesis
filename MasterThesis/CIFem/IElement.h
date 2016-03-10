@@ -22,7 +22,7 @@ namespace CIFem
 	public:
 
 		virtual ~IElement();
-		virtual const arma::Mat<double> & GetStiffnessMatrix() = 0;
+		virtual arma::Mat<double> GetStiffnessMatrix() = 0;
 		const std::vector<std::shared_ptr<DOF>> & GetDofs() { return _dof; }
 		std::vector<int> GetDofIndecies();
 
@@ -32,6 +32,7 @@ namespace CIFem
 		virtual arma::Col<double> GravityLoad(Vector3d direction) = 0;
 
 		virtual void CalculateSectionForces() = 0;
+		virtual void DoSectionChecks() = 0;
 	};
 }
 

@@ -14,7 +14,7 @@ namespace CIFem_wrapper
 
 	public:
 		WR_Material();
-		WR_Material(double E, double poi, double rho);
+		WR_Material(double E, double poi, double rho, double fu);
 
 		std::shared_ptr<CIFem::Material> GetMaterial();
 

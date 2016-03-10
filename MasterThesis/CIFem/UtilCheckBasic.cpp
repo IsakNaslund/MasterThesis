@@ -12,10 +12,9 @@ namespace CIFem
 	{
 	}
 
-	void UtilCheck3dBasic::CheckElementUtilisations()
+	void UtilCheck3dBasic::CheckElementUtilisations(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results)
 	{
-		//for each (Element3d* elem in elements)
-		//{
+
 			// Do checks, update element utilisation
 			
 
@@ -29,6 +28,9 @@ namespace CIFem
 			// Update elem util
 
 
-		//}
+	}
+	double UtilCheck3dBasic::AxialCheck(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results)
+	{
+		return 0.0;
 	}
 }

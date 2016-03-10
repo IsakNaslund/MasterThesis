@@ -3,6 +3,7 @@
 #include "IUtilisationCheck.h"
 #include "ICrossSection.h"
 #include "Material.h"
+#include "ElementResults3d.h"
 
 namespace CIFem
 {
@@ -11,7 +12,7 @@ namespace CIFem
 	public:
 		IUtilCheck3d();
 		~IUtilCheck3d();
-		virtual void CheckElementUtilisations() = 0;
+		virtual void CheckElementUtilisations(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results) = 0;
 	};
 }
 

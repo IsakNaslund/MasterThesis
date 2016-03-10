@@ -32,6 +32,7 @@ namespace CIFem
 		virtual arma::Col<double> GravityLoad(Vector3d direction) = 0;
 
 		virtual void CalculateSectionForces() = 0;
+		virtual void DoSectionChecks() = 0;
 	};
 }
 

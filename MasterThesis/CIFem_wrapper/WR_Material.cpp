@@ -7,9 +7,9 @@ CIFem_wrapper::WR_Material::WR_Material()
 	_mat = gcnew m_shared_ptr<CIFem::Material>(new CIFem::Material());
 }
 
-CIFem_wrapper::WR_Material::WR_Material(double E, double poi, double rho)
+CIFem_wrapper::WR_Material::WR_Material(double E, double poi, double rho, double fu)
 {
-	_mat = gcnew m_shared_ptr<CIFem::Material>(new CIFem::Material(E, poi, rho));
+	_mat = gcnew m_shared_ptr<CIFem::Material>(new CIFem::Material(E, poi, rho, fu));
 }
 
 std::shared_ptr<CIFem::Material> CIFem_wrapper::WR_Material::GetMaterial()
@@ -19,7 +19,7 @@ std::shared_ptr<CIFem::Material> CIFem_wrapper::WR_Material::GetMaterial()
 
 CIFem_wrapper::WR_Material^ CIFem_wrapper::WR_Material::Copy()
 {
-	return gcnew WR_Material(_mat.operator std::shared_ptr<CIFem::Material>()->E(), _mat.operator std::shared_ptr<CIFem::Material>()->Poisson(), _mat.operator std::shared_ptr<CIFem::Material>()->Rho());
+	return gcnew WR_Material(_mat.operator std::shared_ptr<CIFem::Material>()->E(), _mat.operator std::shared_ptr<CIFem::Material>()->Poisson(), _mat.operator std::shared_ptr<CIFem::Material>()->Rho(), _mat.operator std::shared_ptr<CIFem::Material>()->Fu());
 }
 
 System::String ^ CIFem_wrapper::WR_Material::ToString()

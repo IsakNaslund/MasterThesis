@@ -45,3 +45,8 @@ void CIFem::Spring::CalculateSectionForces()
 	//save this is some way....
 	double stress = _k*(_dof[1]->GetResultingTranslation() - _dof[0]->GetResultingTranslation());
 }
+
+void CIFem::Spring::DoSectionChecks()
+{
+	//do nothing, IMPLEMENT
+}

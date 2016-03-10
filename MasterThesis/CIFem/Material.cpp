@@ -6,11 +6,12 @@ CIFem::Material::Material()
 {
 }
 
-CIFem::Material::Material(double E, double poi, double rho)
+CIFem::Material::Material(double E, double poi, double rho, double fu)
 {
 	_E = E;
 	_poi = poi;
 	_rho = rho;
+	_fu = fu;
 }
 
 
@@ -31,6 +32,11 @@ double CIFem::Material::Rho()
 double CIFem::Material::G()
 {
 	return _E / (2 * (_poi + 1));
+}
+
+double CIFem::Material::Fu()
+{
+	return _fu;
 }
 
 double CIFem::Material::Poisson()

@@ -277,6 +277,11 @@ void CIFem::Element3d::CalculateSectionForces(int n)
 
 }
 
+void CIFem::Element3d::DoSectionChecks()
+{
+	//IMPLEMENT
+}
+
 
 // Creates and returns the transformation matrix G
 arma::mat Element3d::GetTransformationMatrix()

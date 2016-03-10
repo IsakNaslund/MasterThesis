@@ -12,7 +12,7 @@ namespace CIFem
 	{
 	}
 
-	void UtilCheck3dBasic::CheckElementUtilisations()
+	void UtilCheck3dBasic::CheckElementUtilisations(ICrossSection xSec, Material mat, ElementResults3d results)
 	{
 		//for each (Element3d* elem in elements)
 		//{

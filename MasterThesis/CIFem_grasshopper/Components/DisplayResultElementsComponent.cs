@@ -188,12 +188,12 @@ namespace CIFem_grasshopper.Components
 
         public override void DrawViewportWires(IGH_PreviewArgs args)
         {
-            DrawCurves(args, _dispCrvN, System.Drawing.Color.OldLace);
+            DrawCurves(args, _dispCrvN, System.Drawing.Color.Blue);
             DrawCurves(args, _dispCrvVy, System.Drawing.Color.OldLace);
-            DrawCurves(args, _dispCrvVz, System.Drawing.Color.OldLace);
-            DrawCurves(args, _dispCrvT, System.Drawing.Color.OldLace);
-            DrawCurves(args, _dispCrvMyy, System.Drawing.Color.OldLace);
-            DrawCurves(args, _dispCrvMzz, System.Drawing.Color.OldLace);
+            DrawCurves(args, _dispCrvVz, System.Drawing.Color.Black);
+            DrawCurves(args, _dispCrvT, System.Drawing.Color.Brown);
+            DrawCurves(args, _dispCrvMyy, System.Drawing.Color.DarkOrange);
+            DrawCurves(args, _dispCrvMzz, System.Drawing.Color.Purple);
 
             base.DrawViewportWires(args);
         }

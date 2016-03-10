@@ -7,8 +7,13 @@ Element3d::Element3d()
 	//Init();			//Initialise
 }
 
+// Creates an element with a basic check. If possible use overloaded function instead.
+Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, std::shared_ptr<ICrossSection> crossSec, Material mat, Vector3d normal) :
+	Element3d(sNode, eNode, dof, crossSec, mat, normal, std::shared_ptr<IUtilCheck3d>(new CIFem::UtilCheck3dBasic()))
+{
+}
 
-Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, std::shared_ptr<ICrossSection> crossSec, Material mat, Vector3d normal)
+CIFem::Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, Material mat, Vector3d normal, std::shared_ptr<IUtilCheck3d> checktype)
 {
 
 	_sNode = sNode;
@@ -35,6 +40,8 @@ Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector
 	//Set up zero load
 	_qx = _qy = _qz = _qw = 0;
 
+	_utilCheck = checktype;
+
 	UpdateStiffnessMatrix();
 }
 
@@ -43,12 +50,6 @@ Element3d::~Element3d()
 {
 }
 
-/*
-vector<int> Element3d::GetDofs()
-{
-	return _edof;
-}
-*/
 
 void CIFem::Element3d::UpdateStiffnessMatrix()
 {
@@ -334,40 +335,6 @@ arma::mat CIFem::Element3d::GetCMatrix()
 	L2 = pow(_length, 2);
 	L3 = pow(_length, 3);
 
-	/*arma::mat C(12, 12, arma::fill::zeros);
-
-	C(0, 1) = 1;
-	C(1, 5) = 1;
-	C(2, 9) = 1;
-	C(3, 11) = 1;
-	C(4, 8) = -1;
-	C(5, 4) = 1;
-
-	C(6, 0) = L;
-	C(6, 1) = 1;
-
-	C(7, 2) = L3;
-	C(7, 3) = L2;
-	C(7, 4) = L;
-	C(7, 5) = 1;
-
-	C(8, 6) = L3;
-	C(8, 7) = L2;
-	C(8, 8) = L;
-	C(8, 9) = 1;
-
-	C(9, 10) = L;
-	C(9, 11) = 1;
-
-	C(10, 6) = -3*L2;
-	C(10, 7) = -2*L;
-	C(10, 8) = -1;
-
-	C(10, 2) = 3*L2;
-	C(10, 3) = 2*L;
-	C(10, 4) = 1;
-
-	return C;*/
 
 	arma::mat C;
 
@@ -400,39 +367,8 @@ arma::mat CIFem::Element3d::GetCMatrix()
 			0 0 3*L^2 2*L 1 0    0     0   0 0 0 0];*/	//12
 }
 
-// Initiates the element
-/*void Element3d::Init()
-{
-	// Set element orientation to global z
-	SetElementOrientation({ 0, 0, 1 });
-
-}*/
-
-/*
-void Element3d::SetEdof(vector<int> edof)
-{
-	int length = edof.size();
-	if (length!=12)
-		throw std::invalid_argument("Number of degrees of freedom should be 12.");
-	else
-		_edof = edof;
-}*/
 
 
-
-
-// Element orientation is the direction of the local z axis
-/*void Element3d::SetElementOrientation(std::vector<double> eo)
-{
-	if (eo.size() != 3)
-		throw invalid_argument("Element orientation vector should have length 3, [x y z]");
-	else
-	{
-		double eoLength = sqrt(eo[0] * eo[0] + eo[1] * eo[1] + eo[2] * eo[2]);
-		eo = { eo[0] / eoLength, eo[1] / eoLength, eo[2] / eoLength };
-		_eo = eo;
-	}
-}*/
 
 
 void CIFem::Element3d::SetElementOrientation(Vector3d eo)
@@ -451,4 +387,59 @@ void CIFem::Element3d::SetElementOrientation(Vector3d eo)
 double Element3d::CalcLength(XYZ sNode, XYZ eNode)
 {
 	return sNode.DistanceTo(eNode);
+}
+
+std::vector<double> CIFem::Element3d::NormalForce() const
+{
+	return _results._N;
+}
+
+std::vector<double> CIFem::Element3d::ShearForceZ() const
+{
+	return _results._Vz;
+}
+
+std::vector<double> CIFem::Element3d::ShearForceY() const
+{
+	return _results._Vy;
+}
+
+std::vector<double> CIFem::Element3d::MomentY() const
+{
+	return _results._My;
+}
+
+std::vector<double> CIFem::Element3d::MomentZ() const
+{
+	return _results._Mz;
+}
+
+std::vector<double> CIFem::Element3d::TorsionalForce() const
+{
+	return _results._T;
+}
+
+std::vector<double> CIFem::Element3d::DisplacementX() const
+{
+	return _results._u;
+}
+
+std::vector<double> CIFem::Element3d::DisplacementY() const
+{
+	return _results._v;
+}
+
+std::vector<double> CIFem::Element3d::DisplacementZ() const
+{
+	return _results._w;
+}
+
+std::vector<double> CIFem::Element3d::DisplacementTorsion() const
+{
+	return _results._fi;
+}
+
+std::vector<double> CIFem::Element3d::ResultPosition() const
+{
+	return _results._pos;
 }

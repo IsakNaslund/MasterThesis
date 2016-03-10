@@ -148,61 +148,85 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CIFem_dll.h" />
+<<<<<<< HEAD
+    <ClInclude Include="EigenSolver.h" />
+    <ClInclude Include="ISolver.h" />
+    <ClInclude Include="LinearSolver.h" />
+=======
+    <ClInclude Include="ElementResults3d.h" />
+    <ClInclude Include="IElementResults.h" />
+    <ClInclude Include="IUtilCheck3d.h" />
+    <ClInclude Include="IUtilisationCheck.h" />
+>>>>>>> de28fe595856f30f9e09fb7ba06691fd65a5b59c
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="Restraint.h" />
     <ClInclude Include="DOF.h" />
     <ClInclude Include="DofRelease.h" />
     <ClInclude Include="Element3d.h" />
     <ClInclude Include="Element3dRcp.h" />
     <ClInclude Include="ElementProperty.h" />
+    <ClInclude Include="GlobalSettings.h" />
     <ClInclude Include="ICrossSection.h" />
     <ClInclude Include="IElement.h" />
     <ClInclude Include="CIFemMath.h" />
-<<<<<<< HEAD
-    <ClInclude Include="IElementRcp.h" />
-    <ClInclude Include="IRelease.h" />
-    <ClInclude Include="ISectionProperties.h" />
-=======
     <ClInclude Include="INode.h" />
+    <ClInclude Include="IElementRcp.h" />
+    <ClInclude Include="Plane.h" />
+    <ClInclude Include="ReleaseBeam2d.h" />
     <ClInclude Include="SectionProperties.h" />
->>>>>>> e349f041a398f9fd41da9b6852190bff002d2c8b
+    <ClInclude Include="IRelease.h" />
     <ClInclude Include="Node3d.h" />
     <ClInclude Include="Rectangle3d.h" />
     <ClInclude Include="ReleaseBeam3d.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RHS3d.h" />
-    <ClInclude Include="SecPropBar.h" />
-    <ClInclude Include="SecPropBeam2d.h" />
-    <ClInclude Include="SecPropBeam3d.h" />
     <ClInclude Include="Spring.h" />
-    <ClInclude Include="Structure3d.h" />
+    <ClInclude Include="Structure.h" />
+    <ClInclude Include="UtilCheck3dBasic.h" />
+    <ClInclude Include="Vector3d.h" />
     <ClInclude Include="XYZ.h" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
+    <ClCompile Include="EigenSolver.cpp" />
+    <ClCompile Include="ISolver.cpp" />
+    <ClCompile Include="LinearSolver.cpp" />
+=======
+    <ClCompile Include="ElementResults3d.cpp" />
+    <ClCompile Include="IElementResults.cpp" />
+    <ClCompile Include="IUtilCheck3d.cpp" />
+    <ClCompile Include="IUtilisationCheck.cpp" />
+>>>>>>> de28fe595856f30f9e09fb7ba06691fd65a5b59c
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="Restraint.cpp" />
     <ClCompile Include="DOF.cpp" />
     <ClCompile Include="DofRelease.cpp" />
     <ClCompile Include="Element3d.cpp" />
     <ClCompile Include="Element3dRcp.cpp" />
     <ClCompile Include="ElementProperty.cpp" />
     <ClCompile Include="CIFemMath.cpp" />
-<<<<<<< HEAD
+    <ClCompile Include="IElement.cpp" />
     <ClCompile Include="IElementRcp.cpp" />
+    <ClCompile Include="INode.cpp" />
     <ClCompile Include="IRelease.cpp" />
-    <ClCompile Include="ISectionProperties.cpp" />
-=======
->>>>>>> e349f041a398f9fd41da9b6852190bff002d2c8b
     <ClCompile Include="Node3d.cpp" />
+    <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Rectangle3d.cpp" />
+    <ClCompile Include="ReleaseBeam2d.cpp" />
     <ClCompile Include="ReleaseBeam3d.cpp" />
     <ClCompile Include="RHS3d.cpp" />
-    <ClCompile Include="SecPropBar.cpp" />
-    <ClCompile Include="SecPropBeam2d.cpp" />
-    <ClCompile Include="SecPropBeam3d.cpp" />
     <ClCompile Include="SectionProperties.cpp" />
     <ClCompile Include="Spring.cpp" />
-    <ClCompile Include="Structure3d.cpp" />
+    <ClCompile Include="Structure.cpp" />
+    <ClCompile Include="UtilCheckBasic.cpp" />
+    <ClCompile Include="Vector3d.cpp" />
     <ClCompile Include="XYZ.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CIFem.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -37,6 +37,20 @@
     <Filter Include="Source Files\Releases">
       <UniqueIdentifier>{8149a203-0932-4b4a-8c81-efd36a2b92c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Restraints">
+      <UniqueIdentifier>{bf197bf0-5b2c-4c16-beb6-0da73041251c}</UniqueIdentifier>
+    </Filter>
+<<<<<<< HEAD
+    <Filter Include="Header Files\Solvers">
+      <UniqueIdentifier>{d294d01e-80b9-4da9-a215-64457fc823dc}</UniqueIdentifier>
+=======
+    <Filter Include="Header Files\UtilisationChecks">
+      <UniqueIdentifier>{62b028ce-cab2-45b8-8fad-8392eee298b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Elements\ElementResults">
+      <UniqueIdentifier>{2002b315-c6b8-4447-9812-31719faf7ce7}</UniqueIdentifier>
+>>>>>>> de28fe595856f30f9e09fb7ba06691fd65a5b59c
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XYZ.h">
@@ -46,9 +60,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ElementProperty.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Structure3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DOF.h">
@@ -61,15 +72,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ICrossSection.h">
-      <Filter>Header Files\Elements\Cross sections</Filter>
-    </ClInclude>
-    <ClInclude Include="SecPropBar.h">
-      <Filter>Header Files\Elements\Cross sections</Filter>
-    </ClInclude>
-    <ClInclude Include="SecPropBeam3d.h">
-      <Filter>Header Files\Elements\Cross sections</Filter>
-    </ClInclude>
-    <ClInclude Include="SecPropBeam2d.h">
       <Filter>Header Files\Elements\Cross sections</Filter>
     </ClInclude>
     <ClInclude Include="RHS3d.h">
@@ -114,13 +116,49 @@
     <ClInclude Include="GlobalSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Element3d.h">
       <Filter>Header Files\Elements</Filter>
-=======
+    </ClInclude>
     <ClInclude Include="Structure.h">
       <Filter>Header Files</Filter>
->>>>>>> c300fa631a290f4afbf539d032c3b5fa3610ee2b
+    </ClInclude>
+    <ClInclude Include="Vector3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Restraint.h">
+      <Filter>Header Files\Restraints</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Header Files\Elements</Filter>
+    </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="ISolver.h">
+      <Filter>Header Files\Solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="LinearSolver.h">
+      <Filter>Header Files\Solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="EigenSolver.h">
+      <Filter>Header Files\Solvers</Filter>
+=======
+    <ClInclude Include="IUtilisationCheck.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilCheck3dBasic.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+    <ClInclude Include="IUtilCheck3d.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+    <ClInclude Include="IElementResults.h">
+      <Filter>Header Files\Elements\ElementResults</Filter>
+    </ClInclude>
+    <ClInclude Include="ElementResults3d.h">
+      <Filter>Header Files\Elements\ElementResults</Filter>
+>>>>>>> de28fe595856f30f9e09fb7ba06691fd65a5b59c
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -133,19 +171,7 @@
     <ClCompile Include="ElementProperty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Structure3d.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DOF.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SecPropBar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SecPropBeam2d.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SecPropBeam3d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RHS3d.cpp">
@@ -193,10 +219,50 @@
     <ClCompile Include="IElement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Vector3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Restraint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="EigenSolver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LinearSolver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ISolver.cpp">
+=======
+    <ClCompile Include="IUtilisationCheck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UtilCheckBasic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IUtilCheck3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IElementResults.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ElementResults3d.cpp">
+>>>>>>> de28fe595856f30f9e09fb7ba06691fd65a5b59c
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CIFem.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

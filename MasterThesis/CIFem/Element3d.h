@@ -5,8 +5,12 @@
 #include <vector>
 #include "Material.h"
 #include "include\armadillo"
-#include "IElement.h";
+#include "IElement.h"
 #include <memory>
+#include "IUtilCheck3d.h"
+#include "ElementResults3d.h"
+#include "UtilCheck3dBasic.h"
+
 
 using namespace std;
 using namespace CIFem;
@@ -15,34 +19,26 @@ namespace CIFem
 {
 	class CIFEM_API Element3d : public IElement
 	{
-
-		struct Results
-		{
-			//Lists of results
-			std::vector<double> _N, _Vy, _Vz, _T, _My, _Mz, _u, _v, _w, _fi, _pos;
-		};
-
-		XYZ _sNode, _eNode;		// Start and end node
-		vector<int> _edof;		// Element degrees of freedom		
+		XYZ _sNode, _eNode;		// Start and end node	
 		double _length;			// Element length
-		//ElementProperty _ep;	// Element property
-		//SectionProperties _secProp;
 		
 		Material _mat;
-		Vector3d _eo;// Element orientation
-		Results _results;
+		Vector3d _eo;			// Element orientation
+		ElementResults3d _results;
+		std::shared_ptr<IUtilCheck3d> _utilCheck;
 
 		//Distributed loads
-		double _qx, _qy, _qz,_qw;
+		double _qx, _qy, _qz, _qw;
 
 		//Stiffness matrix
 		arma::mat::fixed<12,12> _Ke;
 
 	public:
 		Element3d();
-		//Element3d(XYZ, XYZ, vector<int>, ElementProperty);
-		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, std::shared_ptr<ICrossSection> crossSec, Material mat, Vector3d normal);
+		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, Material mat, Vector3d normal);
+		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, Material mat, Vector3d normal, std::shared_ptr<IUtilCheck3d> checktype);
 		~Element3d();
+
 
 
 		void UpdateStiffnessMatrix();
@@ -56,32 +52,28 @@ namespace CIFem
 		void CalculateSectionForces(int n);   //n is the number of evaluation points
 
 
-		//Geometric data getters
+		// Geometric data getters
 		XYZ StartPosition() const { return _sNode; }
 		XYZ EndPosition() const { return _eNode; }
 		Vector3d Orientation() const { return _eo; }
 
 		//Result outputs:
 		//Section Forces
-		std::vector<double> NormalForce() const { return _results._N; }
-		std::vector<double> ShearForceZ() const { return _results._Vz; }
-		std::vector<double> ShearForceY() const { return _results._Vy; }
-		std::vector<double> MomentY() const { return _results._My; }
-		std::vector<double> MomentZ() const { return _results._Mz; }
-		std::vector<double> TorsionalForce() const { return _results._T; }
+		std::vector<double> NormalForce() const;
+		std::vector<double> ShearForceZ() const;
+		std::vector<double> ShearForceY() const;
+		std::vector<double> MomentY() const;
+		std::vector<double> MomentZ() const;
+		std::vector<double> TorsionalForce() const;
 
 		//Displacements
-		std::vector<double> DisplacementX() const { return _results._u; }
-		std::vector<double> DisplacementY() const { return _results._v; }
-		std::vector<double> DisplacementZ() const { return _results._w; }
-		std::vector<double> DisplacementTorsion() const { return _results._fi; }
+		std::vector<double> DisplacementX() const;
+		std::vector<double> DisplacementY() const;
+		std::vector<double> DisplacementZ() const;
+		std::vector<double> DisplacementTorsion() const;
 
 		//Location along the element
-		std::vector<double> ResultPosition() const { return _results._pos; }
-
-		//Utilization
-		//TODO: Implement utilization calculations
-
+		std::vector<double> ResultPosition() const;
 
 
 	private:

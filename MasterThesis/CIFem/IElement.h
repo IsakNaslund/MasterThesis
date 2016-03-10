@@ -7,6 +7,7 @@
 #include "DOF.h"
 #include "Vector3d.h"
 #include "ICrossSection.h"
+#include "IUtilisationCheck.h"
 
 namespace CIFem
 {
@@ -17,6 +18,7 @@ namespace CIFem
 		virtual int GetSize() =0;
 		void SetEdof(std::vector<std::shared_ptr<DOF> > edof);
 		std::shared_ptr<ICrossSection> _crossSection;
+	
 	public:
 
 		virtual ~IElement();

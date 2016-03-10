@@ -148,6 +148,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CIFem_dll.h" />
+    <ClInclude Include="ElementResults3d.h" />
+    <ClInclude Include="IElementResults.h" />
+    <ClInclude Include="IUtilCheck3d.h" />
+    <ClInclude Include="IUtilisationCheck.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Restraint.h" />
     <ClInclude Include="DOF.h" />
@@ -172,10 +176,15 @@
     <ClInclude Include="RHS3d.h" />
     <ClInclude Include="Spring.h" />
     <ClInclude Include="Structure.h" />
+    <ClInclude Include="UtilCheck3dBasic.h" />
     <ClInclude Include="Vector3d.h" />
     <ClInclude Include="XYZ.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ElementResults3d.cpp" />
+    <ClCompile Include="IElementResults.cpp" />
+    <ClCompile Include="IUtilCheck3d.cpp" />
+    <ClCompile Include="IUtilisationCheck.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Restraint.cpp" />
     <ClCompile Include="DOF.cpp" />
@@ -197,6 +206,7 @@
     <ClCompile Include="SectionProperties.cpp" />
     <ClCompile Include="Spring.cpp" />
     <ClCompile Include="Structure.cpp" />
+    <ClCompile Include="UtilCheckBasic.cpp" />
     <ClCompile Include="Vector3d.cpp" />
     <ClCompile Include="XYZ.cpp" />
   </ItemGroup>

@@ -8,8 +8,6 @@
 
 namespace CIFem
 {
-	
-
 	class CIFEM_API IElementRcp
 	{
 	public:

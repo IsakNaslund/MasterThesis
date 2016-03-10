@@ -40,6 +40,12 @@
     <Filter Include="Header Files\Restraints">
       <UniqueIdentifier>{bf197bf0-5b2c-4c16-beb6-0da73041251c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\UtilisationChecks">
+      <UniqueIdentifier>{62b028ce-cab2-45b8-8fad-8392eee298b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Elements\ElementResults">
+      <UniqueIdentifier>{2002b315-c6b8-4447-9812-31719faf7ce7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XYZ.h">
@@ -123,6 +129,21 @@
     <ClInclude Include="Material.h">
       <Filter>Header Files\Elements</Filter>
     </ClInclude>
+    <ClInclude Include="IUtilisationCheck.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilCheck3dBasic.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+    <ClInclude Include="IUtilCheck3d.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+    <ClInclude Include="IElementResults.h">
+      <Filter>Header Files\Elements\ElementResults</Filter>
+    </ClInclude>
+    <ClInclude Include="ElementResults3d.h">
+      <Filter>Header Files\Elements\ElementResults</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XYZ.cpp">
@@ -192,6 +213,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IUtilisationCheck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UtilCheckBasic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IUtilCheck3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IElementResults.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ElementResults3d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

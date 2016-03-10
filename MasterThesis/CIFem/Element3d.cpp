@@ -200,6 +200,9 @@ arma::Col<double> CIFem::Element3d::GravityLoad(Vector3d direction)
 
 void CIFem::Element3d::CalculateSectionForces(int n)
 {
+	//Reset result file:
+	_results.Reset();
+
 	//Variables used frequently
 	double EA, EIz, EIy, GKv, L2, L3, L4;
 

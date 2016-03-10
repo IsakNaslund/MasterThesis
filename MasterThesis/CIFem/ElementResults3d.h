@@ -12,15 +12,17 @@ namespace CIFem
 	{
 		friend class Element3d;
 
-	public:
-		ElementResults3d();
-		~ElementResults3d();
-
-	private:
 		//Lists of results
 		std::vector<double> _N, _Vy, _Vz, _T, _My, _Mz, _u, _v, _w, _fi, _pos;
 
 		//Utilisation
 		double _maxUtil = 0;	// Initialise to 0
+
+	public:
+		ElementResults3d();
+		~ElementResults3d();
+
+		void Reset();
+
 	};
 }

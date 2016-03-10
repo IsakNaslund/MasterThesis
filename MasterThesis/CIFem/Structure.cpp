@@ -155,6 +155,11 @@ std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Structure::GetElements()
 	return _elements;
 }
 
+std::vector<std::shared_ptr<CIFem::INode>> CIFem::Structure::GetNodes()
+{
+	return _nodes;
+}
+
 void CIFem::Structure::ResetStructure()
 {
 	_elements.clear();
@@ -262,7 +267,7 @@ void CIFem::Structure::SetDofKMatIndex(std::set<std::shared_ptr<CIFem::DOF>>& sp
 arma::mat CIFem::Structure::AssembleStiffnessMatrix(int size)
 {	
 	// Create K matrix
-	arma::mat K(size, size);
+	arma::mat K(size, size, arma::fill::zeros);
 
 	// Assemble K matrix
 	for each (std::shared_ptr<CIFem::IElement> pElem in _elements)
@@ -280,6 +285,8 @@ void CIFem::Structure::AssembleElementsInKMat(arma::mat & K, arma::mat & Ke, con
 	//DEBUG
 	//K.print("K:");
 	//Ke.print("Ke");
+
+	std::vector<double> kVec = arma::conv_to<std::vector<double>>::from(Ke.col(0));
 
 	// Check inputs
 	int n = K.n_rows;

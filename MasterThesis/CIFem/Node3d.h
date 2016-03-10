@@ -30,6 +30,8 @@ namespace CIFem
 		std::vector<std::shared_ptr<DOF>> GetTranslationDofs();
 		std::vector<std::shared_ptr<DOF>> GetRotationDofs();
 
+		CIFem::XYZ GetPos() { return _location; }
+
 		double DistanceTo(const Node3d* other) const;
 		double DistanceTo(const INode* other) const;
 		double DistanceTo(const XYZ& otherPt) const;

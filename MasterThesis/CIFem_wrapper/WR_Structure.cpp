@@ -98,6 +98,41 @@ System::Collections::Generic::List<WR_IElement^>^ CIFem_wrapper::WR_Structure::G
 	return elems;
 }
 
+System::Collections::Generic::List<WR_XYZ^>^ CIFem_wrapper::WR_Structure::GetAllPoints()
+{
+	System::Collections::Generic::List<WR_XYZ^>^ pts =
+		gcnew System::Collections::Generic::List<WR_XYZ^>();
+
+	std::vector<std::shared_ptr<CIFem::INode>> nodes =
+		_structure.operator std::shared_ptr<CIFem::Structure>()->GetNodes();
+
+	for (int i = 0; i < nodes.size(); i++)
+	{
+		CIFem::INode* e = nodes[i].get();
+
+		// Element3d
+		Node3d* node3d = dynamic_cast<CIFem::Node3d*>(e);
+
+		double factor = 100;
+
+		if (node3d != NULL && node3d != nullptr)
+		{
+			XYZ stPt = node3d->GetPos();
+			std::vector<std::shared_ptr<DOF>> dofs= node3d->GetDofs();
+			double x, y, z;
+			x = dofs[0]->GetResultingTranslation()*factor;
+			y = dofs[1]->GetResultingTranslation()*factor;
+			z = dofs[2]->GetResultingTranslation()*factor;
+
+			WR_XYZ^ pt = gcnew WR_XYZ(stPt.GetX() + x, stPt.GetY() + y, stPt.GetZ() + z);
+			pts->Add(pt);
+		}
+
+	}
+
+	return pts;
+}
+
 std::shared_ptr<CIFem::Structure> CIFem_wrapper::WR_Structure::GetStructure()
 {
 	return _structure.operator std::shared_ptr<CIFem::Structure>();

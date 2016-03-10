@@ -30,10 +30,10 @@ namespace CIFem
 		void ApplyGravityToElements();
 		void ApplyNodalForces();
 
-		arma::colvec GetForceVector(std::set<std::shared_ptr<DOF>>);
-		arma::colvec GetDisplacementVector(std::set<std::shared_ptr<DOF>>);
+		arma::colvec GetForceVector(DofSet &);
+		arma::colvec GetDisplacementVector(DofSet &);
 
-		void LinEqSolve(arma::mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, DofSet, arma::colvec & s);
+		void LinEqSolve(arma::mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, DofSet & spDofs, arma::colvec & s);
 	};
 }
 

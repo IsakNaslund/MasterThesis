@@ -13,6 +13,7 @@ namespace CIFem_grasshopper
     {
         public List<string> log { get; set; }
         private List<ResultElement> resElems { get; set; }
+        private List<Rhino.Geometry.Point3d> pts { get; set; }
 
         public StructureComponent(): base("Structure", "Structure", "A structure to hold beams, releases, forces etc.", "CIFem", "Structure")
         {
@@ -50,6 +51,7 @@ namespace CIFem_grasshopper
                 "Messageboard", "log", "Outputs a log of the performed calculation", GH_ParamAccess.list);
 
             pManager.AddParameter(new ResultElementParam(), "Result Elements", "RE", "Result elements, storing results from the calculation", GH_ParamAccess.list);
+            pManager.AddPointParameter("p", "p", "p", GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -101,10 +103,20 @@ namespace CIFem_grasshopper
                         resElems.Add(re);
                     }
                 }
+
+                //Extract Points
+                pts = new List<Rhino.Geometry.Point3d>();
+                List<WR_XYZ> xyzs = structure.GetAllPoints();
+
+                for (int i = 0; i < xyzs.Count; i++)
+                {
+                    pts.Add(new Rhino.Geometry.Point3d(xyzs[i].X, xyzs[i].Y, xyzs[i].Z));
+                }
             }
 
             DA.SetData(0, log);
             DA.SetDataList(1, resElems);
+            DA.SetDataList(2, pts);
         }
     }
 }

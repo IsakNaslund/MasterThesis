@@ -34,13 +34,14 @@ void CIFem::EigenSolver::Solve()
 														// Solve K matrix
 	arma::colvec s;		// Resulting forces
 	arma::colvec am;
-	EigenSolve(_K, am, C, _dofs, s);
+	EigenSolve(_K, C, _dofs);
 
 }
 
 double CIFem::EigenSolver::SetResultsToMode(int mode)
 {
-	arma::colvec a(_K.n_rows, arma::fill::zeros);
+	int size = _K.n_rows;
+	arma::colvec a(size, arma::fill::zeros);
 
 	a(_fDof) = _eigenVectors.col(mode);
 
@@ -56,7 +57,7 @@ double CIFem::EigenSolver::SetResultsToMode(int mode)
 	return _eigenValues(mode);
 }
 
-void CIFem::EigenSolver::EigenSolve(arma::mat & K, arma::colvec & a, arma::mat & C, DofSet spDofs, arma::colvec & s)
+void CIFem::EigenSolver::EigenSolve(arma::mat & K, arma::mat & C, DofSet spDofs)
 {
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -87,11 +88,6 @@ void CIFem::EigenSolver::EigenSolve(arma::mat & K, arma::colvec & a, arma::mat &
 	// however, I think uvec is fixed size
 	_fDof = arma::uvec(fDof);
 	arma::uvec upDof(pDof);
-
-	arma::vec eigVal;
-	arma::mat eigVec;
-
-
 
 	// Solve Eigenvalue problem
 	arma::eig_sym(_eigenValues, _eigenVectors, K(_fDof, _fDof));

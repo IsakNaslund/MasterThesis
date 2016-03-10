@@ -1,7 +1,7 @@
 #include "ISolver.h"
 
 
-void CIFem::ISolver::SetUpDofs(DofSet spDofs)
+void CIFem::ISolver::SetUpDofs(DofSet & spDofs)
 {
 	//Counting dofs, assuming all dofs exists in the nodes
 	//Clear loads from dofs
@@ -15,7 +15,7 @@ void CIFem::ISolver::SetUpDofs(DofSet spDofs)
 
 }
 
-void CIFem::ISolver::StoreResultsInDofs(arma::colvec a, arma::colvec f, DofSet spDofs)
+void CIFem::ISolver::StoreResultsInDofs(const arma::colvec & a, const arma::colvec & f, DofSet & spDofs)
 {
 
 	for each (std::shared_ptr<DOF> spDof in spDofs)

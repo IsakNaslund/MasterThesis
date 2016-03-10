@@ -148,6 +148,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CIFem_dll.h" />
+    <ClInclude Include="EigenSolver.h" />
+    <ClInclude Include="ISolver.h" />
+    <ClInclude Include="LinearSolver.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Restraint.h" />
     <ClInclude Include="DOF.h" />
@@ -176,6 +179,9 @@
     <ClInclude Include="XYZ.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EigenSolver.cpp" />
+    <ClCompile Include="ISolver.cpp" />
+    <ClCompile Include="LinearSolver.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Restraint.cpp" />
     <ClCompile Include="DOF.cpp" />

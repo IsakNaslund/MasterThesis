@@ -23,14 +23,16 @@ Spring::~Spring()
 {
 }
 
-arma::Mat<double> CIFem::Spring::GetStiffnessMatrix()
+void CIFem::Spring::UpdateStiffnessMatrix()
 {
-	arma::Mat<double> ke;
-
-	ke	<< _k << -_k << arma::endr
+	_Ke << _k << -_k << arma::endr
 		<< -_k << _k << arma::endr;
 
-	return ke;
+}
+
+const arma::Mat<double> & CIFem::Spring::GetStiffnessMatrix()
+{
+	return _Ke;
 }
 
 std::vector<int> CIFem::Spring::GetDofs()

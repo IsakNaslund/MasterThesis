@@ -86,7 +86,8 @@ namespace CIFem_grasshopper
                 // Add forces
 
                 // Solve
-                structure.Solve();
+                WR_LinearSolver solver = new WR_LinearSolver(structure, true);
+                solver.Solve();
 
                 // Extract results
                 List<WR_IElement> elems = structure.GetAllElements();

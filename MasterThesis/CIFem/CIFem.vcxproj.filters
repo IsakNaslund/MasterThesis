@@ -40,6 +40,9 @@
     <Filter Include="Header Files\Restraints">
       <UniqueIdentifier>{bf197bf0-5b2c-4c16-beb6-0da73041251c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Solvers">
+      <UniqueIdentifier>{d294d01e-80b9-4da9-a215-64457fc823dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XYZ.h">
@@ -123,6 +126,15 @@
     <ClInclude Include="Material.h">
       <Filter>Header Files\Elements</Filter>
     </ClInclude>
+    <ClInclude Include="ISolver.h">
+      <Filter>Header Files\Solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="LinearSolver.h">
+      <Filter>Header Files\Solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="EigenSolver.h">
+      <Filter>Header Files\Solvers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XYZ.cpp">
@@ -192,6 +204,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EigenSolver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LinearSolver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ISolver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

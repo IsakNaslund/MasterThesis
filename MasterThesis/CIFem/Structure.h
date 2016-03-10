@@ -26,12 +26,12 @@ namespace CIFem
 		void AddElementRcp(std::shared_ptr<IElementRcp>);
 		void AddElementRcp(std::vector<std::shared_ptr<IElementRcp>>);
 
-		// Not implemented, probably shouldnt be either....!
+		// Not implemented, probably shouldnt be either....?
 		Structure Copy();
 
 
 
-		void Solve();
+		//void Solve();
 
 		double SolveEigenvalue(int mode);
 
@@ -39,28 +39,37 @@ namespace CIFem
 
 		void ResetStructure();
 
-	private:
-		//std::vector<std::shared_ptr<CIFem::IElement>> CreateElements();
-		//void BuildStructure();
 		std::set<std::shared_ptr<CIFem::DOF>> GetDofs();
+
+		void ApplyGravityToElements(Vector3d gravField);
+		void ApplyNodalForces();
+
+		arma::mat AssembleStiffnessMatrix(int size);
+
+		arma::mat GetCMatrix();
+
+		void CalculateElementSectionForces();
+
+	private:		
 		void GetNodeDofs(std::set<std::shared_ptr<CIFem::DOF>> & dofs);
 		void GetUniqueElementDofs(std::set<std::shared_ptr<CIFem::DOF>> & dofs);
 
 		void SetDofKMatIndex(std::set<std::shared_ptr<CIFem::DOF>>&);
-		arma::sp_mat AssembleStiffnessMatrix(std::set<std::shared_ptr<CIFem::DOF>>);
-		void AssembleElementsInKMat(arma::sp_mat & K, arma::mat & Ke, const std::vector<std::shared_ptr<DOF>>&);
+		
+		void AssembleElementsInKMat(arma::mat & K, arma::mat & Ke, const std::vector<std::shared_ptr<DOF>>&);
 		arma::colvec GetForceVector(std::set<std::shared_ptr<DOF>>);
 		arma::colvec GetDisplacementVector(std::set<std::shared_ptr<DOF>>);
-		void LinEqSolve(arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::set<std::shared_ptr<DOF>>, arma::colvec & s);
 
+
+		void LinEqSolve(arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::set<std::shared_ptr<DOF>>, arma::colvec & s);
 		double EigenSolve(arma::sp_mat & K, arma::colvec & am, arma::mat & C, std::set<std::shared_ptr<DOF>> spDofs, arma::colvec & s, int mode);
 
 		void StoreResultsInDofs(arma::colvec a, arma::colvec f, std::set<std::shared_ptr<DOF>>);
-		arma::mat GetCMatrix();
-		void CalculateElemetForces();
-		void ApplyNodalForces();
 
-		void CalculateElementSectionForces();
+		void CalculateElemetForces();
+
+		
+
 
 	};
 }

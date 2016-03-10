@@ -53,15 +53,15 @@ System::Collections::Generic::List<WR_Element3d^>^ CIFem_wrapper::WR_Structure::
 */
 
 
-void CIFem_wrapper::WR_Structure::Solve()
+/*void CIFem_wrapper::WR_Structure::Solve()
 {
 	_structure.operator std::shared_ptr<CIFem::Structure>()->Solve();
-}
+}*/
 
-double CIFem_wrapper::WR_Structure::EigenSolve(int mode)
+/*double CIFem_wrapper::WR_Structure::EigenSolve(int mode)
 {
 	return _structure.operator std::shared_ptr<CIFem::Structure>()->SolveEigenvalue(mode);
-}
+}*/
 
 // Currently only implemented to return Element3d
 System::Collections::Generic::List<WR_IElement^>^ CIFem_wrapper::WR_Structure::GetAllElements()
@@ -96,5 +96,10 @@ System::Collections::Generic::List<WR_IElement^>^ CIFem_wrapper::WR_Structure::G
 	}
 
 	return elems;
+}
+
+std::shared_ptr<CIFem::Structure> CIFem_wrapper::WR_Structure::GetStructure()
+{
+	return _structure.operator std::shared_ptr<CIFem::Structure>();
 }
 

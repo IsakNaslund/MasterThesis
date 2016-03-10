@@ -35,6 +35,7 @@ Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector
 	//Set up zero load
 	_qx = _qy = _qz = _qw = 0;
 
+	UpdateStiffnessMatrix();
 }
 
 
@@ -49,8 +50,7 @@ vector<int> Element3d::GetDofs()
 }
 */
 
-// Creates and returns a global element stiffness matrix
-arma::Mat<double> Element3d::GetStiffnessMatrix()
+void CIFem::Element3d::UpdateStiffnessMatrix()
 {
 	// Get indata from element properties
 	double A = _crossSection->GetArea();
@@ -69,13 +69,13 @@ arma::Mat<double> Element3d::GetStiffnessMatrix()
 	double k2 = G*Kv / l;
 
 	////// Define matrix //////
-	arma::Mat<double> Ke = arma::zeros(12,12);
+	arma::Mat<double> Ke = arma::zeros(12, 12);
 
 	// Row 1
 	Ke(0, 0) = k1;				Ke(0, 6) = -k1;
 
 	// Row 2
-	Ke(1, 1) = 12 * E*Iz / l3;	Ke(1, 5) = 6 * E*Iz / l2; 
+	Ke(1, 1) = 12 * E*Iz / l3;	Ke(1, 5) = 6 * E*Iz / l2;
 	Ke(1, 7) = -Ke(1, 1);		Ke(1, 11) = Ke(1, 5);
 
 	// Row 3
@@ -119,7 +119,13 @@ arma::Mat<double> Element3d::GetStiffnessMatrix()
 
 	arma::mat GMat = GetTransformationMatrix();
 
-	return GMat.t()*Ke*GMat;
+	_Ke = GMat.t()*Ke*GMat;
+}
+
+// Creates and returns a global element stiffness matrix
+const arma::Mat<double> & Element3d::GetStiffnessMatrix()
+{
+	return _Ke;
 }
 
 arma::Col<double> CIFem::Element3d::GravityLoad(Vector3d direction)

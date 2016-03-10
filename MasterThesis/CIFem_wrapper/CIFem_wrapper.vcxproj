@@ -137,12 +137,14 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="Utilities.h" />
+    <ClInclude Include="WR_EigenSolver.h" />
     <ClInclude Include="WR_Elem3dRcp.h" />
     <ClInclude Include="WR_Element3d.h" />
     <ClInclude Include="WR_IElement.h" />
     <ClInclude Include="WR_IElemRcp.h" />
     <ClInclude Include="WR_INode.h" />
     <ClInclude Include="WR_IXSec.h" />
+    <ClInclude Include="WR_LinearSolver.h" />
     <ClInclude Include="WR_Material.h" />
     <ClInclude Include="WR_Node3d.h" />
     <ClInclude Include="WR_Plane.h" />
@@ -162,12 +164,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Utilities.cpp" />
+    <ClCompile Include="WR_EigenSolver.cpp" />
     <ClCompile Include="WR_Elem3dRcp.cpp" />
     <ClCompile Include="WR_Element3d.cpp" />
     <ClCompile Include="WR_IElement.cpp" />
     <ClCompile Include="WR_IElemRcp.cpp" />
     <ClCompile Include="WR_INode.cpp" />
     <ClCompile Include="WR_IXSec.cpp" />
+    <ClCompile Include="WR_LinearSolver.cpp" />
     <ClCompile Include="WR_Material.cpp" />
     <ClCompile Include="WR_Node3d.cpp" />
     <ClCompile Include="WR_Plane.cpp" />

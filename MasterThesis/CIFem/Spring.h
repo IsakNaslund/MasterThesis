@@ -13,13 +13,18 @@ namespace CIFem
 	class CIFEM_API Spring :public IElement
 	{
 		double _k;
+
+		arma::mat::fixed<2, 2> _Ke;
 	public:
 		Spring();
 		Spring(double k);
 		Spring(double k, std::vector<std::shared_ptr<DOF> > dofs);
 
 		~Spring();
-		arma::Mat<double> GetStiffnessMatrix();
+
+
+		void UpdateStiffnessMatrix();
+		const arma::Mat<double> & GetStiffnessMatrix();
 		std::vector<int> GetDofs();
 
 		arma::Col<double> GravityLoad(Vector3d direction) { return arma::vec(); }

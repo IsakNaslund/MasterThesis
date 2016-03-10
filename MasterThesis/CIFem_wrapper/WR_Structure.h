@@ -24,9 +24,11 @@ namespace CIFem_wrapper
 		System::Collections::Generic::List<WR_IElement^>^ GetAllElements();
 		//System::Collections::Generic::List<WR_Element3d^>^ GetElements3d();
 
-		void Solve();
+		std::shared_ptr<CIFem::Structure> GetStructure();
 
-		double EigenSolve(int mode);
+		//void Solve();
+
+		//double EigenSolve(int mode);
 
 	private:
 		

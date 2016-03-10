@@ -35,13 +35,19 @@ namespace CIFem
 		//Distributed loads
 		double _qx, _qy, _qz,_qw;
 
+		//Stiffness matrix
+		arma::mat::fixed<12,12> _Ke;
+
 	public:
 		Element3d();
 		//Element3d(XYZ, XYZ, vector<int>, ElementProperty);
 		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, std::shared_ptr<ICrossSection> crossSec, Material mat, Vector3d normal);
 		~Element3d();
 
-		arma::Mat<double> GetStiffnessMatrix();	// Returns the element stiffness (in global coordinates)
+
+		void UpdateStiffnessMatrix();
+
+		const arma::Mat<double> & GetStiffnessMatrix();	// Returns the element stiffness (in global coordinates)
 
 		arma::Col<double> GravityLoad(Vector3d direction);
 

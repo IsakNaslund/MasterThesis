@@ -13,6 +13,8 @@ namespace CIFem_grasshopper
     {
         public List<string> log { get; set; }
         private List<ResultElement> resElems { get; set; }
+        private WR_EigenSolver _solver;
+        WR_Structure _structure;
 
         public StructureComponentEigen(): base("Structure Eigen", "Structure Eig", "A structure to hold beams, releases, forces etc. Solves for eigenvalues", "CIFem", "Structure")
         {
@@ -76,25 +78,35 @@ namespace CIFem_grasshopper
                 log.Add("Structure invokation started");
 
                 // Create structure wrapper
-                WR_Structure structure = new WR_Structure();
+                _structure = new WR_Structure();
 
                 // Add restraint nodes
                 foreach (WR_Node3d n in nodes)
-                    structure.AddNode(n);
+                    _structure.AddNode(n);
                 log.Add("" + nodes.Count + " nodes added to structure");
 
                 // Add elements
                 foreach (WR_Elem3dRcp e in beams)
-                    structure.AddElementRcp(e);
+                    _structure.AddElementRcp(e);
                 log.Add("" + beams.Count + " elements added to structure");
 
                 // Add forces
 
                 // Solve
-                structure.EigenSolve(mode);
+                _solver = new WR_EigenSolver(_structure);
+                _solver.Solve();
+                //structure.EigenSolve(mode);
+
+            }
+
+            if (_solver != null && _structure != null)
+            {
+                _solver.SetResultsToMode(mode);
 
                 // Extract results
-                List<WR_IElement> elems = structure.GetAllElements();
+                List<WR_IElement> elems = _structure.GetAllElements();
+                resElems.Clear();
+
                 for (int i = 0; i < elems.Count; i++)
                 {
 
@@ -106,6 +118,9 @@ namespace CIFem_grasshopper
                     }
                 }
             }
+
+
+
 
             DA.SetData(0, log);
             DA.SetDataList(1, resElems);

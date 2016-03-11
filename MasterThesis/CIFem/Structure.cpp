@@ -286,8 +286,6 @@ void CIFem::Structure::AssembleElementsInKMat(arma::mat & K, arma::mat & Ke, con
 	//K.print("K:");
 	//Ke.print("Ke");
 
-	std::vector<double> kVec = arma::conv_to<std::vector<double>>::from(Ke.col(0));
-
 	// Check inputs
 	int n = K.n_rows;
 	for each (std::shared_ptr<DOF> spDof in spEDofs)

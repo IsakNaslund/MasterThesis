@@ -43,6 +43,7 @@ namespace CIFem
 
 		void UpdateStiffnessMatrix();
 		void DoSectionChecks();
+		void UpdateUtilisation(double u);
 
 		const arma::Mat<double> & GetStiffnessMatrix();	// Returns the element stiffness (in global coordinates)
 

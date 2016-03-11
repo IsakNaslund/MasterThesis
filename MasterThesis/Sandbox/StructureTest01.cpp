@@ -81,7 +81,7 @@ std::vector<std::shared_ptr<IElementRcp>> StructureTest01::CreateElements(XYZ lb
 	double Kv = 1;						// Change in case of 3d test
 	//ElementProperty ep(E, G, A, Iy, Iz, Kv);
 
-	Material mat(210e9, 0.3, 7800);
+	Material mat(210e9, 0.3, 7800, 275e9);
 	std::shared_ptr<Rectangle3d> rec(new Rectangle3d(0.150, 0.150));
 
 	

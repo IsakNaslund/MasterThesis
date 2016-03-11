@@ -15,8 +15,8 @@ namespace CIFem
 	protected:
 		std::shared_ptr<CIFem::Structure> _structure;
 
-		void SetUpDofs(DofSet spDofs);
-		void StoreResultsInDofs(arma::colvec a, arma::colvec f, DofSet);
+		void SetUpDofs(DofSet & spDofs);
+		void StoreResultsInDofs(const arma::colvec & a, const arma::colvec & f, DofSet & spDofs);
 		void CalculateElementSectionForces();
 		DofSet GetDofs();
 

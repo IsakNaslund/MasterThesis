@@ -22,6 +22,7 @@ namespace CIFem_wrapper
 		void AddElementRcp(WR_IElemRcp^ wrRcp);
 		//void AddElementRcp(std::vector<IElementRcp *>);
 		System::Collections::Generic::List<WR_IElement^>^ GetAllElements();
+		System::Collections::Generic::List<WR_XYZ^>^ GetAllPoints();
 		//System::Collections::Generic::List<WR_Element3d^>^ GetElements3d();
 
 		std::shared_ptr<CIFem::Structure> GetStructure();

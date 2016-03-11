@@ -78,7 +78,7 @@ void CIFem::LinearSolver::ApplyNodalForces()
 	_structure->ApplyNodalForces();
 }
 
-arma::colvec CIFem::LinearSolver::GetForceVector(std::set<std::shared_ptr<DOF>> spDofs)
+arma::colvec CIFem::LinearSolver::GetForceVector(DofSet & spDofs)
 {
 	arma::colvec f(spDofs.size(), arma::fill::zeros);
 
@@ -90,7 +90,7 @@ arma::colvec CIFem::LinearSolver::GetForceVector(std::set<std::shared_ptr<DOF>> 
 
 // Creates a displacement vector from the dofs.
 // N.B. the displacement vector is in transformed coordinates (am, rather than as)
-arma::colvec CIFem::LinearSolver::GetDisplacementVector(std::set<std::shared_ptr<DOF>> spDofs)
+arma::colvec CIFem::LinearSolver::GetDisplacementVector(DofSet & spDofs)
 {
 	arma::colvec a(spDofs.size(), arma::fill::zeros);
 
@@ -103,7 +103,7 @@ arma::colvec CIFem::LinearSolver::GetDisplacementVector(std::set<std::shared_ptr
 
 
 
-void CIFem::LinearSolver::LinEqSolve(arma::mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, DofSet spDofs, arma::colvec & s)
+void CIFem::LinearSolver::LinEqSolve(arma::mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, DofSet & spDofs, arma::colvec & s)
 {
 	// Check prescribed deformations
 	std::vector<unsigned int> transBCDof;

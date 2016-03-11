@@ -33,9 +33,10 @@ namespace CIFem
 
 		//void Solve();
 
-		double SolveEigenvalue(int mode);
+		//double SolveEigenvalue(int mode);
 
 		std::vector<std::shared_ptr<CIFem::IElement>> GetElements();
+		std::vector<std::shared_ptr<INode>> GetNodes();
 
 		void ResetStructure();
 
@@ -49,6 +50,8 @@ namespace CIFem
 		arma::mat GetCMatrix();
 
 		void CalculateElementSectionForces();
+
+
 
 	private:		
 		void GetNodeDofs(std::set<std::shared_ptr<CIFem::DOF>> & dofs);

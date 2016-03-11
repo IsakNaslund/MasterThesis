@@ -27,7 +27,7 @@ namespace CIFem
 
 	private:
 
-		void CIFem::EigenSolver::EigenSolve(arma::mat & K, arma::colvec & a, arma::mat & C, DofSet spDofs, arma::colvec & s);
+		void CIFem::EigenSolver::EigenSolve(arma::mat & K, arma::mat & C, DofSet spDofs);
 	};
 }
 

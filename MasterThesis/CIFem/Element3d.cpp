@@ -8,12 +8,12 @@ Element3d::Element3d()
 }
 
 // Creates an element with a basic check. If possible use overloaded function instead.
-Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, std::shared_ptr<ICrossSection> crossSec, Material mat, Vector3d normal) :
+Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal) :
 	Element3d(sNode, eNode, dof, crossSec, mat, normal, std::shared_ptr<IUtilCheck3d>(new CIFem::UtilCheck3dBasic()))
 {
 }
 
-CIFem::Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, Material mat, Vector3d normal, std::shared_ptr<IUtilCheck3d> checktype)
+CIFem::Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<IUtilCheck3d> checktype)
 {
 
 	_sNode = sNode;
@@ -55,8 +55,8 @@ void CIFem::Element3d::UpdateStiffnessMatrix()
 {
 	// Get indata from element properties
 	double A = _crossSection->GetArea();
-	double E = _mat.E();
-	double G = _mat.G();
+	double E = _mat->E();
+	double G = _mat->G();
 	double Iy = _crossSection->GetIy();
 	double Iz = _crossSection->GetIz();
 	double Kv = _crossSection->GetKv();
@@ -135,7 +135,7 @@ arma::Col<double> CIFem::Element3d::GravityLoad(Vector3d direction)
 	//arma::vec f(12, arma::fill::zeros);
 
 	//volume times density
-	double volDens = _mat.Rho()*_crossSection->GetArea()*_length;
+	double volDens = _mat->Rho()*_crossSection->GetArea()*_length;
 
 	//temporary variables to fill the force vector
 	double qx, qy, qz, mx, my, mz;
@@ -198,6 +198,8 @@ arma::Col<double> CIFem::Element3d::GravityLoad(Vector3d direction)
 	return arma::vec();
 }
 
+
+//Calculated section forces and moments, and performs a section check.
 void CIFem::Element3d::CalculateSectionForces(int n)
 {
 	//Reset result file:
@@ -206,10 +208,10 @@ void CIFem::Element3d::CalculateSectionForces(int n)
 	//Variables used frequently
 	double EA, EIz, EIy, GKv, L2, L3, L4;
 
-	EA = _crossSection->GetArea()*_mat.E();
-	EIy = _crossSection->GetIy()*_mat.E();
-	EIz = _crossSection->GetIz()*_mat.E();
-	GKv = _crossSection->GetKv()*_mat.G();
+	EA = _crossSection->GetArea()*_mat->E();
+	EIy = _crossSection->GetIy()*_mat->E();
+	EIz = _crossSection->GetIz()*_mat->E();
+	GKv = _crossSection->GetKv()*_mat->G();
 
 	L2 = pow(_length, 2);
 	L3 = pow(_length, 3);
@@ -273,19 +275,19 @@ void CIFem::Element3d::CalculateSectionForces(int n)
 		_results._w.push_back(x3*m(6) + x2*m(7) + x*m(8) + m(9) + _qz*x4 / (24 * EIy));	//qz*x^4/24/EIy;
 		_results._fi.push_back(x*m(10) + m(11) - _qw*x2 / (2 * GKv));					//-qw*x^2/2/GKv
 
+
+		// Initialise list of utilisations so that it has as many points as the results
+		std::shared_ptr<Utilisation> spU(new Utilisation());
+		_results._util.push_back(spU);
 	}
 
+	// Do section checks when all results are stored
+	DoSectionChecks();
 }
 
 void CIFem::Element3d::DoSectionChecks()
 {
-	//IMPLEMENT
-}
-
-// Updates the utilisation if the new is greater than the one stored.
-void CIFem::Element3d::UpdateUtilisation(double u)
-{
-	_results.UpdateUtilisation(u);
+	_utilCheck->CheckElementUtilisations(this->_crossSection, this->_mat, this->_results);
 }
 
 
@@ -456,4 +458,9 @@ std::vector<double> CIFem::Element3d::DisplacementTorsion() const
 std::vector<double> CIFem::Element3d::ResultPosition() const
 {
 	return _results._pos;
+}
+
+std::vector<std::shared_ptr<Utilisation>> CIFem::Element3d::Utilisations() const
+{
+	return _results.Utilisations();
 }

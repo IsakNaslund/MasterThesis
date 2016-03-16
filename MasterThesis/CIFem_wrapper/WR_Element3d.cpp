@@ -69,6 +69,11 @@ namespace CIFem_wrapper
 		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->ResultPosition());
 	}
 
+	System::Collections::Generic::List<WR_Utilisation^>^ WR_Element3d::Utilisations()
+	{
+		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->Utilisations());
+	}
+
 	WR_XYZ ^ CIFem_wrapper::WR_Element3d::GetStartPos()
 	{
 		XYZ sPos = _element.get()->StartPosition();

@@ -180,6 +180,7 @@
     <ClInclude Include="Spring.h" />
     <ClInclude Include="Structure.h" />
     <ClInclude Include="UtilCheck3dBasic.h" />
+    <ClInclude Include="Utilisation.h" />
     <ClInclude Include="Vector3d.h" />
     <ClInclude Include="XYZ.h" />
   </ItemGroup>
@@ -213,6 +214,7 @@
     <ClCompile Include="Spring.cpp" />
     <ClCompile Include="Structure.cpp" />
     <ClCompile Include="UtilCheckBasic.cpp" />
+    <ClCompile Include="Utilisation.cpp" />
     <ClCompile Include="Vector3d.cpp" />
     <ClCompile Include="XYZ.cpp" />
   </ItemGroup>

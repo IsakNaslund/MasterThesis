@@ -151,6 +151,7 @@
     <ClInclude Include="WR_ReleaseBeam3d.h" />
     <ClInclude Include="WR_Restraint.h" />
     <ClInclude Include="WR_Structure.h" />
+    <ClInclude Include="WR_Utilisation.h" />
     <ClInclude Include="WR_Vector.h" />
     <ClInclude Include="WR_XSecRect.h" />
     <ClInclude Include="WR_XYZ.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="WR_ReleaseBeam3d.cpp" />
     <ClCompile Include="WR_Restraint.cpp" />
     <ClCompile Include="WR_Structure.cpp" />
+    <ClCompile Include="WR_Utilisation.cpp" />
     <ClCompile Include="WR_Vector.cpp" />
     <ClCompile Include="WR_XSecRect.cpp" />
     <ClCompile Include="WR_XYZ.cpp" />

@@ -22,7 +22,7 @@ namespace CIFem
 		XYZ _sNode, _eNode;		// Start and end node	
 		double _length;			// Element length
 		
-		Material _mat;
+		std::shared_ptr<Material> _mat;
 		Vector3d _eo;			// Element orientation
 		ElementResults3d _results;
 		std::shared_ptr<IUtilCheck3d> _utilCheck;
@@ -35,15 +35,14 @@ namespace CIFem
 
 	public:
 		Element3d();
-		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, Material mat, Vector3d normal);
-		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, Material mat, Vector3d normal, std::shared_ptr<IUtilCheck3d> checktype);
+		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal);
+		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<IUtilCheck3d> checktype);
 		~Element3d();
 
 
 
 		void UpdateStiffnessMatrix();
 		void DoSectionChecks();
-		void UpdateUtilisation(double u);
 
 		const arma::Mat<double> & GetStiffnessMatrix();	// Returns the element stiffness (in global coordinates)
 
@@ -76,6 +75,9 @@ namespace CIFem
 
 		//Location along the element
 		std::vector<double> ResultPosition() const;
+
+		//Utilisations
+		std::vector<std::shared_ptr<Utilisation>> Utilisations() const;
 
 
 	private:

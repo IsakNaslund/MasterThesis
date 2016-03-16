@@ -28,7 +28,7 @@ CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, Rel
 	_stRel = stRel;
 	_enRel = enRel;
 	_xSec = xSec;
-	_mat = Material(matStiff, poisonRatio, 0, 0);
+	_mat = std::shared_ptr<Material>(new Material(matStiff, poisonRatio, 0, 0));
 	SetNormal(normal);	// Set normal with format check
 }
 
@@ -39,11 +39,11 @@ CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, Rel
 	_stRel = stRel;
 	_enRel = enRel;
 	_xSec = xSec;
-	_mat = Material(matStiff, poisonRatio, density, fu);
+	_mat = std::shared_ptr<Material>(new Material(matStiff, poisonRatio, density, fu));
 	SetNormal(normal);	// Set normal with format check
 }
 
-CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, std::shared_ptr<ICrossSection> xSec, Material material, std::vector<double> normal)
+CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> material, std::vector<double> normal)
 {
 	_stPos = stPos;
 	_enPos = enPos;

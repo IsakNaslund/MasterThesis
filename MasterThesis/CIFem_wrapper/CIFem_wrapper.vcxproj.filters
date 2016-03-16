@@ -78,6 +78,9 @@
     <ClInclude Include="WR_EigenSolver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WR_Utilisation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -138,6 +141,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WR_EigenSolver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WR_Utilisation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

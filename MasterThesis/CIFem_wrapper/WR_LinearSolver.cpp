@@ -24,5 +24,13 @@ CIFem_wrapper::WR_LinearSolver::~WR_LinearSolver()
 
 void CIFem_wrapper::WR_LinearSolver::Solve()
 {
-	_solver->Solve();
+	try
+	{
+		_solver->Solve();
+	}
+	catch (const std::exception& e)
+	{
+		throw gcnew System::Exception(gcnew System::String(e.what()));
+	}
+
 }

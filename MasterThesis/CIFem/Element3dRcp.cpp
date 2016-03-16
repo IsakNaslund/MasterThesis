@@ -139,12 +139,12 @@ std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Element3dRcp::CreateElement
 			std::shared_ptr<DOF> ptr(new DOF(0));
 			dof.push_back(ptr);
 
-			if (_stRel.GetReleases()[i].Stiffness() > 0)
+			if (_enRel.GetReleases()[i].Stiffness() > 0)
 			{
 				std::vector<std::shared_ptr<DOF> > sprDof;
 				sprDof.push_back(ptr);
 				sprDof.push_back(enNodDof[i]);
-				std::shared_ptr<CIFem::IElement> spring(new Spring(_stRel.GetReleases()[i].Stiffness(), sprDof));
+				std::shared_ptr<CIFem::IElement> spring(new Spring(_enRel.GetReleases()[i].Stiffness(), sprDof));
 				newElements.push_back(spring);
 			}
 		}

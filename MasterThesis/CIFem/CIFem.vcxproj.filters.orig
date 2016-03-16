@@ -40,16 +40,14 @@
     <Filter Include="Header Files\Restraints">
       <UniqueIdentifier>{bf197bf0-5b2c-4c16-beb6-0da73041251c}</UniqueIdentifier>
     </Filter>
-<<<<<<< HEAD
     <Filter Include="Header Files\Solvers">
       <UniqueIdentifier>{d294d01e-80b9-4da9-a215-64457fc823dc}</UniqueIdentifier>
-=======
+    </Filter>
     <Filter Include="Header Files\UtilisationChecks">
       <UniqueIdentifier>{62b028ce-cab2-45b8-8fad-8392eee298b9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Elements\ElementResults">
       <UniqueIdentifier>{2002b315-c6b8-4447-9812-31719faf7ce7}</UniqueIdentifier>
->>>>>>> de28fe595856f30f9e09fb7ba06691fd65a5b59c
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -134,7 +132,6 @@
     <ClInclude Include="Material.h">
       <Filter>Header Files\Elements</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="ISolver.h">
       <Filter>Header Files\Solvers</Filter>
     </ClInclude>
@@ -143,7 +140,7 @@
     </ClInclude>
     <ClInclude Include="EigenSolver.h">
       <Filter>Header Files\Solvers</Filter>
-=======
+    </ClInclude>
     <ClInclude Include="IUtilisationCheck.h">
       <Filter>Header Files\UtilisationChecks</Filter>
     </ClInclude>
@@ -158,7 +155,14 @@
     </ClInclude>
     <ClInclude Include="ElementResults3d.h">
       <Filter>Header Files\Elements\ElementResults</Filter>
->>>>>>> de28fe595856f30f9e09fb7ba06691fd65a5b59c
+    </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="LoadCase.h">
+      <Filter>Header Files</Filter>
+=======
+    <ClInclude Include="Utilisation.h">
+      <Filter>Header Files\Elements\ElementResults</Filter>
+>>>>>>> a7cb0590d66557fef680c1e3035c2523c57572a4
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -231,7 +235,6 @@
     <ClCompile Include="Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="EigenSolver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -239,7 +242,8 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ISolver.cpp">
-=======
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="IUtilisationCheck.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -253,7 +257,13 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ElementResults3d.cpp">
->>>>>>> de28fe595856f30f9e09fb7ba06691fd65a5b59c
+      <Filter>Source Files</Filter>
+    </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="LoadCase.cpp">
+=======
+    <ClCompile Include="Utilisation.cpp">
+>>>>>>> a7cb0590d66557fef680c1e3035c2523c57572a4
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

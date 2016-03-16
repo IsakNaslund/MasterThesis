@@ -159,6 +159,9 @@
     <ClInclude Include="Utilisation.h">
       <Filter>Header Files\Elements\ElementResults</Filter>
     </ClInclude>
+    <ClInclude Include="LoadCase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XYZ.cpp">
@@ -258,6 +261,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ICrossSection.cpp">
+	<Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadCase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

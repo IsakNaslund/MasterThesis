@@ -5,6 +5,7 @@
 #include <memory>
 #include "ISolver.h"
 #include "Vector3d.h"
+#include "LoadCombination.h"
 
 typedef std::set<std::shared_ptr<CIFem::DOF>> DofSet;
 
@@ -14,6 +15,7 @@ namespace CIFem
 	{
 		bool _gravityOn;
 		Vector3d _gravityField;
+		std::vector<LoadCombination> _loadCobms;
 
 	public:
 		LinearSolver();

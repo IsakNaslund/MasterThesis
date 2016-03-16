@@ -49,6 +49,9 @@
     <Filter Include="Header Files\Elements\ElementResults">
       <UniqueIdentifier>{2002b315-c6b8-4447-9812-31719faf7ce7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Loads">
+      <UniqueIdentifier>{4caa80a5-713f-4a7e-a136-ae0d283071dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XYZ.h">
@@ -160,7 +163,13 @@
       <Filter>Header Files\Elements\ElementResults</Filter>
     </ClInclude>
     <ClInclude Include="LoadCase.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Loads</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadCombination.h">
+      <Filter>Header Files\Loads</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLoad.h">
+      <Filter>Header Files\Loads</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -261,6 +270,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LoadCase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadCombination.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ILoad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLoad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

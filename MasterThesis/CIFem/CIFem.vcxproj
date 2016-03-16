@@ -155,6 +155,7 @@
     <ClInclude Include="IElementResults.h" />
     <ClInclude Include="IUtilCheck3d.h" />
     <ClInclude Include="IUtilisationCheck.h" />
+    <ClInclude Include="LoadCase.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Restraint.h" />
     <ClInclude Include="DOF.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="IElementResults.cpp" />
     <ClCompile Include="IUtilCheck3d.cpp" />
     <ClCompile Include="IUtilisationCheck.cpp" />
+    <ClCompile Include="LoadCase.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Restraint.cpp" />
     <ClCompile Include="DOF.cpp" />

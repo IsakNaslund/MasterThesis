@@ -89,6 +89,33 @@ double CIFem::Rectangle3d::CalcAlphaFactor()
 	}
 }
 
+// Performs a shear check in the local y-direction
+double CIFem::Rectangle3d::CheckShearY(double Vy)
+{
+	// "Flip" b and h since check is done in y-dir 
+	double h = _width;
+	double b = _height;
+	
+	// Assumptions: Shear checked in middle of section
+	double S = pow((h / 2), 2)*b / 8;
+	double I = _secProp.Iy();
+
+	return (S*Vy) / (I*b);
+}
+
+// Performs a shear check in the local z-direction
+double CIFem::Rectangle3d::CheckShearZ(double Vz)
+{
+	double h = _height;
+	double b = _width;
+
+	// Assumptions: Shear checked in middle of section
+	double S = pow((h / 2), 2)*b / 8;
+	double I = _secProp.Iz();
+
+	return (S*Vz) / (I*b);
+}
+
 double CIFem::Rectangle3d::CheckCombAxialBending(double N, double Myy, double Mzz)
 {
 	std::vector<double> yMinMax = { -_width / 2, _width / 2 };

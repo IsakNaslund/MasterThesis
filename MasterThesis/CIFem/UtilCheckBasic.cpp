@@ -23,10 +23,9 @@ namespace CIFem
 			results._util[i]->Update(CheckCombAxialBending(xSec, mat, results, i),
 				"Combined axial and bending over two axes");
 			
-			// Update elem util
-
-			// Do check (combined shear)
-			// Update elem util
+			// Check shear
+			results._util[i]->Update(CheckShearY(xSec, mat, results, i), "Shear in local y-direction");
+			results._util[i]->Update(CheckShearZ(xSec, mat, results, i), "Shear in local z-direction");
 		}
 	}
 
@@ -45,5 +44,20 @@ namespace CIFem
 		double stress = xSec->CheckCombAxialBending(results.N()[i], results.Myy()[i], results.Mzz()[i]);
 
 		return (stress / mat->Fu());
+	}
+	
+	double UtilCheck3dBasic::
+		CheckShearY(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results, int i)
+	{
+		double tauXY = xSec->CheckShearY(results.Vy()[i]);
+
+		return (tauXY / (mat->Fu() / sqrt(3)));
+	}
+
+	double UtilCheck3dBasic::CheckShearZ(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results, int i)
+	{
+		double tauXZ = xSec->CheckShearZ(results.Vz()[i]);
+
+		return (tauXZ / (mat->Fu() / sqrt(3)));
 	}
 }

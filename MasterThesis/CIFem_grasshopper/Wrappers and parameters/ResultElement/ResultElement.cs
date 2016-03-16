@@ -27,6 +27,9 @@ namespace CIFem_grasshopper
         public List<double> w { get; private set; }
         public List<double> fi { get; private set; }
 
+        // Utilisations
+        public List<WR_Utilisation> util { get; private set; }
+
         // Element data
         public Rhino.Geometry.Point3d sPos { get; private set; }
         public Rhino.Geometry.Point3d ePos { get; private set; }
@@ -51,6 +54,9 @@ namespace CIFem_grasshopper
 
             // Displacements
             GetDisplacements(elem);
+
+            // Utilisations
+            GetUtilisations(elem);
         }
 
         private void ScalePositionList(WR_Element3d elem)
@@ -85,6 +91,11 @@ namespace CIFem_grasshopper
             v = elem.DisplacementY();
             w = elem.DisplacementZ();
             fi = elem.DisplacementTorsion();
+        }
+
+        private void GetUtilisations(WR_Element3d elem)
+        {
+            util = elem.Utilisations();
         }
 
         private void GetElementGeometricData(WR_Element3d elem)

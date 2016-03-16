@@ -5,6 +5,7 @@
 #include "Element3d.h"
 #include "m_shared_ptr.h"
 #include "Utilities.h"
+#include "WR_Utilisation.h"
 
 namespace CIFem_wrapper
 {
@@ -29,6 +30,8 @@ namespace CIFem_wrapper
 		System::Collections::Generic::List<double> ^ DisplacementTorsion();
 
 		System::Collections::Generic::List<double> ^ ResultPosition();
+
+		System::Collections::Generic::List<WR_Utilisation^> ^ Utilisations();
 
 		WR_XYZ ^ GetStartPos();
 		WR_XYZ ^ GetEndPos();

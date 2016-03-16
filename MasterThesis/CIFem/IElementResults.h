@@ -2,6 +2,7 @@
 #include "CIFem_dll.h"
 #include <vector>
 #include "IElement.h"
+#include "Utilisation.h"
 
 namespace CIFem
 {
@@ -14,11 +15,11 @@ namespace CIFem
 
 		virtual void Reset() = 0;
 		double GetMaxAbsolute(std::vector<double> forces);
-		void UpdateUtilisation(double u);
+		void UpdateMaxUtilisation(Utilisation u);
 
 	protected:
 		//Utilisation
-		double _maxUtil = 0;	// Initialise to 0
+		Utilisation _maxUtil;
 	};
 }
 

@@ -31,9 +31,8 @@ namespace CIFem
 			return min;
 	}
 
-	void IElementResults::UpdateUtilisation(double u)
+	void IElementResults::UpdateMaxUtilisation(Utilisation u)
 	{
-		if (u > _maxUtil)
-			_maxUtil = u;
+		_maxUtil.Update(u.GetUtil(), u.GetDesc());
 	}
 }

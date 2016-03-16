@@ -27,6 +27,7 @@ namespace CIFem
 		_fi.clear();
 		_pos.clear();
 
-		_maxUtil = 0;
+		_util.clear();
+		_maxUtil.Reset();
 	}
 }

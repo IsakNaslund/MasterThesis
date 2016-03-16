@@ -16,6 +16,7 @@ CIFem::Spring::Spring(double k, std::vector<std::shared_ptr<DOF>> dofs)
 {
 	_k = k;
 	SetEdof(dofs);
+	UpdateStiffnessMatrix();
 }
 
 

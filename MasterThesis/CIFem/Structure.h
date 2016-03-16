@@ -29,12 +29,6 @@ namespace CIFem
 		// Not implemented, probably shouldnt be either....?
 		Structure Copy();
 
-
-
-		//void Solve();
-
-		//double SolveEigenvalue(int mode);
-
 		std::vector<std::shared_ptr<CIFem::IElement>> GetElements();
 		std::vector<std::shared_ptr<INode>> GetNodes();
 
@@ -51,28 +45,31 @@ namespace CIFem
 
 		void CalculateElementSectionForces();
 
-
-
 	private:		
 		void GetNodeDofs(std::set<std::shared_ptr<CIFem::DOF>> & dofs);
 		void GetUniqueElementDofs(std::set<std::shared_ptr<CIFem::DOF>> & dofs);
 
-		void SetDofKMatIndex(std::set<std::shared_ptr<CIFem::DOF>>&);
-		
 		void AssembleElementsInKMat(arma::mat & K, arma::mat & Ke, const std::vector<std::shared_ptr<DOF>>&);
-		arma::colvec GetForceVector(std::set<std::shared_ptr<DOF>>);
-		arma::colvec GetDisplacementVector(std::set<std::shared_ptr<DOF>>);
+
+		////////////////////////////////////////////////////////////
+		////////Old stuff. Saved for reference if needed////////////
+		////////////////////////////////////////////////////////////
 
 
-		void LinEqSolve(arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::set<std::shared_ptr<DOF>>, arma::colvec & s);
-		double EigenSolve(arma::sp_mat & K, arma::colvec & am, arma::mat & C, std::set<std::shared_ptr<DOF>> spDofs, arma::colvec & s, int mode);
-
-		void StoreResultsInDofs(arma::colvec a, arma::colvec f, std::set<std::shared_ptr<DOF>>);
-
-		void CalculateElemetForces();
-
+		//void SetDofKMatIndex(std::set<std::shared_ptr<CIFem::DOF>>&);
 		
+		
+		//arma::colvec GetForceVector(std::set<std::shared_ptr<DOF>>);
+		//arma::colvec GetDisplacementVector(std::set<std::shared_ptr<DOF>>);
 
+
+		//void LinEqSolve(arma::sp_mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, std::set<std::shared_ptr<DOF>>, arma::colvec & s);
+		//double EigenSolve(arma::sp_mat & K, arma::colvec & am, arma::mat & C, std::set<std::shared_ptr<DOF>> spDofs, arma::colvec & s, int mode);
+
+		//void StoreResultsInDofs(arma::colvec a, arma::colvec f, std::set<std::shared_ptr<DOF>>);
+
+		//void CalculateElemetForces();
+		//
 
 	};
 }

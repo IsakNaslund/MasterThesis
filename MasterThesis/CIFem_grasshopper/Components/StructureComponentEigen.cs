@@ -15,6 +15,7 @@ namespace CIFem_grasshopper
         private List<ResultElement> resElems { get; set; }
         private WR_EigenSolver _solver;
         WR_Structure _structure;
+        double _eigVal;
 
         public StructureComponentEigen(): base("Structure Eigen", "Structure Eig", "A structure to hold beams, releases, forces etc. Solves for eigenvalues", "CIFem", "Structure")
         {
@@ -55,6 +56,7 @@ namespace CIFem_grasshopper
                 "Messageboard", "log", "Outputs a log of the performed calculation", GH_ParamAccess.list);
 
             pManager.AddParameter(new ResultElementParam(), "Result Elements", "RE", "Result elements, storing results from the calculation", GH_ParamAccess.list);
+            pManager.AddNumberParameter("EigVal", "EV", "The eigenvalue of choosen mode", GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -101,7 +103,7 @@ namespace CIFem_grasshopper
 
             if (_solver != null && _structure != null)
             {
-                _solver.SetResultsToMode(mode);
+                _eigVal =_solver.SetResultsToMode(mode);
 
                 // Extract results
                 List<WR_IElement> elems = _structure.GetAllElements();
@@ -124,6 +126,7 @@ namespace CIFem_grasshopper
 
             DA.SetData(0, log);
             DA.SetDataList(1, resElems);
+            DA.SetData(2, _eigVal);
         }
     }
 }

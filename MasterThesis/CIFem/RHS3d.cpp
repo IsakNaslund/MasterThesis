@@ -32,3 +32,23 @@ void CIFem::RHS3d::CalcSectionProperties()
 
 	_secProp= SectionProperties(area, iy, iz, -1);
 }
+
+double CIFem::RHS3d::CheckCombAxialBending(double N, double Myy, double Mzz)
+{
+	std::vector<double> yMinMax = { -_width / 2, _width / 2 };
+	std::vector<double> zMinMax = { -_height / 2, _height / 2 };
+
+	double absmax = 0;
+	double val;
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < 2; j++)
+		{
+			val = (N / _secProp.A()) + ((Myy / _secProp.Iy()) * zMinMax[i]) + ((Mzz / _secProp.Iz()) * yMinMax[i]);
+			if (abs(val) > abs(absmax))
+				absmax = val;
+		}
+	}
+
+	return absmax;
+}

@@ -257,6 +257,9 @@
     <ClCompile Include="Utilisation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ICrossSection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CIFem.rc">

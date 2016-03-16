@@ -17,15 +17,15 @@ namespace CIFem
 		for (int i = 0; i < results.Utilisations().size(); i++)
 		{
 			// Do checks, update element utilisation
-			results._util[i]->Update(AxialCheck(xSec, mat, results, i), "Axial");
+			results._util[i]->Update(AxialCheck(xSec, mat, results, i), "Pure axial");
 
-			// Do check
+			// Do check (combined bending and axial)
+			results._util[i]->Update(CheckCombAxialBending(xSec, mat, results, i),
+				"Combined axial and bending over two axes");
+			
 			// Update elem util
 
-			// Do check
-			// Update elem util
-
-			// Do check
+			// Do check (combined shear)
 			// Update elem util
 		}
 	}
@@ -37,5 +37,13 @@ namespace CIFem
 		double A = xSec->GetArea();
 
 		return (N / A)/(mat->Fu());
+	}
+
+
+	double UtilCheck3dBasic::CheckCombAxialBending(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results, int i)
+	{
+		double stress = xSec->CheckCombAxialBending(results.N()[i], results.Myy()[i], results.Mzz()[i]);
+
+		return (stress / mat->Fu());
 	}
 }

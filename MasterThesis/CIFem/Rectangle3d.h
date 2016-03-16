@@ -27,6 +27,9 @@ namespace CIFem
 		void CalcSectionProperties();
 		double CalcTorsionalStiffness(const double iy, const double iz);
 		double CalcAlphaFactor();
+
+		// Inherited via ICrossSection
+		virtual double CheckCombAxialBending(double N, double Myy, double Mzz) override;
 	};
 }
 

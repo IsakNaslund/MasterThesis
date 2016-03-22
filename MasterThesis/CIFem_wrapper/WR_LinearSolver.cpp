@@ -34,3 +34,8 @@ void CIFem_wrapper::WR_LinearSolver::Solve()
 	}
 
 }
+
+void CIFem_wrapper::WR_LinearSolver::AddLoadCombination(WR_LoadCombination ^ comb)
+{
+	_solver->AddLoadCombination(comb->GetCombination());
+}

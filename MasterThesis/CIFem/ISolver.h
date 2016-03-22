@@ -19,6 +19,7 @@ namespace CIFem
 		void StoreResultsInDofs(const arma::colvec & a, const arma::colvec & f, DofSet & spDofs);
 		void CalculateElementSectionForces();
 		DofSet GetDofs();
+		void ResetAllForces(DofSet & spDofs);
 
 	public:
 

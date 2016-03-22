@@ -50,6 +50,11 @@ Element3d::~Element3d()
 {
 }
 
+void CIFem::Element3d::ResetLineLoads()
+{
+	_qx = _qy = _qz = _qw = 0;
+}
+
 
 void CIFem::Element3d::UpdateStiffnessMatrix()
 {

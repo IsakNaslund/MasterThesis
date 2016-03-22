@@ -83,7 +83,7 @@ std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Structure::GetElements()
 	return _elements;
 }
 
-std::vector<std::shared_ptr<CIFem::INode>> CIFem::Structure::GetNodes()
+const std::vector<std::shared_ptr<CIFem::INode>> & CIFem::Structure::GetNodes()
 {
 	return _nodes;
 }
@@ -92,6 +92,14 @@ void CIFem::Structure::ResetStructure()
 {
 	_elements.clear();
 	_nodes.clear();
+}
+
+void CIFem::Structure::ResetStructrualForces()
+{
+	for (int i = 0; i < _elements.size(); i++)
+	{
+		_elements[i]->ResetElementForces();
+	}
 }
 
 

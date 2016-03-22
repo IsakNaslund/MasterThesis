@@ -39,43 +39,77 @@ void CIFem::LinearSolver::Solve()
 	// Update dof kIndex and clear dof loads
 	SetUpDofs(spDofs);
 
-	//Apply element loads to dofs (need to add something that creates linear loads over elements etc)
-	ApplyGravityToElements();
-
-	//Apply Node forces to dofs
-	ApplyNodalForces();
-
 	//Get the stiffness matrix from the structure
 	arma::mat K = _structure->AssembleStiffnessMatrix(spDofs.size());
 
-	
-	arma::mat C = _structure->GetCMatrix();				// Get transformation vector for restraints
+	for (int i = 0; i < _loadCobms.size(); i++)
+	{
+		//Reset all forces on dofs and elements
+		ResetAllForces(spDofs);
 
-	// Get a and f vectors 
-	arma::colvec am = GetDisplacementVector(spDofs);	// Get displacement vector
-	arma::colvec f = GetForceVector(spDofs);			// Get force vector
+		//Apply element loads to dofs (need to add something that creates linear loads over elements etc)
+		ApplyGravityToElements(_loadCobms[i]);
 
-	// Solve K matrix
-	arma::colvec s;		// Resulting forces
-	LinEqSolve(K, am, f, C, spDofs, s);
+		//Apply Node forces to dofs
+		ApplyNodalForces(_loadCobms[i].getPointLoad());
 
-	// Store results in dofs
-	StoreResultsInDofs(am, s, spDofs);
+		arma::mat C = _structure->GetCMatrix();				// Get transformation vector for restraints
 
-	//Calculate section forces for the elements
-	CalculateElementSectionForces();
+		// Get a and f vectors 
+		arma::colvec am = GetDisplacementVector(spDofs);	// Get displacement vector
+		arma::colvec f = GetForceVector(spDofs);			// Get force vector
 
+		// Solve K matrix
+		arma::colvec s;		// Resulting forces
+		LinEqSolve(K, am, f, C, spDofs, s);
+
+		// Store results in dofs
+		StoreResultsInDofs(am, s, spDofs);
+
+		//Calculate section forces for the elements
+		CalculateElementSectionForces();
+	}
 }
 
-void CIFem::LinearSolver::ApplyGravityToElements()
+void CIFem::LinearSolver::AddLoadCombination(LoadCombination comb)
 {
-	if (_gravityOn)
-		_structure->ApplyGravityToElements(_gravityField);
+	_loadCobms.push_back(comb);
+}
+
+void CIFem::LinearSolver::ApplyGravityToElements(const LoadCombination & loadComb)
+{
+	if (loadComb.getGravityOn())
+		_structure->ApplyGravityToElements(loadComb.getGravityField());
 }
 
 void CIFem::LinearSolver::ApplyNodalForces()
 {
 	_structure->ApplyNodalForces();
+}
+
+void CIFem::LinearSolver::ApplyNodalForces(const std::vector<PointLoad>& pointLoads)
+{
+	for (int i = 0; i < pointLoads.size(); i++)
+	{
+		for each (std::shared_ptr<INode> node in _structure->GetNodes())
+		{
+			//ugly way of applying the loads.... Should we even be working with INodes?....
+			// forthis to be more generic we need to add other stuff such as Vector2d, Pointload 2d etc...
+			double dist = node->DistanceTo(pointLoads[i].Pos());
+			if (dist >= 0 && dist < GlobalTol)
+			{
+				std::vector<std::shared_ptr<DOF>> nodeDofs = node->GetDofs();
+				nodeDofs[0]->AddLoad(pointLoads[i].Force().GetX());
+				nodeDofs[1]->AddLoad(pointLoads[i].Force().GetY());
+				nodeDofs[2]->AddLoad(pointLoads[i].Force().GetZ());
+				nodeDofs[3]->AddLoad(pointLoads[i].Moment().GetX());
+				nodeDofs[4]->AddLoad(pointLoads[i].Moment().GetY());
+				nodeDofs[5]->AddLoad(pointLoads[i].Moment().GetZ());
+
+				break;
+			}
+		}
+	}
 }
 
 arma::colvec CIFem::LinearSolver::GetForceVector(DofSet & spDofs)

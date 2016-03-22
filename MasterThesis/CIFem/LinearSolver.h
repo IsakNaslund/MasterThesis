@@ -6,6 +6,7 @@
 #include "ISolver.h"
 #include "Vector3d.h"
 #include "LoadCombination.h"
+#include "GlobalSettings.h"
 
 typedef std::set<std::shared_ptr<CIFem::DOF>> DofSet;
 
@@ -27,10 +28,13 @@ namespace CIFem
 		void Solve();
 
 
+		void AddLoadCombination(LoadCombination comb);
+
 	private:
 
-		void ApplyGravityToElements();
+		void ApplyGravityToElements(const LoadCombination & loadComb);
 		void ApplyNodalForces();
+		void ApplyNodalForces(const std::vector<PointLoad> & pointLoads);
 
 		arma::colvec GetForceVector(DofSet &);
 		arma::colvec GetDisplacementVector(DofSet &);

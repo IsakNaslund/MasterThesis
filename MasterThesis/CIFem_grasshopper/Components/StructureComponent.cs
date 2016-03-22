@@ -28,6 +28,14 @@ namespace CIFem_grasshopper
             }
         }
 
+        public override GH_Exposure Exposure
+        {
+            get
+            {
+                return GH_Exposure.hidden;
+            }
+        }
+
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddParameter(new NodeParam(), "Restraint Nodes", "RN",

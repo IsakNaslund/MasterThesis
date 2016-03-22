@@ -8,9 +8,9 @@ using Grasshopper.Kernel.Expressions;
 
 namespace CIFem_grasshopper
 {
-    public class BeamReleaseParameter : GH_Param<BeamReleaseGoo>
+    public class StructureParam : GH_Param<StructureGoo>
     {
-        public BeamReleaseParameter():base(new GH_InstanceDescription("BeamRelease", "BR", "Release for 3d beam", "CIFem", "Elements"))
+        public StructureParam():base(new GH_InstanceDescription("Structure", "Str", "A structure", "CIFem", "Structure"))
         { }
 
 
@@ -18,7 +18,7 @@ namespace CIFem_grasshopper
         {
             get
             {
-                return new Guid("aa256079-afa6-4e98-a639-fef249c951ac");
+                return new Guid("f8755248-b560-470b-ab1e-e86988ba935a");
             }
         }
 

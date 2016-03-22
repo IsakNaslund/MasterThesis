@@ -148,17 +148,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CIFem_dll.h" />
-<<<<<<< HEAD
     <ClInclude Include="EigenSolver.h" />
     <ClInclude Include="ISolver.h" />
     <ClInclude Include="LinearSolver.h" />
-=======
     <ClInclude Include="ElementResults3d.h" />
     <ClInclude Include="IElementResults.h" />
     <ClInclude Include="IUtilCheck3d.h" />
     <ClInclude Include="IUtilisationCheck.h" />
->>>>>>> de28fe595856f30f9e09fb7ba06691fd65a5b59c
+    <ClInclude Include="LoadCase.h" />
+    <ClInclude Include="LoadCombination.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="PointLoad.h" />
     <ClInclude Include="Restraint.h" />
     <ClInclude Include="DOF.h" />
     <ClInclude Include="DofRelease.h" />
@@ -183,21 +183,27 @@
     <ClInclude Include="Spring.h" />
     <ClInclude Include="Structure.h" />
     <ClInclude Include="UtilCheck3dBasic.h" />
+    <ClInclude Include="Utilisation.h" />
     <ClInclude Include="Vector3d.h" />
     <ClInclude Include="XYZ.h" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ClCompile Include="EigenSolver.cpp" />
+<<<<<<< HEAD
+    <ClCompile Include="ILoad.cpp" />
+=======
+    <ClCompile Include="ICrossSection.cpp" />
+>>>>>>> 562fe58db7039534a0cf3d548285d2a8afcf0244
     <ClCompile Include="ISolver.cpp" />
     <ClCompile Include="LinearSolver.cpp" />
-=======
     <ClCompile Include="ElementResults3d.cpp" />
     <ClCompile Include="IElementResults.cpp" />
     <ClCompile Include="IUtilCheck3d.cpp" />
     <ClCompile Include="IUtilisationCheck.cpp" />
->>>>>>> de28fe595856f30f9e09fb7ba06691fd65a5b59c
+    <ClCompile Include="LoadCase.cpp" />
+    <ClCompile Include="LoadCombination.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="PointLoad.cpp" />
     <ClCompile Include="Restraint.cpp" />
     <ClCompile Include="DOF.cpp" />
     <ClCompile Include="DofRelease.cpp" />
@@ -219,6 +225,7 @@
     <ClCompile Include="Spring.cpp" />
     <ClCompile Include="Structure.cpp" />
     <ClCompile Include="UtilCheckBasic.cpp" />
+    <ClCompile Include="Utilisation.cpp" />
     <ClCompile Include="Vector3d.cpp" />
     <ClCompile Include="XYZ.cpp" />
   </ItemGroup>

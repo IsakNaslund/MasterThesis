@@ -30,9 +30,10 @@ namespace CIFem
 		Structure Copy();
 
 		std::vector<std::shared_ptr<CIFem::IElement>> GetElements();
-		std::vector<std::shared_ptr<INode>> GetNodes();
+		const std::vector<std::shared_ptr<INode>> & GetNodes();
 
 		void ResetStructure();
+		void ResetStructrualForces();
 
 		std::set<std::shared_ptr<CIFem::DOF>> GetDofs();
 

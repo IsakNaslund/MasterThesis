@@ -269,13 +269,13 @@
     <ClCompile Include="Utilisation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ICrossSection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="LoadCase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LoadCombination.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ILoad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PointLoad.cpp">

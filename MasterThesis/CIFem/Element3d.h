@@ -39,7 +39,9 @@ namespace CIFem
 		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<IUtilCheck3d> checktype);
 		~Element3d();
 
+		void ResetElementForces() { ResetLineLoads(); }
 
+		void ResetLineLoads();
 
 		void UpdateStiffnessMatrix();
 		void DoSectionChecks();

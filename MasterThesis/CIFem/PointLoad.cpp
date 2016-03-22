@@ -2,7 +2,7 @@
 
 
 
-PointLoad::PointLoad()
+CIFem::PointLoad::PointLoad()
 {
 }
 
@@ -14,6 +14,6 @@ CIFem::PointLoad::PointLoad(Vector3d force, Vector3d moment, XYZ pos)
 }
 
 
-PointLoad::~PointLoad()
+CIFem::PointLoad::~PointLoad()
 {
 }

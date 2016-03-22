@@ -145,6 +145,7 @@
     <ClInclude Include="WR_INode.h" />
     <ClInclude Include="WR_IXSec.h" />
     <ClInclude Include="WR_LinearSolver.h" />
+    <ClInclude Include="WR_LoadCombination.h" />
     <ClInclude Include="WR_Material.h" />
     <ClInclude Include="WR_Node3d.h" />
     <ClInclude Include="WR_Plane.h" />
@@ -173,6 +174,7 @@
     <ClCompile Include="WR_INode.cpp" />
     <ClCompile Include="WR_IXSec.cpp" />
     <ClCompile Include="WR_LinearSolver.cpp" />
+    <ClCompile Include="WR_LoadCombination.cpp" />
     <ClCompile Include="WR_Material.cpp" />
     <ClCompile Include="WR_Node3d.cpp" />
     <ClCompile Include="WR_Plane.cpp" />

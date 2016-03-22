@@ -7,17 +7,18 @@ using Grasshopper.Kernel;
 
 using CIFem_wrapper;
 
+
+
 namespace CIFem_grasshopper
 {
-    public class StructureComponentEigen : GH_Component
+    public class EigSolverComponent : GH_Component
     {
         public List<string> log { get; set; }
         private List<ResultElement> resElems { get; set; }
         private WR_EigenSolver _solver;
-        WR_Structure _structure;
         double _eigVal;
 
-        public StructureComponentEigen(): base("Structure Eigen", "Structure Eig", "A structure to hold beams, releases, forces etc. Solves for eigenvalues", "CIFem", "Structure")
+        public EigSolverComponent(): base("Eigen Solver", "EigSlv", "A eigenmode solver of a structure", "CIFem", "Solvers")
         {
             log = new List<string>();
         }
@@ -26,34 +27,16 @@ namespace CIFem_grasshopper
         {
             get
             {
-                return new Guid("57194535-5b02-424a-b0e0-3e6cb81fd0c4");
+                return new Guid("07fc970c-ab42-4384-bc0d-dbcb254e64a4");
             }
         }
 
-        public override GH_Exposure Exposure
-        {
-            get
-            {
-                return GH_Exposure.hidden;
-            }
-        }
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new NodeParam(), "Restraint Nodes", "RN",
-                "A list of nodes that may contain restraints", GH_ParamAccess.list);
-
-            pManager.AddParameter(new BeamParam(), "Beams", "B", 
-                "Beams that the structure should consist of", GH_ParamAccess.list);
-
-            // Woops, should be restraints!
-            //pManager.AddParameter(
-            //    new BeamReleaseParameter(), "Releases", "R", "Releases for the structure", GH_ParamAccess.list);
-
+            pManager.AddParameter(new StructureParam(), "Structure", "Str", "The structure to solve", GH_ParamAccess.item);
             pManager.AddIntegerParameter("Mode", "m", "The mode to evaluate", GH_ParamAccess.item);
             pManager.AddBooleanParameter("Solve", "Go", "Toggle the solver", GH_ParamAccess.item);
-
-
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -61,7 +44,6 @@ namespace CIFem_grasshopper
             // Add displacements, reactions, element forces etc
 
             pManager.AddTextParameter("Messageboard", "log", "Outputs a log of the performed calculation", GH_ParamAccess.list);
-
             pManager.AddParameter(new ResultElementParam(), "Result Elements", "RE", "Result elements, storing results from the calculation", GH_ParamAccess.list);
             pManager.AddNumberParameter("EigVal", "EV", "The eigenvalue of choosen mode", GH_ParamAccess.item);
         }
@@ -70,50 +52,28 @@ namespace CIFem_grasshopper
         {
             // Indata
             bool go = false;
-            List<WR_Node3d> nodes = new List<WR_Node3d>();
-            List<WR_IElemRcp> beams = new List<WR_IElemRcp>();
+            WR_Structure structure = null;
             int mode = 0;
 
-            if (!DA.GetDataList(0, nodes)) { return; }
-            if (!DA.GetDataList(1, beams)) { return; }
-            if (!DA.GetData(2, ref mode)) { return; }
-            if (!DA.GetData(3, ref go)) { return; }
+            if (!DA.GetData(0, ref structure)) { return; }
+            if (!DA.GetData(1, ref mode)) { return; }
+            if (!DA.GetData(2, ref go)) { return; }
 
             if (go)
             {
                 resElems = new List<ResultElement>();
 
-                log.Clear();
-                log.Add("Structure invokation started");
-
-                // Create structure wrapper
-                _structure = new WR_Structure();
-
-                // Add restraint nodes
-                foreach (WR_Node3d n in nodes)
-                    _structure.AddNode(n);
-                log.Add("" + nodes.Count + " nodes added to structure");
-
-                // Add elements
-                foreach (WR_Elem3dRcp e in beams)
-                    _structure.AddElementRcp(e);
-                log.Add("" + beams.Count + " elements added to structure");
-
-                // Add forces
-
                 // Solve
-                _solver = new WR_EigenSolver(_structure);
+                _solver = new WR_EigenSolver(structure);
                 _solver.Solve();
-                //structure.EigenSolve(mode);
-
             }
 
-            if (_solver != null && _structure != null)
+            if (_solver != null && structure != null)
             {
-                _eigVal =_solver.SetResultsToMode(mode);
+                _eigVal = _solver.SetResultsToMode(mode);
 
                 // Extract results
-                List<WR_IElement> elems = _structure.GetAllElements();
+                List<WR_IElement> elems = structure.GetAllElements();
                 resElems.Clear();
 
                 for (int i = 0; i < elems.Count; i++)
@@ -134,6 +94,7 @@ namespace CIFem_grasshopper
             DA.SetData(0, log);
             DA.SetDataList(1, resElems);
             DA.SetData(2, _eigVal);
+
         }
     }
 }

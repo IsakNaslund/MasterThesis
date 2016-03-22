@@ -35,3 +35,14 @@ DofSet CIFem::ISolver::GetDofs()
 	return _structure->GetDofs();
 }
 
+void CIFem::ISolver::ResetAllForces(DofSet & spDofs)
+{
+	for each (std::shared_ptr<CIFem::DOF> dof in spDofs)
+	{
+		dof->ClearLoad();
+	}
+	_structure->ResetStructrualForces();
+}
+
+
+

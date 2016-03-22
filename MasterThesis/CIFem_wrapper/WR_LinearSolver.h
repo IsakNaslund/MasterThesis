@@ -2,6 +2,7 @@
 #include "LinearSolver.h"
 #include "m_shared_ptr.h"
 #include "WR_Structure.h"
+#include "WR_LoadCombination.h"
 
 namespace CIFem_wrapper
 {
@@ -16,5 +17,7 @@ namespace CIFem_wrapper
 		~WR_LinearSolver();
 
 		void Solve();
+
+		void AddLoadCombination(WR_LoadCombination^ comb);
 	};
 }

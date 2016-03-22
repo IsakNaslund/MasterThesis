@@ -26,6 +26,7 @@ namespace CIFem
 		const std::vector<std::shared_ptr<DOF>> & GetDofs() { return _dof; }
 		std::vector<int> GetDofIndecies();
 
+		virtual void ResetElementForces() {  }
 
 		virtual arma::Col<double> GravityLoad() {  return GravityLoad(-9.82); }
 		virtual arma::Col<double> GravityLoad(double factor) { return GravityLoad(Vector3d(0, 0, factor)); }

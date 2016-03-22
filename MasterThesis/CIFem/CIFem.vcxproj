@@ -189,7 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EigenSolver.cpp" />
-    <ClCompile Include="ILoad.cpp" />
+    <ClCompile Include="ICrossSection.cpp" />
     <ClCompile Include="ISolver.cpp" />
     <ClCompile Include="LinearSolver.cpp" />
     <ClCompile Include="ElementResults3d.cpp" />

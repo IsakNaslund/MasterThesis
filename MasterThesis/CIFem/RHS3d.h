@@ -18,6 +18,9 @@ namespace CIFem
 
 	private:
 		void CalcSectionProperties();
+
+		// Inherited via ICrossSection
+		virtual double CheckCombAxialBending(double N, double Myy, double Mzz) override;
 	};
 }
 

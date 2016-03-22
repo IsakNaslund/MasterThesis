@@ -19,7 +19,9 @@ namespace CIFem
 		inline virtual double  GetKv() const { return _secProp.Kv(); }
 
 		//Checks
-		virtual double CheckCombAxialBending(double N, double Myy, double Mzz) = 0;
+		virtual double CheckCombAxialBending(double N, double Myy, double Mzz) = 0;	// Returns sigma
+		virtual double CheckShearY(double Vy) = 0;	// Returns tau
+		virtual double CheckShearZ(double Vz) = 0;	// Returns tau
 	};
 
 }

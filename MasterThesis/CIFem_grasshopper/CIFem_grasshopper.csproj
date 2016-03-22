@@ -69,6 +69,7 @@
     <Compile Include="Components\StructureComponent.cs" />
     <Compile Include="Components\MaterialComponent.cs" />
     <Compile Include="Components\DisplacementComponent.cs" />
+    <Compile Include="Components\UtilisationComponent.cs" />
     <Compile Include="Components\LoadCombinationComponent.cs" />
     <Compile Include="Components\StructureConstructionComponent.cs" />
     <Compile Include="Components\LinearSolverComponent.cs" />
@@ -97,6 +98,8 @@
     <Compile Include="Wrappers and parameters\ResultElement\ResultElement.cs" />
     <Compile Include="Wrappers and parameters\ResultElement\ResultElementGoo.cs" />
     <Compile Include="Wrappers and parameters\ResultElement\ResultElementParam.cs" />
+    <Compile Include="Wrappers and parameters\ResultElement\Utilisation\UtilisationGoo.cs" />
+    <Compile Include="Wrappers and parameters\ResultElement\Utilisation\UtilisationParam.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CIFem_wrapper\CIFem_wrapper.vcxproj">

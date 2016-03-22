@@ -30,6 +30,8 @@ namespace CIFem
 
 		// Inherited via ICrossSection
 		virtual double CheckCombAxialBending(double N, double Myy, double Mzz) override;
+		virtual double CheckShearY(double Vy) override;
+		virtual double CheckShearZ(double Vz) override;
 	};
 }
 

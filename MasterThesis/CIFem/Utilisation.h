@@ -1,6 +1,7 @@
 #pragma once
 #include "CIFem_dll.h"
 #include <string>
+#include <memory>
 
 
 namespace CIFem
@@ -14,6 +15,7 @@ namespace CIFem
 		Utilisation();
 		Utilisation(double utilisation, std::string description);
 		~Utilisation();
+		std::shared_ptr<Utilisation> Copy();	// Returns a new shared pointer to an identical object
 
 		void Reset();
 		void Update(double utilisation, std::string description);

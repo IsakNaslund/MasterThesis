@@ -39,6 +39,7 @@ namespace CIFem_grasshopper
             pManager.AddNumberParameter("Torsion", "T", "Torsion", GH_ParamAccess.list);
             pManager.AddNumberParameter("MomentMajor", "Myy", "Bending moment around the element y axis (strong bending)", GH_ParamAccess.list);
             pManager.AddNumberParameter("MomentMinor", "Mzz", "Bending moment around the element z axis (weak bending)", GH_ParamAccess.list);
+            pManager.AddParameter(new UtilisationParam(), "Utilisation", "U", "Highest utilisation", GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -54,6 +55,7 @@ namespace CIFem_grasshopper
             DA.SetDataList(4, re.T);
             DA.SetDataList(5, re.My);
             DA.SetDataList(6, re.Mz);
+            DA.SetDataList(7, re.util);
         }
     }
 }

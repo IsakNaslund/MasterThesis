@@ -52,3 +52,38 @@ double CIFem::RHS3d::CheckCombAxialBending(double N, double Myy, double Mzz)
 
 	return absmax;
 }
+
+double CIFem::RHS3d::CheckShearY(double Vy)
+{
+	// Check performed in middle of section
+
+	// Assign local variables for consistency with function CheckShearZ
+	double b = _height;
+	double tf = _thickness;
+	double tw = _thickness;
+	double hw = _width - tf;
+
+	double I = _secProp.Iz();
+	double S = tw*pow(hw, 2) + (b / 2)*(pow(hw + tf, 2) - pow(hw, 2));
+	double t = _thickness;
+
+	return (Vy*S) / (I*t);
+}
+
+
+double CIFem::RHS3d::CheckShearZ(double Vz)
+{
+	// Check performed in middle of section
+
+	// Assign local variables for consistency with function CheckShearY
+	double b = _width;
+	double tf = _thickness;
+	double tw = _thickness;
+	double hw = _height - tf;
+	
+	double I = _secProp.Iy();
+	double S = tw*pow(hw, 2) + (b / 2)*(pow(hw + tf, 2) - pow(hw, 2));
+	double t = _thickness;
+
+	return (Vz*S)/(I*t);
+}

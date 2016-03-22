@@ -18,6 +18,13 @@ Utilisation::~Utilisation()
 {
 }
 
+// Returns a new shared pointer to an identical object
+std::shared_ptr<Utilisation> CIFem::Utilisation::Copy()
+{
+	std::shared_ptr<Utilisation> u(new Utilisation(_util, _description));
+	return u;
+}
+
 void CIFem::Utilisation::Reset()
 {
 	_util = 0;

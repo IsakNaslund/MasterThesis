@@ -34,6 +34,7 @@ namespace CIFem
 		const bool & getGravityOn() const { return _gravityOn; }
 		const Vector3d & getGravityField() const { return _gravField; }
 		const std::vector<PointLoad> & getPointLoad() const { return _pointLoads; }
+		const inline std::string Name() const { return _name; }
 	};
 }
 

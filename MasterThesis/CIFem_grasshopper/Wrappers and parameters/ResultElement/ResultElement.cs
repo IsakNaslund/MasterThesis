@@ -14,18 +14,18 @@ namespace CIFem_grasshopper
         public List<double> pos { get; private set; }
 
         // Forces
-        public List<double> N1 { get; private set; }
-        public List<double> Vy { get; private set; }
-        public List<double> Vz { get; private set; }
-        public List<double> T { get; private set; }
-        public List<double> My { get; private set; }
-        public List<double> Mz { get; private set; }
+        public Dictionary<string, List<double>> N1 { get; private set; }
+        public Dictionary<string, List<double>> Vy { get; private set; }
+        public Dictionary<string, List<double>> Vz { get; private set; }
+        public Dictionary<string, List<double>> T { get; private set; }
+        public Dictionary<string, List<double>> My { get; private set; }
+        public Dictionary<string, List<double>> Mz { get; private set; }
 
         // Displacements
-        public List<double> u { get; private set; }
-        public List<double> v { get; private set; }
-        public List<double> w { get; private set; }
-        public List<double> fi { get; private set; }
+        public Dictionary<string, List<double>> u { get; private set; }
+        public Dictionary<string, List<double>> v { get; private set; }
+        public Dictionary<string, List<double>> w { get; private set; }
+        public Dictionary<string, List<double>> fi { get; private set; }
 
         // Utilisations
         public List<WR_Utilisation> util { get; private set; }
@@ -59,44 +59,47 @@ namespace CIFem_grasshopper
             GetUtilisations(elem);
         }
 
+
         private void ScalePositionList(WR_Element3d elem)
         {
-            List<double> unScaled = elem.ResultPosition();
-            double sFac = 1/Utilities.GetScalingFactorFromRhino();
-
             pos = new List<double>();
 
-            for (int i = 0; i < unScaled.Count; i++)
-            {
-                pos.Add(unScaled[i] * sFac);
+            List<double> unScaled = elem.ResultPosition();
+            double sFac = 1 / Utilities.GetScalingFactorFromRhino();
 
-            }
+            for (int i = 0; i < unScaled.Count; i++)
+                pos.Add(unScaled[i] * sFac);
 
         }
 
+
         private void GetForces(WR_Element3d elem)
         {
-            N1 = elem.NormalForce();
-            Vy = elem.ShearForceY();
-            Vz = elem.ShearForceZ();
-            T = elem.TorsionalForce();
-            My = elem.MomentY();
-            Mz = elem.MomentZ();
+            // Initialise dictionaries
+            N1 = elem.AllNormalForce();
+            Vy = elem.AllShearForceY();
+            Vz = elem.AllShearForceZ();
+            T = elem.AllTorsionalForce();
+            My = elem.AllMomentY();
+            Mz = elem.AllMomentZ();
+
         }
 
 
         private void GetDisplacements(WR_Element3d elem)
         {
-            u = elem.DisplacementX();
-            v = elem.DisplacementY();
-            w = elem.DisplacementZ();
-            fi = elem.DisplacementTorsion();
+            u = elem.AllDisplacementX();
+            v = elem.AllDisplacementY();
+            w = elem.AllDisplacementZ();
+            fi = elem.AllDisplacementTorsion();
         }
 
         private void GetUtilisations(WR_Element3d elem)
         {
-            util = elem.Utilisations();
+            //util = elem.Utilisations();
         }
+
+
 
         private void GetElementGeometricData(WR_Element3d elem)
         {

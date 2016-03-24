@@ -26,6 +26,7 @@ namespace CIFem_wrapper
 		WR_LoadCombination^ Copy();
 
 		LoadCombination GetCombination();
+		System::String^ Name();
 
 	private:
 		WR_LoadCombination(CIFem::LoadCombination comb);

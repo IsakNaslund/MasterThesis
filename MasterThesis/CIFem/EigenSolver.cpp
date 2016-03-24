@@ -52,7 +52,7 @@ double CIFem::EigenSolver::SetResultsToMode(int mode)
 
 	StoreResultsInDofs(a, s, _dofs);
 
-	CalculateElementSectionForces();
+	CalculateElementSectionForces("Mode " + mode);
 
 	return _eigenValues(mode);
 }

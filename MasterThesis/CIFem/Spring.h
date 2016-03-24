@@ -29,10 +29,11 @@ namespace CIFem
 
 		arma::Col<double> GravityLoad(Vector3d direction) { return arma::vec(); }
 
-		void CalculateSectionForces();
-		void DoSectionChecks();
+		void CalculateSectionForces(std::string resultName);
+		
 
 	protected:
+		void DoSectionChecks(std::string resName);
 		int GetSize() { return 2; };
 	};
 

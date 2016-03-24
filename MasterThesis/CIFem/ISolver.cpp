@@ -25,9 +25,9 @@ void CIFem::ISolver::StoreResultsInDofs(const arma::colvec & a, const arma::colv
 
 }
 
-void CIFem::ISolver::CalculateElementSectionForces()
+void CIFem::ISolver::CalculateElementSectionForces(std::string resultName)
 {
-	_structure->CalculateElementSectionForces();
+	_structure->CalculateElementSectionForces(resultName);
 }
 
 DofSet CIFem::ISolver::GetDofs()

@@ -13,11 +13,11 @@ namespace CIFem
 		UtilCheck3dBasic();
 		~UtilCheck3dBasic();
 
-		void CheckElementUtilisations(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results) override;
-		double AxialCheck(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results, int i);
-		double CheckCombAxialBending(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results, int i);
-		double CheckShearY(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results, int i);
-		double CheckShearZ(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results, int i);
+		void CheckElementUtilisations(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results, std::string resName) override;
+		double AxialCheck(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, double N);
+		double CheckCombAxialBending(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, double N, double My, double Mz);
+		double CheckShearY(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, double Vy);
+		double CheckShearZ(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, double Vz);
 	};
 }
 

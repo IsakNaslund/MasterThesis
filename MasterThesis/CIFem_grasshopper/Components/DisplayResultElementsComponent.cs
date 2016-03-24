@@ -44,6 +44,9 @@ namespace CIFem_grasshopper.Components
             pManager.AddParameter(new ResultElementParam(), "Result Element", "RE", "Result element", GH_ParamAccess.list);
             pManager.AddBooleanParameter("DisplayToggles", "DT", "Toggles the forces to display. Input should be a list of 6 booleans (N, Vy, Vz, T, Myy, Mzz). [Normal force, shear in weak axis, shear in strong axis, torsion, bending in strong direction, bending in weak direction]", GH_ParamAccess.list);
             pManager.AddNumberParameter("ScalingFactor", "sfac", "Scaling factor for the drawing. Input should be either one 'global' scaling factor or a list of 6 individual ones.", GH_ParamAccess.list, 1);
+            pManager.AddTextParameter("Load Comb", "LC", "Load combination to display results from", GH_ParamAccess.item);
+
+            pManager[3].Optional = true;
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -66,7 +69,7 @@ namespace CIFem_grasshopper.Components
             List<ResultElement> res = new List<ResultElement>();
             List<bool> dispToggles = new List<bool>();
             List<double> sFacs = new List<double>();
-
+            string name = null;
             // Result element
             if (!DA.GetDataList(0, res)) { return; }
 
@@ -94,6 +97,15 @@ namespace CIFem_grasshopper.Components
                 return;
             }
 
+            if (!DA.GetData(3, ref name))
+            {
+                if (res.Count > 0)
+                {
+                    name = res[0].N1.First().Key;
+                }
+            }
+
+
             // Now it is assumed that all inputs are correct
 
             // Get toggles and scaling factors
@@ -117,27 +129,27 @@ namespace CIFem_grasshopper.Components
 
                 // Normal force
                 if (bN)
-                    _dispCrvN.AddRange(CreateCurvesFromResults(re, re.N1, elZ, sfN));
+                    _dispCrvN.AddRange(CreateCurvesFromResults(re, re.N1[name], elZ, sfN));
 
                 // Shear force in weak direction
                 if (bVy)
-                    _dispCrvVy.AddRange(CreateCurvesFromResults(re, re.Vy, elY, sfVy));
+                    _dispCrvVy.AddRange(CreateCurvesFromResults(re, re.Vy[name], elY, sfVy));
 
                 // Shear force in strong direction
                 if (bVz)
-                    _dispCrvVz.AddRange(CreateCurvesFromResults(re, re.Vz, elZ, sfVz));
+                    _dispCrvVz.AddRange(CreateCurvesFromResults(re, re.Vz[name], elZ, sfVz));
 
                 // Torsion
                 if (bT)
-                    _dispCrvT.AddRange(CreateCurvesFromResults(re, re.T, elZ, sfT));
+                    _dispCrvT.AddRange(CreateCurvesFromResults(re, re.T[name], elZ, sfT));
 
                 // Moment around minor axis (bending in strong direction)
                 if (bMyy)
-                    _dispCrvMyy.AddRange(CreateCurvesFromResults(re, re.My, elZ, sfMyy));
+                    _dispCrvMyy.AddRange(CreateCurvesFromResults(re, re.My[name], elZ, sfMyy));
 
                 // Moment around major axis (bending in weak direction)
                 if (bMzz)
-                    _dispCrvMzz.AddRange(CreateCurvesFromResults(re, re.Mz, elY, sfMzz));
+                    _dispCrvMzz.AddRange(CreateCurvesFromResults(re, re.Mz[name], elY, sfMzz));
             }
 
             // Set bounding box

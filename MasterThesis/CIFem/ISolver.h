@@ -17,7 +17,7 @@ namespace CIFem
 
 		void SetUpDofs(DofSet & spDofs);
 		void StoreResultsInDofs(const arma::colvec & a, const arma::colvec & f, DofSet & spDofs);
-		void CalculateElementSectionForces();
+		void CalculateElementSectionForces(std::string resultName);
 		DofSet GetDofs();
 		void ResetAllForces(DofSet & spDofs);
 

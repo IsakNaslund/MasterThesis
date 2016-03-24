@@ -51,3 +51,8 @@ LoadCombination CIFem_wrapper::WR_LoadCombination::GetCombination()
 {
 	return *_loadComb;
 }
+
+System::String ^ CIFem_wrapper::WR_LoadCombination::Name()
+{
+	return msclr::interop::marshal_as<System::String^>(_loadComb->Name());
+}

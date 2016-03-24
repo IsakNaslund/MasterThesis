@@ -18,7 +18,7 @@ namespace CIFem
 		virtual int GetSize() =0;
 		void SetEdof(std::vector<std::shared_ptr<DOF> > edof);
 		std::shared_ptr<ICrossSection> _crossSection;
-	
+		virtual void DoSectionChecks(std::string resName) = 0;
 	public:
 
 		virtual ~IElement();
@@ -32,8 +32,8 @@ namespace CIFem
 		virtual arma::Col<double> GravityLoad(double factor) { return GravityLoad(Vector3d(0, 0, factor)); }
 		virtual arma::Col<double> GravityLoad(Vector3d direction) = 0;
 
-		virtual void CalculateSectionForces() = 0;
-		virtual void DoSectionChecks() = 0;
+		virtual void CalculateSectionForces(std::string resultName) = 0;
+
 	};
 }
 

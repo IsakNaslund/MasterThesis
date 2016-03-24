@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "WR_Element3d.h"
+#include <msclr\marshal_cppstd.h>
 
 namespace CIFem_wrapper
 {
@@ -14,64 +15,127 @@ namespace CIFem_wrapper
 		_element = element;
 	}
 
-	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::NormalForce()
+	/*System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::NormalForce(System::String^ res)
 	{
-		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->NormalForce());
+		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->NormalForce(
+			_element.operator std::shared_ptr<CIFem::Element3d>()->GetResult(msclr::interop::marshal_as<std::string>(res))));
 	}
 
-	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::ShearForceZ()
+	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::ShearForceZ(System::String^ res)
 	{
-		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->ShearForceZ());
+		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->ShearForceZ(
+			_element.operator std::shared_ptr<CIFem::Element3d>()->GetResult(msclr::interop::marshal_as<std::string>(res))));
 	}
 
-	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::ShearForceY()
+	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::ShearForceY(System::String^ res)
 	{
-		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->ShearForceY());
+		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->ShearForceY(
+			_element.operator std::shared_ptr<CIFem::Element3d>()->GetResult(msclr::interop::marshal_as<std::string>(res))));
 	}
 
-	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::MomentY()
+	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::MomentY(System::String^ res)
 	{
-		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->MomentY());
+		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->MomentY(
+			_element.operator std::shared_ptr<CIFem::Element3d>()->GetResult(msclr::interop::marshal_as<std::string>(res))));
 	}
 
-	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::MomentZ()
+	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::MomentZ(System::String^ res)
 	{
-		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->MomentZ());
+		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->MomentZ(
+			_element.operator std::shared_ptr<CIFem::Element3d>()->GetResult(msclr::interop::marshal_as<std::string>(res))));
 	}
 
-	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::TorsionalForce()
+	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::TorsionalForce(System::String^ res)
 	{
-		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->TorsionalForce());
+		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->TorsionalForce(
+			_element.operator std::shared_ptr<CIFem::Element3d>()->GetResult(msclr::interop::marshal_as<std::string>(res))));
 	}
 
-	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::DisplacementX()
+	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::DisplacementX(System::String^ res)
 	{
-		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->DisplacementX());
+		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->DisplacementX(
+			_element.operator std::shared_ptr<CIFem::Element3d>()->GetResult(msclr::interop::marshal_as<std::string>(res))));
 	}
 
-	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::DisplacementY()
+	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::DisplacementY(System::String^ res)
 	{
-		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->DisplacementY());
+		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->DisplacementY(
+			_element.operator std::shared_ptr<CIFem::Element3d>()->GetResult(msclr::interop::marshal_as<std::string>(res))));
 	}
 
-	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::DisplacementZ()
+	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::DisplacementZ(System::String^ res)
 	{
-		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->DisplacementZ());
+		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->DisplacementZ(
+			_element.operator std::shared_ptr<CIFem::Element3d>()->GetResult(msclr::interop::marshal_as<std::string>(res))));
 	}
 
-	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::DisplacementTorsion()
+	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::DisplacementTorsion(System::String^ res)
 	{
-		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->DisplacementTorsion());
+		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->DisplacementTorsion(
+			_element.operator std::shared_ptr<CIFem::Element3d>()->GetResult(msclr::interop::marshal_as<std::string>(res))));
 	}
+
+
+
+	System::Collections::Generic::List<WR_Utilisation^>^ WR_Element3d::Utilisations(System::String^ res)
+	{
+		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->Utilisations(
+			_element.operator std::shared_ptr<CIFem::Element3d>()->GetResult(msclr::interop::marshal_as<std::string>(res))));
+	}*/
 
 	System::Collections::Generic::List<double>^ CIFem_wrapper::WR_Element3d::ResultPosition()
 	{
 		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->ResultPosition());
 	}
 
-	System::Collections::Generic::List<WR_Utilisation^>^ WR_Element3d::Utilisations()
+	ResultDictionary ^ WR_Element3d::AllNormalForce()
 	{
-		return Utilities::GetListFromVector(_element.operator std::shared_ptr<CIFem::Element3d>()->Utilisations());
+		return Utilities::MapToDictionary(_element.operator std::shared_ptr<CIFem::Element3d>()->AllNormalForce());
+	}
+
+	ResultDictionary ^ WR_Element3d::AllShearForceZ()
+	{
+		return Utilities::MapToDictionary(_element.operator std::shared_ptr<CIFem::Element3d>()->AllShearForceZ());
+	}
+
+	ResultDictionary ^ WR_Element3d::AllShearForceY()
+	{
+		return Utilities::MapToDictionary(_element.operator std::shared_ptr<CIFem::Element3d>()->AllShearForceY());
+	}
+
+	ResultDictionary ^ WR_Element3d::AllMomentY()
+	{
+		return Utilities::MapToDictionary(_element.operator std::shared_ptr<CIFem::Element3d>()->AllMomentY());
+	}
+
+	ResultDictionary ^ WR_Element3d::AllMomentZ()
+	{
+		return Utilities::MapToDictionary(_element.operator std::shared_ptr<CIFem::Element3d>()->AllMomentZ());
+	}
+
+	ResultDictionary ^ WR_Element3d::AllTorsionalForce()
+	{
+		return Utilities::MapToDictionary(_element.operator std::shared_ptr<CIFem::Element3d>()->AllTorsionalForce());
+	}
+
+	ResultDictionary ^ WR_Element3d::AllDisplacementX()
+	{
+		return Utilities::MapToDictionary(_element.operator std::shared_ptr<CIFem::Element3d>()->AllDisplacementX());
+	}
+
+	ResultDictionary ^ WR_Element3d::AllDisplacementY()
+	{
+		return Utilities::MapToDictionary(_element.operator std::shared_ptr<CIFem::Element3d>()->AllDisplacementY());
+	}
+
+	ResultDictionary ^ WR_Element3d::AllDisplacementZ()
+	{
+		return Utilities::MapToDictionary(_element.operator std::shared_ptr<CIFem::Element3d>()->AllDisplacementZ());
+	}
+
+	ResultDictionary ^ WR_Element3d::AllDisplacementTorsion()
+	{
+		return Utilities::MapToDictionary(_element.operator std::shared_ptr<CIFem::Element3d>()->AllDisplacementTorsion());
 	}
 
 	WR_XYZ ^ CIFem_wrapper::WR_Element3d::GetStartPos()

@@ -10,6 +10,7 @@
 #include "IUtilCheck3d.h"
 #include "ElementResults3d.h"
 #include "UtilCheck3dBasic.h"
+#include <map>
 
 
 using namespace std;
@@ -25,6 +26,7 @@ namespace CIFem
 		std::shared_ptr<Material> _mat;
 		Vector3d _eo;			// Element orientation
 		ElementResults3d _results;
+		//ElementResults3d _results;
 		std::shared_ptr<IUtilCheck3d> _utilCheck;
 
 		//Distributed loads
@@ -44,15 +46,16 @@ namespace CIFem
 		void ResetLineLoads();
 
 		void UpdateStiffnessMatrix();
-		void DoSectionChecks();
+
 
 		const arma::Mat<double> & GetStiffnessMatrix();	// Returns the element stiffness (in global coordinates)
 
 		arma::Col<double> GravityLoad(Vector3d direction);
 
 
-		void CalculateSectionForces() {  CalculateSectionForces(11); }
-		void CalculateSectionForces(int n);   //n is the number of evaluation points
+		void CalculateSectionForces(string resultName) {  CalculateSectionForces(11, resultName); }
+		void CalculateSectionForces(int n, string resultName);   //n is the number of evaluation points
+
 
 
 		// Geometric data getters
@@ -62,24 +65,41 @@ namespace CIFem
 
 		//Result outputs:
 		//Section Forces
-		std::vector<double> NormalForce() const;
-		std::vector<double> ShearForceZ() const;
-		std::vector<double> ShearForceY() const;
-		std::vector<double> MomentY() const;
-		std::vector<double> MomentZ() const;
-		std::vector<double> TorsionalForce() const;
+		std::vector<double> NormalForce(std::string res);
+		std::vector<double> ShearForceZ(std::string res);
+		std::vector<double> ShearForceY(std::string res);
+		std::vector<double> MomentY(std::string res);
+		std::vector<double> MomentZ(std::string res);
+		std::vector<double> TorsionalForce(std::string res);
 
 		//Displacements
-		std::vector<double> DisplacementX() const;
-		std::vector<double> DisplacementY() const;
-		std::vector<double> DisplacementZ() const;
-		std::vector<double> DisplacementTorsion() const;
+		std::vector<double> DisplacementX(std::string res);
+		std::vector<double> DisplacementY(std::string res);
+		std::vector<double> DisplacementZ(std::string res);
+		std::vector<double> DisplacementTorsion(std::string res);
 
 		//Location along the element
-		std::vector<double> ResultPosition() const;
+		std::vector<double> ResultPosition();
 
 		//Utilisations
-		std::vector<std::shared_ptr<Utilisation>> Utilisations() const;
+		std::vector<std::shared_ptr<Utilisation>> Utilisations(std::string res);
+
+
+
+		//Result outputs:
+		//Section Forces
+		std::map<std::string, std::vector<double>> AllNormalForce() const;
+		std::map<std::string, std::vector<double>> AllShearForceZ() const;
+		std::map<std::string, std::vector<double>> AllShearForceY() const;
+		std::map<std::string, std::vector<double>> AllMomentY() const;
+		std::map<std::string, std::vector<double>> AllMomentZ() const;
+		std::map<std::string, std::vector<double>> AllTorsionalForce() const;
+
+		//Displacements
+		std::map<std::string, std::vector<double>> AllDisplacementX() const;
+		std::map<std::string, std::vector<double>> AllDisplacementY() const;
+		std::map<std::string, std::vector<double>> AllDisplacementZ() const;
+		std::map<std::string, std::vector<double>> AllDisplacementTorsion() const;
 
 
 	private:
@@ -97,11 +117,14 @@ namespace CIFem
 
 		arma::mat GetCMatrix();						//Used for section forces
 
-
+		// Results
+		//ElementResults3d & GetResult(std::string resultName);
  
-
+		
 
 	protected:
+
+		void DoSectionChecks(std::string resultName);
 		int GetSize() { return 12; };
 	};
 }

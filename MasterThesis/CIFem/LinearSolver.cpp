@@ -67,7 +67,7 @@ void CIFem::LinearSolver::Solve()
 		StoreResultsInDofs(am, s, spDofs);
 
 		//Calculate section forces for the elements
-		CalculateElementSectionForces();
+		CalculateElementSectionForces(_loadCobms[i].Name());
 	}
 }
 

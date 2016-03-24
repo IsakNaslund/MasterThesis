@@ -35,6 +35,9 @@ namespace CIFem_grasshopper
         {
             pManager.AddParameter(new ResultElementParam(), "Result Element", "RE", "Result element", GH_ParamAccess.list);
             pManager.AddNumberParameter("Scale factor", "s", "The displacement scale", GH_ParamAccess.item, 10);
+            pManager.AddTextParameter("Load Comb", "LC", "Load combination to display results from", GH_ParamAccess.item);
+
+            pManager[2].Optional = true;
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -47,9 +50,17 @@ namespace CIFem_grasshopper
         {
             List<ResultElement> res = new List<ResultElement>();
             double sFac = double.NaN;
+            string name = null;
 
             if (!DA.GetDataList(0, res)) { return; }
             if (!DA.GetData(1, ref sFac)) { return; }
+            if(!DA.GetData(2, ref name))
+            {
+                if(res.Count>0)
+                {
+                    name = res[0].N1.First().Key;
+                }
+            }
 
             _dispCrvs.Clear();
 
@@ -78,7 +89,7 @@ namespace CIFem_grasshopper
 
                 for (int i = 0; i < nbEval; i++)
                 {
-                    Point3d curvePt = stPos + tan * (re.pos[i]+re.u[i]* sFac) +norm*re.w[i]* sFac + yDir*re.v[i]* sFac;
+                    Point3d curvePt = stPos + tan * (re.pos[i]+re.u[name][i]* sFac) +norm*re.w[name][i]* sFac + yDir*re.v[name][i]* sFac;
                     curvePts.Add(curvePt);
                     allPts.Add(curvePt);
                 }

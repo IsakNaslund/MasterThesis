@@ -25,3 +25,14 @@ System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^> ^ Utilities::
 	return l;
 }
 
+System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<double>^>^ Utilities::MapToDictionary(std::map<std::string, std::vector<double>> map)
+{
+	System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<double>^> ^ dict = gcnew System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<double>^>();
+
+	for each (std::pair<std::string, std::vector<double>> pair in map)
+	{
+		dict->Add(msclr::interop::marshal_as<System::String ^>(pair.first), GetListFromVector(pair.second));
+	}
+	return dict;
+}
+

@@ -44,7 +44,7 @@ namespace CIFem
 
 		arma::mat GetCMatrix();
 
-		void CalculateElementSectionForces();
+		void CalculateElementSectionForces(std::string resultName);
 
 	private:		
 		void GetNodeDofs(std::set<std::shared_ptr<CIFem::DOF>> & dofs);

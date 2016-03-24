@@ -249,11 +249,11 @@ void CIFem::Structure::ApplyNodalForces()
 	}
 }
 
-void CIFem::Structure::CalculateElementSectionForces()
+void CIFem::Structure::CalculateElementSectionForces(std::string resultName)
 {
 	for (int i = 0; i < _elements.size(); i++)
 	{
-		_elements[i]->CalculateSectionForces();
+		_elements[i]->CalculateSectionForces(resultName);
 	}
 }
 

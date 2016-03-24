@@ -205,11 +205,13 @@ arma::Col<double> CIFem::Element3d::GravityLoad(Vector3d direction)
 
 
 //Calculated section forces and moments, and performs a section check.
-void CIFem::Element3d::CalculateSectionForces(int n)
+void CIFem::Element3d::CalculateSectionForces(int n, string resultName)
 {
-	//Reset result file:
-	_results.Reset();
+	//ElementResults3d result = GetResult(resultName);
 
+	//Reset result file:
+	//result.Reset();
+	_results.SetUpLoadComb(resultName);
 	//Variables used frequently
 	double EA, EIz, EIy, GKv, L2, L3, L4;
 
@@ -248,7 +250,8 @@ void CIFem::Element3d::CalculateSectionForces(int n)
 
 	//_N1, _Vy, _Vz, _T, _My, _Mz, _u, _v, _w, _fi, pos;
 
-
+	//TODO:: Make this in a cleaner way:
+	_results._pos.clear();
 
 	for (int i = 0; i < n; i++)
 	{
@@ -268,31 +271,33 @@ void CIFem::Element3d::CalculateSectionForces(int n)
 		x3 = pow(x, 3);
 		x4 = pow(x, 4);
 																						//Values ignored for now..
-		_results._N.push_back(EA*m(0) - _qx*x);											//-qx*x
-		_results._Vy.push_back(-6 * EIz*m(2) - _qy*x);									//-qy*x
-		_results._Vz.push_back(-6 * EIy*m(6) - _qz*x);									//-qz*x
-		_results._T.push_back(GKv*m(10) - _qw*x);										//-qw*x
-		_results._My.push_back(-6 * EIy*x*m(6) - 2 * EIy*m(7) - _qz*x2 / 2);			//-qz*x^2/2
-		_results._Mz.push_back(6 * EIz*x*m(2) + 2 * EIz*m(3) + _qy*x2 / 2);				//qy*x^2/2
+		_results._N[resultName].push_back(EA*m(0) - _qx*x);											//-qx*x
+		_results._Vy[resultName].push_back(-6 * EIz*m(2) - _qy*x);									//-qy*x
+		_results._Vz[resultName].push_back(-6 * EIy*m(6) - _qz*x);									//-qz*x
+		_results._T[resultName].push_back(GKv*m(10) - _qw*x);										//-qw*x
+		_results._My[resultName].push_back(-6 * EIy*x*m(6) - 2 * EIy*m(7) - _qz*x2 / 2);			//-qz*x^2/2
+		_results._Mz[resultName].push_back(6 * EIz*x*m(2) + 2 * EIz*m(3) + _qy*x2 / 2);				//qy*x^2/2
 
-		_results._u.push_back(x*m(0) + m(1) - _qx*x2 / (2 * EA));						//-qx*x^2/2/EA;
-		_results._v.push_back(x3*m(2) + x2*m(3) + x*m(4) + m(5) + _qy*x4 / (24 * EIz));	//qy*x^4/24/EIz;
-		_results._w.push_back(x3*m(6) + x2*m(7) + x*m(8) + m(9) + _qz*x4 / (24 * EIy));	//qz*x^4/24/EIy;
-		_results._fi.push_back(x*m(10) + m(11) - _qw*x2 / (2 * GKv));					//-qw*x^2/2/GKv
+		_results._u[resultName].push_back(x*m(0) + m(1) - _qx*x2 / (2 * EA));						//-qx*x^2/2/EA;
+		_results._v[resultName].push_back(x3*m(2) + x2*m(3) + x*m(4) + m(5) + _qy*x4 / (24 * EIz));	//qy*x^4/24/EIz;
+		_results._w[resultName].push_back(x3*m(6) + x2*m(7) + x*m(8) + m(9) + _qz*x4 / (24 * EIy));	//qz*x^4/24/EIy;
+		_results._fi[resultName].push_back(x*m(10) + m(11) - _qw*x2 / (2 * GKv));					//-qw*x^2/2/GKv
 
 
 		// Initialise list of utilisations so that it has as many points as the results
 		std::shared_ptr<Utilisation> spU(new Utilisation());
-		_results._util.push_back(spU);
+		_results._util[resultName].push_back(spU);
 	}
 
 	// Do section checks when all results are stored
-	DoSectionChecks();
+	DoSectionChecks(resultName);
 }
 
-void CIFem::Element3d::DoSectionChecks()
+
+// Do section checks for all results stored in element
+void CIFem::Element3d::DoSectionChecks(std::string resultName)
 {
-	_utilCheck->CheckElementUtilisations(this->_crossSection, this->_mat, this->_results);
+	_utilCheck->CheckElementUtilisations(this->_crossSection, this->_mat, _results, resultName);
 }
 
 
@@ -405,67 +410,130 @@ void CIFem::Element3d::SetElementOrientation(Vector3d eo)
 
 }
 
+
+/*ElementResults3d & CIFem::Element3d::GetResult(std::string resultName)
+{
+	// Find or create result object
+	ElementResults3d result;
+	if (_results.find(resultName) != _results.end())
+		result = _results.find(resultName)->second;
+	else
+		_results[resultName] = result;
+
+	return result;
+}*/
+
 double Element3d::CalcLength(XYZ sNode, XYZ eNode)
 {
 	return sNode.DistanceTo(eNode);
 }
 
-std::vector<double> CIFem::Element3d::NormalForce() const
+std::vector<double> CIFem::Element3d::NormalForce(const std::string comb)
 {
-	return _results._N;
+	return std::vector<double>();
 }
 
-std::vector<double> CIFem::Element3d::ShearForceZ() const
+std::vector<double> CIFem::Element3d::ShearForceZ(std::string comb)
 {
-	return _results._Vz;
+	return std::vector<double>();
 }
 
-std::vector<double> CIFem::Element3d::ShearForceY() const
+std::vector<double> CIFem::Element3d::ShearForceY(std::string comb)
 {
-	return _results._Vy;
+	return std::vector<double>();
 }
 
-std::vector<double> CIFem::Element3d::MomentY() const
+std::vector<double> CIFem::Element3d::MomentY(std::string comb)
 {
-	return _results._My;
+	return std::vector<double>();
 }
 
-std::vector<double> CIFem::Element3d::MomentZ() const
+std::vector<double> CIFem::Element3d::MomentZ(std::string comb)
 {
-	return _results._Mz;
+	return std::vector<double>();
 }
 
-std::vector<double> CIFem::Element3d::TorsionalForce() const
+std::vector<double> CIFem::Element3d::TorsionalForce(std::string comb)
 {
-	return _results._T;
+	return std::vector<double>();
 }
 
-std::vector<double> CIFem::Element3d::DisplacementX() const
+std::vector<double> CIFem::Element3d::DisplacementX(std::string comb)
 {
-	return _results._u;
+	return std::vector<double>();
 }
 
-std::vector<double> CIFem::Element3d::DisplacementY() const
+std::vector<double> CIFem::Element3d::DisplacementY(std::string comb) 
 {
-	return _results._v;
+	return std::vector<double>();
 }
 
-std::vector<double> CIFem::Element3d::DisplacementZ() const
+std::vector<double> CIFem::Element3d::DisplacementZ(std::string comb) 
 {
-	return _results._w;
+	return std::vector<double>();
 }
 
-std::vector<double> CIFem::Element3d::DisplacementTorsion() const
+std::vector<double> CIFem::Element3d::DisplacementTorsion(std::string comb) 
 {
-	return _results._fi;
+	return std::vector<double>();
 }
 
-std::vector<double> CIFem::Element3d::ResultPosition() const
+std::vector<double> CIFem::Element3d::ResultPosition() 
 {
 	return _results._pos;
 }
 
-std::vector<std::shared_ptr<Utilisation>> CIFem::Element3d::Utilisations() const
+std::vector<std::shared_ptr<Utilisation>> CIFem::Element3d::Utilisations(std::string comb) 
 {
-	return _results.Utilisations();
+	return std::vector<std::shared_ptr<Utilisation>>();
+}
+
+std::map<std::string, std::vector<double>> CIFem::Element3d::AllNormalForce() const
+{
+	return _results._N;
+}
+
+std::map<std::string, std::vector<double>> CIFem::Element3d::AllShearForceZ() const
+{
+	return _results._Vz;
+}
+
+std::map<std::string, std::vector<double>> CIFem::Element3d::AllShearForceY() const
+{
+	return _results._Vy;
+}
+
+std::map<std::string, std::vector<double>> CIFem::Element3d::AllMomentY() const
+{
+	return _results._My;
+}
+
+std::map<std::string, std::vector<double>> CIFem::Element3d::AllMomentZ() const
+{
+	return _results._Mz;
+}
+
+std::map<std::string, std::vector<double>> CIFem::Element3d::AllTorsionalForce() const
+{
+	return _results._T;
+}
+
+std::map<std::string, std::vector<double>> CIFem::Element3d::AllDisplacementX() const
+{
+	return _results._u;
+}
+
+std::map<std::string, std::vector<double>> CIFem::Element3d::AllDisplacementY() const
+{
+	return _results._v;
+}
+
+std::map<std::string, std::vector<double>> CIFem::Element3d::AllDisplacementZ() const
+{
+	return _results._w;
+}
+
+std::map<std::string, std::vector<double>> CIFem::Element3d::AllDisplacementTorsion() const
+{
+	return _results._fi;
 }

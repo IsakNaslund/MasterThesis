@@ -41,13 +41,13 @@ std::vector<int> CIFem::Spring::GetDofs()
 	return std::vector<int>();
 }
 
-void CIFem::Spring::CalculateSectionForces()
+void CIFem::Spring::CalculateSectionForces(std::string resultName)
 {
 	//save this is some way....
 	double stress = _k*(_dof[1]->GetResultingTranslation() - _dof[0]->GetResultingTranslation());
 }
 
-void CIFem::Spring::DoSectionChecks()
+void CIFem::Spring::DoSectionChecks(std::string resName)
 {
 	//do nothing, IMPLEMENT
 }

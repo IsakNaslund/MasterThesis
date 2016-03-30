@@ -10,10 +10,11 @@
 namespace Utilities
 {
 	// C++ to C# conversion functions
-	System::Collections::Generic::List<double> ^ GetListFromVector(std::vector<double> vec);
-	System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation ^> ^ GetListFromVector(std::vector<std::shared_ptr<CIFem::Utilisation>> vec);
+	System::Collections::Generic::List<double> ^ GetListFromVector(const std::vector<double> & vec);
+	System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation ^> ^ GetListFromVector(const std::vector<std::shared_ptr<CIFem::Utilisation>> & vec);
 
-	System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<double> ^> ^ MapToDictionary(std::map<std::string, std::vector<double>> map);
+	System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<double> ^> ^ MapToDictionary(const std::map<std::string, std::vector<double>> & map);
+	System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation ^> ^> ^ MapToDictionary(const std::map<std::string, std::vector<std::shared_ptr<CIFem::Utilisation>>> & map);
 
 	// C# to C++ conversion functions
 

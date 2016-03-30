@@ -28,7 +28,7 @@ namespace CIFem_grasshopper
         public Dictionary<string, List<double>> fi { get; private set; }
 
         // Utilisations
-        public List<WR_Utilisation> util { get; private set; }
+        public Dictionary<string, List<WR_Utilisation>> util { get; private set; }
 
         // Element data
         public Rhino.Geometry.Point3d sPos { get; private set; }
@@ -96,7 +96,7 @@ namespace CIFem_grasshopper
 
         private void GetUtilisations(WR_Element3d elem)
         {
-            //util = elem.Utilisations();
+            util = elem.AllUtilisations();
         }
 
 

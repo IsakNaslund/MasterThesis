@@ -26,6 +26,11 @@ namespace CIFem
 		void AddElementRcp(std::shared_ptr<IElementRcp>);
 		void AddElementRcp(std::vector<std::shared_ptr<IElementRcp>>);
 
+
+		double GetWeight() const;
+		int NodeCount();
+		int ElementCount();
+
 		// Not implemented, probably shouldnt be either....?
 		Structure Copy();
 

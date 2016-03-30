@@ -173,6 +173,7 @@
     <ClInclude Include="IElementRcp.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="ReleaseBeam2d.h" />
+    <ClInclude Include="SectionGroup.h" />
     <ClInclude Include="SectionProperties.h" />
     <ClInclude Include="IRelease.h" />
     <ClInclude Include="Node3d.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="RHS3d.h" />
     <ClInclude Include="Spring.h" />
+    <ClInclude Include="StandardSectionSizer.h" />
     <ClInclude Include="Structure.h" />
     <ClInclude Include="UtilCheck3dBasic.h" />
     <ClInclude Include="Utilisation.h" />
@@ -217,8 +219,10 @@
     <ClCompile Include="ReleaseBeam2d.cpp" />
     <ClCompile Include="ReleaseBeam3d.cpp" />
     <ClCompile Include="RHS3d.cpp" />
+    <ClCompile Include="SectionGroup.cpp" />
     <ClCompile Include="SectionProperties.cpp" />
     <ClCompile Include="Spring.cpp" />
+    <ClCompile Include="StandardSectionSizer.cpp" />
     <ClCompile Include="Structure.cpp" />
     <ClCompile Include="UtilCheckBasic.cpp" />
     <ClCompile Include="Utilisation.cpp" />

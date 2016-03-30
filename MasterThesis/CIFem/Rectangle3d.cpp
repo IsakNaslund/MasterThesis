@@ -97,10 +97,10 @@ double CIFem::Rectangle3d::CheckShearY(double Vy)
 	double b = _height;
 	
 	// Assumptions: Shear checked in middle of section
-	double S = pow((h / 2), 2)*b / 8;
-	double I = _secProp.Iy();
+	double S = pow(b, 2)*h / 8;
+	double I = _secProp.Iz();
 
-	return (S*Vy) / (I*b);
+	return (S*Vy) / (I*h);
 }
 
 // Performs a shear check in the local z-direction
@@ -110,8 +110,8 @@ double CIFem::Rectangle3d::CheckShearZ(double Vz)
 	double b = _width;
 
 	// Assumptions: Shear checked in middle of section
-	double S = pow((h / 2), 2)*b / 8;
-	double I = _secProp.Iz();
+	double S = pow(h, 2)*b / 8;
+	double I = _secProp.Iy();
 
 	return (S*Vz) / (I*b);
 }
@@ -127,7 +127,7 @@ double CIFem::Rectangle3d::CheckCombAxialBending(double N, double Myy, double Mz
 	{
 		for (int j = 0; j < 2; j++)
 		{
-			val = (N / _secProp.A()) + ((Myy / _secProp.Iy()) * zMinMax[i]) + ((Mzz / _secProp.Iz()) * yMinMax[i]);
+			val = (N / _secProp.A()) + ((Myy / _secProp.Iy()) * zMinMax[i]) + ((Mzz / _secProp.Iz()) * yMinMax[j]);
 			if (abs(val) > abs(absmax))
 				absmax = val;
 		}

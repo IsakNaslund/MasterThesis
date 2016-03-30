@@ -16,11 +16,12 @@ namespace CIFem_grasshopper
         public List<string> log { get; set; }
         private List<ResultElement> resElems { get; set; }
         private WR_EigenSolver _solver;
-        double _eigVal;
+        List<double> _eigVals;
 
         public EigSolverComponent(): base("Eigen Solver", "EigSlv", "A eigenmode solver of a structure", "CIFem", "Solvers")
         {
             log = new List<string>();
+            _eigVals = new List<double>();
         }
 
         public override Guid ComponentGuid
@@ -35,7 +36,7 @@ namespace CIFem_grasshopper
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddParameter(new StructureParam(), "Structure", "Str", "The structure to solve", GH_ParamAccess.item);
-            pManager.AddIntegerParameter("Mode", "m", "The mode to evaluate", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("Modes", "m", "The modes to evaluate", GH_ParamAccess.list);
             pManager.AddBooleanParameter("Solve", "Go", "Toggle the solver", GH_ParamAccess.item);
         }
 
@@ -45,7 +46,7 @@ namespace CIFem_grasshopper
 
             pManager.AddTextParameter("Messageboard", "log", "Outputs a log of the performed calculation", GH_ParamAccess.list);
             pManager.AddParameter(new ResultElementParam(), "Result Elements", "RE", "Result elements, storing results from the calculation", GH_ParamAccess.list);
-            pManager.AddNumberParameter("EigVal", "EV", "The eigenvalue of choosen mode", GH_ParamAccess.item);
+            pManager.AddNumberParameter("EigVals", "EV", "The eigenvalues of choosen modes", GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -53,10 +54,10 @@ namespace CIFem_grasshopper
             // Indata
             bool go = false;
             WR_Structure structure = null;
-            int mode = 0;
+            List<int> modes = new List<int>();
 
             if (!DA.GetData(0, ref structure)) { return; }
-            if (!DA.GetData(1, ref mode)) { return; }
+            if (!DA.GetDataList(1, modes)) { return; }
             if (!DA.GetData(2, ref go)) { return; }
 
             if (go)
@@ -70,7 +71,13 @@ namespace CIFem_grasshopper
 
             if (_solver != null && structure != null)
             {
-                _eigVal = _solver.SetResultsToMode(mode);
+
+                _eigVals = new List<double>();
+                foreach (int mode in modes)
+                {
+                    _eigVals.Add(_solver.SetResultsToMode(mode));
+                }
+
 
                 // Extract results
                 List<WR_IElement> elems = structure.GetAllElements();
@@ -93,7 +100,7 @@ namespace CIFem_grasshopper
 
             DA.SetData(0, log);
             DA.SetDataList(1, resElems);
-            DA.SetData(2, _eigVal);
+            DA.SetDataList(2, _eigVals);
 
         }
     }

@@ -84,6 +84,9 @@
     <ClInclude Include="WR_LoadCombination.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WR_XSecRHS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -150,6 +153,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WR_LoadCombination.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WR_XSecRHS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

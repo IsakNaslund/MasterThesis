@@ -28,6 +28,7 @@ namespace CIFem
 		ElementResults3d _results;
 		//ElementResults3d _results;
 		std::shared_ptr<IUtilCheck3d> _utilCheck;
+		std::shared_ptr<ICrossSection> _crossSection;
 
 		//Distributed loads
 		double _qx, _qy, _qz, _qw;
@@ -40,6 +41,8 @@ namespace CIFem
 		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal);
 		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<IUtilCheck3d> checktype);
 		~Element3d();
+
+		double Weight() const;
 
 		void ResetElementForces() { ResetLineLoads(); }
 
@@ -55,6 +58,12 @@ namespace CIFem
 
 		void CalculateSectionForces(string resultName) {  CalculateSectionForces(11, resultName); }
 		void CalculateSectionForces(int n, string resultName);   //n is the number of evaluation points
+
+
+		//Update functions to be used by optimizers to update diffrent beam properties
+		void UpdateCrossSection(std::shared_ptr<ICrossSection> newCrossSection);
+		void UpdateMaterial(std::shared_ptr<Material> newMat);
+		void UpdateNormal(Vector3d newNormal);
 
 
 
@@ -84,23 +93,25 @@ namespace CIFem
 		//Utilisations
 		std::vector<std::shared_ptr<Utilisation>> Utilisations(std::string res);
 
-
+		//Calc and get max utilisation
+		Utilisation CalcAndGetMaxUtil();
 
 		//Result outputs:
 		//Section Forces
-		std::map<std::string, std::vector<double>> AllNormalForce() const;
-		std::map<std::string, std::vector<double>> AllShearForceZ() const;
-		std::map<std::string, std::vector<double>> AllShearForceY() const;
-		std::map<std::string, std::vector<double>> AllMomentY() const;
-		std::map<std::string, std::vector<double>> AllMomentZ() const;
-		std::map<std::string, std::vector<double>> AllTorsionalForce() const;
+		const std::map<std::string, std::vector<double>> & AllNormalForce() const;
+		const std::map<std::string, std::vector<double>> & AllShearForceZ() const;
+		const std::map<std::string, std::vector<double>> & AllShearForceY() const;
+		const std::map<std::string, std::vector<double>> & AllMomentY() const;
+		const std::map<std::string, std::vector<double>> & AllMomentZ() const;
+		const std::map<std::string, std::vector<double>> & AllTorsionalForce() const;
 
 		//Displacements
-		std::map<std::string, std::vector<double>> AllDisplacementX() const;
-		std::map<std::string, std::vector<double>> AllDisplacementY() const;
-		std::map<std::string, std::vector<double>> AllDisplacementZ() const;
-		std::map<std::string, std::vector<double>> AllDisplacementTorsion() const;
+		const std::map<std::string, std::vector<double>> & AllDisplacementX() const;
+		const std::map<std::string, std::vector<double>> & AllDisplacementY() const;
+		const std::map<std::string, std::vector<double>> & AllDisplacementZ() const;
+		const std::map<std::string, std::vector<double>> & AllDisplacementTorsion() const;
 
+		const std::map<std::string, std::vector<std::shared_ptr<Utilisation>>> & AllUtilisation() const;
 
 	private:
 		//void Init();				// Initialises class, call from all constructors

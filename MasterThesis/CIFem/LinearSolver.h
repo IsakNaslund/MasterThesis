@@ -29,6 +29,7 @@ namespace CIFem
 
 
 		void AddLoadCombination(LoadCombination comb);
+		void AddLoadCombinations(std::vector<LoadCombination> comb);
 
 	private:
 

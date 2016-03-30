@@ -155,6 +155,7 @@
     <ClInclude Include="WR_Utilisation.h" />
     <ClInclude Include="WR_Vector.h" />
     <ClInclude Include="WR_XSecRect.h" />
+    <ClInclude Include="WR_XSecRHS.h" />
     <ClInclude Include="WR_XYZ.h" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +185,7 @@
     <ClCompile Include="WR_Utilisation.cpp" />
     <ClCompile Include="WR_Vector.cpp" />
     <ClCompile Include="WR_XSecRect.cpp" />
+    <ClCompile Include="WR_XSecRHS.cpp" />
     <ClCompile Include="WR_XYZ.cpp" />
   </ItemGroup>
   <ItemGroup>

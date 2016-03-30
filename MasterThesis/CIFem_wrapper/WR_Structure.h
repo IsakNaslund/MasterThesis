@@ -27,6 +27,13 @@ namespace CIFem_wrapper
 
 		std::shared_ptr<CIFem::Structure> GetStructure();
 
+
+		double GetWeight();
+		
+
+
+		property double NodeCount {double get() { return _structure.operator std::shared_ptr<CIFem::Structure>()->NodeCount(); }}
+		property double ElementCount {double get() { return _structure.operator std::shared_ptr<CIFem::Structure>()->ElementCount(); }}
 		//void Solve();
 
 		//double EigenSolve(int mode);

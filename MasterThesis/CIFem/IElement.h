@@ -14,10 +14,12 @@ namespace CIFem
 	class CIFEM_API IElement
 	{
 	protected:
+
+		bool _updateStiffnessMatrix;
 		std::vector<std::shared_ptr<DOF>> _dof;
 		virtual int GetSize() =0;
 		void SetEdof(std::vector<std::shared_ptr<DOF> > edof);
-		std::shared_ptr<ICrossSection> _crossSection;
+
 		virtual void DoSectionChecks(std::string resName) = 0;
 	public:
 
@@ -33,6 +35,8 @@ namespace CIFem
 		virtual arma::Col<double> GravityLoad(Vector3d direction) = 0;
 
 		virtual void CalculateSectionForces(std::string resultName) = 0;
+
+		virtual double Weight() const = 0;
 
 	};
 }

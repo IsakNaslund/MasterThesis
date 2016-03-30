@@ -4,7 +4,7 @@
 //////////////   C++ to C# conversion functions   //////////////
 
 // Convert a vector of doubles to a list managed pointer
-System::Collections::Generic::List<double> ^ Utilities::GetListFromVector(std::vector<double> vec)
+System::Collections::Generic::List<double> ^ Utilities::GetListFromVector(const std::vector<double> & vec)
 {
 	System::Collections::Generic::List<double> ^ l = gcnew System::Collections::Generic::List<double>(vec.size());
 
@@ -15,7 +15,7 @@ System::Collections::Generic::List<double> ^ Utilities::GetListFromVector(std::v
 }
 
 // Convert a vector of doubles to a list managed pointer
-System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^> ^ Utilities::GetListFromVector(std::vector<std::shared_ptr<CIFem::Utilisation>> vec)
+System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^> ^ Utilities::GetListFromVector(const std::vector<std::shared_ptr<CIFem::Utilisation>> & vec)
 {
 	System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^> ^ l = gcnew System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^>(vec.size());
 
@@ -25,11 +25,22 @@ System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^> ^ Utilities::
 	return l;
 }
 
-System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<double>^>^ Utilities::MapToDictionary(std::map<std::string, std::vector<double>> map)
+System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<double>^>^ Utilities::MapToDictionary(const std::map<std::string, std::vector<double>> & map)
 {
 	System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<double>^> ^ dict = gcnew System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<double>^>();
 
 	for each (std::pair<std::string, std::vector<double>> pair in map)
+	{
+		dict->Add(msclr::interop::marshal_as<System::String ^>(pair.first), GetListFromVector(pair.second));
+	}
+	return dict;
+}
+
+System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^>^>^ Utilities::MapToDictionary(const std::map<std::string, std::vector<std::shared_ptr<CIFem::Utilisation>>> & map)
+{
+	System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^>^> ^ dict = gcnew System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^>^>();
+
+	for each (std::pair<std::string, std::vector<std::shared_ptr<CIFem::Utilisation>>> pair in map)
 	{
 		dict->Add(msclr::interop::marshal_as<System::String ^>(pair.first), GetListFromVector(pair.second));
 	}

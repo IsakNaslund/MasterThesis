@@ -138,6 +138,12 @@ namespace CIFem_wrapper
 		return Utilities::MapToDictionary(_element.operator std::shared_ptr<CIFem::Element3d>()->AllDisplacementTorsion());
 	}
 
+	UtilDictionary ^ WR_Element3d::AllUtilisations()
+	{
+		return Utilities::MapToDictionary(_element.operator std::shared_ptr<CIFem::Element3d>()->AllUtilisation());
+	}
+
+
 	WR_XYZ ^ CIFem_wrapper::WR_Element3d::GetStartPos()
 	{
 		XYZ sPos = _element.get()->StartPosition();

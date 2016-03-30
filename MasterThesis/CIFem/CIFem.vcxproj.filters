@@ -52,6 +52,9 @@
     <Filter Include="Header Files\Loads">
       <UniqueIdentifier>{4caa80a5-713f-4a7e-a136-ae0d283071dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Opimizers">
+      <UniqueIdentifier>{6e3292ab-7a74-491b-bcbe-fc926fe1deb6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XYZ.h">
@@ -171,6 +174,12 @@
     <ClInclude Include="PointLoad.h">
       <Filter>Header Files\Loads</Filter>
     </ClInclude>
+    <ClInclude Include="StandardSectionSizer.h">
+      <Filter>Header Files\Opimizers</Filter>
+    </ClInclude>
+    <ClInclude Include="SectionGroup.h">
+      <Filter>Header Files\Elements\Cross sections</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XYZ.cpp">
@@ -279,6 +288,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PointLoad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StandardSectionSizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SectionGroup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

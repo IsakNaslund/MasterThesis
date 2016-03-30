@@ -54,12 +54,32 @@ namespace CIFem_grasshopper
             {
                 return RectangularCrossSection(section);
             }
+            else if (section.ToUpper().StartsWith("RHS"))
+            {
+                return RHSCrossSection(section);
+            }
 
             
 
             throw new NotImplementedException();
 
             return null;
+        }
+
+        private WR_IXSec RHSCrossSection(string section)
+        {
+            string[] numbers = System.Text.RegularExpressions.Regex.Split(section, @"\D+");
+
+            double height, width, thickness;
+
+            if (numbers.Length < 4 || !double.TryParse(numbers[1], out height) || !double.TryParse(numbers[2], out width) || !double.TryParse(numbers[3], out thickness))
+            {
+                throw new Exception("Wrong string format for cross section");
+            }
+
+            double factor = Utilities.GetScalingFactorFromRhino();
+
+            return new WR_XSecRHS(height * factor, width * factor, thickness*factor);
         }
 
         private WR_IXSec RectangularCrossSection(string section)

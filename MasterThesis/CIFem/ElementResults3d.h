@@ -23,7 +23,12 @@ namespace CIFem
 		//List of utilisations
 		std::map<std::string, std::vector<std::shared_ptr<Utilisation>>> _util;
 
+		//Maximum utilisation
+		Utilisation _maxUtil;
+
 		void SetUpLoadComb(std::string name);
+
+		void CalcMaxUtil();
 
 	public:
 		ElementResults3d();

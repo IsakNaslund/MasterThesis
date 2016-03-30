@@ -7,6 +7,7 @@
 #include <memory>
 #include "DOF.h"
 
+
 namespace CIFem
 {
 
@@ -22,6 +23,7 @@ namespace CIFem
 
 		~Spring();
 
+		double Weight() const { return 0; }
 
 		void UpdateStiffnessMatrix();
 		const arma::Mat<double> & GetStiffnessMatrix();

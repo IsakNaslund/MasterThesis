@@ -8,6 +8,7 @@
 #include "WR_Utilisation.h"
 
 typedef System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<double> ^> ResultDictionary;
+typedef System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^> ^> UtilDictionary;
 
 namespace CIFem_wrapper
 {
@@ -46,6 +47,8 @@ namespace CIFem_wrapper
 		ResultDictionary ^ AllDisplacementY();
 		ResultDictionary ^ AllDisplacementZ();
 		ResultDictionary ^ AllDisplacementTorsion();
+
+		UtilDictionary ^ AllUtilisations();
 
 		WR_XYZ ^ GetStartPos();
 		WR_XYZ ^ GetEndPos();

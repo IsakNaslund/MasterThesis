@@ -28,6 +28,9 @@ namespace CIFem_grasshopper
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddParameter(new ResultElementParam(), "Result Element", "RE", "Result element", GH_ParamAccess.item);
+            pManager.AddTextParameter("Load Comb", "LC", "Load combination to display results from", GH_ParamAccess.item);
+
+            pManager[1].Optional = true;
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -46,16 +49,23 @@ namespace CIFem_grasshopper
         {
             // Indata
             ResultElement re = null;
+            string name = null;
             if (!DA.GetData(0, ref re)) { return; }
 
+
+            if (!DA.GetData(1, ref name))
+            {
+                 name = re.N1.First().Key;
+            }
+
             DA.SetDataList(0, re.pos);
-            DA.SetDataList(1, re.N1);
-            DA.SetDataList(2, re.Vy);
-            DA.SetDataList(3, re.Vz);
-            DA.SetDataList(4, re.T);
-            DA.SetDataList(5, re.My);
-            DA.SetDataList(6, re.Mz);
-            DA.SetDataList(7, re.util);
+            DA.SetDataList(1, re.N1[name]);
+            DA.SetDataList(2, re.Vy[name]);
+            DA.SetDataList(3, re.Vz[name]);
+            DA.SetDataList(4, re.T[name]);
+            DA.SetDataList(5, re.My[name]);
+            DA.SetDataList(6, re.Mz[name]);
+            DA.SetDataList(7, re.util[name]);
         }
     }
 }

@@ -55,6 +55,28 @@ void CIFem::Structure::AddElementRcp(std::vector<std::shared_ptr<IElementRcp>> e
 		AddElementRcp(elements[i]);
 }
 
+double CIFem::Structure::GetWeight() const
+{
+	double weight = 0;
+
+	for each (std::shared_ptr<CIFem::IElement> ele in _elements)
+	{
+		weight += ele->Weight();
+	}
+
+	return weight;
+}
+
+int CIFem::Structure::NodeCount()
+{
+	return _nodes.size();
+}
+
+int CIFem::Structure::ElementCount()
+{
+	return _elements.size();
+}
+
 
 // Not implemented!
 CIFem::Structure CIFem::Structure::Copy()

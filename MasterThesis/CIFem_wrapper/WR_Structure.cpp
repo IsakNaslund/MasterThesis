@@ -138,3 +138,8 @@ std::shared_ptr<CIFem::Structure> CIFem_wrapper::WR_Structure::GetStructure()
 	return _structure.operator std::shared_ptr<CIFem::Structure>();
 }
 
+double CIFem_wrapper::WR_Structure::GetWeight()
+{
+	return _structure.operator std::shared_ptr<CIFem::Structure>()->GetWeight();
+}
+

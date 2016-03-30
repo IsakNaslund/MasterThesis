@@ -74,6 +74,17 @@ namespace CIFem
 
 	}
 
+	void ElementResults3d::CalcMaxUtil()
+	{
+		for each (std::pair<std::string, std::vector<std::shared_ptr<Utilisation>>> utilPair in _util)
+		{
+			for (int i = 0; i < utilPair.second.size(); i++)
+			{
+				_maxUtil.Update(utilPair.second[i]->GetUtil(), utilPair.first + " " + utilPair.second[i]->GetDesc());
+			}
+		}
+	}
+
 	ElementResults3d::ElementResults3d()
 	{
 	}

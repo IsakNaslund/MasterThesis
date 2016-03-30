@@ -19,7 +19,7 @@ void CIFem::IElement::SetEdof(std::vector<std::shared_ptr<DOF> > edof)
 
 CIFem::IElement::~IElement()
 {
-	_crossSection.reset();
+
 }
 
 std::vector<int> CIFem::IElement::GetDofIndecies()

@@ -42,12 +42,17 @@ CIFem::Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std:
 
 	_utilCheck = checktype;
 
-	UpdateStiffnessMatrix();
+	_updateStiffnessMatrix = true;
 }
 
 
 Element3d::~Element3d()
 {
+}
+
+double CIFem::Element3d::Weight() const
+{
+	return _length*_crossSection->GetArea()*_mat->Rho();
 }
 
 void CIFem::Element3d::ResetLineLoads()
@@ -131,6 +136,9 @@ void CIFem::Element3d::UpdateStiffnessMatrix()
 // Creates and returns a global element stiffness matrix
 const arma::Mat<double> & Element3d::GetStiffnessMatrix()
 {
+	if (_updateStiffnessMatrix)
+		UpdateStiffnessMatrix();
+
 	return _Ke;
 }
 
@@ -292,6 +300,26 @@ void CIFem::Element3d::CalculateSectionForces(int n, string resultName)
 	// Do section checks when all results are stored
 	DoSectionChecks(resultName);
 }
+
+void CIFem::Element3d::UpdateCrossSection(std::shared_ptr<ICrossSection> newCrossSection)
+{
+	_crossSection = newCrossSection;
+	_updateStiffnessMatrix = true;
+}
+
+void CIFem::Element3d::UpdateMaterial(std::shared_ptr<Material> newMat)
+{
+	_mat = newMat;
+	_updateStiffnessMatrix = true;
+}
+
+void CIFem::Element3d::UpdateNormal(Vector3d newNormal)
+{
+	_eo = newNormal;
+	_updateStiffnessMatrix = true;
+}
+
+
 
 
 // Do section checks for all results stored in element
@@ -488,52 +516,63 @@ std::vector<std::shared_ptr<Utilisation>> CIFem::Element3d::Utilisations(std::st
 	return std::vector<std::shared_ptr<Utilisation>>();
 }
 
-std::map<std::string, std::vector<double>> CIFem::Element3d::AllNormalForce() const
+Utilisation CIFem::Element3d::CalcAndGetMaxUtil()
+{
+	_results.CalcMaxUtil();
+	return _results._maxUtil;
+}
+
+const std::map<std::string, std::vector<double>> & CIFem::Element3d::AllNormalForce() const
 {
 	return _results._N;
 }
 
-std::map<std::string, std::vector<double>> CIFem::Element3d::AllShearForceZ() const
+const std::map<std::string, std::vector<double>>&  CIFem::Element3d::AllShearForceZ() const
 {
 	return _results._Vz;
 }
 
-std::map<std::string, std::vector<double>> CIFem::Element3d::AllShearForceY() const
+const std::map<std::string, std::vector<double>> & CIFem::Element3d::AllShearForceY() const
 {
 	return _results._Vy;
 }
 
-std::map<std::string, std::vector<double>> CIFem::Element3d::AllMomentY() const
+const std::map<std::string, std::vector<double>> & CIFem::Element3d::AllMomentY() const
 {
 	return _results._My;
 }
 
-std::map<std::string, std::vector<double>> CIFem::Element3d::AllMomentZ() const
+const std::map<std::string, std::vector<double>> & CIFem::Element3d::AllMomentZ() const
 {
 	return _results._Mz;
 }
 
-std::map<std::string, std::vector<double>> CIFem::Element3d::AllTorsionalForce() const
+const std::map<std::string, std::vector<double>> & CIFem::Element3d::AllTorsionalForce() const
 {
 	return _results._T;
 }
 
-std::map<std::string, std::vector<double>> CIFem::Element3d::AllDisplacementX() const
+const std::map<std::string, std::vector<double>> & CIFem::Element3d::AllDisplacementX() const
 {
 	return _results._u;
 }
 
-std::map<std::string, std::vector<double>> CIFem::Element3d::AllDisplacementY() const
+const std::map<std::string, std::vector<double>> & CIFem::Element3d::AllDisplacementY() const
 {
 	return _results._v;
 }
 
-std::map<std::string, std::vector<double>> CIFem::Element3d::AllDisplacementZ() const
+const std::map<std::string, std::vector<double>> & CIFem::Element3d::AllDisplacementZ() const
 {
 	return _results._w;
 }
 
-std::map<std::string, std::vector<double>> CIFem::Element3d::AllDisplacementTorsion() const
+const std::map<std::string, std::vector<double>> & CIFem::Element3d::AllDisplacementTorsion() const
 {
 	return _results._fi;
+}
+
+const std::map<std::string, std::vector<std::shared_ptr<Utilisation>>>& CIFem::Element3d::AllUtilisation() const
+{
+	return _results._util;
 }

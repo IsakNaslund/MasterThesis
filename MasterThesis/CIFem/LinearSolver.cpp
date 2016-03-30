@@ -76,6 +76,11 @@ void CIFem::LinearSolver::AddLoadCombination(LoadCombination comb)
 	_loadCobms.push_back(comb);
 }
 
+void CIFem::LinearSolver::AddLoadCombinations(std::vector<LoadCombination> combs)
+{
+	_loadCobms.insert(_loadCobms.end(), combs.begin(), combs.end());
+}
+
 void CIFem::LinearSolver::ApplyGravityToElements(const LoadCombination & loadComb)
 {
 	if (loadComb.getGravityOn())

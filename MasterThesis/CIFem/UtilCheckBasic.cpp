@@ -14,7 +14,7 @@ namespace CIFem
 
 	void UtilCheck3dBasic::CheckElementUtilisations(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results, std::string resName)
 	{
-		for (int i = 0; i < results.Utilisations().size(); i++)
+		for (int i = 0; i < results.Utilisations()[resName].size(); i++)
 		{
 			// Do checks, update element utilisation
 			results._util[resName][i]->Update(AxialCheck(xSec, mat, results.N()[resName][i]), "Pure axial");

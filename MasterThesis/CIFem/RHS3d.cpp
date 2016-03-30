@@ -15,6 +15,8 @@ CIFem::RHS3d::RHS3d(double height, double width, double thickness)
 	_height = height;
 	_width = width;
 	_thickness = thickness;
+
+	CalcSectionProperties();
 }
 
 
@@ -30,7 +32,7 @@ void CIFem::RHS3d::CalcSectionProperties()
 	iy = 2 * (_thickness*pow(_height, 3) / 12 + (_width - _thickness)*pow(_thickness, 3) / 12 + (_width - _thickness)*_thickness*pow(((_height - _thickness) / 2), 2));
 	iz = 2 * (_thickness*pow(_width, 3) / 12 + (_height - _thickness)*pow(_thickness, 3) / 12 + (_height - _thickness)*_thickness*pow(((_width - _thickness) / 2), 2));
 
-	_secProp= SectionProperties(area, iy, iz, -1);
+	_secProp= SectionProperties(area, iy, iz, CalcStVenantsTorsionConstant());
 }
 
 double CIFem::RHS3d::CheckCombAxialBending(double N, double Myy, double Mzz)
@@ -86,4 +88,20 @@ double CIFem::RHS3d::CheckShearZ(double Vz)
 	double t = _thickness;
 
 	return (Vz*S)/(I*t);
+}
+
+double CIFem::RHS3d::CalcStVenantsTorsionConstant()
+{
+	//Calculated according to:
+	//http://www.cisc-icca.ca/files/technical/techdocs/updates/torsionprop.pdf
+
+	//Valid for thinwalled sections _width/_thickness >= 10. Assuming true for now...
+
+	//Calculating without knowing corner radius
+	double Rc, Ap, p;
+
+	Rc = 1.5*_thickness;     // = (Ro-Ri)/2
+	Ap = (_width - _thickness)*(_height - _thickness) - pow(Rc, 2)*(4 - M_PI);
+	p = 2 * ((_width - _thickness) + (_height - _thickness)) - 2 * Rc*(4 - M_PI);
+	return 4 * pow(Ap, 2)*_thickness / p;
 }

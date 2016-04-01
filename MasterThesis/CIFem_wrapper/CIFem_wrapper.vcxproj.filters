@@ -87,6 +87,12 @@
     <ClInclude Include="WR_XSecRHS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WR_SectionGroup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WR_StandardSectionSizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -156,6 +162,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WR_XSecRHS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WR_SectionGroup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WR_StandardSectionSizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

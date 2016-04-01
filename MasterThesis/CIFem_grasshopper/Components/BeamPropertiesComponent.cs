@@ -24,10 +24,13 @@ namespace CIFem_grasshopper
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddTextParameter("Cross section", "XS", "Cross section for the beam on string form", GH_ParamAccess.item);
+            pManager.AddParameter(new CrossSectionParameter(),"Cross section", "XS", "Cross section for the beam. Can be provided as a full cross section or as a string in correct format", GH_ParamAccess.item);
             pManager.AddParameter(new BeamReleaseParameter(), "Start Release", "SR", "Release at the start point fo the beam", GH_ParamAccess.item);
             pManager.AddParameter(new BeamReleaseParameter(), "End Release", "ER", "Release at the end point fo the beam", GH_ParamAccess.item);
             pManager.AddParameter(new MaterialParam(), "Material", "M", "Material to use in the beam", GH_ParamAccess.item);
+            pManager.AddParameter(new CrossSectionGroupParameter(), "Cross section Group", "XSG", "Optional cross section group to be used be optimizers", GH_ParamAccess.item);
+
+            pManager[4].Optional = true;
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -37,22 +40,26 @@ namespace CIFem_grasshopper
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            string crossSection = "";
+            // string crossSection = "";
+            WR_IXSec xSec= null;
             WR_ReleaseBeam3d stREl = null;
             WR_ReleaseBeam3d enREl = null;
             WR_Material mat = null;
-            double E = double.NaN;
-            double poi = double.NaN;
+            WR_SectionGroup secGroup = null;
 
-            if (!DA.GetData(0, ref crossSection)) { return; }
+            if (!DA.GetData(0, ref xSec)) { return; }
             if (!DA.GetData(1, ref stREl)) { return; }
             if (!DA.GetData(2, ref enREl)) { return; }
             if (!DA.GetData(3, ref mat)) { return; }
 
 
-            BeamProperties beamProp = new BeamProperties(mat, crossSection, stREl, enREl);
-            
-            
+            BeamProperties beamProp;
+
+            if (!DA.GetData(4, ref secGroup))
+                beamProp = new BeamProperties(mat, xSec, stREl, enREl);
+            else
+                beamProp = new BeamProperties(mat, xSec, stREl, enREl, secGroup);
+
 
             DA.SetData(0, beamProp);
 

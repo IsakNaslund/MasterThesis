@@ -33,6 +33,20 @@ void CIFem::RHS3d::CalcSectionProperties()
 	iz = 2 * (_thickness*pow(_width, 3) / 12 + (_height - _thickness)*pow(_thickness, 3) / 12 + (_height - _thickness)*_thickness*pow(((_width - _thickness) / 2), 2));
 
 	_secProp= SectionProperties(area, iy, iz, CalcStVenantsTorsionConstant());
+
+	_Nmax = area;
+	double hw = _width - _thickness;
+	double S = _thickness*pow(hw, 2) + (_height / 2)*(pow(hw + _thickness, 2) - pow(hw, 2));
+	_Vymax = iz*_thickness / S;
+	 hw = _height - _thickness;
+	 S = _thickness*pow(hw, 2) + (_width / 2)*(pow(hw + _thickness, 2) - pow(hw, 2));
+	_Vzmax = iy*_thickness / S;
+	_Mymax = iy / (_width / 2);
+	_Mzmax = iz / (_height / 2);
+	//No checks for torsion yet implemented
+	_Tmax = 100000000000;
+
+
 }
 
 double CIFem::RHS3d::CheckCombAxialBending(double N, double Myy, double Mzz)

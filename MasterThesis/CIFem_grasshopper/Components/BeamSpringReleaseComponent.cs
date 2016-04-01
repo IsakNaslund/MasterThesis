@@ -23,6 +23,14 @@ namespace CIFem_grasshopper.Components
             }
         }
 
+        public override GH_Exposure Exposure
+        {
+            get
+            {
+                return GH_Exposure.secondary;
+            }
+        }
+
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddNumberParameter("X-translation", "X", "Fix translation in x direction. val < 0 => fixed, val = 0 => released, val > 0 => spring with stiffness=val", GH_ParamAccess.item);

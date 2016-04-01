@@ -21,6 +21,7 @@ namespace CIFem
 		std::shared_ptr<ICrossSection> _xSec;
 		std::vector<double> _normal;
 		std::shared_ptr<Material> _mat;
+		std::shared_ptr<SectionGroup> _sectionGroup;
 
 	public:
 		Element3dRcp();
@@ -28,6 +29,8 @@ namespace CIFem
 		Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, std::shared_ptr<ICrossSection> xSec, double matStiff, double poisonRatio, std::vector<double> normal);
 		Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, std::shared_ptr<ICrossSection> xSec, double matStiff, double poisonRatio, double density, double fu, std::vector<double> normal);
 		Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> material, std::vector<double> normal);
+		Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> material, std::vector<double> normal, std::shared_ptr<SectionGroup> sectionGroup);
+
 
 		std::vector<std::shared_ptr<CIFem::IElement>> CreateElement(std::vector<std::shared_ptr<INode>> & systemNodes);
 		~Element3dRcp();

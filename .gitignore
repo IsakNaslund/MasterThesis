@@ -14,3 +14,4 @@ MasterThesis/CIFem/ClassDiagram.cd
 MasterThesis/CIFem/Element3d.h.orig
 MasterThesis/CIFem/Element3d_BACKUP20160310.h
 MasterThesis/CIFem_grasshopper/CIFem_grasshopper.csproj.orig
+*.orig

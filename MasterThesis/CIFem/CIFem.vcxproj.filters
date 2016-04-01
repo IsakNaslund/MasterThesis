@@ -180,6 +180,24 @@
     <ClInclude Include="SectionGroup.h">
       <Filter>Header Files\Elements\Cross sections</Filter>
     </ClInclude>
+    <ClInclude Include="Element3dChecks.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+    <ClInclude Include="AxialCheck.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+    <ClInclude Include="ShearYCheck.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+    <ClInclude Include="ShearZCheck.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+    <ClInclude Include="CombAxialBendingCheck.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+    <ClInclude Include="Checks.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XYZ.cpp">
@@ -294,6 +312,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SectionGroup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Element3dChecks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AxialCheck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CombAxialBendingCheck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShearYCheck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShearZCheck.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

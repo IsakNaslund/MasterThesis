@@ -9,9 +9,13 @@ namespace CIFem
 {
 	class CIFEM_API ICrossSection
 	{
+		friend class SectionGroup;
 	protected:
+		
 		SectionProperties _secProp;
 		virtual void CalcSectionProperties() = 0;
+		//Factors for checking max values for finding new Crossections. Needs to be multiplied by maximum alowed stress
+		double _Nmax, _Vymax, _Vzmax, _Mymax, _Mzmax, _Tmax;
 
 	public:
 		inline virtual double GetArea() const { return _secProp.A(); }

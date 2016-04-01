@@ -100,7 +100,7 @@ CIFem::Structure CIFem::Structure::Copy()
 }
 
 
-std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Structure::GetElements()
+const std::vector<std::shared_ptr<CIFem::IElement>> & CIFem::Structure::GetElements()
 {
 	return _elements;
 }

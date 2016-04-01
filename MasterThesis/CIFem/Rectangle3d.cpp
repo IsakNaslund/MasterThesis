@@ -27,7 +27,13 @@ void Rectangle3d::CalcSectionProperties()
 	double iz = (_height*_width*_width*_width) / 12;
 
 	_secProp = SectionProperties(area, iy, iz, CalcTorsionalStiffness(iy, iz));
-
+	_Nmax = area;
+	_Vymax = iz*_height / (pow(_width, 2)*_height / 8);
+	_Vzmax = iy*_height / (pow(_height, 2)*_width / 8);
+	_Mymax = iy / (_width / 2);
+	_Mzmax = iz / (_height / 2);
+	//No checks for torsion yet implemented
+	_Tmax = 100000000000;
 }
 
 double CIFem::Rectangle3d::GetHeight() const
@@ -97,7 +103,7 @@ double CIFem::Rectangle3d::CheckShearY(double Vy)
 	double b = _height;
 	
 	// Assumptions: Shear checked in middle of section
-	double S = pow(b, 2)*h / 8;
+	double S = pow(h, 2)*b / 8;
 	double I = _secProp.Iz();
 
 	return (S*Vy) / (I*h);

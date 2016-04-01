@@ -25,6 +25,14 @@ namespace CIFem_grasshopper
             }
         }
 
+        public override GH_Exposure Exposure
+        {
+            get
+            {
+                return GH_Exposure.secondary;
+            }
+        }
+
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddBooleanParameter("X-translation", "X", "Fix translation in x direction", GH_ParamAccess.item);

@@ -3,6 +3,7 @@
 #include "SectionProperties.h"
 #include "CIFem_dll.h"
 #include <vector>
+#include <string>
 
 namespace CIFem
 {
@@ -22,6 +23,10 @@ namespace CIFem
 		virtual double CheckCombAxialBending(double N, double Myy, double Mzz) = 0;	// Returns sigma
 		virtual double CheckShearY(double Vy) = 0;	// Returns tau
 		virtual double CheckShearZ(double Vz) = 0;	// Returns tau
+
+		// Returns a string defining the cross section
+		// Different format for each cross section. Needs to be handled in wrappers.
+		virtual std::string ToString() = 0;
 	};
 
 }

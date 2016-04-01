@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Grasshopper.Kernel;
+using Rhino.Geometry;
 
 using CIFem_wrapper;
 
@@ -11,11 +12,12 @@ namespace CIFem_grasshopper
 {
     public class StructureComponent : GH_Component
     {
+        BoundingBox _bb;
         public List<string> log { get; set; }
         private List<ResultElement> resElems { get; set; }
         private List<Rhino.Geometry.Point3d> pts { get; set; }
 
-        public StructureComponent(): base("Structure", "Structure", "A structure to hold beams, releases, forces etc.", "CIFem", "Structure")
+        public StructureComponent() : base("Structure", "Structure", "A structure to hold beams, releases, forces etc.", "CIFem", "Structure")
         {
             log = new List<string>();
         }
@@ -41,7 +43,7 @@ namespace CIFem_grasshopper
             pManager.AddParameter(new NodeParam(), "Restraint Nodes", "RN",
                 "A list of nodes that may contain restraints", GH_ParamAccess.list);
 
-            pManager.AddParameter(new BeamParam(), "Beams", "B", 
+            pManager.AddParameter(new BeamParam(), "Beams", "B",
                 "Beams that the structure should consist of", GH_ParamAccess.list);
 
             // Woops, should be restraints!

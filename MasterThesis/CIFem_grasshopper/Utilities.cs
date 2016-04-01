@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Rhino;
+using CIFem_wrapper;
 
 namespace CIFem_grasshopper
 {
@@ -84,5 +85,27 @@ namespace CIFem_grasshopper
         }
 
 
+        public enum CrossSectionType
+        {
+            RectangularSolid = 140000,
+            RHS,
+            CircularSolid,
+            CHS,
+        }
+
+
+        public static CrossSectionType CrossSectionTypeFromString(string section)
+        {
+            if (section.ToUpper().StartsWith("REC"))
+            {
+                return CrossSectionType.RectangularSolid;
+            }
+            else if (section.ToUpper().StartsWith("RHS"))
+            {
+                return CrossSectionType.RHS;
+            }
+
+            throw new NotImplementedException();
+        }
     }
 }

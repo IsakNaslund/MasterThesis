@@ -25,13 +25,18 @@ System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^> ^ Utilities::
 	return l;
 }
 
+System::String ^ Utilities::ConvertToSystemString(std::string stdStr)
+{
+	return msclr::interop::marshal_as<System::String ^>(stdStr);
+}
+
 System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<double>^>^ Utilities::MapToDictionary(const std::map<std::string, std::vector<double>> & map)
 {
 	System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<double>^> ^ dict = gcnew System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<double>^>();
 
 	for each (std::pair<std::string, std::vector<double>> pair in map)
 	{
-		dict->Add(msclr::interop::marshal_as<System::String ^>(pair.first), GetListFromVector(pair.second));
+		dict->Add(ConvertToSystemString(pair.first), GetListFromVector(pair.second));
 	}
 	return dict;
 }
@@ -42,7 +47,7 @@ System::Collections::Generic::Dictionary<System::String^, System::Collections::G
 
 	for each (std::pair<std::string, std::vector<std::shared_ptr<CIFem::Utilisation>>> pair in map)
 	{
-		dict->Add(msclr::interop::marshal_as<System::String ^>(pair.first), GetListFromVector(pair.second));
+		dict->Add(ConvertToSystemString(pair.first), GetListFromVector(pair.second));
 	}
 	return dict;
 }

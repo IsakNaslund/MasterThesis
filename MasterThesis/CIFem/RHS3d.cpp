@@ -46,7 +46,7 @@ double CIFem::RHS3d::CheckCombAxialBending(double N, double Myy, double Mzz)
 	{
 		for (int j = 0; j < 2; j++)
 		{
-			val = (N / _secProp.A()) + ((Myy / _secProp.Iy()) * zMinMax[i]) + ((Mzz / _secProp.Iz()) * yMinMax[i]);
+			val = (N / _secProp.A()) + ((Myy / _secProp.Iy()) * zMinMax[i]) + ((Mzz / _secProp.Iz()) * yMinMax[j]);
 			if (abs(val) > abs(absmax))
 				absmax = val;
 		}
@@ -104,4 +104,9 @@ double CIFem::RHS3d::CalcStVenantsTorsionConstant()
 	Ap = (_width - _thickness)*(_height - _thickness) - pow(Rc, 2)*(4 - M_PI);
 	p = 2 * ((_width - _thickness) + (_height - _thickness)) - 2 * Rc*(4 - M_PI);
 	return 4 * pow(Ap, 2)*_thickness / p;
+}
+
+std::string CIFem::RHS3d::ToString()
+{
+	return "RHS" + std::to_string(_height) + "x" + std::to_string(_width) + "x" + std::to_string(_thickness);
 }

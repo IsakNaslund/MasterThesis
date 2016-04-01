@@ -162,4 +162,9 @@ namespace CIFem_wrapper
 		return gcnew WR_Vector(v.GetX(), v.GetY(), v.GetZ());
 	}
 
+	System::String ^ WR_Element3d::GetSectionString()
+	{
+		return Utilities::ConvertToSystemString(_element.operator std::shared_ptr<CIFem::Element3d>()->GetCrossSection()->ToString());
+	}
+
 }

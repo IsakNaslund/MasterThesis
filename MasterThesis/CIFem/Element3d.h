@@ -62,6 +62,7 @@ namespace CIFem
 
 		//Update functions to be used by optimizers to update diffrent beam properties
 		void UpdateCrossSection(std::shared_ptr<ICrossSection> newCrossSection);
+		std::shared_ptr<ICrossSection> GetCrossSection() const;
 		void UpdateMaterial(std::shared_ptr<Material> newMat);
 		void UpdateNormal(Vector3d newNormal);
 

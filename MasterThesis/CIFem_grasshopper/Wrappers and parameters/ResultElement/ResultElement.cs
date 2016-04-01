@@ -33,7 +33,8 @@ namespace CIFem_grasshopper
         // Element data
         public Rhino.Geometry.Point3d sPos { get; private set; }
         public Rhino.Geometry.Point3d ePos { get; private set; }
-        public Rhino.Geometry.Vector3d elNormal { get; private set; }
+        public Rhino.Geometry.Vector3d elNormal { get; private set; }   // Local z vector
+        public String SectionPropertyString { get; set; }
 
         public ResultElement()
         {
@@ -109,6 +110,9 @@ namespace CIFem_grasshopper
 
             // Orientation
             elNormal = CreateRhinoVector(elem.GetElementNormal(), false);
+
+            // Section property string
+            SectionPropertyString = elem.GetSectionString();
         }
 
         /// <summary>

@@ -307,6 +307,11 @@ void CIFem::Element3d::UpdateCrossSection(std::shared_ptr<ICrossSection> newCros
 	_updateStiffnessMatrix = true;
 }
 
+std::shared_ptr<ICrossSection> CIFem::Element3d::GetCrossSection() const
+{
+	return _crossSection;
+}
+
 void CIFem::Element3d::UpdateMaterial(std::shared_ptr<Material> newMat)
 {
 	_mat = newMat;

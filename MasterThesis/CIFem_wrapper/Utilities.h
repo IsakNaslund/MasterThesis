@@ -13,6 +13,8 @@ namespace Utilities
 	System::Collections::Generic::List<double> ^ GetListFromVector(const std::vector<double> & vec);
 	System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation ^> ^ GetListFromVector(const std::vector<std::shared_ptr<CIFem::Utilisation>> & vec);
 
+	System::String^ ConvertToSystemString(std::string);
+
 	System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<double> ^> ^ MapToDictionary(const std::map<std::string, std::vector<double>> & map);
 	System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation ^> ^> ^ MapToDictionary(const std::map<std::string, std::vector<std::shared_ptr<CIFem::Utilisation>>> & map);
 

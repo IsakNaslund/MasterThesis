@@ -48,56 +48,6 @@ namespace CIFem_grasshopper
             _section = CrossSectionFormString(section);
         }
 
-        private WR_IXSec CrossSectionFormString(string section)
-        {
-            if (section.ToUpper().StartsWith("REC"))
-            {
-                return RectangularCrossSection(section);
-            }
-            else if (section.ToUpper().StartsWith("RHS"))
-            {
-                return RHSCrossSection(section);
-            }
-
-            
-
-            throw new NotImplementedException();
-
-            return null;
-        }
-
-        private WR_IXSec RHSCrossSection(string section)
-        {
-            string[] numbers = System.Text.RegularExpressions.Regex.Split(section, @"\D+");
-
-            double height, width, thickness;
-
-            if (numbers.Length < 4 || !double.TryParse(numbers[1], out height) || !double.TryParse(numbers[2], out width) || !double.TryParse(numbers[3], out thickness))
-            {
-                throw new Exception("Wrong string format for cross section");
-            }
-
-            double factor = Utilities.GetScalingFactorFromRhino();
-
-            return new WR_XSecRHS(height * factor, width * factor, thickness*factor);
-        }
-
-        private WR_IXSec RectangularCrossSection(string section)
-        {
-            string[] numbers = System.Text.RegularExpressions.Regex.Split(section, @"\D+");
-
-            double height, width;
-
-            if (numbers.Length < 3 || !double.TryParse(numbers[1], out height) || !double.TryParse(numbers[2], out width))
-            {
-                throw new Exception("Wrong string format for cross section");
-            }
-
-            double factor = Utilities.GetScalingFactorFromRhino();
-
-            return new WR_XSecRect(height* factor, width* factor);
-
-        }
 
         public override string ToString()
         {
@@ -134,5 +84,62 @@ namespace CIFem_grasshopper
 
         public WR_ReleaseBeam3d EndRelease
         { get { return _enRel; } }
+
+
+        private WR_IXSec CrossSectionFormString(string section)
+        {
+            Utilities.CrossSectionType cst = Utilities.CrossSectionTypeFromString(section);
+
+            switch (cst)
+            {
+                case Utilities.CrossSectionType.RectangularSolid:
+                    return RectangularCrossSection(section);
+
+                case Utilities.CrossSectionType.RHS:
+                    return RHSCrossSection(section);
+
+                case Utilities.CrossSectionType.CircularSolid:
+                    break;
+                case Utilities.CrossSectionType.CHS:
+                    break;
+                default:
+                    break;
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private WR_IXSec RHSCrossSection(string section)
+        {
+            string[] numbers = System.Text.RegularExpressions.Regex.Split(section, @"\D+");
+
+            double height, width, thickness;
+
+            if (numbers.Length < 4 || !double.TryParse(numbers[1], out height) || !double.TryParse(numbers[2], out width) || !double.TryParse(numbers[3], out thickness))
+            {
+                throw new Exception("Wrong string format for cross section");
+            }
+
+            double factor = Utilities.GetScalingFactorFromRhino();
+
+            return new WR_XSecRHS(height * factor, width * factor, thickness * factor);
+        }
+
+        private WR_IXSec RectangularCrossSection(string section)
+        {
+            string[] numbers = System.Text.RegularExpressions.Regex.Split(section, @"\D+");
+
+            double height, width;
+
+            if (numbers.Length < 3 || !double.TryParse(numbers[1], out height) || !double.TryParse(numbers[2], out width))
+            {
+                throw new Exception("Wrong string format for cross section");
+            }
+
+            double factor = Utilities.GetScalingFactorFromRhino();
+
+            return new WR_XSecRect(height * factor, width * factor);
+
+        }
     }
 }

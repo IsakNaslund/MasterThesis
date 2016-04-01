@@ -116,6 +116,15 @@ double CIFem::Rectangle3d::CheckShearZ(double Vz)
 	return (S*Vz) / (I*b);
 }
 
+
+std::string CIFem::Rectangle3d::ToString()
+{
+	return "REC" + std::to_string(_height) + "x" + std::to_string(_width);
+}
+
+
+
+
 double CIFem::Rectangle3d::CheckCombAxialBending(double N, double Myy, double Mzz)
 {
 	std::vector<double> yMinMax = { -_width / 2, _width / 2 };

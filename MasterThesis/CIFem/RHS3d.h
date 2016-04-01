@@ -29,6 +29,8 @@ namespace CIFem
 		virtual double CheckShearZ(double Vz) override;
 
 		double CalcStVenantsTorsionConstant();
+
+		std::string ToString() override;
 	};
 }
 

@@ -6,6 +6,7 @@
 #include "m_shared_ptr.h"
 #include "Utilities.h"
 #include "WR_Utilisation.h"
+#include "RHS3d.h"
 
 typedef System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<double> ^> ResultDictionary;
 typedef System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^> ^> UtilDictionary;
@@ -53,6 +54,10 @@ namespace CIFem_wrapper
 		WR_XYZ ^ GetStartPos();
 		WR_XYZ ^ GetEndPos();
 		WR_Vector ^ GetElementNormal();
+
+		System::String ^ GetSectionString() override;
+
+
 	};
 }
 

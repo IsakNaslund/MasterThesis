@@ -9,8 +9,10 @@
 #include <memory>
 #include "IUtilCheck3d.h"
 #include "ElementResults3d.h"
-#include "UtilCheck3dBasic.h"
+#include "Element3dChecks.h"
+//#include "UtilCheck3dBasic.h"
 #include <map>
+#include "SectionGroup.h"
 
 
 using namespace std;
@@ -27,7 +29,7 @@ namespace CIFem
 		Vector3d _eo;			// Element orientation
 		ElementResults3d _results;
 		//ElementResults3d _results;
-		std::shared_ptr<IUtilCheck3d> _utilCheck;
+		std::shared_ptr<Element3dChecks> _utilCheck;
 		std::shared_ptr<ICrossSection> _crossSection;
 
 		//Distributed loads
@@ -36,10 +38,16 @@ namespace CIFem
 		//Stiffness matrix
 		arma::mat::fixed<12,12> _Ke;
 
+		//Optional section group used for optimization
+		std::shared_ptr<SectionGroup> _sectionGroup;
+
 	public:
 		Element3d();
 		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal);
-		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<IUtilCheck3d> checktype);
+		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<Element3dChecks> checktype);
+		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<Element3dChecks> checktype, std::shared_ptr<SectionGroup> sectionGroup);
+		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<SectionGroup> sectionGroup);
+
 		~Element3d();
 
 		double Weight() const;
@@ -65,7 +73,8 @@ namespace CIFem
 		void UpdateMaterial(std::shared_ptr<Material> newMat);
 		void UpdateNormal(Vector3d newNormal);
 
-
+		bool UpdateCrossSection();
+		bool UpdateElement() { return UpdateCrossSection(); }
 
 		// Geometric data getters
 		XYZ StartPosition() const { return _sNode; }

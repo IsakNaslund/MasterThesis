@@ -5,25 +5,28 @@
 #include "LinearSolver.h"
 #include <memory>
 
-
-class CIFEM_API StandardSectionSizer
+namespace CIFem
 {
-	LinearSolver _linSolver;
-	std::shared_ptr<Structure> _structure;
-public:
-	StandardSectionSizer();
-	StandardSectionSizer(std::shared_ptr<Structure> structure);
-	~StandardSectionSizer();
+
+	class CIFEM_API StandardSectionSizer
+	{
+		LinearSolver _linSolver;
+		std::shared_ptr<Structure> _structure;
+	public:
+		StandardSectionSizer();
+		StandardSectionSizer(std::shared_ptr<Structure> structure);
+		~StandardSectionSizer();
 
 
-	//Main function for running section sizier
-	void Run();
+		//Main function for running section sizier
+		void Run(int maxIterations);
 
-	//Add load combination
-	void AddLoadCombination(LoadCombination comb);
+		//Add load combination
+		void AddLoadCombination(LoadCombination comb);
 
-private:
+	private:
 
-	bool CheckUtilization();
-};
+		bool CheckUtilization(int maxIterations, int iterationCount);
+	};
+}
 

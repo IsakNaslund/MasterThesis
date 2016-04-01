@@ -65,6 +65,7 @@
     <Compile Include="Components\NodeComponent.cs" />
     <Compile Include="Components\PointLoadComponent.cs" />
     <Compile Include="Components\ResultElementComponent.cs" />
+    <Compile Include="Components\SectionGroupComponent.cs" />
     <Compile Include="Components\StructureComponentEigen.cs" />
     <Compile Include="Components\StructureComponent.cs" />
     <Compile Include="Components\MaterialComponent.cs" />
@@ -75,6 +76,12 @@
     <Compile Include="Components\LinearSolverComponent.cs" />
     <Compile Include="Components\EigSolverComponent.cs" />
     <Compile Include="Components\StructurePropertiesComponent.cs" />
+    <Compile Include="CrossSectionCasts.cs" />
+    <Compile Include="Components\SectionSizerComponent.cs" />
+    <Compile Include="Wrappers and parameters\CrossSectionGroupParameter.cs" />
+    <Compile Include="Wrappers and parameters\CrossSectionGoo.cs" />
+    <Compile Include="Wrappers and parameters\CrossSectionGroupGoo.cs" />
+    <Compile Include="Wrappers and parameters\CrossSectionParameter.cs" />
     <Compile Include="Wrappers and parameters\StructureParam.cs" />
     <Compile Include="Wrappers and parameters\StructureGoo.cs" />
     <Compile Include="Utilities.cs" />

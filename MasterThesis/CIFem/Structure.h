@@ -34,7 +34,7 @@ namespace CIFem
 		// Not implemented, probably shouldnt be either....?
 		Structure Copy();
 
-		std::vector<std::shared_ptr<CIFem::IElement>> GetElements();
+		const std::vector<std::shared_ptr<CIFem::IElement>> & GetElements();
 		const std::vector<std::shared_ptr<INode>> & GetNodes();
 
 		void ResetStructure();

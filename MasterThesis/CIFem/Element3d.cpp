@@ -9,11 +9,12 @@ Element3d::Element3d()
 
 // Creates an element with a basic check. If possible use overloaded function instead.
 Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF> > dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal) :
-	Element3d(sNode, eNode, dof, crossSec, mat, normal, std::shared_ptr<IUtilCheck3d>(new CIFem::UtilCheck3dBasic()))
+	Element3d(sNode, eNode, dof, crossSec, mat, normal, Element3dChecks::BasicCheckSharedPtr())
 {
+	
 }
 
-CIFem::Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<IUtilCheck3d> checktype)
+CIFem::Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<Element3dChecks> checktype)
 {
 
 	_sNode = sNode;
@@ -45,6 +46,17 @@ CIFem::Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std:
 	_updateStiffnessMatrix = true;
 }
 
+CIFem::Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<Element3dChecks> checktype, std::shared_ptr<SectionGroup> sectionGroup)
+:Element3d(sNode, eNode, dof, crossSec, mat, normal, checktype)
+{
+	_sectionGroup = sectionGroup;
+}
+
+CIFem::Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<SectionGroup> sectionGroup)
+	: Element3d(sNode, eNode, dof, crossSec, mat, normal, Element3dChecks::BasicCheckSharedPtr(), sectionGroup)
+{
+
+}
 
 Element3d::~Element3d()
 {
@@ -317,6 +329,22 @@ void CIFem::Element3d::UpdateNormal(Vector3d newNormal)
 {
 	_eo = newNormal;
 	_updateStiffnessMatrix = true;
+}
+
+bool CIFem::Element3d::UpdateCrossSection()
+{
+	if (_results._maxUtil.GetUtil() > 1)
+	{
+		std::shared_ptr<ICrossSection> newSec;
+		bool success = _sectionGroup->UpdateCrossSection(_mat, _results, newSec);
+
+		//Should the cross section be updated if no match found? Doing it anyway for now....
+
+		UpdateCrossSection(newSec);
+
+		return success;
+	}
+	return true;
 }
 
 

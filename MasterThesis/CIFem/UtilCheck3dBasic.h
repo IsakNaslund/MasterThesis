@@ -1,5 +1,5 @@
 #pragma once
-
+/*
 #include "CIFem_dll.h"
 #include "IUtilisationCheck.h"
 #include "IUtilCheck3d.h"
@@ -19,5 +19,5 @@ namespace CIFem
 		double CheckShearY(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, double Vy);
 		double CheckShearZ(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, double Vz);
 	};
-}
+}*/
 

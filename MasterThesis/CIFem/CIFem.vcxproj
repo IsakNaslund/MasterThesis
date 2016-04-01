@@ -147,8 +147,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AxialCheck.h" />
+    <ClInclude Include="Checks.h" />
     <ClInclude Include="CIFem_dll.h" />
+    <ClInclude Include="CombAxialBendingCheck.h" />
     <ClInclude Include="EigenSolver.h" />
+    <ClInclude Include="Element3dChecks.h" />
     <ClInclude Include="ISolver.h" />
     <ClInclude Include="LinearSolver.h" />
     <ClInclude Include="ElementResults3d.h" />
@@ -181,6 +185,8 @@
     <ClInclude Include="ReleaseBeam3d.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RHS3d.h" />
+    <ClInclude Include="ShearYCheck.h" />
+    <ClInclude Include="ShearZCheck.h" />
     <ClInclude Include="Spring.h" />
     <ClInclude Include="StandardSectionSizer.h" />
     <ClInclude Include="Structure.h" />
@@ -190,7 +196,10 @@
     <ClInclude Include="XYZ.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AxialCheck.cpp" />
+    <ClCompile Include="CombAxialBendingCheck.cpp" />
     <ClCompile Include="EigenSolver.cpp" />
+    <ClCompile Include="Element3dChecks.cpp" />
     <ClCompile Include="ICrossSection.cpp" />
     <ClCompile Include="ISolver.cpp" />
     <ClCompile Include="LinearSolver.cpp" />
@@ -221,6 +230,8 @@
     <ClCompile Include="RHS3d.cpp" />
     <ClCompile Include="SectionGroup.cpp" />
     <ClCompile Include="SectionProperties.cpp" />
+    <ClCompile Include="ShearYCheck.cpp" />
+    <ClCompile Include="ShearZCheck.cpp" />
     <ClCompile Include="Spring.cpp" />
     <ClCompile Include="StandardSectionSizer.cpp" />
     <ClCompile Include="Structure.cpp" />

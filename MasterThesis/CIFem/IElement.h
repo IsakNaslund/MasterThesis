@@ -11,6 +11,7 @@
 
 namespace CIFem
 {
+	class Utilisation;
 	class CIFEM_API IElement
 	{
 	protected:
@@ -37,6 +38,9 @@ namespace CIFem
 		virtual void CalculateSectionForces(std::string resultName) = 0;
 
 		virtual double Weight() const = 0;
+
+		virtual bool UpdateElement() = 0;
+		virtual Utilisation CalcAndGetMaxUtil() = 0;
 
 	};
 }

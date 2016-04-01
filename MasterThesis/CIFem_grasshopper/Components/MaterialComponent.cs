@@ -23,6 +23,14 @@ namespace CIFem_grasshopper
             }
         }
 
+        public override GH_Exposure Exposure
+        {
+            get
+            {
+                return GH_Exposure.tertiary;
+            }
+        }
+
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddNumberParameter("Material Stiffness", "E", "Youngs modulus for the beam, set to steel by deafault", GH_ParamAccess.item, 210000000000);

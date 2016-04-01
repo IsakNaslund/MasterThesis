@@ -6,6 +6,7 @@
 #include <vector>
 #include <memory>
 #include "DOF.h"
+#include "Utilisation.h"
 
 
 namespace CIFem
@@ -33,6 +34,9 @@ namespace CIFem
 
 		void CalculateSectionForces(std::string resultName);
 		
+		bool UpdateElement() { return true; }
+
+		Utilisation CalcAndGetMaxUtil() { return Utilisation(0, "No Spring utilisation implemented yet"); }
 
 	protected:
 		void DoSectionChecks(std::string resName);

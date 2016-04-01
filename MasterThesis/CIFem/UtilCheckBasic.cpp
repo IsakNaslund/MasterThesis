@@ -1,5 +1,5 @@
 #include "UtilCheck3dBasic.h"
-
+/*
 
 namespace CIFem
 {
@@ -59,4 +59,4 @@ namespace CIFem
 
 		return (tauXZ / (mat->Fu() / sqrt(3)));
 	}
-}
+}*/

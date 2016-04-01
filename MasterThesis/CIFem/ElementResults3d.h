@@ -14,7 +14,7 @@ namespace CIFem
 	class CIFEM_API ElementResults3d : public IElementResults
 	{
 		friend class Element3d;
-		friend class UtilCheck3dBasic;
+		friend class Element3dChecks;
 
 		//Lists of results
 		combResList _N, _Vy, _Vz, _T, _My, _Mz, _u, _v, _w, _fi;

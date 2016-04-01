@@ -54,6 +54,12 @@ CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, Rel
 	SetNormal(normal);	// Set normal with format check
 }
 
+CIFem::Element3dRcp::Element3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> material, std::vector<double> normal, std::shared_ptr<SectionGroup> sectionGroup)
+	: Element3dRcp(stPos, enPos, stRel, enRel, xSec, material, normal)
+{
+	_sectionGroup = sectionGroup;
+}
+
 std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Element3dRcp::CreateElement(std::vector<std::shared_ptr<INode>> & systemNodes)
 {
 	std::shared_ptr<INode> stNode, enNode;
@@ -152,7 +158,7 @@ std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Element3dRcp::CreateElement
 
 	//SectionProperties secProp = _xSec->CalcSectionProperties();
 	//ElementProperty ep =ElementProperty(_mat.E(), _mat.G(), secProp._area, secProp._Iy, secProp._Iz, secProp._Kv);
-	std::shared_ptr<CIFem::IElement> beam(new Element3d(_stPos, _enPos, dof, _xSec, _mat, Vector3d(_normal[0],_normal[1],_normal[2])));
+	std::shared_ptr<CIFem::IElement> beam(new Element3d(_stPos, _enPos, dof, _xSec, _mat, Vector3d(_normal[0],_normal[1],_normal[2]), _sectionGroup));
 
 	newElements.push_back(beam);
 

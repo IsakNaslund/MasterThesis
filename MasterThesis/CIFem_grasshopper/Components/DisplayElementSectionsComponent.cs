@@ -12,11 +12,14 @@ namespace CIFem_grasshopper
     public class DisplayElementSectionsComponent : GH_Component
     {
         BoundingBox _bb;
+        private List<Curve> secCrvs { get; set; }
         private List<Brep> breps { get; set; }
 
         public DisplayElementSectionsComponent(): base("DisplayElementSectionsComponent", "DES", "Displays the element sections", "CIFem", "Results")
         {
             _bb = new BoundingBox();
+            secCrvs = new List<Curve>();
+            breps = new List<Brep>();
         }
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
@@ -30,6 +33,7 @@ namespace CIFem_grasshopper
         {
             //Do nothing
             //throw new NotImplementedException();
+            pManager.AddCurveParameter("Sections", "S", "sections. debug", GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -44,6 +48,8 @@ namespace CIFem_grasshopper
             if (!DA.GetData(2, ref sfac)) { return; }
 
             breps = CreateSectionSweeps(re);
+
+            DA.SetDataList(0, secCrvs);
         }
 
         public override BoundingBox ClippingBox
@@ -73,99 +79,91 @@ namespace CIFem_grasshopper
         }
 
 
-
+        private void ResetDrawingData()
+        {
+            secCrvs.Clear();
+            breps.Clear();
+            _bb = new BoundingBox();
+        }
 
         private List<Brep> CreateSectionSweeps(List<ResultElement> res)
         {
+            // Clear lists
+            ResetDrawingData();
+
             List<Point3d> pts = new List<Point3d>();            // Points to create curve from
             List<Point3d> maxPtsForBB = new List<Point3d>();
             List<Brep> sSweeps = new List<Brep>(res.Count);
 
             foreach (ResultElement re in res)
             {
-                Vector3d x = re.GetLocalXVec(false);
+                Vector3d x = re.LocalX;
                 Vector3d z = re.elNormal;
                 Vector3d y = Vector3d.CrossProduct(z, x);
                 y.Unitize();
                 Line cl = new Line(re.sPos, x);
+                List<Curve> crvs;
 
                 pts.Clear();
 
-                // Section curves to sweep (2 if hollow sections)
-                Curve c1;
-                Curve c2;
-
-                // Cast section from string
-                String xs = re.SectionPropertyString;
-
-                Utilities.CrossSectionType wrXSec = Utilities.CrossSectionTypeFromString(xs);
-                switch (wrXSec)
+                if (CrossSectionCasts.GetSectionPropertyCrvs(re.SectionPropertyString, out crvs))
                 {
-                    case Utilities.CrossSectionType.RectangularSolid:
-                        /*
-                        double height = r.GetHeight() / Utilities.GetScalingFactorFromRhino();
-                        double width = r.GetWidth() / Utilities.GetScalingFactorFromRhino();
+                    foreach (Curve crv in crvs)
+                    {
+                        for (int i = 0; i < re.pos.Count; i++)
+                        {
+                            Curve c = (Curve)crv.Duplicate();
 
-                        pts.Add(re.sPos + z * height / 2 + y * width / 2);
-                        pts.Add(re.sPos + z * height / 2 - y * width / 2);
-                        pts.Add(re.sPos - z * height / 2 + y * width / 2);
-                        pts.Add(re.sPos - z * height / 2 - y * width / 2);
 
-                        pts.Add(re.sPos + z * height / 2 + y * width / 2); // Add first pt again to get closed curve
+                            Transform rotTrans = Transform.Rotation(Vector3d.XAxis, Vector3d.YAxis, Vector3d.ZAxis, re.LocalX, re.LocalY, re.elNormal);
+                            c.Transform(rotTrans);
 
-                        c1 = Curve.CreateInterpolatedCurve(pts, 1);
-                        */
-                        break;
+                            Point3d pt = re.CreateRhinoPt(re.pos[i]);
+                            // Move curves to element origin
+                            c.Translate((Vector3d)pt);
 
-                    case Utilities.CrossSectionType.RHS:
-                        /*
-                        double height = r.GetHeight() / Utilities.GetScalingFactorFromRhino();
-                        double width = r.GetWidth() / Utilities.GetScalingFactorFromRhino();
-                        double thickness = r.GetThickness() / Utilities.GetScalingFactorFromRhino();
 
-                        // Outer curve 
-                        pts.Add(re.sPos + z * height / 2 + y * width / 2);
-                        pts.Add(re.sPos + z * height / 2 - y * width / 2);
-                        pts.Add(re.sPos - z * height / 2 + y * width / 2);
-                        pts.Add(re.sPos - z * height / 2 - y * width / 2);
+                            // Align curves to element
+                            //Vector3d locComb = re.LocalX + re.LocalY + re.elNormal;
+                            //Vector3d globComb = new Vector3d(1, 1, 1);
+                            //Vector3d rotAxis = Vector3d.CrossProduct(globComb, locComb);
 
-                        // Add first pt again to get closed curve
-                        pts.Add(re.sPos + z * height / 2 + y * width / 2);
-                        maxPtsForBB.AddRange(pts);  // Add to maxpts
 
-                        c1 = Curve.CreateInterpolatedCurve(pts, 1);
-                        Brep[] b1 = Brep.CreateFromSweep(cl.ToNurbsCurve(), c1, false, Rhino.RhinoDoc.ActiveDoc.ModelAbsoluteTolerance);
-                        if (b1.Length > 0)
-                            sSweeps.Add(b1[0]);
+                            //if (rotAxis != Vector3d.Zero)
+                            //{
+                            //    double angle = Vector3d.VectorAngle(globComb, locComb);
+                            //    c.Rotate(angle, rotAxis, pt);
+                            //    
+                            //}
 
-                        // Inner curve
-                        maxPtsForBB.AddRange(pts);  // Add to maxpts
-                        pts.Clear();
-                        pts.Add(re.sPos + z * (height - 2 * thickness) / 2 + y * (width - 2 * thickness) / 2);
-                        pts.Add(re.sPos + z * (height - 2 * thickness) / 2 - y * (width - 2 * thickness) / 2);
-                        pts.Add(re.sPos - z * (height - 2 * thickness) / 2 + y * (width - 2 * thickness) / 2);
-                        pts.Add(re.sPos - z * (height - 2 * thickness) / 2 - y * (width - 2 * thickness) / 2);
+                            /*
+                            // Align curves to element
+                            Vector3d rotX = Vector3d.CrossProduct(Vector3d.XAxis, re.LocalX);
+                            if (rotX!=Vector3d.Zero)
+                            {
+                                double Xa = Vector3d.VectorAngle(Vector3d.XAxis, re.LocalX);
+                                c.Rotate(Xa, rotX, pt);
+                            }
+                            
 
-                        // Add first pt again to get closed curve
-                        pts.Add(re.sPos + z * (height - 2 * thickness) / 2 + y * (width - 2 * thickness) / 2);
-                        maxPtsForBB.AddRange(pts);  // Add to maxpts
+                            Vector3d rotY = Vector3d.CrossProduct(Vector3d.YAxis, re.LocalY);
+                            double Ya = Vector3d.VectorAngle(Vector3d.YAxis, re.LocalY);
+                            c.Rotate(Ya, rotY, pt);
 
-                        c2 = Curve.CreateInterpolatedCurve(pts, 1);
-                        Brep[] b2 = Brep.CreateFromSweep(cl.ToNurbsCurve(), c2, false, Rhino.RhinoDoc.ActiveDoc.ModelAbsoluteTolerance);
-                        if (b2.Length > 0)
-                            sSweeps.Add(b2[0]);
-
-                        sSweeps.Add(Brep.CreateEdgeSurface(new List<Curve> { c1, c2 }));
-                        */
-                        break;
-                    case Utilities.CrossSectionType.CircularSolid:
-                    case Utilities.CrossSectionType.CHS:
-                    default:
-                        throw new NotImplementedException("Error, section type not implemented for display");
+                            Vector3d rotZ = Vector3d.CrossProduct(Vector3d.XAxis, re.elNormal);
+                            double Za = Vector3d.VectorAngle(Vector3d.XAxis, re.elNormal);
+                            c.Rotate(Za, rotZ, pt);
+                            */
+                            // Add curves
+                            secCrvs.Add(c);
+                        }
+                    }
                 }
             }
 
-            _bb = new BoundingBox(maxPtsForBB);
+            _bb = new BoundingBox();
+
+            
 
             return sSweeps;
         }
@@ -174,8 +172,7 @@ namespace CIFem_grasshopper
         public override void DrawViewportMeshes(IGH_PreviewArgs args)
         {
             DrawBreps(args, breps, System.Drawing.Color.DarkBlue);
-
-            // Also, dont create objects, just get the data instead
+            DrawCurves(args, secCrvs, System.Drawing.Color.DarkBlue);
 
             base.DrawViewportMeshes(args);
         }
@@ -184,6 +181,12 @@ namespace CIFem_grasshopper
         {
             for (int i = 0; i < breps.Count; i++)
                 args.Display.DrawBrepWires(breps[i], color);
+        }
+
+        private void DrawCurves(IGH_PreviewArgs args, List<Curve> crvs, System.Drawing.Color color)
+        {
+            for (int i = 0; i < crvs.Count; i++)
+                args.Display.DrawCurve(crvs[i], color);
         }
 
 

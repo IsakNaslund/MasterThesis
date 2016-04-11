@@ -33,6 +33,9 @@ namespace CIFem_grasshopper
         // Element data
         public Rhino.Geometry.Point3d sPos { get; private set; }
         public Rhino.Geometry.Point3d ePos { get; private set; }
+        public double Length { get; private set; }
+        public Rhino.Geometry.Vector3d LocalX { get; private set; }
+        public Rhino.Geometry.Vector3d LocalY { get; private set; }
         public Rhino.Geometry.Vector3d elNormal { get; private set; }   // Local z vector
         public String SectionPropertyString { get; set; }
 
@@ -107,37 +110,26 @@ namespace CIFem_grasshopper
             // Node positions
             sPos = CreateRhinoPt(elem.GetStartPos());
             ePos = CreateRhinoPt(elem.GetEndPos());
+            Length = sPos.DistanceTo(ePos);
 
             // Orientation
             elNormal = CreateRhinoVector(elem.GetElementNormal(), false);
+            SetLocalVectors();
 
             // Section property string
             SectionPropertyString = elem.GetSectionString();
         }
 
-        /// <summary>
-        /// Returns a (unitized) vector from start node to end node
-        /// </summary>
-        /// <returns></returns>
-        public Rhino.Geometry.Vector3d GetLocalXVec()
+        
+
+        private void SetLocalVectors()
         {
-            return GetLocalXVec(true);
-        }
+            var tempX = new Rhino.Geometry.Vector3d(ePos.X - sPos.X, ePos.Y - sPos.Y, ePos.Z - sPos.Z);
+            tempX.Unitize();
+            LocalX = tempX;
 
 
-        /// <summary>
-        /// Returns a vector from start node to end node
-        /// </summary>
-        /// <param name="unitize">True = return unitised vector, false = return non-unitised vector</param>
-        /// <returns></returns>
-        public Rhino.Geometry.Vector3d GetLocalXVec(bool unitize)
-        {
-            Rhino.Geometry.Vector3d v = new Rhino.Geometry.Vector3d(ePos.X - sPos.X, ePos.Y - sPos.Y, ePos.Z - sPos.Z);
-
-            if (unitize)
-                v.Unitize();
-
-            return v;
+            LocalY = Rhino.Geometry.Vector3d.CrossProduct(elNormal, LocalX);
         }
 
 
@@ -150,6 +142,13 @@ namespace CIFem_grasshopper
         {
             double factor = Utilities.GetScalingFactorFromRhino();
             return new Rhino.Geometry.Point3d(iPt.X / factor, iPt.Y / factor, iPt.Z / factor);
+        }
+
+
+        
+        public Rhino.Geometry.Point3d CreateRhinoPt(double pos)
+        {
+            return sPos + LocalX * pos;
         }
 
 

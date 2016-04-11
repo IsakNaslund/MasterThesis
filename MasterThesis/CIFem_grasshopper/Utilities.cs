@@ -84,28 +84,5 @@ namespace CIFem_grasshopper
             return factor;
         }
 
-
-        public enum CrossSectionType
-        {
-            RectangularSolid = 140000,
-            RHS,
-            CircularSolid,
-            CHS,
-        }
-
-
-        public static CrossSectionType CrossSectionTypeFromString(string section)
-        {
-            if (section.ToUpper().StartsWith("REC"))
-            {
-                return CrossSectionType.RectangularSolid;
-            }
-            else if (section.ToUpper().StartsWith("RHS"))
-            {
-                return CrossSectionType.RHS;
-            }
-
-            throw new NotImplementedException();
-        }
     }
 }

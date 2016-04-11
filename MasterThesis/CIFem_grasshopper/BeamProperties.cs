@@ -15,6 +15,18 @@ namespace CIFem_grasshopper
         private WR_Material _mat;
         private WR_SectionGroup _secGroup;
 
+        public WR_Material Material
+        { get { return _mat; } }
+
+        public WR_IXSec CrossSection
+         { get { return _section; } }
+
+        public WR_ReleaseBeam3d StartRelease
+         { get { return _stRel; } }
+ 
+        public WR_ReleaseBeam3d EndRelease
+         { get { return _enRel; } }
+
         public BeamProperties()
         {
             _section = null;
@@ -58,10 +70,6 @@ namespace CIFem_grasshopper
             str += "Start release:" + _stRel.ToString() + "\n";
             str += "End release" + _enRel.ToString();
 
-
-
-
-
             return str;
         }
 
@@ -86,19 +94,19 @@ namespace CIFem_grasshopper
 
         private WR_IXSec CrossSectionFormString(string section)
         {
-            Utilities.CrossSectionType cst = Utilities.CrossSectionTypeFromString(section);
+            CrossSectionCasts.CrossSectionType cst = CrossSectionCasts.CrossSectionTypeFromString(section);
 
             switch (cst)
             {
-                case Utilities.CrossSectionType.RectangularSolid:
+                case CrossSectionCasts.CrossSectionType.RectangularSolid:
                     return RectangularCrossSection(section);
 
-                case Utilities.CrossSectionType.RHS:
+                case CrossSectionCasts.CrossSectionType.RHS:
                     return RHSCrossSection(section);
 
-                case Utilities.CrossSectionType.CircularSolid:
+                case CrossSectionCasts.CrossSectionType.CircularSolid:
                     break;
-                case Utilities.CrossSectionType.CHS:
+                case CrossSectionCasts.CrossSectionType.CHS:
                     break;
                 default:
                     break;
@@ -137,7 +145,6 @@ namespace CIFem_grasshopper
             double factor = Utilities.GetScalingFactorFromRhino();
 
             return new WR_XSecRect(height * factor, width * factor);
-
         }
 
         public WR_SectionGroup SectionGroup

@@ -120,7 +120,7 @@ namespace CIFem_grasshopper.Components
             foreach (ResultElement re in res)
             {
                 // Get element orientation
-                Rhino.Geometry.Vector3d elX = re.GetLocalXVec();
+                Rhino.Geometry.Vector3d elX = re.LocalX;
                 Rhino.Geometry.Vector3d elZ = re.elNormal;
                 Vector3d elY = Vector3d.CrossProduct(elZ, elX);
 
@@ -171,7 +171,7 @@ namespace CIFem_grasshopper.Components
             // Get points on original element
             List<Point3d> basePts = new List<Point3d>();
             List<Point3d> pts = new List<Point3d>();
-            Rhino.Geometry.Vector3d elX = re.GetLocalXVec(true);
+            Rhino.Geometry.Vector3d elX = re.LocalX;
             List<double> lengths = re.pos;
             foreach (double l in lengths)
             {

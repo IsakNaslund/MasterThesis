@@ -15,17 +15,11 @@ namespace CIFem_grasshopper
         List<Curve> _secCrvs;
         List<Brep> _breps;
 
-        //DEBUG
-        List<Point3d> outPts;
-        List<Vector3d> outVecs;
-
         public DisplayElementSectionsComponent(): base("DisplayElementSectionsComponent", "DES", "Displays the element sections", "CIFem", "Results")
         {
             _bb = new BoundingBox();
             _secCrvs = new List<Curve>();
             _breps = new List<Brep>();
-            outPts = new List<Point3d>();
-            outVecs = new List<Vector3d>();
         }
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
@@ -42,8 +36,6 @@ namespace CIFem_grasshopper
             //throw new NotImplementedException();
             pManager.AddCurveParameter("Sections", "S", "sections. debug", GH_ParamAccess.list);
             pManager.AddBrepParameter("Breps", "B", "breps debug", GH_ParamAccess.list);
-            pManager.AddVectorParameter("Vc", "v", "v debug", GH_ParamAccess.list);
-            pManager.AddPointParameter("Pts", "p", "p debug", GH_ParamAccess.list);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -63,8 +55,6 @@ namespace CIFem_grasshopper
 
             DA.SetDataList(0, _secCrvs);
             DA.SetDataList(1, _breps);
-            DA.SetDataList(2, outVecs);
-            DA.SetDataList(3, outPts);
         }
 
         public override BoundingBox ClippingBox
@@ -111,17 +101,8 @@ namespace CIFem_grasshopper
             List<Point3d> maxPtsForBB = new List<Point3d>();
             List<Brep> sSweeps = new List<Brep>(res.Count);
 
-            //DEBUG
-            outPts.Clear();
-            outVecs.Clear();
-
             foreach (ResultElement re in res)
             {
-                Vector3d x = re.LocalX;
-                Vector3d z = re.elNormal;
-                Vector3d y = Vector3d.CrossProduct(z, x);
-                y.Unitize();
-                Line cl = new Line(re.sPos, x);
                 List<Curve> crvs;
                 List<Curve> sweepCrvs = new List<Curve>();
 
@@ -134,7 +115,7 @@ namespace CIFem_grasshopper
                     {
                         Point3d pt = CalcDeformedPosition(re, i, loadComb, sFac);
 
-                        // Add points
+                        // Add points to list
                         pts.Add(pt);
                     }
 
@@ -142,23 +123,32 @@ namespace CIFem_grasshopper
 
                     foreach (Curve crv in crvs)
                     {
+                        // Rotation to local coordinates
+                        Transform rotTrans = Transform.Rotation(Vector3d.XAxis, Vector3d.YAxis, Vector3d.ZAxis, re.LocalX, re.LocalY, re.elNormal);
+                        crv.Transform(rotTrans);
+
                         sweepCrvs.Clear();
 
                         for (int i = 0; i < re.pos.Count; i++)
                         {
                             Curve c = (Curve)crv.Duplicate();
 
-                            Transform rotTrans = Transform.Rotation(Vector3d.XAxis, Vector3d.YAxis, Vector3d.ZAxis, re.LocalX, re.LocalY, re.elNormal);
-                            c.Transform(rotTrans);
+                            Transform defTrans;
+                            if (showDeformed)
+                            {
+                                // Rotation to deformed shape
+                                Vector3d defTan = CalcDeformedTangent(rail, pts[i]);
+                                defTrans = GetDeformationTransform(re, defTan, i, loadComb, sFac);
+                            }
+                            else
+                                defTrans = Transform.Identity;
 
-                            Vector3d defTan = CalcDeformedTangent(rail, pts[i]);
-                            outVecs.Add(defTan);
-                            outPts.Add(pts[i]);
-                            Transform t = GetDeformationTransform(re, defTan, i, loadComb, sFac);
-                            c.Transform(t);
+                            // Calculate move to element positions
+                            Transform tTrans = Transform.Translation((Vector3d)pts[i]);
 
-                            // Move curves to element positions
-                            c.Translate((Vector3d)pts[i]);
+                            // Perform transformation
+                            c.Transform(defTrans);
+                            c.Transform(tTrans);
 
                             // Add curves
                             _secCrvs.Add(c);
@@ -201,20 +191,21 @@ namespace CIFem_grasshopper
                 return c.TangentAt(t);
         }
 
+
         private Transform GetDeformationTransform(ResultElement re, Vector3d defTan, int pos, string loadComb, double sFac)
         {
-            // Rotate normal vector
-            Transform t1 = Transform.Rotation(re.fi[loadComb][pos], re.LocalX, Point3d.Origin);
-            Vector3d rotY = re.elNormal;
-            Vector3d rotZ = re.elNormal;
-            rotY.Transform(t1);
-            rotZ.Transform(t1);
+            // Rotate tangent
+            Transform t1;
+            double angle = Vector3d.VectorAngle(re.LocalX, defTan);
+            if (Math.Abs(angle) >= Rhino.RhinoDoc.ActiveDoc.PageAngleToleranceRadians)
+                t1 = Transform.Rotation(angle, Vector3d.CrossProduct(re.LocalX, defTan), Point3d.Origin);
+            else
+                t1 = Transform.Identity;
 
-            //DEBUG, trying to sort out tangent rotation first
+            // Rotate in plane
+            Transform t2 = Transform.Rotation(re.fi[loadComb][pos]*(Math.PI/180)*sFac, defTan, Point3d.Origin);
 
-            Transform t = Transform.Rotation(re.LocalX, re.LocalY, re.elNormal, defTan, re.LocalY, re.elNormal);
-
-            return t;
+            return t1 *t2;
         }
 
 
@@ -237,7 +228,5 @@ namespace CIFem_grasshopper
             for (int i = 0; i < crvs.Count; i++)
                 args.Display.DrawCurve(crvs[i], color);
         }
-
-
     }
 }

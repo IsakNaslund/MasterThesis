@@ -4,7 +4,7 @@
 #include <map>
 
 
-typedef std::map<std::string, std::vector<double>> combResList;
+//typedef std::map<std::string, std::vector<double>> combResList;
 
 namespace CIFem
 {
@@ -35,12 +35,12 @@ namespace CIFem
 		~ElementResults3d();
 
 		void Reset();
-		combResList N() const { return _N; }
-		combResList Vy() const { return _Vy; }
-		combResList Vz() const { return _Vz; }
-		combResList T() const { return _T; }
-		combResList Myy() const { return _My; }
-		combResList Mzz() const { return _Mz; }
+		combResList  N() const { return _N; }
+		combResList  Vy() const { return _Vy; }
+		combResList  Vz() const { return _Vz; }
+		combResList  T() const { return _T; }
+		combResList  Myy() const { return _My; }
+		combResList  Mzz() const { return _Mz; }
 		std::map<std::string, std::vector<std::shared_ptr<Utilisation>>> Utilisations() const { return _util; }
 	};
 }

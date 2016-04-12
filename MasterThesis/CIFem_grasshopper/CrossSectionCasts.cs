@@ -116,9 +116,10 @@ namespace CIFem_grasshopper
             width = -1;
             thickness = -1;
 
-            string[] numbers = System.Text.RegularExpressions.Regex.Split(section, @"\D+");
+            //string[] numbers = System.Text.RegularExpressions.Regex.Split(section, @"\D+");
+            List<string> numbers = System.Text.RegularExpressions.Regex.Split(section, @"[^0-9\.]+").Where(c => c != "." && c.Trim() != "").ToList();
 
-            if (numbers.Length < 4 || !double.TryParse(numbers[1], out height) || !double.TryParse(numbers[2], out width) || !double.TryParse(numbers[3], out thickness))
+            if (numbers.Count < 3 || !double.TryParse(numbers[0], out height) || !double.TryParse(numbers[1], out width) || !double.TryParse(numbers[2], out thickness))
                 return false;
 
             return true;
@@ -191,8 +192,8 @@ namespace CIFem_grasshopper
             List<Point3d> pts = new List<Point3d>();
             pts.Add((Point3d)(Vector3d.ZAxis * height / 2 + Vector3d.YAxis * width / 2));
             pts.Add((Point3d)(Vector3d.ZAxis * height / 2 - Vector3d.YAxis * width / 2));
-            pts.Add((Point3d)(-Vector3d.ZAxis * height / 2 + Vector3d.YAxis * width / 2));
             pts.Add((Point3d)(-Vector3d.ZAxis * height / 2 - Vector3d.YAxis * width / 2));
+            pts.Add((Point3d)(-Vector3d.ZAxis * height / 2 + Vector3d.YAxis * width / 2));
 
             pts.Add((Point3d)(Vector3d.ZAxis * height / 2 + Vector3d.YAxis * width / 2)); // Add first pt again to get closed curve
 
@@ -203,8 +204,8 @@ namespace CIFem_grasshopper
             pts.Clear();
             pts.Add((Point3d)(Vector3d.ZAxis * ((height / 2) - thickness) + Vector3d.YAxis * ((width / 2) - thickness)));
             pts.Add((Point3d)(Vector3d.ZAxis * ((height / 2) - thickness) - Vector3d.YAxis * ((width / 2) - thickness)));
-            pts.Add((Point3d)(-Vector3d.ZAxis * ((height / 2) - thickness) + Vector3d.YAxis * ((width / 2) - thickness)));
             pts.Add((Point3d)(-Vector3d.ZAxis * ((height / 2) - thickness) - Vector3d.YAxis * ((width / 2) - thickness)));
+            pts.Add((Point3d)(-Vector3d.ZAxis * ((height / 2) - thickness) + Vector3d.YAxis * ((width / 2) - thickness)));
 
             pts.Add((Point3d)(Vector3d.ZAxis * ((height / 2) - thickness) + Vector3d.YAxis * ((width / 2) - thickness))); // Add first pt again to get closed curve
 

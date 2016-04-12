@@ -84,6 +84,11 @@ CIFem::Vector3d CIFem::Vector3d::operator- (CIFem::Vector3d other)
 	return Vector3d(_x-other._x, _y-other._y, _z-other._z);
 }
 
+CIFem::Vector3d CIFem::Vector3d::operator+ (CIFem::Vector3d other)
+{
+	return Vector3d(_x + other._x, _y + other._y, _z + other._z);
+}
+
 CIFem::Vector3d CIFem::Vector3d::ZeroVec()
 {
 	return Vector3d(0,0,0);
@@ -102,4 +107,9 @@ CIFem::Vector3d CIFem::Vector3d::Y()
 CIFem::Vector3d CIFem::Vector3d::Z()
 {
 	return Vector3d(0,0,1);
+}
+
+CIFem::Vector3d CIFem::Vector3d::CrossProduct(Vector3d a, Vector3d b)
+{
+	return Vector3d(a._y*b._z-b._y*a._z, a._z * b._x - b._z * a._x, a._x * b._y - b._x * a._y);
 }

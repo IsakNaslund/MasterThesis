@@ -40,6 +40,7 @@ namespace CIFem
 		virtual double Weight() const = 0;
 
 		virtual bool UpdateElement() = 0;
+		virtual bool UpdateElementOrientation() = 0;
 		virtual Utilisation CalcAndGetMaxUtil() = 0;
 
 	};

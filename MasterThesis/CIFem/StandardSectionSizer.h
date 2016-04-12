@@ -19,14 +19,16 @@ namespace CIFem
 
 
 		//Main function for running section sizier
-		void Run(int maxIterations);
+		int Run(int maxIterations);
 
 		//Add load combination
 		void AddLoadCombination(LoadCombination comb);
 
 	private:
 
-		bool CheckUtilization(int maxIterations, int iterationCount);
+		bool CheckUtilization();
+		bool CheckElementRotation();
+		bool IncrementIteration(const int & maxIterations, int & iterationCount);
 	};
 }
 

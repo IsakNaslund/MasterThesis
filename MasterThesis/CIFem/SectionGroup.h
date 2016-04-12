@@ -16,7 +16,7 @@ namespace CIFem
 		{
 			bool operator()(std::shared_ptr<CIFem::ICrossSection> a, std::shared_ptr<CIFem::ICrossSection> b)
 			{
-				return a->GetArea() > b->GetArea();
+				return a->GetArea() < b->GetArea();
 			}
 		};
 

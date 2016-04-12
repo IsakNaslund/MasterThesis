@@ -33,6 +33,7 @@ namespace CIFem
 		virtual double CheckShearY(double Vy) override;
 		virtual double CheckShearZ(double Vz) override;
 
+		bool DirectionDependant() { return true; }
 
 		std::string ToString() override;
 	};

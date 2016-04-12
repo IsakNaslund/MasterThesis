@@ -3,6 +3,9 @@
 #include <vector>
 #include "IElement.h"
 #include "Utilisation.h"
+#include <map>
+
+typedef std::map<std::string, std::vector<double>> combResList;
 
 namespace CIFem
 {
@@ -15,6 +18,7 @@ namespace CIFem
 
 		virtual void Reset() = 0;
 		double GetMaxAbsolute(std::vector<double> forces);
+		double GetMaxAbsolute(const combResList & forces);
 		void UpdateMaxUtilisation(Utilisation u);
 
 	protected:

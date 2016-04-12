@@ -17,17 +17,20 @@ StandardSectionSizer::~StandardSectionSizer()
 {
 }
 
-void StandardSectionSizer::Run(int maxIterations)
+int StandardSectionSizer::Run(int maxIterations)
 {
 	int iterationCount = 0;
-
+	bool run = true;
 	//Run until all sections have utilization below 1
-	while (CheckUtilization(maxIterations, iterationCount))
+	while (run)
 	{
-		_linSolver.Solve();
-		iterationCount++;
-	}
 
+		run = CheckElementRotation();
+		_linSolver.Solve();
+		//_linSolver.Solve();
+		run = (/*CheckUtilization() ||*/ run) & IncrementIteration(maxIterations, iterationCount);
+	}
+	return iterationCount;
 }
 
 void StandardSectionSizer::AddLoadCombination(LoadCombination comb)
@@ -35,24 +38,40 @@ void StandardSectionSizer::AddLoadCombination(LoadCombination comb)
 	_linSolver.AddLoadCombination(comb);
 }
 
-bool StandardSectionSizer::CheckUtilization(int maxIterations, int iterationCount)
+bool StandardSectionSizer::CheckUtilization()
 {
-
-	if (iterationCount < 1)
-		return true;
-
-	if (iterationCount > maxIterations)
-		return false;
 
 	bool updated = false;
 	for (int i = 0; i < _structure->ElementCount(); i++)
 	{
 		if (_structure->GetElements()[i]->CalcAndGetMaxUtil().GetUtil()>1)
 		{
-			_structure->GetElements()[i]->UpdateElement();
-			updated = true;
+			if(_structure->GetElements()[i]->UpdateElement())
+				updated = true;
 		}
 	}
 
 	return updated;
+}
+
+bool StandardSectionSizer::CheckElementRotation()
+{
+	bool updated = false;
+	for (int i = 0; i < _structure->ElementCount(); i++)
+	{
+		if (_structure->GetElements()[i]->UpdateElementOrientation())
+			updated = true;
+	}
+
+	return updated;
+
+}
+bool StandardSectionSizer::IncrementIteration(const int & maxIterations, int & iterationCount)
+{
+
+	iterationCount++;
+
+	if (iterationCount > maxIterations)
+		return false;
+
 }

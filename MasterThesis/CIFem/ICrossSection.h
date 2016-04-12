@@ -31,6 +31,9 @@ namespace CIFem
 		// Returns a string defining the cross section
 		// Different format for each cross section. Needs to be handled in wrappers.
 		virtual std::string ToString() = 0;
+
+		virtual bool DirectionDependant() = 0;
+
 	};
 
 }

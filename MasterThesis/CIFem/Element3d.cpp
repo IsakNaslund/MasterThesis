@@ -143,6 +143,8 @@ void CIFem::Element3d::UpdateStiffnessMatrix()
 	arma::mat GMat = GetTransformationMatrix();
 
 	_Ke = GMat.t()*Ke*GMat;
+
+	_updateStiffnessMatrix = false;
 }
 
 // Creates and returns a global element stiffness matrix
@@ -336,6 +338,8 @@ void CIFem::Element3d::UpdateNormal(Vector3d newNormal)
 	_updateStiffnessMatrix = true;
 }
 
+
+
 bool CIFem::Element3d::UpdateCrossSection()
 {
 	if (_results._maxUtil.GetUtil() > 1)
@@ -349,6 +353,61 @@ bool CIFem::Element3d::UpdateCrossSection()
 
 		return success;
 	}
+	return true;
+}
+
+bool CIFem::Element3d::UpdateElement()
+{
+	return UpdateCrossSection();
+}
+
+
+bool CIFem::Element3d::UpdateElementOrientation()
+{
+	return UpdateNormal();
+}
+
+bool CIFem::Element3d::UpdateNormal()
+{
+	//For example circular cross sections dont gain anything from rotating the normal
+	if (!_crossSection->DirectionDependant())
+		return false;
+
+
+	//Assuming that max moments will e dominating to rotate the normal vector
+	double maxMy, maxMz;
+
+
+	maxMz = _results.GetMaxAbsolute(_results.Mzz());
+
+	if (maxMz == 0)
+		return false;
+
+	maxMy = _results.GetMaxAbsolute(_results.Myy());
+
+	if (maxMy == 0 && maxMz == 0)
+		return false;
+
+	Vector3d tan(_sNode, _eNode);
+	tan.Unitize();
+
+	Vector3d y = Vector3d::CrossProduct(_eo, tan);
+	y.Unitize();
+
+	if (maxMy == 0)
+	{
+		UpdateNormal(y);
+		return true;
+	}
+		
+
+
+	Vector3d newNormal = _eo*maxMy + y*maxMz;
+
+	newNormal.Unitize();
+
+	UpdateNormal(newNormal);
+
 	return true;
 }
 

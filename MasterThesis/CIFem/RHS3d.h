@@ -30,6 +30,8 @@ namespace CIFem
 
 		double CalcStVenantsTorsionConstant();
 
+		bool DirectionDependant() { return true; }
+
 		std::string ToString() override;
 	};
 }

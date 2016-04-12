@@ -31,6 +31,28 @@ namespace CIFem
 			return min;
 	}
 
+	double IElementResults::GetMaxAbsolute(const combResList & forces)
+	{
+		double max = -1e99;
+		double min = 1e99;
+
+		for each (std::pair<std::string, std::vector<double>> var in forces)
+		{
+			for (size_t i = 0; i < var.second.size(); i++)
+			{
+				if (var.second[i] > max)
+					max = var.second[i];
+				if (var.second[i] < min)
+					min = var.second[i];
+			}
+		}
+
+		if (abs(max) >= abs(min))
+			return max;
+		else
+			return min;
+	}
+
 	void IElementResults::UpdateMaxUtilisation(Utilisation u)
 	{
 		_maxUtil.Update(u.GetUtil(), u.GetDesc());

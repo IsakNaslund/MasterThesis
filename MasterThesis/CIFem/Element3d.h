@@ -74,8 +74,11 @@ namespace CIFem
 		void UpdateMaterial(std::shared_ptr<Material> newMat);
 		void UpdateNormal(Vector3d newNormal);
 
+		bool UpdateElementOrientation();
+
 		bool UpdateCrossSection();
-		bool UpdateElement() { return UpdateCrossSection(); }
+		bool UpdateElement();
+		bool UpdateNormal();
 
 		// Geometric data getters
 		XYZ StartPosition() const { return _sNode; }

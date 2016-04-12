@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using Rhino;
 using CIFem_wrapper;
+using Rhino.Geometry;
+using CIFem_grasshopper;
 
 namespace CIFem_grasshopper
 {

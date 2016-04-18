@@ -98,7 +98,6 @@ namespace CIFem_grasshopper
             ResetDrawingData();
 
             List<Point3d> pts = new List<Point3d>();            // Points to create curve from
-            List<Point3d> maxPtsForBB = new List<Point3d>();
             List<Brep> sSweeps = new List<Brep>(res.Count);
 
             foreach (ResultElement re in res)
@@ -161,7 +160,7 @@ namespace CIFem_grasshopper
                 }
             }
 
-            _bb = new BoundingBox();
+            _bb = new BoundingBox(pts);
 
             return true;
         }
@@ -211,8 +210,10 @@ namespace CIFem_grasshopper
 
         public override void DrawViewportMeshes(IGH_PreviewArgs args)
         {
-            DrawBreps(args, _breps, System.Drawing.Color.DarkBlue);
-            DrawCurves(args, _secCrvs, System.Drawing.Color.DarkBlue);
+            // Dont do this, results are strange. Instead output the breps and curves
+
+            //DrawBreps(args, _breps, System.Drawing.Color.DarkBlue);
+            //DrawCurves(args, _secCrvs, System.Drawing.Color.DarkBlue);
 
             base.DrawViewportMeshes(args);
         }

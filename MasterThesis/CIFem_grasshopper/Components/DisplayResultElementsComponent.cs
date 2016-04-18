@@ -120,10 +120,9 @@ namespace CIFem_grasshopper.Components
             foreach (ResultElement re in res)
             {
                 // Get element orientation
-                Rhino.Geometry.Vector3d elX = re.LocalX;
-                Rhino.Geometry.Vector3d elZ = re.elNormal;
-                Vector3d elY = Vector3d.CrossProduct(elZ, elX);
-
+                Vector3d elX = re.LocalX;
+                Vector3d elY = re.LocalY;
+                Vector3d elZ = re.elNormal;
 
                 ////// START DRAWING STUFF //////
 

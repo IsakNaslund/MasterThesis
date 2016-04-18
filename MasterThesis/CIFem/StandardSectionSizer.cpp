@@ -24,9 +24,9 @@ int StandardSectionSizer::Run(int maxIterations)
 	//Run until all sections have utilization below 1
 	while (run)
 	{
-
-		run = CheckElementRotation();
 		_linSolver.Solve();
+		run = CheckElementRotation();
+
 		//_linSolver.Solve();
 		run = (/*CheckUtilization() ||*/ run) & IncrementIteration(maxIterations, iterationCount);
 	}
@@ -71,7 +71,6 @@ bool StandardSectionSizer::IncrementIteration(const int & maxIterations, int & i
 
 	iterationCount++;
 
-	if (iterationCount > maxIterations)
-		return false;
+	return iterationCount < maxIterations;
 
 }

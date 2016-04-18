@@ -23,7 +23,7 @@ void CIFem_wrapper::WR_StandardSectionSizer::AddLoadCombination(WR_LoadCombinati
 	_secSizer->AddLoadCombination(comb->GetCombination());
 }
 
-void CIFem_wrapper::WR_StandardSectionSizer::Run(int maxIterations)
+int CIFem_wrapper::WR_StandardSectionSizer::Run(int maxIterations)
 {
-	_secSizer->Run(maxIterations);
+	return _secSizer->Run(maxIterations);
 }

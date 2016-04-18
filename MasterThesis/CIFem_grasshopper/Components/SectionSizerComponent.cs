@@ -12,10 +12,12 @@ namespace CIFem_grasshopper
     {
         public List<string> log { get; set; }
         private List<ResultElement> resElems { get; set; }
+        private int _nbIterations;
 
         public SectionSizerComponent(): base("Section Sizer", "SecSize", "A simple section sizer based on a linear solver.", "CIFem", "Optimizers")
         {
             log = new List<string>();
+            _nbIterations = 0;
         }
 
         public override Guid ComponentGuid
@@ -42,6 +44,7 @@ namespace CIFem_grasshopper
             pManager.AddTextParameter("Messageboard", "log", "Outputs a log of the performed calculation", GH_ParamAccess.list);
 
             pManager.AddParameter(new ResultElementParam(), "Result Elements", "RE", "Result elements, storing results from the calculation", GH_ParamAccess.list);
+            pManager.AddIntegerParameter("I", "Iterations", "Number of iterations ran", GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -70,7 +73,7 @@ namespace CIFem_grasshopper
                     secSizer.AddLoadCombination(lc);
                 }
 
-                secSizer.Run(maxIter);
+                _nbIterations= secSizer.Run(maxIter);
 
 
                 // Extract results
@@ -88,6 +91,7 @@ namespace CIFem_grasshopper
             }
             DA.SetDataList(0, log);
             DA.SetDataList(1, resElems);
+            DA.SetData(2, _nbIterations);
 
         }
     }

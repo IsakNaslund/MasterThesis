@@ -19,6 +19,7 @@ namespace CIFem
 		//Lists of results
 		combResList _N, _Vy, _Vz, _T, _My, _Mz, _u, _v, _w, _fi;
 		std::vector<double> _pos;
+		std::vector<std::string> _loadCases;
 
 		//List of utilisations
 		std::map<std::string, std::vector<std::shared_ptr<Utilisation>>> _util;
@@ -42,5 +43,8 @@ namespace CIFem
 		combResList  Myy() const { return _My; }
 		combResList  Mzz() const { return _Mz; }
 		std::map<std::string, std::vector<std::shared_ptr<Utilisation>>> Utilisations() const { return _util; }
+
+		void MaxMomentSection(double & my, double & mz);
+
 	};
 }

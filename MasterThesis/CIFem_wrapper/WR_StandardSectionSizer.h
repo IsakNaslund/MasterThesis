@@ -16,7 +16,7 @@ namespace CIFem_wrapper
 		~WR_StandardSectionSizer();
 
 		void AddLoadCombination(WR_LoadCombination^ comb);
-		void Run(int maxIterations);
+		int Run(int maxIterations);
 	};
 }
 

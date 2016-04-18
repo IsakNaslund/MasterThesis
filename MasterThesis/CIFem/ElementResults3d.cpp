@@ -72,6 +72,11 @@ namespace CIFem
 		else
 			_util.insert(std::pair<std::string, std::vector<std::shared_ptr<Utilisation>>>(name, std::vector<std::shared_ptr<Utilisation>>()));
 
+		if (!(std::find(_loadCases.begin(), _loadCases.end(), name) != _loadCases.end()))
+		{
+			_loadCases.push_back(name);
+		}
+
 	}
 
 	void ElementResults3d::CalcMaxUtil()
@@ -111,5 +116,28 @@ namespace CIFem
 
 		_util.clear();
 		_maxUtil.Reset();
+
+		_loadCases.clear();
+	}
+
+	void ElementResults3d::MaxMomentSection(double & my, double & mz)
+	{
+		double max = -1e99;
+
+		for (int i = 0; i < _loadCases.size(); i++)
+		{
+			for (int j = 0; j < _My[_loadCases[i]].size(); j++)
+			{
+				double totSquared = pow(_My[_loadCases[i]][j], 2) + pow(_Mz[_loadCases[i]][j], 2);
+				if (totSquared > max)
+				{
+					max = totSquared;
+					my = _My[_loadCases[i]][j];
+					mz = _Mz[_loadCases[i]][j];
+				}
+					
+			}
+		}
+
 	}
 }

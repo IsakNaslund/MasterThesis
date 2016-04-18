@@ -375,17 +375,15 @@ bool CIFem::Element3d::UpdateNormal()
 
 
 	//Assuming that max moments will e dominating to rotate the normal vector
-	double maxMy, maxMz;
+	double maxMy = 0;
+	double maxMz = 0;
 
-
-	maxMz = _results.GetMaxAbsolute(_results.Mzz());
+	_results.MaxMomentSection(maxMy, maxMz);
 
 	if (maxMz == 0)
 		return false;
 
-	maxMy = _results.GetMaxAbsolute(_results.Myy());
-
-	if (maxMy == 0 && maxMz == 0)
+	if(abs(maxMz/maxMy) < 0.0001)
 		return false;
 
 	Vector3d tan(_sNode, _eNode);
@@ -399,10 +397,8 @@ bool CIFem::Element3d::UpdateNormal()
 		UpdateNormal(y);
 		return true;
 	}
-		
-
-
-	Vector3d newNormal = _eo*maxMy + y*maxMz;
+	
+	Vector3d newNormal = _eo*maxMy - y*maxMz;
 
 	newNormal.Unitize();
 

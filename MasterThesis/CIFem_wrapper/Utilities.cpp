@@ -25,6 +25,17 @@ System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^> ^ Utilities::
 	return l;
 }
 
+System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^>^ Utilities::GetListFromUtilSet(const CIFem::UtilisationSet & set)
+{
+	System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^> ^ l = gcnew System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^>(set.size());
+
+	int size = set.size();
+	for (int i = 0; i < size; i++)
+		l->Add(gcnew CIFem_wrapper::WR_Utilisation(set[i]));
+
+	return l;
+}
+
 System::String ^ Utilities::ConvertToSystemString(std::string stdStr)
 {
 	return msclr::interop::marshal_as<System::String ^>(stdStr);
@@ -51,4 +62,16 @@ System::Collections::Generic::Dictionary<System::String^, System::Collections::G
 	}
 	return dict;
 }
+
+System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation ^> ^> ^ Utilities::MapToDictionary(const std::map<std::string, CIFem::UtilisationSet> & map)
+{
+	System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^>^> ^ dict = gcnew System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation^>^>();
+
+	for each (std::pair<std::string, CIFem::UtilisationSet> pair in map)
+	{
+		dict->Add(ConvertToSystemString(pair.first), GetListFromUtilSet(pair.second));
+	}
+	return dict;
+}
+
 

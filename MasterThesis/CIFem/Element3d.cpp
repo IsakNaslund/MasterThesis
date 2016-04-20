@@ -306,10 +306,11 @@ void CIFem::Element3d::CalculateSectionForces(int n, string resultName)
 		_results._fi[resultName].push_back(x*m(10) + m(11) - _qw*x2 / (2 * GKv));					//-qw*x^2/2/GKv
 
 
-		// Initialise list of utilisations so that it has as many points as the results
-		std::shared_ptr<Utilisation> spU(new Utilisation());
-		_results._util[resultName].push_back(spU);
+
 	}
+
+	// Initialise list of utilisations so that it has as many points as the results
+	_results._util[resultName].SetUpEmptyUtilisations(n);
 
 	// Do section checks when all results are stored
 	DoSectionChecks(resultName);
@@ -353,7 +354,7 @@ bool CIFem::Element3d::UpdateCrossSection()
 
 		return success;
 	}
-	return true;
+	return false;
 }
 
 bool CIFem::Element3d::UpdateElement()
@@ -660,7 +661,7 @@ const std::map<std::string, std::vector<double>> & CIFem::Element3d::AllDisplace
 	return _results._fi;
 }
 
-const std::map<std::string, std::vector<std::shared_ptr<Utilisation>>>& CIFem::Element3d::AllUtilisation() const
+const std::map<std::string, UtilisationSet>& CIFem::Element3d::AllUtilisation() const
 {
 	return _results._util;
 }

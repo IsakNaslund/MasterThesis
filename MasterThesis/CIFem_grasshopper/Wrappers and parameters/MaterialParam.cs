@@ -12,7 +12,7 @@ namespace CIFem_grasshopper
     public class MaterialParam : GH_Param<MaterialGoo>
     {
 
-        public MaterialParam() :base(new GH_InstanceDescription("Material", "M", "Material to use in structures","CIFem","Elements"))
+        public MaterialParam() :base(new GH_InstanceDescription("Material", "M", "Material to use in structures","CIFem", "Parameters"))
         {
         }
 
@@ -24,12 +24,5 @@ namespace CIFem_grasshopper
             }
         }
 
-        public override GH_Exposure Exposure
-        {
-            get
-            {
-                return GH_Exposure.hidden;
-            }
-        }
     }
 }

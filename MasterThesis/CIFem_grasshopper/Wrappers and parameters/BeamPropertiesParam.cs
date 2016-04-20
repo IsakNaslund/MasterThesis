@@ -10,7 +10,7 @@ namespace CIFem_grasshopper
     public class BeamPropertiesParam : Grasshopper.Kernel.GH_Param<BeamPropertiesGoo>
     {
 
-        public BeamPropertiesParam():base(new GH_InstanceDescription("3d Beam Prop", "3dbP", "Properties for a 3d beam","CIFem","Elements"))
+        public BeamPropertiesParam():base(new GH_InstanceDescription("3d Beam Prop", "3dbP", "Properties for a 3d beam","CIFem", "Parameters"))
         {
         }
 
@@ -22,12 +22,5 @@ namespace CIFem_grasshopper
             }
         }
 
-        public override GH_Exposure Exposure
-        {
-            get
-            {
-                return GH_Exposure.hidden;
-            }
-        }
     }
 }

@@ -162,6 +162,7 @@
     <ClInclude Include="LoadCase.h" />
     <ClInclude Include="LoadCombination.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="ModeShapeOptimizer.h" />
     <ClInclude Include="PointLoad.h" />
     <ClInclude Include="Restraint.h" />
     <ClInclude Include="DOF.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Structure.h" />
     <ClInclude Include="UtilCheck3dBasic.h" />
     <ClInclude Include="Utilisation.h" />
+    <ClInclude Include="UtilisationSet.h" />
     <ClInclude Include="Vector3d.h" />
     <ClInclude Include="XYZ.h" />
   </ItemGroup>
@@ -210,6 +212,7 @@
     <ClCompile Include="LoadCase.cpp" />
     <ClCompile Include="LoadCombination.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="ModeShapeOptimizer.cpp" />
     <ClCompile Include="PointLoad.cpp" />
     <ClCompile Include="Restraint.cpp" />
     <ClCompile Include="DOF.cpp" />
@@ -237,6 +240,7 @@
     <ClCompile Include="Structure.cpp" />
     <ClCompile Include="UtilCheckBasic.cpp" />
     <ClCompile Include="Utilisation.cpp" />
+    <ClCompile Include="UtilisationSet.cpp" />
     <ClCompile Include="Vector3d.cpp" />
     <ClCompile Include="XYZ.cpp" />
   </ItemGroup>

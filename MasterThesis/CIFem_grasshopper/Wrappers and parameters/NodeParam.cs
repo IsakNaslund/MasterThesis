@@ -22,12 +22,5 @@ namespace CIFem_grasshopper
             }
         }
 
-        public override GH_Exposure Exposure
-        {
-            get
-            {
-                return GH_Exposure.hidden;
-            }
-        }
     }
 }

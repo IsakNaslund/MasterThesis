@@ -124,7 +124,7 @@ namespace CIFem
 		const std::map<std::string, std::vector<double>> & AllDisplacementZ() const;
 		const std::map<std::string, std::vector<double>> & AllDisplacementTorsion() const;
 
-		const std::map<std::string, std::vector<std::shared_ptr<Utilisation>>> & AllUtilisation() const;
+		const std::map<std::string, UtilisationSet> & AllUtilisation() const;
 
 	private:
 		//void Init();				// Initialises class, call from all constructors

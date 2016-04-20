@@ -18,8 +18,8 @@ namespace CIFem
 		std::shared_ptr<Utilisation> Copy();	// Returns a new shared pointer to an identical object
 
 		void Reset();
-		void Update(double utilisation, std::string description);
-		inline double const GetUtil() { return _util; }
-		inline std::string const GetDesc() { return _description; }
+		void Update(const double & utilisation, const std::string & description);
+		inline double const GetUtil() const { return _util; }
+		inline std::string const GetDesc() const { return _description; }
 	};
 }

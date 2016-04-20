@@ -198,6 +198,12 @@
     <ClInclude Include="Checks.h">
       <Filter>Header Files\UtilisationChecks</Filter>
     </ClInclude>
+    <ClInclude Include="ModeShapeOptimizer.h">
+      <Filter>Header Files\Opimizers</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilisationSet.h">
+      <Filter>Header Files\Elements\ElementResults</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XYZ.cpp">
@@ -327,6 +333,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ShearZCheck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModeShapeOptimizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UtilisationSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

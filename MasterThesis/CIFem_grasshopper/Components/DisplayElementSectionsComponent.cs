@@ -202,7 +202,7 @@ namespace CIFem_grasshopper
                 t1 = Transform.Identity;
 
             // Rotate in plane
-            Transform t2 = Transform.Rotation(re.fi[loadComb][pos]*(Math.PI/180)*sFac, defTan, Point3d.Origin);
+            Transform t2 = Transform.Rotation(re.fi[loadComb][pos]*sFac, defTan, Point3d.Origin);
 
             return t1 *t2;
         }

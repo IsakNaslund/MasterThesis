@@ -32,7 +32,7 @@ void CIFem::Utilisation::Reset()
 }
 
 //Updates information if new utilisation is larger than old one
-void CIFem::Utilisation::Update(double utilisation, std::string description)
+void CIFem::Utilisation::Update(const double & utilisation, const std::string & description)
 {
 	double absUtil = abs(utilisation);
 	if (absUtil>_util)

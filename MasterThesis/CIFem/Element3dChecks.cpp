@@ -23,7 +23,7 @@ void CIFem::Element3dChecks::CheckElementUtilisations(std::shared_ptr<ICrossSect
 		for each (std::shared_ptr<IUtilCheck3d> check in _checks)
 		{
 			// Do checks, update element utilisation
-			results._util[resName][i]->Update(check->CheckElementUtilisations(xSec, mat, results, resName, i), check->_checkName);
+			results._util[resName].Update(check->CheckElementUtilisations(xSec, mat, results, resName, i), check->_checkName, i);
 		}
 	}
 }
@@ -37,7 +37,7 @@ bool CIFem::Element3dChecks::CheckUtilUntilFail(std::shared_ptr<ICrossSection> x
 		{
 			for (int i = 0; i < results.Utilisations()[pair.first].size(); i++)
 			{
-				if (check->CheckElementUtilisations(xSec, mat, results, pair.first, i) > 1)
+				if (abs(check->CheckElementUtilisations(xSec, mat, results, pair.first, i)) > 1)
 					return false;
 			}
 		}

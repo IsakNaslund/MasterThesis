@@ -9,7 +9,7 @@ namespace CIFem_grasshopper
 {
     public class CrossSectionParameter : GH_Param<CrossSectionGoo>
     {
-        public CrossSectionParameter():base(new GH_InstanceDescription("Cross Section", "XS", "Cross section for a beam", "CIFem", "Elements"))
+        public CrossSectionParameter():base(new GH_InstanceDescription("Cross Section", "XS", "Cross section for a beam", "CIFem", "Parameters"))
         { }
 
 
@@ -21,12 +21,6 @@ namespace CIFem_grasshopper
             }
         }
 
-        public override GH_Exposure Exposure
-        {
-            get
-            {
-                return GH_Exposure.hidden;
-            }
-        }
+
     }
 }

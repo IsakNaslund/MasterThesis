@@ -92,10 +92,31 @@ namespace CIFem_grasshopper
 
         private void GetDisplacements(WR_Element3d elem)
         {
-            u = elem.AllDisplacementX();
-            v = elem.AllDisplacementY();
-            w = elem.AllDisplacementZ();
+            //u = elem.AllDisplacementX();
+            //v = elem.AllDisplacementY();
+            //w = elem.AllDisplacementZ();
+            double sfac = Utilities.GetScalingFactorFromRhino();
+            u = GetScaledDisplacementList(elem.AllDisplacementX(), sfac);
+            v = GetScaledDisplacementList(elem.AllDisplacementY(), sfac);
+            w = GetScaledDisplacementList(elem.AllDisplacementZ(), sfac);
+
             fi = elem.AllDisplacementTorsion();
+        }
+
+        private Dictionary<string, List<double>> GetScaledDisplacementList(Dictionary<string, List<double>> list, double sfac)
+        {
+            Dictionary<string, List<double>> scaledList = new Dictionary<string, List<double>>();
+            foreach (KeyValuePair<string,List<double>> item in list)
+            {
+                List<double> valueList = new List<double>();
+
+                foreach (double d in item.Value)
+                {
+                    valueList.Add(d / sfac);
+                }
+                scaledList.Add(item.Key, valueList);
+            }
+            return scaledList;
         }
 
         private void GetUtilisations(WR_Element3d elem)

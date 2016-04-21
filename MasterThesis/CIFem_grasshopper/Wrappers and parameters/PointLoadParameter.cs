@@ -9,16 +9,9 @@ namespace CIFem_grasshopper
 {
     public class PointLoadParameter : Grasshopper.Kernel.GH_Param<PointLoadGoo>
     {
-        public PointLoadParameter():base(new GH_InstanceDescription("Point Load", "Pl", "Point Load", "CIFem", "Loads"))
+        public PointLoadParameter():base(new GH_InstanceDescription("Point Load", "Pl", "Point Load", "CIFem", "Parameters"))
         { }
 
-        public override GH_Exposure Exposure
-        {
-            get
-            {
-                return GH_Exposure.hidden;
-            }
-        }
 
         public override Guid ComponentGuid
         {

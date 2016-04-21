@@ -10,7 +10,7 @@ namespace CIFem_grasshopper
 {
     public class BeamReleaseParameter : GH_Param<BeamReleaseGoo>
     {
-        public BeamReleaseParameter():base(new GH_InstanceDescription("BeamRelease", "BR", "Release for 3d beam", "CIFem", "Elements"))
+        public BeamReleaseParameter():base(new GH_InstanceDescription("BeamRelease", "BR", "Release for 3d beam", "CIFem", "Parameters"))
         { }
 
 
@@ -22,12 +22,5 @@ namespace CIFem_grasshopper
             }
         }
 
-        public override GH_Exposure Exposure
-        {
-            get
-            {
-                return GH_Exposure.hidden;
-            }
-        }
     }
 }

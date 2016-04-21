@@ -11,7 +11,7 @@ namespace CIFem_grasshopper
 {
     public class UtilisationParam : Grasshopper.Kernel.GH_Param<UtilisationGoo>
     {
-        public UtilisationParam():base(new GH_InstanceDescription("Utilisation", "U", "Section utilisation","CIFem", "Results"))
+        public UtilisationParam():base(new GH_InstanceDescription("Utilisation", "U", "Section utilisation","CIFem", "Parameters"))
         {
         }
 

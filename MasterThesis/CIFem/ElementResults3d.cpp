@@ -68,9 +68,9 @@ namespace CIFem
 
 		// Find or create result object
 		if (_util.find(name) != _util.end())
-			_util[name].clear();
+			_util[name].Clear();
 		else
-			_util.insert(std::pair<std::string, std::vector<std::shared_ptr<Utilisation>>>(name, std::vector<std::shared_ptr<Utilisation>>()));
+			_util.insert(std::pair<std::string, UtilisationSet>(name, UtilisationSet()));
 
 		if (!(std::find(_loadCases.begin(), _loadCases.end(), name) != _loadCases.end()))
 		{
@@ -81,12 +81,11 @@ namespace CIFem
 
 	void ElementResults3d::CalcMaxUtil()
 	{
-		for each (std::pair<std::string, std::vector<std::shared_ptr<Utilisation>>> utilPair in _util)
+		_maxUtil.Reset();
+
+		for each (std::pair<std::string, UtilisationSet> utilPair in _util)
 		{
-			for (int i = 0; i < utilPair.second.size(); i++)
-			{
-				_maxUtil.Update(utilPair.second[i]->GetUtil(), utilPair.first + " " + utilPair.second[i]->GetDesc());
-			}
+			_maxUtil.Update(utilPair.second.MaxUtil().GetUtil(), utilPair.first + " " + utilPair.second.MaxUtil().GetDesc());
 		}
 	}
 

@@ -9,16 +9,9 @@ namespace CIFem_grasshopper
 {
     public class LoadCombParameter : Grasshopper.Kernel.GH_Param<LoadCombGoo>
     {
-        public LoadCombParameter():base(new GH_InstanceDescription("Load combiation", "LC", "Load combination", "CIFem", "Loads"))
+        public LoadCombParameter():base(new GH_InstanceDescription("Load combiation", "LC", "Load combination", "CIFem", "Parameters"))
         { }
 
-        public override GH_Exposure Exposure
-        {
-            get
-            {
-                return GH_Exposure.hidden;
-            }
-        }
 
         public override Guid ComponentGuid
         {

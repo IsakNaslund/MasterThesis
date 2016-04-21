@@ -27,8 +27,8 @@ int StandardSectionSizer::Run(int maxIterations)
 		_linSolver.Solve();
 		run = CheckElementRotation();
 
-		//_linSolver.Solve();
-		run = (/*CheckUtilization() ||*/ run) & IncrementIteration(maxIterations, iterationCount);
+		_linSolver.Solve();
+		run = (CheckUtilization() || run) & IncrementIteration(maxIterations, iterationCount);
 	}
 	return iterationCount;
 }

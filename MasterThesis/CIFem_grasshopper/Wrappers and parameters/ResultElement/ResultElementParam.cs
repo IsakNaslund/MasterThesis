@@ -11,7 +11,7 @@ namespace CIFem_grasshopper
 {
     public class ResultElementParam : Grasshopper.Kernel.GH_Param<ResultElementGoo>
     {
-        public ResultElementParam():base(new GH_InstanceDescription("Element results parameter", "ElRes", "A results parameter for elements","CIFem","Results"))
+        public ResultElementParam():base(new GH_InstanceDescription("Element results parameter", "ElRes", "A results parameter for elements","CIFem", "Parameters"))
         {
         }
 
@@ -22,5 +22,7 @@ namespace CIFem_grasshopper
                 return new Guid("15dd06f1-7f94-421e-a5f0-764ad3081864");
             }
         }
+
+        
     }
 }

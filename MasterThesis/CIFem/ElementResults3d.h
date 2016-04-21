@@ -2,6 +2,7 @@
 #include "CIFem_dll.h"
 #include "IElementResults.h"
 #include <map>
+#include "UtilisationSet.h"
 
 
 //typedef std::map<std::string, std::vector<double>> combResList;
@@ -22,7 +23,7 @@ namespace CIFem
 		std::vector<std::string> _loadCases;
 
 		//List of utilisations
-		std::map<std::string, std::vector<std::shared_ptr<Utilisation>>> _util;
+		std::map<std::string, UtilisationSet> _util;
 
 		//Maximum utilisation
 		Utilisation _maxUtil;
@@ -42,7 +43,7 @@ namespace CIFem
 		combResList  T() const { return _T; }
 		combResList  Myy() const { return _My; }
 		combResList  Mzz() const { return _Mz; }
-		std::map<std::string, std::vector<std::shared_ptr<Utilisation>>> Utilisations() const { return _util; }
+		std::map<std::string, UtilisationSet> Utilisations() const { return _util; }
 
 		void MaxMomentSection(double & my, double & mz);
 

@@ -33,10 +33,10 @@ namespace CIFem_grasshopper
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddNumberParameter("Material Stiffness", "E", "Youngs modulus for the beam, set to steel by deafault", GH_ParamAccess.item, 210000000000);
+            pManager.AddNumberParameter("Material Stiffness", "E", "Youngs modulus for the beam, set to steel by deafault", GH_ParamAccess.item, 210e9);
             pManager.AddNumberParameter("Poisons ratio", "p", "Poisons ration for the material of the beam, set to steel by default", GH_ParamAccess.item, 0.3);
             pManager.AddNumberParameter("Density", "d", "Density of the material. Given in kg/m3", GH_ParamAccess.item, 7800);
-            pManager.AddNumberParameter("Ultimate Stress", "fu", "The ultimate stress for the material, used for utilisation checks", GH_ParamAccess.item, 275e9);
+            pManager.AddNumberParameter("Ultimate Stress", "fu", "The ultimate stress for the material, used for utilisation checks", GH_ParamAccess.item, 275e6);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)

@@ -49,6 +49,12 @@
     <Filter Include="Header Files\Elements\ElementResults">
       <UniqueIdentifier>{2002b315-c6b8-4447-9812-31719faf7ce7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Loads">
+      <UniqueIdentifier>{4caa80a5-713f-4a7e-a136-ae0d283071dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Opimizers">
+      <UniqueIdentifier>{6e3292ab-7a74-491b-bcbe-fc926fe1deb6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XYZ.h">
@@ -156,13 +162,55 @@
     <ClInclude Include="ElementResults3d.h">
       <Filter>Header Files\Elements\ElementResults</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="LoadCase.h">
-      <Filter>Header Files</Filter>
-=======
     <ClInclude Include="Utilisation.h">
       <Filter>Header Files\Elements\ElementResults</Filter>
->>>>>>> a7cb0590d66557fef680c1e3035c2523c57572a4
+    </ClInclude>
+    <ClInclude Include="LoadCase.h">
+      <Filter>Header Files\Loads</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadCombination.h">
+      <Filter>Header Files\Loads</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLoad.h">
+      <Filter>Header Files\Loads</Filter>
+    </ClInclude>
+    <ClInclude Include="StandardSectionSizer.h">
+      <Filter>Header Files\Opimizers</Filter>
+    </ClInclude>
+    <ClInclude Include="SectionGroup.h">
+      <Filter>Header Files\Elements\Cross sections</Filter>
+    </ClInclude>
+    <ClInclude Include="Element3dChecks.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+    <ClInclude Include="AxialCheck.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+    <ClInclude Include="ShearYCheck.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+    <ClInclude Include="ShearZCheck.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+    <ClInclude Include="CombAxialBendingCheck.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+    <ClInclude Include="Checks.h">
+      <Filter>Header Files\UtilisationChecks</Filter>
+    </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="CHS3d.h">
+      <Filter>Header Files\Elements\Cross sections</Filter>
+    </ClInclude>
+    <ClInclude Include="CircularSolid3d.h">
+      <Filter>Header Files\Elements\Cross sections</Filter>
+=======
+    <ClInclude Include="ModeShapeOptimizer.h">
+      <Filter>Header Files\Opimizers</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilisationSet.h">
+      <Filter>Header Files\Elements\ElementResults</Filter>
+>>>>>>> 9fc205a61909e7f9270f521c8a7ae4915f93a61a
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -259,11 +307,53 @@
     <ClCompile Include="ElementResults3d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="LoadCase.cpp">
-=======
     <ClCompile Include="Utilisation.cpp">
->>>>>>> a7cb0590d66557fef680c1e3035c2523c57572a4
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ICrossSection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadCase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadCombination.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLoad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StandardSectionSizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SectionGroup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Element3dChecks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AxialCheck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CombAxialBendingCheck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShearYCheck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShearZCheck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="CHS3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CircularSolid3d.cpp">
+=======
+    <ClCompile Include="ModeShapeOptimizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UtilisationSet.cpp">
+>>>>>>> 9fc205a61909e7f9270f521c8a7ae4915f93a61a
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

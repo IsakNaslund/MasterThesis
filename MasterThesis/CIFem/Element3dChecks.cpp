@@ -46,6 +46,23 @@ bool CIFem::Element3dChecks::CheckUtilUntilFail(std::shared_ptr<ICrossSection> x
 	return true;
 }
 
+bool CIFem::Element3dChecks::CheckUtilUntilFail(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results, std::string loadCase)
+{
+	//This could be done better.Maybe save the highest sectional forces and use them only to do the check?
+
+	for each (std::shared_ptr<IUtilCheck3d> check in _checks)
+	{
+		for (int i = 0; i < results.Utilisations()[loadCase].size(); i++)
+		{
+			if (abs(check->CheckElementUtilisations(xSec, mat, results, loadCase, i)) > 1)
+				return false;
+		}
+	}
+
+
+	return true;
+}
+
 CIFem::Element3dChecks CIFem::Element3dChecks::BasicCheck()
 {
 	Element3dChecks check;

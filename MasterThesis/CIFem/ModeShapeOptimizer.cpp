@@ -3,7 +3,7 @@
 double CIFem::ModeShapeOptimizer::FindLowestUtilisation(int mode)
 {
 	double minUtil = 9e10;
-	std::string modeName = "Mode " + mode;
+	std::string modeName = "Mode " + std::to_string(mode);
 	for (int i = 0; i < _structure->GetElements().size(); i++)
 	{
 		double util = _structure->GetElements()[i]->Utilisations(modeName).MaxUtil().GetUtil();
@@ -18,7 +18,7 @@ double CIFem::ModeShapeOptimizer::FindLowestUtilisation(int mode)
 
 void CIFem::ModeShapeOptimizer::ScaleElementSectionForces(int mode, double sFac)
 {
-	std::string modeName = "Mode " + mode;
+	std::string modeName = "Mode " + std::to_string(mode);
 	for (int i = 0; i < _structure->GetElements().size(); i++)
 	{
 		_structure->GetElements()[i]->ScaleResults(modeName, sFac);
@@ -27,7 +27,7 @@ void CIFem::ModeShapeOptimizer::ScaleElementSectionForces(int mode, double sFac)
 
 void CIFem::ModeShapeOptimizer::UpdateSectionCrossSection(int mode)
 {
-	std::string modeName = "Mode " + mode;
+	std::string modeName = "Mode " + std::to_string(mode);
 	for (int i = 0; i < _structure->GetElements().size(); i++)
 	{
 		_structure->GetElements()[i]->UpdateElement(modeName);

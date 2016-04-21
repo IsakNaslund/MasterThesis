@@ -687,7 +687,7 @@ bool CIFem::Element3d::UpdateElement(std::string state)
 {
 
 	std::shared_ptr<ICrossSection> newSec;
-	bool success = _sectionGroup->UpdateCrossSection(_mat, _results, newSec);
+	bool success = _sectionGroup->UpdateCrossSection(_mat, _results, newSec, state);
 
 	//Should the cross section be updated if no match found? Doing it anyway for now....
 

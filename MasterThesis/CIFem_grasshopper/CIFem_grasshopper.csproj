@@ -64,7 +64,8 @@
     <Compile Include="Components\DisplayResultElementsComponent.cs" />
     <Compile Include="Components\ElementForcesComponent.cs" />
     <Compile Include="Components\ModeLoadCaseComponent.cs" />
-    <Compile Include="Components\ModeShapeOptimizerComponent.cs" />
+    <Compile Include="Components\ModeShapeOptimizerComponentModes.cs" />
+    <Compile Include="Components\ModeShapeOptimizerComponentRatio.cs" />
     <Compile Include="Components\NodeComponent.cs" />
     <Compile Include="Components\PointLoadComponent.cs" />
     <Compile Include="Components\ResultElementComponent.cs" />

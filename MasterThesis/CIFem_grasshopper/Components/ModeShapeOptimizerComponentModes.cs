@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace CIFem_grasshopper
 {
-    public class ModeShapeOptimizerComponent : GH_Component
+    public class ModeShapeOptimizerComponentModes : GH_Component
     {
         public List<string> log { get; set; }
         private List<ResultElement> resElems { get; set; }
 
-        public ModeShapeOptimizerComponent(): base("Mode shape optimizer", "ModeSize", "Section sizer sizing elements based on mode shapes", "CIFem", "Optimizers")
+        public ModeShapeOptimizerComponentModes(): base("Mode shape optimizer", "ModeSize", "Section sizer sizing elements based on mode shapes", "CIFem", "Optimizers")
         {
             log = new List<string>();
         }
@@ -22,7 +22,7 @@ namespace CIFem_grasshopper
         {
             get
             {
-                return new Guid("68dcaaf3-817d-4cf0-b0da-386a3c0d20d4");
+                return new Guid("3df875da-f58a-4bb7-8b64-346c24d1233b");
             }
         }
 
@@ -31,7 +31,7 @@ namespace CIFem_grasshopper
         {
             pManager.AddParameter(new StructureParam(), "Structure", "Str", "The structure to solve", GH_ParamAccess.item);
             pManager.AddBooleanParameter("Solve", "Go", "Toggle the solver", GH_ParamAccess.item);
-            pManager.AddNumberParameter("Max Ratio", "R", "Maximum ratio of eigenvalue in relation to the first before break", GH_ParamAccess.item, 5);
+            pManager.AddIntegerParameter("Modes", "m", "The modes to optimize for", GH_ParamAccess.list);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -48,11 +48,11 @@ namespace CIFem_grasshopper
             // Indata
             WR_Structure structure = null;
             bool go = false;
-            double maxRatio = 0;
+            List<int> modes = new List<int>();
 
             if (!DA.GetData(0, ref structure)) { return; }
             if (!DA.GetData(1, ref go)) { return; }
-            if (!DA.GetData(2, ref maxRatio)) { return; }
+            if (!DA.GetDataList(2, modes)) { return; }
 
 
             if (go)
@@ -62,7 +62,7 @@ namespace CIFem_grasshopper
                 // Solve
                 WR_ModeShapeOptimizer optimizer = new WR_ModeShapeOptimizer(structure);
 
-                optimizer.Run(maxRatio);
+                optimizer.Run(modes);
 
                 // Extract results
                 List<WR_IElement> elems = structure.GetAllElements();
@@ -83,4 +83,3 @@ namespace CIFem_grasshopper
         }
     }
 }
-

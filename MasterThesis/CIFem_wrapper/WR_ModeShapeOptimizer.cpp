@@ -26,3 +26,8 @@ void CIFem_wrapper::WR_ModeShapeOptimizer::Run(double maxRatio)
 {
 	_optimizer->Run(maxRatio);
 }
+
+void CIFem_wrapper::WR_ModeShapeOptimizer::Run(System::Collections::Generic::List<int>^ modes)
+{
+	_optimizer->Run(Utilities::GetSetFromList(modes));
+}

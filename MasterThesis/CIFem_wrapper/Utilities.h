@@ -5,6 +5,7 @@
 #include <map>
 #include <msclr\marshal_cppstd.h>
 #include "UtilisationSet.h"
+#include <set>
 
 
 
@@ -23,5 +24,7 @@ namespace Utilities
 	System::Collections::Generic::Dictionary<System::String^, System::Collections::Generic::List<CIFem_wrapper::WR_Utilisation ^> ^> ^ MapToDictionary(const std::map<std::string, CIFem::UtilisationSet> & map);
 
 	// C# to C++ conversion functions
+	std::vector<int>  GetVectorFromList(System::Collections::Generic::List<int> ^ list);
+	std::set<int>  GetSetFromList(System::Collections::Generic::List<int> ^ list);
 
 }

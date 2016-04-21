@@ -74,4 +74,26 @@ System::Collections::Generic::Dictionary<System::String^, System::Collections::G
 	return dict;
 }
 
+std::vector<int> Utilities::GetVectorFromList(System::Collections::Generic::List<int>^ list)
+{
+	std::vector<int> vec;
+
+	for (int i = 0; i < list->Count; i++)
+	{
+		vec.push_back(list[i]);
+	}
+	return vec;
+}
+
+std::set<int> Utilities::GetSetFromList(System::Collections::Generic::List<int>^ list)
+{
+	std::set<int> set;
+
+	for (int i = 0; i < list->Count; i++)
+	{
+		set.insert(list[i]);
+	}
+	return set;
+}
+
 

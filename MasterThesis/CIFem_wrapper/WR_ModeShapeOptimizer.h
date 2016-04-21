@@ -1,6 +1,7 @@
 #pragma once
 #include "WR_Structure.h"
 #include "ModeShapeOptimizer.h"
+#include "Utilities.h"
 
 namespace CIFem_wrapper
 {
@@ -15,6 +16,7 @@ namespace CIFem_wrapper
 
 		void Run();
 		void Run(double maxRatio);
+		void Run(System::Collections::Generic::List<int>^ modes);
 
 	};
 }

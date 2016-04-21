@@ -198,6 +198,12 @@
     <ClInclude Include="Checks.h">
       <Filter>Header Files\UtilisationChecks</Filter>
     </ClInclude>
+    <ClInclude Include="CHS3d.h">
+      <Filter>Header Files\Elements\Cross sections</Filter>
+    </ClInclude>
+    <ClInclude Include="CircularSolid3d.h">
+      <Filter>Header Files\Elements\Cross sections</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XYZ.cpp">
@@ -327,6 +333,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ShearZCheck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CHS3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CircularSolid3d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

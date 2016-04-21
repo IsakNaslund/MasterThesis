@@ -16,3 +16,8 @@ CIFem::ICrossSection * WR_IXSec::GetCrossSection()
 	return _xSec;
 }
 */
+
+System::String ^ CIFem_wrapper::WR_IXSec::ToString()
+{
+	return Utilities::ConvertToSystemString(GetCrossSection()->ToString());
+}

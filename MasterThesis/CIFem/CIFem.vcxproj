@@ -150,9 +150,11 @@
     <ClInclude Include="AxialCheck.h" />
     <ClInclude Include="Checks.h" />
     <ClInclude Include="CIFem_dll.h" />
+    <ClInclude Include="CircularSolid3d.h" />
     <ClInclude Include="CombAxialBendingCheck.h" />
     <ClInclude Include="EigenSolver.h" />
     <ClInclude Include="Element3dChecks.h" />
+    <ClInclude Include="CHS3d.h" />
     <ClInclude Include="ISolver.h" />
     <ClInclude Include="LinearSolver.h" />
     <ClInclude Include="ElementResults3d.h" />
@@ -197,9 +199,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AxialCheck.cpp" />
+    <ClCompile Include="CircularSolid3d.cpp" />
     <ClCompile Include="CombAxialBendingCheck.cpp" />
     <ClCompile Include="EigenSolver.cpp" />
     <ClCompile Include="Element3dChecks.cpp" />
+    <ClCompile Include="CHS3d.cpp" />
     <ClCompile Include="ICrossSection.cpp" />
     <ClCompile Include="ISolver.cpp" />
     <ClCompile Include="LinearSolver.cpp" />

@@ -25,6 +25,8 @@ namespace CIFem
 
 		double SetResultsToMode(int mode);
 
+		const arma::vec & EigenValues() const { return _eigenValues; }
+
 	private:
 
 		void CIFem::EigenSolver::EigenSolve(arma::mat & K, arma::mat & C, DofSet spDofs);

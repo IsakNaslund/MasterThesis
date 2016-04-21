@@ -153,6 +153,7 @@
     <ClInclude Include="CombAxialBendingCheck.h" />
     <ClInclude Include="EigenSolver.h" />
     <ClInclude Include="Element3dChecks.h" />
+    <ClInclude Include="Element3dState.h" />
     <ClInclude Include="ISolver.h" />
     <ClInclude Include="LinearSolver.h" />
     <ClInclude Include="ElementResults3d.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="CombAxialBendingCheck.cpp" />
     <ClCompile Include="EigenSolver.cpp" />
     <ClCompile Include="Element3dChecks.cpp" />
+    <ClCompile Include="Element3dState.cpp" />
     <ClCompile Include="ICrossSection.cpp" />
     <ClCompile Include="ISolver.cpp" />
     <ClCompile Include="LinearSolver.cpp" />

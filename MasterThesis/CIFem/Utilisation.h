@@ -6,8 +6,11 @@
 
 namespace CIFem
 {
+	
 	class CIFEM_API Utilisation
 	{
+		friend class UtilisationSet;
+
 		double _util;
 		std::string _description;
 

@@ -13,6 +13,7 @@
 //#include "UtilCheck3dBasic.h"
 #include <map>
 #include "SectionGroup.h"
+#include "Element3dState.h"
 
 
 using namespace std;
@@ -41,6 +42,9 @@ namespace CIFem
 		//Optional section group used for optimization
 		std::shared_ptr<SectionGroup> _sectionGroup;
 
+		//Element state. Used to save multiple variations of cross section, material and orientation
+		std::map<std::string, Element3dState> _states;
+
 	public:
 		Element3d();
 		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal);
@@ -64,7 +68,7 @@ namespace CIFem
 		arma::Col<double> GravityLoad(Vector3d direction);
 
 
-		void CalculateSectionForces(string resultName) {  CalculateSectionForces(11, resultName); }
+		void CalculateSectionForces(string resultName) {  CalculateSectionForces(5, resultName); }
 		void CalculateSectionForces(int n, string resultName);   //n is the number of evaluation points
 
 
@@ -78,7 +82,13 @@ namespace CIFem
 
 		bool UpdateCrossSection();
 		bool UpdateElement();
-		bool UpdateNormal();
+
+
+
+
+
+
+
 
 		// Geometric data getters
 		XYZ StartPosition() const { return _sNode; }
@@ -104,7 +114,7 @@ namespace CIFem
 		std::vector<double> ResultPosition();
 
 		//Utilisations
-		std::vector<std::shared_ptr<Utilisation>> Utilisations(std::string res);
+		const UtilisationSet & Utilisations(std::string res);
 
 		//Calc and get max utilisation
 		Utilisation CalcAndGetMaxUtil();
@@ -126,6 +136,17 @@ namespace CIFem
 
 		const std::map<std::string, UtilisationSet> & AllUtilisation() const;
 
+
+		bool UpdateElementOrientation(std::string state);
+		bool UpdateElement(std::string state);
+		bool SetToState(std::string state);
+		virtual void SetMaxState();
+		virtual void SetMinState();
+
+
+		void ScaleResults(std::string loadComb, double sFac);
+
+
 	private:
 		//void Init();				// Initialises class, call from all constructors
 		//void SetEdof(vector<int>);	// Sets the element dofs
@@ -144,7 +165,10 @@ namespace CIFem
 		// Results
 		//ElementResults3d & GetResult(std::string resultName);
  
+		bool GetNewNormal(Vector3d & newNormal);
 		
+		void SetToState(Element3dState & state);
+
 
 	protected:
 

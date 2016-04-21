@@ -38,6 +38,9 @@ namespace CIFem
 		bool UpdateElementOrientation() { return false; }
 
 		Utilisation CalcAndGetMaxUtil() { return Utilisation(0, "No Spring utilisation implemented yet"); }
+		const UtilisationSet & Utilisations(std::string res) { return UtilisationSet(); }
+
+		void ScaleResults(std::string loadComb, double sFac) {}
 
 	protected:
 		void DoSectionChecks(std::string resName);

@@ -8,6 +8,7 @@
 #include "Vector3d.h"
 #include "ICrossSection.h"
 #include "IUtilisationCheck.h"
+#include "UtilisationSet.h"
 
 namespace CIFem
 {
@@ -43,6 +44,15 @@ namespace CIFem
 		virtual bool UpdateElementOrientation() = 0;
 		virtual Utilisation CalcAndGetMaxUtil() = 0;
 
+		virtual const UtilisationSet & Utilisations(std::string res) = 0;
+
+		virtual void ScaleResults(std::string loadComb, double sFac) = 0;
+
+		virtual bool UpdateElementOrientation(std::string state) { return false; }
+		virtual bool UpdateElement(std::string state) { return false; }
+		virtual bool SetToState(std::string state) { return false; }
+		virtual void SetMaxState() {  }
+		virtual void SetMinState() {  }
 	};
 }
 

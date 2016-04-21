@@ -105,6 +105,10 @@ namespace CIFem_grasshopper
                 List<Curve> crvs;
                 List<Curve> sweepCrvs = new List<Curve>();
 
+                // Start and end caps
+                List<Curve> sCap = new List<Curve>();
+                List<Curve> eCap = new List<Curve>();
+
                 if (CrossSectionCasts.GetSectionPropertyCrvs(re.SectionPropertyString, out crvs))
                 {
                     pts.Clear();
@@ -154,9 +158,22 @@ namespace CIFem_grasshopper
                             sweepCrvs.Add(c);
                         }
 
-                        Brep[] b = Brep.CreateFromSweep(rail, sweepCrvs, false, Rhino.RhinoDoc.ActiveDoc.ModelAbsoluteTolerance);
+                        //Add curves to cap curves
+                        if (sweepCrvs.Count > 0)
+                        {
+                            sCap.Add(sweepCrvs[0]);
+                            eCap.Add(sweepCrvs[sweepCrvs.Count-1]);
+                        }
+
+                        //Create sweep
+                        Brep[] b = Brep.CreateFromSweep(rail, sweepCrvs, true, Rhino.RhinoDoc.ActiveDoc.ModelAbsoluteTolerance);
                         _breps.AddRange(b);
                     }
+
+                    // Cap sections
+                    List<List<Curve>> caps = new List<List<Curve>> { sCap, eCap };
+                    if (!CapSections(caps))
+                        throw new Exception("Error in the drawing of element sections");
                 }
             }
 
@@ -165,6 +182,30 @@ namespace CIFem_grasshopper
             return true;
         }
 
+
+        private bool CapSections(List<List<Curve>> capCrvs)
+        {
+            for (int i = 0; i < capCrvs.Count; i++)
+            {
+                Brep cap = new Brep();
+
+                // For one curve, i.e. solid sections
+                if (capCrvs[i].Count == 1)
+                    cap = Brep.CreatePlanarBreps(capCrvs[i][0])[0];
+
+                // For two curves, i.e. hollow sections
+                else if (capCrvs[i].Count == 2)
+                    cap = Brep.CreatePlanarBreps(capCrvs[i])[0];
+
+                // Error handling (for development)
+                else
+                    return false;
+
+                _breps.Add(cap);
+            }
+
+            return true;
+        }
 
         public Point3d CalcDeformedPosition(ResultElement re, int pos, string loadComb, double sFac)
         {

@@ -94,7 +94,13 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WR_ModeShapeOptimizer.h">
-      <Filter>Header Files</Filter>
+	  <Filter>Header Files</Filter>
+    </ClInclude>
+	<ClInclude Include="WR_XSecCHS.h">
+	  <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WR_XSecCSS.h">
+	  <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +182,12 @@
     <ClCompile Include="WR_ModeShapeOptimizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WR_XSecCHS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>	
+    <ClCompile Include="WR_XSecCSS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>	
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

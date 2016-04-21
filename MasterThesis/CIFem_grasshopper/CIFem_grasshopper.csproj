@@ -116,7 +116,6 @@
     <ProjectReference Include="..\CIFem_wrapper\CIFem_wrapper.vcxproj">
       <Project>{6a7e91a4-d2d8-4915-98cf-e3345b0997b3}</Project>
       <Name>CIFem_wrapper</Name>
-      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

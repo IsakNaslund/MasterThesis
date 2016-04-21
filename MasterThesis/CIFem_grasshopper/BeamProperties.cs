@@ -104,7 +104,7 @@ namespace CIFem_grasshopper
                 case CrossSectionCasts.CrossSectionType.RHS:
                     return RHSCrossSection(section);
 
-                case CrossSectionCasts.CrossSectionType.CircularSolid:
+                case CrossSectionCasts.CrossSectionType.CSS:
                     break;
                 case CrossSectionCasts.CrossSectionType.CHS:
                     break;

@@ -1,6 +1,7 @@
 #pragma once
 #include "ICrossSection.h"
 #include "m_shared_ptr.h"
+#include "Utilities.h"
 
 namespace CIFem_wrapper
 {
@@ -9,7 +10,7 @@ namespace CIFem_wrapper
 	{
 	public:
 		virtual std::shared_ptr<CIFem::ICrossSection> GetCrossSection() = 0;
-		virtual System::String^ ToString() override { return "Undefined Crossection"; }
+		virtual System::String^ ToString() override;
 	};
 
 }

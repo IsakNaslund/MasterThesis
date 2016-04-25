@@ -40,6 +40,16 @@ void CIFem::UtilisationSet::SetUpEmptyUtilisations(int nb)
 	}
 }
 
+void CIFem::UtilisationSet::ScaleUtilisation(double sFac)
+{
+	_maxUtil._util *= sFac;
+
+	for (int i = 0; i < _utilisations.size(); i++)
+	{
+		_utilisations[i]->_util *= sFac;
+	}
+}
+
 
 
 

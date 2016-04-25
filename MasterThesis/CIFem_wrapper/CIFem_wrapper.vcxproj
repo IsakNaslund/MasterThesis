@@ -148,6 +148,7 @@
     <ClInclude Include="WR_LinearSolver.h" />
     <ClInclude Include="WR_LoadCombination.h" />
     <ClInclude Include="WR_Material.h" />
+    <ClInclude Include="WR_ModeShapeOptimizer.h" />
     <ClInclude Include="WR_Node3d.h" />
     <ClInclude Include="WR_Plane.h" />
     <ClInclude Include="WR_ReleaseBeam3d.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="WR_LinearSolver.cpp" />
     <ClCompile Include="WR_LoadCombination.cpp" />
     <ClCompile Include="WR_Material.cpp" />
+    <ClCompile Include="WR_ModeShapeOptimizer.cpp" />
     <ClCompile Include="WR_Node3d.cpp" />
     <ClCompile Include="WR_Plane.cpp" />
     <ClCompile Include="WR_ReleaseBeam3d.cpp" />

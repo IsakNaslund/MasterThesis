@@ -32,6 +32,9 @@ namespace CIFem
 
 		void CalcMaxUtil();
 
+		void ScaleForcesAndDeformations(std::string loadComb, double sFac);
+
+
 	public:
 		ElementResults3d();
 		~ElementResults3d();

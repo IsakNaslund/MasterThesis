@@ -31,6 +31,7 @@ namespace CIFem
 		void Add(std::shared_ptr<CIFem::ICrossSection> crossSection);
 
 		bool UpdateCrossSection(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection> & updatedCrossSection);
+		bool UpdateCrossSection(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection> & updatedCrossSection, std::string loadCase);
 
 		bool UpdateCrossSection(double N, double Vy, double Vz, double My, double Mz, double T, double fu, std::shared_ptr<CIFem::ICrossSection> & updatedCrossSection);
 

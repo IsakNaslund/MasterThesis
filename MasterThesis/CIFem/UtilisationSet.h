@@ -27,7 +27,9 @@ namespace CIFem
 			return _utilisations.size();
 		}
 
-		const Utilisation & MaxUtil() { return _maxUtil; }
+		const Utilisation & MaxUtil() const { return _maxUtil; }
+
+		void ScaleUtilisation(double sFac);
 
 		const std::shared_ptr<Utilisation> &operator[](int i) const
 		{

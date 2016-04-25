@@ -21,6 +21,7 @@ namespace CIFem
 		void CheckElementUtilisations(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results, std::string resName);
 		//Checks if a cross section holds for all loadcases. Returns true if it holds, false if not
 		bool CheckUtilUntilFail(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results);
+		bool CheckUtilUntilFail(std::shared_ptr<ICrossSection> xSec, std::shared_ptr<Material> mat, ElementResults3d & results, std::string loadCase);
 		static Element3dChecks BasicCheck();
 		static std::shared_ptr<Element3dChecks> BasicCheckSharedPtr();
 

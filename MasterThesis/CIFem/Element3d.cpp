@@ -365,10 +365,16 @@ bool CIFem::Element3d::UpdateElement()
 
 bool CIFem::Element3d::UpdateElementOrientation()
 {
-	return UpdateNormal();
+	Vector3d newNormal;
+	if (GetNewNormal(newNormal))
+	{
+		UpdateNormal(newNormal);
+		return true;
+	}
+	return false;
 }
 
-bool CIFem::Element3d::UpdateNormal()
+bool CIFem::Element3d::GetNewNormal(Vector3d & newNormal)
 {
 	//For example circular cross sections dont gain anything from rotating the normal
 	if (!_crossSection->DirectionDependant())
@@ -395,17 +401,25 @@ bool CIFem::Element3d::UpdateNormal()
 
 	if (maxMy == 0)
 	{
-		UpdateNormal(y);
+		newNormal = y;
+		//UpdateNormal(y);
 		return true;
 	}
 	
-	Vector3d newNormal = _eo*maxMy - y*maxMz;
+	newNormal = _eo*maxMy - y*maxMz;
 
 	newNormal.Unitize();
 
-	UpdateNormal(newNormal);
+	//UpdateNormal(newNormal);
 
 	return true;
+}
+
+
+
+void CIFem::Element3d::ScaleResults(std::string loadComb, double sFac)
+{
+	_results.ScaleForcesAndDeformations(loadComb, sFac);
 }
 
 
@@ -528,17 +542,6 @@ void CIFem::Element3d::SetElementOrientation(Vector3d eo)
 }
 
 
-/*ElementResults3d & CIFem::Element3d::GetResult(std::string resultName)
-{
-	// Find or create result object
-	ElementResults3d result;
-	if (_results.find(resultName) != _results.end())
-		result = _results.find(resultName)->second;
-	else
-		_results[resultName] = result;
-
-	return result;
-}*/
 
 double Element3d::CalcLength(XYZ sNode, XYZ eNode)
 {
@@ -600,9 +603,9 @@ std::vector<double> CIFem::Element3d::ResultPosition()
 	return _results._pos;
 }
 
-std::vector<std::shared_ptr<Utilisation>> CIFem::Element3d::Utilisations(std::string comb) 
+const UtilisationSet & CIFem::Element3d::Utilisations(std::string comb)
 {
-	return std::vector<std::shared_ptr<Utilisation>>();
+	return _results._util[comb];
 }
 
 Utilisation CIFem::Element3d::CalcAndGetMaxUtil()
@@ -664,4 +667,86 @@ const std::map<std::string, std::vector<double>> & CIFem::Element3d::AllDisplace
 const std::map<std::string, UtilisationSet>& CIFem::Element3d::AllUtilisation() const
 {
 	return _results._util;
+}
+
+bool CIFem::Element3d::UpdateElementOrientation(std::string state)
+{
+	Vector3d newNormal;
+	if (GetNewNormal(newNormal))
+	{
+		if (!(_states.find(state) != _states.end()))
+			_states.insert(std::pair<std::string, Element3dState>(state, Element3dState(this->_mat, newNormal, this->_crossSection)));
+		else	
+			_states[state]._eo = newNormal;
+		return true;
+	}
+	return false;
+}
+
+bool CIFem::Element3d::UpdateElement(std::string state)
+{
+
+	std::shared_ptr<ICrossSection> newSec;
+	bool success = _sectionGroup->UpdateCrossSection(_mat, _results, newSec, state);
+
+	//Should the cross section be updated if no match found? Doing it anyway for now....
+
+	if (!(_states.find(state) != _states.end()))
+		_states.insert(std::pair<std::string, Element3dState>(state, Element3dState(this->_mat, this->_eo, newSec)));
+	else
+		_states[state]._crossSection = newSec;
+
+
+	return success;
+
+}
+
+bool CIFem::Element3d::SetToState(std::string state)
+{
+	if (!(_states.find(state) != _states.end()))
+		return false;
+
+	SetToState(_states[state]);
+
+	return true;
+}
+
+void CIFem::Element3d::SetToState(Element3dState & state)
+{
+	UpdateNormal(state._eo);
+	UpdateCrossSection(state._crossSection);
+	UpdateMaterial(state._mat);
+}
+
+
+void CIFem::Element3d::SetMaxState()
+{
+	if (_states.size() < 1)
+		return;
+
+	Element3dState * newState = &_states.begin()->second;
+
+	for (auto &state : _states)
+	{
+		if (state.second._crossSection->GetArea() > newState->_crossSection->GetArea())
+			newState = &state.second;
+	}
+
+	SetToState(*newState);
+}
+
+void CIFem::Element3d::SetMinState()
+{
+	if (_states.size() < 1)
+		return;
+
+	Element3dState * newState = &_states.begin()->second;
+
+	for (auto &state : _states)
+	{
+		if (state.second._crossSection->GetArea() < newState->_crossSection->GetArea())
+			newState = &state.second;
+	}
+
+	SetToState(*newState);
 }

@@ -89,6 +89,60 @@ namespace CIFem
 		}
 	}
 
+	void ElementResults3d::ScaleForcesAndDeformations(std::string loadComb, double sFac)
+	{
+		for (int i = 0; i < _N[loadComb].size(); i++)
+		{
+			_N[loadComb][i] *= sFac;
+		}
+
+		for (int i = 0; i < _Vy[loadComb].size(); i++)
+		{
+			_Vy[loadComb][i] *= sFac;
+		}
+
+		for (int i = 0; i < _Vz[loadComb].size(); i++)
+		{
+			_Vz[loadComb][i] *= sFac;
+		}
+
+		for (int i = 0; i < _T[loadComb].size(); i++)
+		{
+			_T[loadComb][i] *= sFac;
+		}
+
+		for (int i = 0; i <  _My[loadComb].size(); i++)
+		{
+			_My[loadComb][i] *= sFac;
+		}
+
+		for (int i = 0; i < _Mz[loadComb].size(); i++)
+		{
+			_Mz[loadComb][i] *= sFac;
+		}
+
+		for (int i = 0; i < _v[loadComb].size(); i++)
+		{
+			_v[loadComb][i] *= sFac;
+		}
+
+		for (int i = 0; i < _u[loadComb].size(); i++)
+		{
+			_u[loadComb][i] *= sFac;
+		}
+
+		for (int i = 0; i < _w[loadComb].size(); i++)
+		{
+			_w[loadComb][i] *= sFac;
+		}
+
+		for (int i = 0; i < _fi[loadComb].size(); i++)
+		{
+			_fi[loadComb][i] *= sFac;
+		}
+
+	}
+
 	ElementResults3d::ElementResults3d()
 	{
 	}

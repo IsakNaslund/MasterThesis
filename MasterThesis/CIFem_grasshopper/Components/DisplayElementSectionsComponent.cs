@@ -26,7 +26,7 @@ namespace CIFem_grasshopper
         {
             pManager.AddParameter(new ResultElementParam(), "Result Elements", "RE", "Result elements, storing results from the calculation", GH_ParamAccess.list);
             pManager.AddTextParameter("Load Comb", "LC", "Load combination to display results from", GH_ParamAccess.item);
-            pManager.AddBooleanParameter("Show deflections", "def", "Enables or disables showing deformed sections", GH_ParamAccess.item);
+            pManager.AddBooleanParameter("Show deflections", "def", "Enables or disables showing deformed sections", GH_ParamAccess.item, false);
             pManager.AddNumberParameter("ScalingFactor", "sfac", "Scaling factor for the drawing.", GH_ParamAccess.item, 1);
         }
 
@@ -47,9 +47,16 @@ namespace CIFem_grasshopper
             double sfac = 0;
 
             if (!DA.GetDataList(0, re)) { return; }
-            if (!DA.GetData(1, ref loadComb)) { return; }
             if (!DA.GetData(2, ref deformed)) { return; }
-            if (!DA.GetData(3, ref sfac)) { return; }
+            if (deformed)
+            {
+                if (!DA.GetData(1, ref loadComb)) { return; }
+                if (!DA.GetData(3, ref sfac)) { return; }
+            }
+            else
+            {
+                sfac = 1;
+            }
 
             CreateSectionSweeps(re, loadComb, deformed, sfac);
 
@@ -114,15 +121,27 @@ namespace CIFem_grasshopper
                     pts.Clear();
 
                     // Create rail
-                    for (int i = 0; i < re.pos.Count; i++)
+                    Curve rail;
+                    if (showDeformed)
                     {
-                        Point3d pt = CalcDeformedPosition(re, i, loadComb, sFac);
+                        for (int i = 0; i < re.pos.Count; i++)
+                        {
+                            Point3d pt = CalcDeformedPosition(re, i, loadComb, sFac);
 
-                        // Add points to list
-                        pts.Add(pt);
+                            // Add points to list
+                            pts.Add(pt);
+                        }
+
+                        rail = Curve.CreateInterpolatedCurve(pts, 3);
                     }
+                    else
+                    {
+                        // Add points to list for transform of curves to positions
+                        for (int i = 0; i < re.pos.Count; i++)
+                            pts.Add(CalcUndeformedPosition(re, i));
 
-                    Curve rail = Curve.CreateInterpolatedCurve(pts, 3);
+                        rail = (Curve)new Line(re.sPos, re.ePos).ToNurbsCurve();
+                    }
 
                     foreach (Curve crv in crvs)
                     {
@@ -218,6 +237,11 @@ namespace CIFem_grasshopper
             Point3d curvePt = pt + tan * (re.u[loadComb][pos] * sFac) + norm * re.w[loadComb][pos] * sFac + yDir * re.v[loadComb][pos] * sFac;
 
             return curvePt;
+        }
+
+        public Point3d CalcUndeformedPosition(ResultElement re, int pos)
+        {
+            return re.CreateRhinoPt(re.pos[pos]);
         }
 
 

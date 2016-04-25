@@ -16,6 +16,7 @@ namespace CIFem
 		std::vector<std::shared_ptr<CIFem::IElement>> _elements;
 		//std::vector<std::shared_ptr<IElementRcp>> _elementRcps;
 		Plane _structureOrientation;
+		bool _validForLinearSolve;
 
 	public:
 		Structure();
@@ -50,6 +51,12 @@ namespace CIFem
 		arma::mat GetCMatrix();
 
 		void CalculateElementSectionForces(std::string resultName);
+		
+		// Sets the flag if the structure is valid to true
+		void SetValidForLinearCalculation() { _validForLinearSolve = true; };
+
+		// Returns a boolean that indicates if the structure is valid for linear solve
+		bool IsValidForLinearCalculation() { return _validForLinearSolve; };
 
 	private:		
 		void GetNodeDofs(std::set<std::shared_ptr<CIFem::DOF>> & dofs);

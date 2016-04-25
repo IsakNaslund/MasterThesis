@@ -10,6 +10,9 @@ CIFem::Structure::Structure()
 	Vector3d z(0, 0, 1);
 	XYZ origin(0, 0, 0);
 	_structureOrientation = Plane(x, y, z, origin);
+	
+	// Initially set validity to false, has to be set to true later
+	_validForLinearSolve = false;
 }
 
 
@@ -114,6 +117,8 @@ void CIFem::Structure::ResetStructure()
 {
 	_elements.clear();
 	_nodes.clear();
+
+	_validForLinearSolve = false;
 }
 
 void CIFem::Structure::ResetStructrualForces()
@@ -223,6 +228,7 @@ void CIFem::Structure::AssembleElementsInKMat(arma::mat & K, arma::mat & Ke, con
 		}
 	}
 }
+
 
 
 

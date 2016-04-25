@@ -25,6 +25,9 @@ namespace CIFem
 
 		double SetResultsToMode(int mode);
 
+		// Returns a list of the n first eigenvalues. Requires that the EigenSolve function has been called first
+		std::vector<double> GetEigenValues(int n);
+
 	private:
 
 		void CIFem::EigenSolver::EigenSolve(arma::mat & K, arma::mat & C, DofSet spDofs);

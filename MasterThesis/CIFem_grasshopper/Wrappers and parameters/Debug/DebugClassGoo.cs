@@ -4,22 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using CIFem_wrapper;
 using Grasshopper.Kernel.Types;
 
-namespace CIFem_grasshopper
-{
-    public class LoadCombGoo : Grasshopper.Kernel.Types.GH_Goo<WR_LoadCombination>
-    {
 
-        public LoadCombGoo()
+namespace CIFem_grasshopper.Debug
+{
+    public class DebugClassGoo : GH_Goo<CIFem_wrapper.WR_DebugClass>
+    {
+        public DebugClassGoo()
         {
             Value = null;
         }
 
-        public LoadCombGoo(WR_LoadCombination comb)
+        public DebugClassGoo(CIFem_wrapper.WR_DebugClass dc)
         {
-            Value = comb;
+            Value = dc;
         }
 
         public override bool IsValid
@@ -29,7 +28,8 @@ namespace CIFem_grasshopper
                 if (Value == null)
                     return false;
 
-                return true;
+                else
+                    return true;
             }
         }
 
@@ -37,7 +37,7 @@ namespace CIFem_grasshopper
         {
             get
             {
-                return "A set of loads";
+                return "A class solely for debug purposes";
             }
         }
 
@@ -45,30 +45,28 @@ namespace CIFem_grasshopper
         {
             get
             {
-                return "Load Combination";
+                return "Debug Class Goo";
             }
         }
 
         public override IGH_Goo Duplicate()
         {
-            return new LoadCombGoo(Value.Copy());
+            throw new NotImplementedException();
         }
 
         public override string ToString()
         {
-            if (Value != null)
-            {
-                return Value.Name();
-            }
-            return "Load Combination";
+            return TypeDescription;
         }
+
+
 
         #region casting methods
 
         public override bool CastTo<Q>(ref Q target)
         {
-            //Cast to WR_LoadCombination.
-            if (typeof(Q).IsAssignableFrom(typeof(WR_LoadCombination)))
+            //Cast to CIFem_wrapper.WR_DebugClass.
+            if (typeof(Q).IsAssignableFrom(typeof(CIFem_wrapper.WR_DebugClass)))
             {
                 if (Value == null)
                     target = default(Q);
@@ -87,10 +85,10 @@ namespace CIFem_grasshopper
         {
             if (source == null) { return false; }
 
-            //Cast from WR_LoadCombination
-            if (typeof(WR_LoadCombination).IsAssignableFrom(source.GetType()))
+            //Cast from CIFem_wrapper.WR_DebugClass
+            if (typeof(CIFem_wrapper.WR_DebugClass).IsAssignableFrom(source.GetType()))
             {
-                Value = (WR_LoadCombination)source;
+                Value = (CIFem_wrapper.WR_DebugClass)source;
                 return true;
             }
 
@@ -98,6 +96,5 @@ namespace CIFem_grasshopper
         }
 
         #endregion
-
     }
 }

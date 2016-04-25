@@ -19,5 +19,6 @@ namespace CIFem_wrapper
 		void Solve();
 
 		void AddLoadCombination(WR_LoadCombination^ comb);
+		void CheckStructure();
 	};
 }

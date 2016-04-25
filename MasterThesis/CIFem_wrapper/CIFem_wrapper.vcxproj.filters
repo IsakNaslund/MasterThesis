@@ -99,6 +99,9 @@
     <ClInclude Include="WR_XSecCSS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WR_DebugClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -180,6 +183,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WR_XSecCSS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WR_DebugClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

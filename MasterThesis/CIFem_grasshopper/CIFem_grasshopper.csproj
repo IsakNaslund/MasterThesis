@@ -89,7 +89,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Wrappers and parameters\CrossSectionGroupParameter.cs" />
     <Compile Include="Wrappers and parameters\CrossSectionGoo.cs" />
     <Compile Include="Wrappers and parameters\Element3dOptPropGoo.cs" />
     <Compile Include="Wrappers and parameters\CrossSectionParameter.cs" />
@@ -146,7 +145,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>SET user=carlh
+    <PostBuildEvent>SET user=isakn
 
 copy /Y "$(TargetDir)$(ProjectName).dll" "C:\Users\%25user%25\AppData\Roaming\Grasshopper\Libraries\$(ProjectName).gha"
 copy /Y "$(SolutionDir)x64\Debug\CIFem.dll" "C:\Users\%25user%25\AppData\Roaming\Grasshopper\Libraries\CIFem.dll"

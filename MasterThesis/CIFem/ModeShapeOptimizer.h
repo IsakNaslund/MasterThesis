@@ -18,6 +18,8 @@ namespace CIFem
 		void ScaleElementSectionForces(int mode, double sFac);
 		//Update crosssection-state to the lowest suitable
 		void UpdateSectionCrossSection(int mode);
+		//Rotate cross section
+		void UpdateElementOrientation(int mode);
 
 		//Set elements to worst state
 		void SetElementToWorstState();

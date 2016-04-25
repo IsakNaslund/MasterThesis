@@ -181,7 +181,7 @@
     <ClInclude Include="IElementRcp.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="ReleaseBeam2d.h" />
-    <ClInclude Include="SectionGroup.h" />
+    <ClInclude Include="Element3dOptProp.h" />
     <ClInclude Include="SectionProperties.h" />
     <ClInclude Include="IRelease.h" />
     <ClInclude Include="Node3d.h" />
@@ -237,7 +237,7 @@
     <ClCompile Include="ReleaseBeam2d.cpp" />
     <ClCompile Include="ReleaseBeam3d.cpp" />
     <ClCompile Include="RHS3d.cpp" />
-    <ClCompile Include="SectionGroup.cpp" />
+    <ClCompile Include="Element3dOptProp.cpp" />
     <ClCompile Include="SectionProperties.cpp" />
     <ClCompile Include="ShearYCheck.cpp" />
     <ClCompile Include="ShearZCheck.cpp" />

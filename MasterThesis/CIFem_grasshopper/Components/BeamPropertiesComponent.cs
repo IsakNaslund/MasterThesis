@@ -28,7 +28,7 @@ namespace CIFem_grasshopper
             pManager.AddParameter(new BeamReleaseParameter(), "Start Release", "SR", "Release at the start point fo the beam", GH_ParamAccess.item);
             pManager.AddParameter(new BeamReleaseParameter(), "End Release", "ER", "Release at the end point fo the beam", GH_ParamAccess.item);
             pManager.AddParameter(new MaterialParam(), "Material", "M", "Material to use in the beam", GH_ParamAccess.item);
-            pManager.AddParameter(new CrossSectionGroupParameter(), "Cross section Group", "XSG", "Optional cross section group to be used be optimizers", GH_ParamAccess.item);
+            pManager.AddParameter(new Element3dOptPropParameter(), "Cross section Group", "XSG", "Optional cross section group to be used be optimizers", GH_ParamAccess.item);
 
             pManager[4].Optional = true;
         }
@@ -45,7 +45,7 @@ namespace CIFem_grasshopper
             WR_ReleaseBeam3d stREl = null;
             WR_ReleaseBeam3d enREl = null;
             WR_Material mat = null;
-            WR_SectionGroup secGroup = null;
+            WR_Element3dOptProp optProp = null;
 
             if (!DA.GetData(0, ref xSec)) { return; }
             if (!DA.GetData(1, ref stREl)) { return; }
@@ -55,10 +55,10 @@ namespace CIFem_grasshopper
 
             BeamProperties beamProp;
 
-            if (!DA.GetData(4, ref secGroup))
+            if (!DA.GetData(4, ref optProp))
                 beamProp = new BeamProperties(mat, xSec, stREl, enREl);
             else
-                beamProp = new BeamProperties(mat, xSec, stREl, enREl, secGroup);
+                beamProp = new BeamProperties(mat, xSec, stREl, enREl, optProp);
 
 
             DA.SetData(0, beamProp);

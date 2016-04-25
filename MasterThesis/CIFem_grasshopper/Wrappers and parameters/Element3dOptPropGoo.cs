@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace CIFem_grasshopper
 {
-    public class CrossSectionGroupGoo : GH_Goo<WR_SectionGroup>
+    public class Element3dOptProp : GH_Goo<WR_Element3dOptProp>
     {
 
-        public CrossSectionGroupGoo()
+        public Element3dOptProp()
         {
-            Value = new WR_SectionGroup();
+            Value = new WR_Element3dOptProp();
         }
 
-        public CrossSectionGroupGoo(WR_SectionGroup secGroup)
+        public Element3dOptProp(WR_Element3dOptProp secGroup)
         {
             if(secGroup==null)
-                Value = new WR_SectionGroup();
+                Value = new WR_Element3dOptProp();
             else
                 Value = secGroup;
         }
@@ -54,7 +54,7 @@ namespace CIFem_grasshopper
         public override IGH_Goo Duplicate()
         {
             //No real duplication done here.....
-            return new CrossSectionGroupGoo(Value);
+            return new Element3dOptProp(Value);
         }
 
         public override string ToString()
@@ -66,8 +66,8 @@ namespace CIFem_grasshopper
 
         public override bool CastTo<Q>(ref Q target)
         {
-            //Cast to WR_SectionGroup.
-            if (typeof(Q).IsAssignableFrom(typeof(WR_SectionGroup)))
+            //Cast to WR_Element3dOptProp.
+            if (typeof(Q).IsAssignableFrom(typeof(WR_Element3dOptProp)))
             {
                 if (Value == null)
                     target = default(Q);
@@ -86,10 +86,10 @@ namespace CIFem_grasshopper
         {
             if (source == null) { return false; }
 
-            //Cast from WR_IXSec
-            if (typeof(WR_SectionGroup).IsAssignableFrom(source.GetType()))
+            //Cast from WR_Element3dOptProp
+            if (typeof(WR_Element3dOptProp).IsAssignableFrom(source.GetType()))
             {
-                Value = (WR_SectionGroup)source;
+                Value = (WR_Element3dOptProp)source;
                 return true;
             }
 

@@ -177,9 +177,6 @@
     <ClInclude Include="StandardSectionSizer.h">
       <Filter>Header Files\Opimizers</Filter>
     </ClInclude>
-    <ClInclude Include="SectionGroup.h">
-      <Filter>Header Files\Elements\Cross sections</Filter>
-    </ClInclude>
     <ClInclude Include="Element3dChecks.h">
       <Filter>Header Files\UtilisationChecks</Filter>
     </ClInclude>
@@ -211,6 +208,9 @@
       <Filter>Header Files\Elements\Cross sections</Filter>
     </ClInclude>
     <ClInclude Include="CircularSolid3d.h">
+      <Filter>Header Files\Elements\Cross sections</Filter>
+    </ClInclude>
+    <ClInclude Include="Element3dOptProp.h">
       <Filter>Header Files\Elements\Cross sections</Filter>
     </ClInclude>
   </ItemGroup>
@@ -326,9 +326,6 @@
     <ClCompile Include="StandardSectionSizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SectionGroup.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Element3dChecks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -357,6 +354,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CircularSolid3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Element3dOptProp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -12,9 +12,12 @@ namespace CIFem
 	{
 		LinearSolver _linSolver;
 		std::shared_ptr<Structure> _structure;
+		bool _updateOrientation;
+		bool _updateSection;
 	public:
 		StandardSectionSizer();
 		StandardSectionSizer(std::shared_ptr<Structure> structure);
+		StandardSectionSizer(std::shared_ptr<Structure> structure, bool updateSection, bool updateOrientation);
 		~StandardSectionSizer();
 
 

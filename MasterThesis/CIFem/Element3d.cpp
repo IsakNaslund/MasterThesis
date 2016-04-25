@@ -46,13 +46,13 @@ CIFem::Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std:
 	_updateStiffnessMatrix = true;
 }
 
-CIFem::Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<Element3dChecks> checktype, std::shared_ptr<SectionGroup> sectionGroup)
+CIFem::Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<Element3dChecks> checktype, std::shared_ptr<Element3dOptProp> sectionGroup)
 :Element3d(sNode, eNode, dof, crossSec, mat, normal, checktype)
 {
-	_sectionGroup = sectionGroup;
+	_optimizationProperties = sectionGroup;
 }
 
-CIFem::Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<SectionGroup> sectionGroup)
+CIFem::Element3d::Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<Element3dOptProp> sectionGroup)
 	: Element3d(sNode, eNode, dof, crossSec, mat, normal, Element3dChecks::BasicCheckSharedPtr(), sectionGroup)
 {
 
@@ -345,8 +345,8 @@ bool CIFem::Element3d::UpdateCrossSection()
 {
 	if (_results._maxUtil.GetUtil() > 1)
 	{
-		std::shared_ptr<ICrossSection> newSec;
-		bool success = _sectionGroup->UpdateCrossSection(_mat, _results, newSec);
+		std::shared_ptr<ICrossSection> newSec = _crossSection;
+		bool success = _optimizationProperties->UpdateCrossSection(_mat, _results, newSec);
 
 		//Should the cross section be updated if no match found? Doing it anyway for now....
 
@@ -359,17 +359,23 @@ bool CIFem::Element3d::UpdateCrossSection()
 
 bool CIFem::Element3d::UpdateElement()
 {
+	if (_optimizationProperties->SectionCount() < 1)
+		return false;
+
 	return UpdateCrossSection();
 }
 
 
 bool CIFem::Element3d::UpdateElementOrientation()
 {
-	Vector3d newNormal;
-	if (GetNewNormal(newNormal))
+	if (_optimizationProperties->AllowRotation())
 	{
-		UpdateNormal(newNormal);
-		return true;
+		Vector3d newNormal;
+		if (GetNewNormal(newNormal))
+		{
+			UpdateNormal(newNormal);
+			return true;
+		}
 	}
 	return false;
 }
@@ -685,9 +691,11 @@ bool CIFem::Element3d::UpdateElementOrientation(std::string state)
 
 bool CIFem::Element3d::UpdateElement(std::string state)
 {
+	if (_optimizationProperties->SectionCount() < 1)
+		return false;
 
 	std::shared_ptr<ICrossSection> newSec;
-	bool success = _sectionGroup->UpdateCrossSection(_mat, _results, newSec, state);
+	bool success = _optimizationProperties->UpdateCrossSection(_mat, _results, newSec, state);
 
 	//Should the cross section be updated if no match found? Doing it anyway for now....
 

@@ -12,7 +12,7 @@
 #include "Element3dChecks.h"
 //#include "UtilCheck3dBasic.h"
 #include <map>
-#include "SectionGroup.h"
+#include "Element3dOptProp.h"
 #include "Element3dState.h"
 
 
@@ -40,7 +40,7 @@ namespace CIFem
 		arma::mat::fixed<12,12> _Ke;
 
 		//Optional section group used for optimization
-		std::shared_ptr<SectionGroup> _sectionGroup;
+		std::shared_ptr<Element3dOptProp> _optimizationProperties;
 
 		//Element state. Used to save multiple variations of cross section, material and orientation
 		std::map<std::string, Element3dState> _states;
@@ -49,8 +49,8 @@ namespace CIFem
 		Element3d();
 		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal);
 		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<Element3dChecks> checktype);
-		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<Element3dChecks> checktype, std::shared_ptr<SectionGroup> sectionGroup);
-		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<SectionGroup> sectionGroup);
+		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<Element3dChecks> checktype, std::shared_ptr<Element3dOptProp> sectionGroup);
+		Element3d(const CIFem::XYZ sNode, const CIFem::XYZ eNode, std::vector<std::shared_ptr<DOF>> dof, std::shared_ptr<ICrossSection> crossSec, std::shared_ptr<Material> mat, Vector3d normal, std::shared_ptr<Element3dOptProp> sectionGroup);
 
 		~Element3d();
 

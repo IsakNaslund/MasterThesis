@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace CIFem_grasshopper
 {
-    public class CrossSectionGroupParameter : GH_Param<CrossSectionGroupGoo>
+    public class Element3dOptPropParameter : GH_Param<Element3dOptProp>
     {
-        public CrossSectionGroupParameter():base(new GH_InstanceDescription("Cross Section Group", "XSG", "A collection of cross sections for a beam", "CIFem", "Parameters"))
+        public Element3dOptPropParameter():base(new GH_InstanceDescription("Cross Section Group", "XSG", "A collection of cross sections for a beam", "CIFem", "Parameters"))
         { }
 
 

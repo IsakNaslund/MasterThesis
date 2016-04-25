@@ -38,9 +38,9 @@ CIFem_wrapper::WR_Elem3dRcp::WR_Elem3dRcp(WR_XYZ ^ stPos, WR_XYZ ^ enPos, WR_Rel
 	_eleRcp = gcnew m_shared_ptr<CIFem::Element3dRcp>(new Element3dRcp(*stPos->GetPos(), *enPos->GetPos(), *stRel->GetRelease(), *enRel->GetRelease(), xSec->GetCrossSection(), mat->GetMaterial(), normal->GetAsCppVector()));
 }
 
-CIFem_wrapper::WR_Elem3dRcp::WR_Elem3dRcp(WR_XYZ ^ stPos, WR_XYZ ^ enPos, WR_ReleaseBeam3d ^ stRel, WR_ReleaseBeam3d ^ enRel, WR_IXSec ^ xSec, WR_Material ^ mat, WR_Vector ^ normal, WR_SectionGroup ^ sectionGroup)
+CIFem_wrapper::WR_Elem3dRcp::WR_Elem3dRcp(WR_XYZ ^ stPos, WR_XYZ ^ enPos, WR_ReleaseBeam3d ^ stRel, WR_ReleaseBeam3d ^ enRel, WR_IXSec ^ xSec, WR_Material ^ mat, WR_Vector ^ normal, WR_Element3dOptProp ^ elemOptimizationProp)
 {
-	_eleRcp = gcnew m_shared_ptr<CIFem::Element3dRcp>(new Element3dRcp(*stPos->GetPos(), *enPos->GetPos(), *stRel->GetRelease(), *enRel->GetRelease(), xSec->GetCrossSection(), mat->GetMaterial(), normal->GetAsCppVector(), sectionGroup->GetSectionGroup()));
+	_eleRcp = gcnew m_shared_ptr<CIFem::Element3dRcp>(new Element3dRcp(*stPos->GetPos(), *enPos->GetPos(), *stRel->GetRelease(), *enRel->GetRelease(), xSec->GetCrossSection(), mat->GetMaterial(), normal->GetAsCppVector(), elemOptimizationProp->GetOptimizationProperties()));
 
 }
 

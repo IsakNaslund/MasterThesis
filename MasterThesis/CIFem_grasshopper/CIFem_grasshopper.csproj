@@ -82,9 +82,9 @@
     <Compile Include="Components\StructurePropertiesComponent.cs" />
     <Compile Include="CrossSectionCasts.cs" />
     <Compile Include="Components\SectionSizerComponent.cs" />
-    <Compile Include="Wrappers and parameters\CrossSectionGroupParameter.cs" />
+    <Compile Include="Wrappers and parameters\Element3dOptPropParameter.cs" />
     <Compile Include="Wrappers and parameters\CrossSectionGoo.cs" />
-    <Compile Include="Wrappers and parameters\CrossSectionGroupGoo.cs" />
+    <Compile Include="Wrappers and parameters\Element3dOptPropGoo.cs" />
     <Compile Include="Wrappers and parameters\CrossSectionParameter.cs" />
     <Compile Include="Wrappers and parameters\StructureParam.cs" />
     <Compile Include="Wrappers and parameters\StructureGoo.cs" />

@@ -29,10 +29,7 @@ namespace CIFem_wrapper
 		}
 		catch (const std::exception& e)
 		{
-			const char * msg = e.what();
-			std::string strMsg(msg);
-
-			System::Exception ^ sysE = gcnew System::Exception(Utilities::ConvertToSystemString(strMsg));
+			System::Exception ^ sysE = Utilities::ConvertException(e);
 
 			throw sysE;
 		}

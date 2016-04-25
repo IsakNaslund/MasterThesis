@@ -74,6 +74,18 @@ System::Collections::Generic::Dictionary<System::String^, System::Collections::G
 	return dict;
 }
 
+
+System::Exception ^ Utilities::ConvertException(const std::exception& e)
+{
+	const char * msg = e.what();
+	std::string strMsg(msg);
+
+	System::Exception ^ sysE = gcnew System::Exception(Utilities::ConvertToSystemString(strMsg));
+
+	return sysE;
+}
+
+
 std::vector<int> Utilities::GetVectorFromList(System::Collections::Generic::List<int>^ list)
 {
 	std::vector<int> vec;

@@ -48,5 +48,12 @@ void CIFem_wrapper::WR_LinearSolver::AddLoadCombination(WR_LoadCombination ^ com
 
 void CIFem_wrapper::WR_LinearSolver::CheckStructure()
 {
-	_solver->CheckStructure();
+	try
+	{
+		_solver->CheckStructure();
+	}
+	catch (const std::exception& e)
+	{
+		throw Utilities::ConvertException(e);
+	}
 }

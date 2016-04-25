@@ -13,7 +13,7 @@ namespace CIFem_grasshopper
         private WR_IXSec _section;
         private WR_ReleaseBeam3d _stRel, _enRel;
         private WR_Material _mat;
-        private WR_SectionGroup _secGroup;
+        private WR_Element3dOptProp _elemOptProp;
 
         public WR_Material Material
         { get { return _mat; } }
@@ -80,16 +80,16 @@ namespace CIFem_grasshopper
             _stRel = stRel;
             _enRel = enRel;
             _section = section;
-            _secGroup = new WR_SectionGroup();
+            _elemOptProp = new WR_Element3dOptProp();
         }
 
-        public BeamProperties(WR_Material mat, WR_IXSec section, WR_ReleaseBeam3d stRel, WR_ReleaseBeam3d enRel, WR_SectionGroup sectionGroup)
+        public BeamProperties(WR_Material mat, WR_IXSec section, WR_ReleaseBeam3d stRel, WR_ReleaseBeam3d enRel, WR_Element3dOptProp elemOptProp)
         {
             _mat = mat;
             _stRel = stRel;
             _enRel = enRel;
             _section = section;
-            _secGroup = sectionGroup;
+            _elemOptProp = elemOptProp;
         }
 
         private WR_IXSec CrossSectionFormString(string section)
@@ -147,7 +147,7 @@ namespace CIFem_grasshopper
             return new WR_XSecRect(height * factor, width * factor);
         }
 
-        public WR_SectionGroup SectionGroup
-        { get { return _secGroup; } }
+        public WR_Element3dOptProp OptimizationProperties
+        { get { return _elemOptProp; } }
     }
 }

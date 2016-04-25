@@ -4,10 +4,22 @@
 
 StandardSectionSizer::StandardSectionSizer()
 {
+	_updateOrientation = true;
+	_updateSection = true;
 }
 
 StandardSectionSizer::StandardSectionSizer(std::shared_ptr<Structure> structure)
 {
+	_updateOrientation = true;
+	_updateSection = true;
+	_structure = structure;
+	_linSolver = LinearSolver(_structure);
+}
+
+CIFem::StandardSectionSizer::StandardSectionSizer(std::shared_ptr<Structure> structure, bool updateSection, bool updateOrientation)
+{
+	_updateOrientation = updateOrientation;
+	_updateSection = updateSection;
 	_structure = structure;
 	_linSolver = LinearSolver(_structure);
 }
@@ -19,16 +31,28 @@ StandardSectionSizer::~StandardSectionSizer()
 
 int StandardSectionSizer::Run(int maxIterations)
 {
+	if (!_updateOrientation && !_updateSection)
+		return 0;
+
+
 	int iterationCount = 0;
 	bool run = true;
 	//Run until all sections have utilization below 1
 	while (run)
 	{
-		_linSolver.Solve();
-		run = CheckElementRotation();
+		if (_updateOrientation)
+		{
+			_linSolver.Solve();
+			run = CheckElementRotation();
+		}
 
-		_linSolver.Solve();
-		run = (CheckUtilization() || run) & IncrementIteration(maxIterations, iterationCount);
+		if (_updateSection)
+		{
+			_linSolver.Solve();
+			run = CheckUtilization() || run;
+		}
+
+		run = run & IncrementIteration(maxIterations, iterationCount);
 	}
 	return iterationCount;
 }

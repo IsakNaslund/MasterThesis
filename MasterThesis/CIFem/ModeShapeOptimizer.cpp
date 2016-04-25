@@ -48,6 +48,15 @@ void CIFem::ModeShapeOptimizer::UpdateSectionCrossSection(int mode)
 	}
 }
 
+void CIFem::ModeShapeOptimizer::UpdateElementOrientation(int mode)
+{
+	std::string modeName = "Mode " + std::to_string(mode);
+	for (int i = 0; i < _structure->GetElements().size(); i++)
+	{
+		_structure->GetElements()[i]->UpdateElementOrientation(modeName);
+	}
+}
+
 void CIFem::ModeShapeOptimizer::SetElementToWorstState()
 {
 	for (int i = 0; i < _structure->GetElements().size(); i++)

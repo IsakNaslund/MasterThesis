@@ -7,7 +7,7 @@
 #include "WR_Vector.h"
 #include "m_shared_ptr.h"
 #include "WR_Material.h"
-#include "WR_SectionGroup.h"
+#include "WR_Element3dOptProp.h"
 
 namespace CIFem_wrapper
 {
@@ -27,7 +27,7 @@ namespace CIFem_wrapper
 		WR_Elem3dRcp(XYZ stPos, XYZ enPos, ReleaseBeam3d stRel, ReleaseBeam3d enRel, std::shared_ptr<ICrossSection> xSec, double matStiff, double poisonRatio, std::vector<double> normal);
 		WR_Elem3dRcp(WR_XYZ^ stPos, WR_XYZ^ enPos, WR_ReleaseBeam3d^ stRel, WR_ReleaseBeam3d^ enRel, WR_IXSec^ xSec, double matStiff, double poisonRatio, WR_Vector^ normal);
 		WR_Elem3dRcp(WR_XYZ^ stPos, WR_XYZ^ enPos, WR_ReleaseBeam3d^ stRel, WR_ReleaseBeam3d^ enRel, WR_IXSec^ xSec, WR_Material^ mat , WR_Vector^ normal);
-		WR_Elem3dRcp(WR_XYZ^ stPos, WR_XYZ^ enPos, WR_ReleaseBeam3d^ stRel, WR_ReleaseBeam3d^ enRel, WR_IXSec^ xSec, WR_Material^ mat, WR_Vector^ normal, WR_SectionGroup ^ sectionGroup);
+		WR_Elem3dRcp(WR_XYZ^ stPos, WR_XYZ^ enPos, WR_ReleaseBeam3d^ stRel, WR_ReleaseBeam3d^ enRel, WR_IXSec^ xSec, WR_Material^ mat, WR_Vector^ normal, WR_Element3dOptProp ^ elemOptimizationProp);
 		WR_Elem3dRcp^ Copy();
 		virtual std::shared_ptr<CIFem::IElementRcp> GetRecipe() override;
 	};

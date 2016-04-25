@@ -87,20 +87,20 @@
     <ClInclude Include="WR_XSecRHS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WR_SectionGroup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WR_StandardSectionSizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WR_ModeShapeOptimizer.h">
-	  <Filter>Header Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-	<ClInclude Include="WR_XSecCHS.h">
-	  <Filter>Header Files</Filter>
+    <ClInclude Include="WR_XSecCHS.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WR_XSecCSS.h">
-	  <Filter>Header Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WR_Element3dOptProp.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WR_DebugClass.h">
       <Filter>Header Files</Filter>
@@ -176,9 +176,6 @@
     <ClCompile Include="WR_XSecRHS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WR_SectionGroup.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WR_StandardSectionSizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -187,10 +184,13 @@
     </ClCompile>
     <ClCompile Include="WR_XSecCHS.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>	
+    </ClCompile>
     <ClCompile Include="WR_XSecCSS.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>	
+    </ClCompile>
+    <ClCompile Include="WR_Element3dOptProp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="WR_DebugClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

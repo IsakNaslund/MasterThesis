@@ -9,7 +9,7 @@ namespace CIFem
 {
 	class CIFEM_API ICrossSection
 	{
-		friend class SectionGroup;
+		friend class Element3dOptProp;
 	protected:
 		
 		SectionProperties _secProp;

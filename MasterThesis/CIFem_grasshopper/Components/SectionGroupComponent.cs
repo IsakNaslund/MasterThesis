@@ -11,7 +11,7 @@ namespace CIFem_grasshopper.Components
 {
     public class SectionGroupComponent : GH_Component
     {
-        public SectionGroupComponent(): base("Section Group", "SG", "A group of sections to be used for optimisation for beams", "CIFem", "Elements")
+        public SectionGroupComponent(): base("Element Optimization Properties", "EOP", "Sets up properties for optimization proceduers", "CIFem", "Elements")
         { }
 
         public override Guid ComponentGuid
@@ -33,27 +33,33 @@ namespace CIFem_grasshopper.Components
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddParameter(new CrossSectionParameter(), "Cross Sections", "XS", "Cross sections to group. Used in optimisations procedures", GH_ParamAccess.list);
+            pManager.AddBooleanParameter("Allow Rotation", "R", "Boolean to set if rotation of the section around its own axis should be alowed or not", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("Section Chooser Procedure", "SCP", "Choose wich method to use in sectionsizer. 0= check all, bottom up, 1= choose between one bigger and smaller, 2 = step up one", GH_ParamAccess.item, 0);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new CrossSectionGroupParameter(), "Cross Section Group", "XSG", "Cross section group constructed. Used in optimisations procedures", GH_ParamAccess.item);
+            pManager.AddParameter(new Element3dOptPropParameter(), "Optimization Properies", "OP", "Data used for optimization proceduers", GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             List<WR_IXSec> crossSections = new List<WR_IXSec>();
+            bool allowRotation = false;
+            int sectionChangeType = 0;
 
             if(!DA.GetDataList(0, crossSections)) { return; }
+            if(!DA.GetData(1, ref allowRotation)) { return; }
+            if (!DA.GetData(2, ref sectionChangeType)) { return; }
 
-            WR_SectionGroup group = new WR_SectionGroup();
+            WR_Element3dOptProp optProp = new WR_Element3dOptProp(allowRotation, sectionChangeType);
 
             for (int i = 0; i < crossSections.Count; i++)
             {
-                group.AddCrossSection(crossSections[i]);
+                optProp.AddCrossSection(crossSections[i]);
             }
 
-            DA.SetData(0, group);
+            DA.SetData(0, optProp);
 
         }
     }

@@ -152,6 +152,7 @@
     <ClInclude Include="CIFem_dll.h" />
     <ClInclude Include="CircularSolid3d.h" />
     <ClInclude Include="CombAxialBendingCheck.h" />
+    <ClInclude Include="DebugClass.h" />
     <ClInclude Include="EigenSolver.h" />
     <ClInclude Include="Element3dChecks.h" />
     <ClInclude Include="Element3dState.h" />
@@ -204,6 +205,7 @@
     <ClCompile Include="AxialCheck.cpp" />
     <ClCompile Include="CircularSolid3d.cpp" />
     <ClCompile Include="CombAxialBendingCheck.cpp" />
+    <ClCompile Include="DebugClass.cpp" />
     <ClCompile Include="EigenSolver.cpp" />
     <ClCompile Include="Element3dChecks.cpp" />
     <ClCompile Include="Element3dState.cpp" />

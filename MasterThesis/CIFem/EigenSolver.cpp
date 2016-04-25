@@ -57,6 +57,23 @@ double CIFem::EigenSolver::SetResultsToMode(int mode)
 	return _eigenValues(mode);
 }
 
+std::vector<double> CIFem::EigenSolver::GetEigenValues(int n)
+{
+	std::vector<double> eigVals;
+
+	if (n<=_eigenValues.size())
+		for (int i = 0; i < n; i++)
+			eigVals.push_back(_eigenValues[i]);
+	else
+	{
+		std::string msg = "Structure contains less degrees of freedom than the amount requested. Number requested: " + std::to_string(n) + "";
+		std::exception e(msg.c_str());
+		throw e;
+	}
+
+	return eigVals;
+}
+
 void CIFem::EigenSolver::EigenSolve(arma::mat & K, arma::mat & C, DofSet spDofs)
 {
 
@@ -91,6 +108,4 @@ void CIFem::EigenSolver::EigenSolve(arma::mat & K, arma::mat & C, DofSet spDofs)
 
 	// Solve Eigenvalue problem
 	arma::eig_sym(_eigenValues, _eigenVectors, K(_fDof, _fDof));
-
-
 }

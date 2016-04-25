@@ -60,6 +60,7 @@
     <Compile Include="BeamProperties.cs" />
     <Compile Include="Components\BeamPropertiesComponent.cs" />
     <Compile Include="Components\BeamSpringReleaseComponent.cs" />
+    <Compile Include="Components\Debug\DebugClassComponent.cs" />
     <Compile Include="Components\DisplayElementSectionsComponent.cs" />
     <Compile Include="Components\DisplayResultElementsComponent.cs" />
     <Compile Include="Components\ElementForcesComponent.cs" />
@@ -83,9 +84,17 @@
     <Compile Include="CrossSectionCasts.cs" />
     <Compile Include="Components\SectionSizerComponent.cs" />
     <Compile Include="Wrappers and parameters\Element3dOptPropParameter.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Wrappers and parameters\CrossSectionGroupParameter.cs" />
     <Compile Include="Wrappers and parameters\CrossSectionGoo.cs" />
     <Compile Include="Wrappers and parameters\Element3dOptPropGoo.cs" />
     <Compile Include="Wrappers and parameters\CrossSectionParameter.cs" />
+    <Compile Include="Wrappers and parameters\Debug\DebugClassGoo.cs" />
+    <Compile Include="Wrappers and parameters\Debug\DebugClassParameter.cs" />
     <Compile Include="Wrappers and parameters\StructureParam.cs" />
     <Compile Include="Wrappers and parameters\StructureGoo.cs" />
     <Compile Include="Utilities.cs" />
@@ -119,13 +128,25 @@
       <Name>CIFem_wrapper</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ComponentIcons\BeamPropertiesIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ComponentIcons\BeamSpringReleaseIcon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>SET user=isakn
+    <PostBuildEvent>SET user=carlh
 
 copy /Y "$(TargetDir)$(ProjectName).dll" "C:\Users\%25user%25\AppData\Roaming\Grasshopper\Libraries\$(ProjectName).gha"
 copy /Y "$(SolutionDir)x64\Debug\CIFem.dll" "C:\Users\%25user%25\AppData\Roaming\Grasshopper\Libraries\CIFem.dll"

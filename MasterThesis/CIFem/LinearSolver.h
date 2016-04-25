@@ -7,6 +7,7 @@
 #include "Vector3d.h"
 #include "LoadCombination.h"
 #include "GlobalSettings.h"
+#include "EigenSolver.h"
 
 typedef std::set<std::shared_ptr<CIFem::DOF>> DofSet;
 
@@ -26,7 +27,7 @@ namespace CIFem
 		~LinearSolver();
 
 		void Solve();
-
+		void CheckStructure();
 
 		void AddLoadCombination(LoadCombination comb);
 		void AddLoadCombinations(std::vector<LoadCombination> comb);
@@ -41,6 +42,9 @@ namespace CIFem
 		arma::colvec GetDisplacementVector(DofSet &);
 
 		void LinEqSolve(arma::mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, DofSet & spDofs, arma::colvec & s);
+
+		//Checks the eigenvalues to find rigid body motion
+		bool CheckGlobalRestraints();
 	};
 }
 

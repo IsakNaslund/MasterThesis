@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Grasshopper.Kernel;
 using CIFem_wrapper;
+using System.Drawing;
 
 namespace CIFem_grasshopper.Components
 {
@@ -67,6 +68,14 @@ namespace CIFem_grasshopper.Components
 
             DA.SetData(0, rel);
 
+        }
+
+        protected override Bitmap Icon
+        {
+            get
+            {
+                return Properties.Resources.BeamSpringReleaseIcon;
+            }
         }
     }
 }

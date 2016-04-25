@@ -30,7 +30,8 @@ namespace CIFem_wrapper
 
 		double GetWeight();
 		
-
+		void SetValidForLinearSolver();
+		bool IsValidForLinearSolver() { return _structure.operator std::shared_ptr<CIFem::Structure>()->IsValidForLinearCalculation(); };
 
 		property double NodeCount {double get() { return _structure.operator std::shared_ptr<CIFem::Structure>()->NodeCount(); }}
 		property double ElementCount {double get() { return _structure.operator std::shared_ptr<CIFem::Structure>()->ElementCount(); }}

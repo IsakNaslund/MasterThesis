@@ -68,9 +68,23 @@ namespace CIFem_grasshopper
                     solver.AddLoadCombination(lc);
                 }
 
-                solver.Solve();
+                // Check structure
+                solver.CheckStructure();
+                if (!structure.IsValidForLinearSolver())
+                    return;
 
-                
+                // Solve
+                try
+                {
+                    solver.Solve();
+                }
+                catch (Exception e)
+                {
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, e.Message);
+                    return;
+                }
+
+
                 // Extract results
                 List<WR_IElement> elems = structure.GetAllElements();
                 for (int i = 0; i < elems.Count; i++)

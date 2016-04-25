@@ -143,3 +143,8 @@ double CIFem_wrapper::WR_Structure::GetWeight()
 	return _structure.operator std::shared_ptr<CIFem::Structure>()->GetWeight();
 }
 
+void CIFem_wrapper::WR_Structure::SetValidForLinearSolver()
+{
+	return _structure.operator std::shared_ptr<CIFem::Structure>()->SetValidForLinearCalculation();
+}
+

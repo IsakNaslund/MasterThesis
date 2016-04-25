@@ -26,16 +26,27 @@ void CIFem_wrapper::WR_LinearSolver::Solve()
 {
 	try
 	{
-		_solver->Solve();
+		try
+		{
+			_solver->Solve();
+		}
+		catch (const std::exception& e)
+		{
+			throw gcnew System::Exception(gcnew System::String(e.what()));
+		}
 	}
-	catch (const std::exception& e)
+	catch (System::Exception^ e)
 	{
-		throw gcnew System::Exception(gcnew System::String(e.what()));
+		throw e;
 	}
-
 }
 
 void CIFem_wrapper::WR_LinearSolver::AddLoadCombination(WR_LoadCombination ^ comb)
 {
 	_solver->AddLoadCombination(comb->GetCombination());
+}
+
+void CIFem_wrapper::WR_LinearSolver::CheckStructure()
+{
+	_solver->CheckStructure();
 }

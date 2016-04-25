@@ -102,6 +102,9 @@
     <ClInclude Include="WR_Element3dOptProp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WR_DebugClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -186,6 +189,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WR_Element3dOptProp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WR_DebugClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

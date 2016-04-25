@@ -61,7 +61,15 @@ void CIFem::LinearSolver::Solve()
 
 		// Solve K matrix
 		arma::colvec s;		// Resulting forces
-		LinEqSolve(K, am, f, C, spDofs, s);
+		try
+		{
+			LinEqSolve(K, am, f, C, spDofs, s);
+		}
+		catch (const std::exception& e)
+		{
+			throw e;
+		}
+		
 
 		// Store results in dofs
 		StoreResultsInDofs(am, s, spDofs);
@@ -69,6 +77,22 @@ void CIFem::LinearSolver::Solve()
 		//Calculate section forces for the elements
 		CalculateElementSectionForces(_loadCobms[i].Name());
 	}
+}
+
+void CIFem::LinearSolver::CheckStructure()
+{
+	bool b = false;
+		
+	if (CheckGlobalRestraints())
+	{
+		b = true;
+		// Exception is thrown if check fails
+	}
+
+	// Add more checks here
+
+	if (b)
+		_structure->SetValidForLinearCalculation();
 }
 
 void CIFem::LinearSolver::AddLoadCombination(LoadCombination comb)
@@ -174,9 +198,41 @@ void CIFem::LinearSolver::LinEqSolve(arma::mat & K, arma::colvec & a, arma::colv
 
 	arma::mat f_fsolved = f(ufDof) - K(ufDof, upDof) * a(upDof);
 	//fa = arma::spsolve(Kff, f_fsolved);
-	fa = arma::solve(K(ufDof, ufDof), f_fsolved);
+	try
+	{
+		fa = arma::solve(K(ufDof, ufDof), f_fsolved);
+	}
+	catch (const std::runtime_error &)
+	{
+		std::exception e("Matrix seem to be singular");
+		throw e;
+	}
+	
 	a(ufDof) = fa;
 
 	// Solve forces
 	s = K*a - f;
+}
+
+bool CIFem::LinearSolver::CheckGlobalRestraints()
+{
+	EigenSolver es(_structure);
+	es.Solve();
+
+	std::vector<double> eigVals = es.GetEigenValues(_structure->GetDofs().size());
+
+	// Count number of eigenvalues with a value less than 1
+	int n = 0;
+	for (int i = 0; i < eigVals.size(); i++)
+		if (eigVals[i] < 1)
+			n++;
+
+	if (n == 0)
+		return false;
+	else
+	{
+		std::string msg = "Structure contains " + std::to_string(n) + " number of rigid body moves.";
+		std::exception e(msg.c_str());
+		throw e;
+	}
 }

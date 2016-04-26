@@ -14,7 +14,7 @@ namespace CIFem_grasshopper
         private List<ResultElement> resElems { get; set; }
         private int _nbIterations;
 
-        public SectionSizerComponent(): base("Section Sizer", "SecSize", "A simple section sizer based on a linear solver.", "CIFem", "Optimizers")
+        public SectionSizerComponent(): base("Section sizer", "SecSize", "A simple section sizer based on a linear solver.", "CIFem", "Optimizers")
         {
             log = new List<string>();
             _nbIterations = 0;

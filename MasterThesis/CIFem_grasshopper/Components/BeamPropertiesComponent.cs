@@ -12,7 +12,7 @@ namespace CIFem_grasshopper
 {
     public class BeamPropertiesComponent : GH_Component
     {
-        public BeamPropertiesComponent(): base("Beam Properties", "BP", "Construct a beam properties", "CIFem", "Elements")
+        public BeamPropertiesComponent(): base("Beam properties", "BP", "Construct a beam properties", "CIFem", "Elements")
         { }
 
         public override Guid ComponentGuid

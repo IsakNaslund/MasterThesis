@@ -13,7 +13,7 @@ namespace CIFem_grasshopper
         public List<string> log { get; set; }
         private List<ResultElement> resElems { get; set; }
 
-        public CombinedSectionSizerComponent(): base("Combined Optimizer", "CombSize", "Section sizer sizing elements based on mode shapes as initial input", "CIFem", "Optimizers")
+        public CombinedSectionSizerComponent(): base("Combined optimizer", "CombSize", "Section sizer sizing elements based on mode shapes as initial input", "CIFem", "Optimizers")
         {
             log = new List<string>();
         }

@@ -63,6 +63,16 @@ namespace CIFem_grasshopper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BeamIcon {
+            get {
+                object obj = ResourceManager.GetObject("BeamIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BeamPropertiesIcon {
             get {
                 object obj = ResourceManager.GetObject("BeamPropertiesIcon", resourceCulture);
@@ -86,6 +96,46 @@ namespace CIFem_grasshopper.Properties {
         internal static System.Drawing.Bitmap BeamSpringReleaseIcon {
             get {
                 object obj = ResourceManager.GetObject("BeamSpringReleaseIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LoadCombinationIcon {
+            get {
+                object obj = ResourceManager.GetObject("LoadCombinationIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MaterialIcon {
+            get {
+                object obj = ResourceManager.GetObject("MaterialIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PointLoadIcon {
+            get {
+                object obj = ResourceManager.GetObject("PointLoadIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RestraintNodeIcon {
+            get {
+                object obj = ResourceManager.GetObject("RestraintNodeIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

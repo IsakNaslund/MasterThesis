@@ -69,7 +69,7 @@
     <Compile Include="Components\ModeLoadCaseComponent.cs" />
     <Compile Include="Components\ModeShapeOptimizerComponentModes.cs" />
     <Compile Include="Components\ModeShapeOptimizerComponentRatio.cs" />
-    <Compile Include="Components\NodeComponent.cs" />
+    <Compile Include="Components\RestraintNodeComponent.cs" />
     <Compile Include="Components\PointLoadComponent.cs" />
     <Compile Include="Components\ResultElementComponent.cs" />
     <Compile Include="Components\SectionGroupComponent.cs" />
@@ -142,6 +142,11 @@
     <None Include="Resources\ComponentIcons\BeamSpringReleaseIcon.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\ComponentIcons\RestraintNodeIcon.png" />
+    <None Include="Resources\ComponentIcons\PointLoadIcon.png" />
+    <None Include="Resources\ComponentIcons\MaterialIcon.png" />
+    <None Include="Resources\ComponentIcons\LoadCombinationIcon.png" />
+    <None Include="Resources\ComponentIcons\BeamIcon.png" />
     <Content Include="Resources\ComponentIcons\BeamReleaseIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

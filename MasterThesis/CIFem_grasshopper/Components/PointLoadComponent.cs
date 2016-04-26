@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace CIFem_grasshopper
 {
     public class PointLoadComponent : GH_Component
     {
-        public PointLoadComponent(): base("PointLoad", "PL", "Constructs a point load", "CIFem", "Loads")
+        public PointLoadComponent(): base("Point load", "PL", "Constructs a point load", "CIFem", "Loads")
         {
         }
 
@@ -27,7 +28,7 @@ namespace CIFem_grasshopper
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddPointParameter("Load Position", "P", "Position of the poit load", GH_ParamAccess.item);
+            pManager.AddPointParameter("Load position", "P", "Position of the poit load", GH_ParamAccess.item);
             pManager.AddVectorParameter("Force", "F", "Force. Defaulted to 0 vector.", GH_ParamAccess.item, new Vector3d(0, 0, 0));
             pManager.AddVectorParameter("Moment", "M", "Moment. Defaulted to 0 vector.", GH_ParamAccess.item, new Vector3d(0,0,0));
         }
@@ -48,6 +49,14 @@ namespace CIFem_grasshopper
             if (!DA.GetData(2, ref moment)) { return; }
 
             DA.SetData(0, new PointLoadCarrier(pos, force, moment));
+        }
+
+        protected override Bitmap Icon
+        {
+            get
+            {
+                return Properties.Resources.PointLoadIcon;
+            }
         }
     }
 }

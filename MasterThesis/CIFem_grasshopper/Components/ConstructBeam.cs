@@ -63,5 +63,12 @@ namespace CIFem_grasshopper
 
         }
 
+        protected override Bitmap Icon
+        {
+            get
+            {
+                return Properties.Resources.BeamIcon;
+            }
+        }
     }
 }

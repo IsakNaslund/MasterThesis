@@ -13,7 +13,8 @@ namespace CIFem_grasshopper
 {
     public class BeamReleaseComponent : GH_Component
     {
-        public BeamReleaseComponent(): base("Beam release", "BR", "Construct a beam release", "CIFem", "Elements")
+        public BeamReleaseComponent(): base("Beam release", "BR", 
+            "Construct a beam release. Note that all releases are in <b>global</b> coordinates.", "CIFem", "Elements")
         { }
 
 

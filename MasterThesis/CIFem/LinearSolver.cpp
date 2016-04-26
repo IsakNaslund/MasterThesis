@@ -219,16 +219,16 @@ bool CIFem::LinearSolver::CheckGlobalRestraints()
 	EigenSolver es(_structure);
 	es.Solve();
 
-	std::vector<double> eigVals = es.GetEigenValues(_structure->GetDofs().size());
+	std::vector<double> eigVals = es.GetEigenValues(6); // Could generate some small error, but the 6 lowest eigenvalues should be enough for now.
 
-	// Count number of eigenvalues with a value less than 1
+	// Count number of eigenvalues with a value less than 1e-6
 	int n = 0;
 	for (int i = 0; i < eigVals.size(); i++)
-		if (eigVals[i] < 1)
+		if (eigVals[i] < 1e-6)
 			n++;
 
 	if (n == 0)
-		return false;
+		return true;
 	else
 	{
 		std::string msg = "Structure contains " + std::to_string(n) + " number of rigid body moves.";

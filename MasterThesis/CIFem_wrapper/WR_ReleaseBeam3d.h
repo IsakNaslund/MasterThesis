@@ -9,7 +9,6 @@ namespace CIFem_wrapper
 	{
 		m_shared_ptr<CIFem::ReleaseBeam3d> _release;
 
-
 	public:
 		WR_ReleaseBeam3d();
 		WR_ReleaseBeam3d(CIFem::ReleaseBeam3d _release);
@@ -23,6 +22,20 @@ namespace CIFem_wrapper
 		System::String^ ToString() override;
 
 		std::shared_ptr<CIFem::ReleaseBeam3d> GetRelease();
+
+		// Returns a stiffness based on an index. Returns true if fixed, false if not
+		double GetX() { return GetReleaseStiffness(0); };
+		double GetY() { return GetReleaseStiffness(1); };
+		double GetZ() { return GetReleaseStiffness(2); };
+		double GetXX() { return GetReleaseStiffness(3); };
+		double GetYY() { return GetReleaseStiffness(4); };
+		double GetZZ() { return GetReleaseStiffness(5); };
+
+
+	private:
+		std::vector<CIFem::DofRelease> GetReleases();	// Returns a vector of releases
+		CIFem::DofRelease GetReleaseFromIndex(int i);
+		double GetReleaseStiffness(int i);
 	};
 
 }

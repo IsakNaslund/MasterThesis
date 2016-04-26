@@ -54,6 +54,9 @@ namespace CIFem_grasshopper
             if (!DA.GetData(2, ref enREl)) { return; }
             if (!DA.GetData(3, ref mat)) { return; }
 
+            // Check releases
+            if (!CheckReleases(stREl, enREl))
+                return;
 
             BeamProperties beamProp;
 
@@ -73,6 +76,46 @@ namespace CIFem_grasshopper
             {
                 return CIFem_grasshopper.Properties.Resources.BeamPropertiesIcon;
             }
+        }
+
+
+        /// <summary>
+        /// Checks the releases so that at least one end is restrained in x-, y-, z- and xx.
+        /// </summary>
+        /// <param name="sr"></param>
+        /// <param name="er"></param>
+        /// <returns>True if check is ok, false if errors exist</returns>
+        private bool CheckReleases(WR_ReleaseBeam3d sr, WR_ReleaseBeam3d er)
+        {
+            bool b = true;
+
+            string log = "Error, one of the ends must be restrained. Both ends unrestrained in:\n";
+
+            if (sr.GetX() == 0 && er.GetX() == 0)
+            {
+                log += "X-dir\n";
+                b = false;
+            }
+            if (sr.GetY() == 0 && er.GetY() == 0)
+            {
+                log += "Y-dir\n";
+                b = false;
+            }
+            if (sr.GetZ() == 0 && er.GetZ() == 0)
+            {
+                log += "Z-dir\n";
+                b = false;
+            }
+            if (sr.GetXX() == 0 && er.GetXX() == 0)
+            {
+                log += "Torsion\n";
+                b = false;
+            }
+
+            if (!b)
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, log);
+
+            return b;
         }
     }
 }

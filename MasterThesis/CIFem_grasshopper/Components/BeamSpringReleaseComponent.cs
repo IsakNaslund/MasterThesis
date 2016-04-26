@@ -64,6 +64,8 @@ namespace CIFem_grasshopper.Components
             if (!DA.GetData(4, ref yy)) { return; }
             if (!DA.GetData(5, ref zz)) { return; }
 
+
+
             WR_ReleaseBeam3d rel = new WR_ReleaseBeam3d(x, y, z, xx, yy, zz);
 
             DA.SetData(0, rel);

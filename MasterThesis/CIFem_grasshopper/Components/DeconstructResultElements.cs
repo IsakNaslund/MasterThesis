@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 using Rhino.Geometry;
 
-namespace CIFem_grasshopper.Components
+namespace CIFem_grasshopper
 {
-    public class DecontructResultElements : GH_Component
+    public class DeconstructResultElements : GH_Component
     {
 
-        public DecontructResultElements() : base("Deconstruct Result elements", "ResElem", "Deconstructs the results elements into data", "CIFem", "Results")
+        public DeconstructResultElements() : base("Deconstruct Result elements", "ResElem", "Deconstructs the results elements into data", "CIFem", "Results")
         {
 
         }

@@ -43,7 +43,7 @@ namespace CIFem
 
 		void LinEqSolve(arma::mat & K, arma::colvec & a, arma::colvec & f, arma::mat & C, DofSet & spDofs, arma::colvec & s);
 
-		//Checks the eigenvalues to find rigid body motion
+		//Checks the eigenvalues to find rigid body motion. Returns true if restraints are ok.
 		bool CheckGlobalRestraints();
 	};
 }

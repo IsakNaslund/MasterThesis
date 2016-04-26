@@ -72,3 +72,40 @@ std::shared_ptr<CIFem::ReleaseBeam3d>  WR_ReleaseBeam3d::GetRelease()
 {
 	return _release.operator std::shared_ptr<CIFem::ReleaseBeam3d>();
 }
+
+
+std::vector<CIFem::DofRelease> CIFem_wrapper::WR_ReleaseBeam3d::GetReleases()
+{
+	return _release.operator std::shared_ptr<CIFem::ReleaseBeam3d>()->GetReleases();
+}
+
+CIFem::DofRelease CIFem_wrapper::WR_ReleaseBeam3d::GetReleaseFromIndex(int i)
+{
+	std::vector<CIFem::DofRelease> rels = GetReleases();
+
+	try
+	{
+		return rels[i];
+	}
+	catch (const std::out_of_range&)
+	{
+		std::string s = "Release not set, index out of range.";
+		std::exception e(s.c_str());
+		throw e;
+	}
+}
+
+
+// Returns a stiffness based on an index. Returns true if fixed, false if not
+double CIFem_wrapper::WR_ReleaseBeam3d::GetReleaseStiffness(int i)
+{
+	CIFem::DofRelease rel = GetReleaseFromIndex(i);
+
+	// Set stiffness
+	if (rel.IsFixed())
+	{
+		return -1;
+	}
+
+	return rel.Stiffness();
+}

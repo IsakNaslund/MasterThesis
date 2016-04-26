@@ -12,6 +12,7 @@ namespace CIFem_wrapper
 		WR_Element3dOptProp();
 		WR_Element3dOptProp(bool allowRotation);
 		WR_Element3dOptProp(bool allowRotation, int changeType);
+		WR_Element3dOptProp(bool allowRotation, int changeType, double minUtil, double maxUtil);
 		void AddCrossSection(WR_IXSec^ crossSection);
 		std::shared_ptr<CIFem::Element3dOptProp> GetOptimizationProperties();
 	};

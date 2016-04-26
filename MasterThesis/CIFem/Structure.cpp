@@ -155,6 +155,16 @@ void CIFem::Structure::ApplyGravityToElements(Vector3d gravField)
 	}
 }
 
+double CIFem::Structure::CalcAndGetMaxUtilization()
+{
+	double maxUtil = 0;
+	for (int i = 0; i < ElementCount(); i++)
+	{
+		maxUtil = std::max(_elements[i]->CalcAndGetMaxUtil().GetUtil(), maxUtil);
+	}
+	return maxUtil;
+}
+
 void CIFem::Structure::GetNodeDofs(std::set<std::shared_ptr<CIFem::DOF>>& dofs)
 {
 

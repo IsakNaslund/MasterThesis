@@ -17,6 +17,11 @@ CIFem_wrapper::WR_Element3dOptProp::WR_Element3dOptProp(bool allowRotation, int 
 	_optimizationProperties = gcnew m_shared_ptr<CIFem::Element3dOptProp>(new CIFem::Element3dOptProp(allowRotation, changeType));
 }
 
+CIFem_wrapper::WR_Element3dOptProp::WR_Element3dOptProp(bool allowRotation, int changeType, double minUtil, double maxUtil)
+{
+	_optimizationProperties = gcnew m_shared_ptr<CIFem::Element3dOptProp>(new CIFem::Element3dOptProp(allowRotation, changeType, minUtil, maxUtil));
+}
+
 void CIFem_wrapper::WR_Element3dOptProp::AddCrossSection(CIFem_wrapper::WR_IXSec^ crossSection)
 {
 	_optimizationProperties.operator std::shared_ptr<CIFem::Element3dOptProp>()->Add(crossSection->GetCrossSection());

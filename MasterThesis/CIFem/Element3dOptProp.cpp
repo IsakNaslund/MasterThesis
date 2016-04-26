@@ -6,37 +6,40 @@ CIFem::Element3dOptProp::Element3dOptProp() : Element3dOptProp(Element3dChecks::
 {
 }
 
-CIFem::Element3dOptProp::Element3dOptProp(Element3dChecks checks)
+CIFem::Element3dOptProp::Element3dOptProp(Element3dChecks checks) : Element3dOptProp(checks, false)
 {
-	_checks = checks;
-	_allowRotation = false;
-	_sectionChangeType = SectionChangeType::CheckAll;
 }
 
 CIFem::Element3dOptProp::Element3dOptProp(bool allowRotation) : Element3dOptProp(Element3dChecks::BasicCheck(), allowRotation)
 {
 }
 
-CIFem::Element3dOptProp::Element3dOptProp(Element3dChecks checks, bool allowRotation)
+CIFem::Element3dOptProp::Element3dOptProp(Element3dChecks checks, bool allowRotation) : Element3dOptProp(checks, allowRotation, 0)
 {
-	_checks = checks;
-	_allowRotation = allowRotation;
-	_sectionChangeType = SectionChangeType::CheckAll;
 }
 
 CIFem::Element3dOptProp::Element3dOptProp(bool allowRotation, int changeType) : Element3dOptProp(Element3dChecks::BasicCheck(), allowRotation, changeType)
 {
-
-
 }
-CIFem::Element3dOptProp::Element3dOptProp(Element3dChecks checks, bool allowRotation, int changeType)
+
+CIFem::Element3dOptProp::Element3dOptProp(Element3dChecks checks, bool allowRotation, int changeType) : Element3dOptProp(checks, allowRotation, changeType, 0.7, 1)
 {
-	if (changeType > 3)
+}
+
+CIFem::Element3dOptProp::Element3dOptProp(bool allowRotation, int changeType, double minUtil, double maxUtil):Element3dOptProp(Element3dChecks::BasicCheck(), allowRotation, changeType, minUtil, maxUtil)
+{
+}
+
+CIFem::Element3dOptProp::Element3dOptProp(Element3dChecks checks, bool allowRotation, int changeType, double minUtil, double maxUtil)
+{
+	if (changeType > 4)
 		changeType = 0;
 
 	_checks = checks;
 	_allowRotation = allowRotation;
 	_sectionChangeType = (SectionChangeType)changeType;
+	_minUtil = minUtil;
+	_maxUtil = maxUtil;
 }
 
 CIFem::Element3dOptProp::~Element3dOptProp()
@@ -59,12 +62,43 @@ bool CIFem::Element3dOptProp::UpdateCrossSection(std::shared_ptr<Material> mat, 
 		return UpdateCrossSectionClosePosition(mat, results, updatedCrossSection);
 	case CIFem::Element3dOptProp::StepUpOne:
 		return UpdateCrossSectionStepOne(updatedCrossSection);
+	case CIFem::Element3dOptProp::CheckAllFromClose:
+		return UpdateCrossSectionCheckAllClose(mat, results, updatedCrossSection);
 	default:
 		break;
 	}
 	return false;
 }
 
+
+bool CIFem::Element3dOptProp::UpdateCrossSectionCheckAllClose(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection>& updatedCrossSection)
+{
+	std::set<std::shared_ptr<CIFem::ICrossSection>>::iterator iter = _crossSections.lower_bound(updatedCrossSection);
+	int n = 0;
+
+	if (results._maxUtil.GetUtil() > 1)
+	{
+		while (!is_last(iter, _crossSections) & !_checks.CheckUtilUntilFail(*iter, mat, results))
+		{
+			iter++;
+			n++;
+		}
+		updatedCrossSection = *iter;
+	}
+	else
+	{
+		while (iter!=_crossSections.begin() && _checks.CheckUtilUntilFail(*iter, mat, results))
+		{
+			iter--;
+			n--;
+		}
+
+		iter++;
+		n++;
+		updatedCrossSection = *iter;
+	}
+	return n != 0;
+}
 
 bool CIFem::Element3dOptProp::UpdateCrossSectionCheckAll(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection>& updatedCrossSection)
 {

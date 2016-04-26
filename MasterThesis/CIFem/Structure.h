@@ -58,6 +58,8 @@ namespace CIFem
 		// Returns a boolean that indicates if the structure is valid for linear solve
 		bool IsValidForLinearCalculation() { return _validForLinearSolve; };
 
+		double CalcAndGetMaxUtilization();
+
 	private:		
 		void GetNodeDofs(std::set<std::shared_ptr<CIFem::DOF>> & dofs);
 		void GetUniqueElementDofs(std::set<std::shared_ptr<CIFem::DOF>> & dofs);

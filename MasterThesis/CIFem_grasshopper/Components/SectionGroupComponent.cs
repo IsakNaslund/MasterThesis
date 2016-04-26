@@ -35,6 +35,8 @@ namespace CIFem_grasshopper.Components
             pManager.AddParameter(new CrossSectionParameter(), "Cross Sections", "XS", "Cross sections to group. Used in optimisations procedures", GH_ParamAccess.list);
             pManager.AddBooleanParameter("Allow Rotation", "R", "Boolean to set if rotation of the section around its own axis should be alowed or not", GH_ParamAccess.item);
             pManager.AddIntegerParameter("Section Chooser Procedure", "SCP", "Choose wich method to use in sectionsizer. 0= check all, bottom up, 1= choose between one bigger and smaller, 2 = step up one", GH_ParamAccess.item, 0);
+            pManager.AddNumberParameter("Minimum Utilization", "minU", "The minimum utilization allowed before the elementis set to converged in optimization", GH_ParamAccess.item, 0.8);
+            pManager.AddNumberParameter("Maximum Utilization", "maxU", "The maximum utilization allowed before the elementis set to converged in optimization", GH_ParamAccess.item, 1);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -47,12 +49,16 @@ namespace CIFem_grasshopper.Components
             List<WR_IXSec> crossSections = new List<WR_IXSec>();
             bool allowRotation = false;
             int sectionChangeType = 0;
+            double minUtil = 0;
+            double maxUtil = 1;
 
             if(!DA.GetDataList(0, crossSections)) { return; }
             if(!DA.GetData(1, ref allowRotation)) { return; }
             if (!DA.GetData(2, ref sectionChangeType)) { return; }
+            if (!DA.GetData(3, ref minUtil)) { return; }
+            if (!DA.GetData(4, ref maxUtil)) { return; }
 
-            WR_Element3dOptProp optProp = new WR_Element3dOptProp(allowRotation, sectionChangeType);
+            WR_Element3dOptProp optProp = new WR_Element3dOptProp(allowRotation, sectionChangeType, minUtil,maxUtil);
 
             for (int i = 0; i < crossSections.Count; i++)
             {

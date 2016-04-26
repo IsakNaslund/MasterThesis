@@ -58,9 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BeamProperties.cs" />
+    <Compile Include="Components\CombinedSectionSizerComponent.cs" />
     <Compile Include="Components\BeamPropertiesComponent.cs" />
     <Compile Include="Components\BeamSpringReleaseComponent.cs" />
     <Compile Include="Components\Debug\DebugClassComponent.cs" />
+    <Compile Include="Components\DecontructResultElements.cs" />
     <Compile Include="Components\DisplayElementSectionsComponent.cs" />
     <Compile Include="Components\DisplayResultElementsComponent.cs" />
     <Compile Include="Components\ElementForcesComponent.cs" />

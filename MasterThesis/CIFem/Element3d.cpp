@@ -343,7 +343,7 @@ void CIFem::Element3d::UpdateNormal(Vector3d newNormal)
 
 bool CIFem::Element3d::UpdateCrossSection()
 {
-	if (_results._maxUtil.GetUtil() > 1)
+	if (_results._maxUtil.GetUtil() > _optimizationProperties->_maxUtil || _results._maxUtil.GetUtil() < _optimizationProperties->_minUtil)
 	{
 		std::shared_ptr<ICrossSection> newSec = _crossSection;
 		bool success = _optimizationProperties->UpdateCrossSection(_mat, _results, newSec);

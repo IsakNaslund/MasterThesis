@@ -216,6 +216,9 @@
     <ClInclude Include="DebugClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CombinedSectionSizer.h">
+      <Filter>Header Files\Opimizers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XYZ.cpp">
@@ -363,6 +366,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DebugClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CombinedSectionSizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

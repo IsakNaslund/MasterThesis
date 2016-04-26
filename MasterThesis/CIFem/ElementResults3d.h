@@ -16,6 +16,7 @@ namespace CIFem
 	{
 		friend class Element3d;
 		friend class Element3dChecks;
+		friend class Element3dOptProp;
 
 		//Lists of results
 		combResList _N, _Vy, _Vz, _T, _My, _Mz, _u, _v, _w, _fi;

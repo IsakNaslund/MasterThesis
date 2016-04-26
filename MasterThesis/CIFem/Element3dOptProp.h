@@ -4,19 +4,23 @@
 #include "ICrossSection.h"
 #include <memory>
 #include "Element3dChecks.h"
+#include "ElementResults3d.h"
 
 namespace CIFem
 {
-	class ElementResults3d;
 	class Material;
+
+
 	class CIFEM_API Element3dOptProp
 	{
+		friend class Element3d;
 
 		enum SectionChangeType
 		{
 			CheckAll=0,
 			CheckClose=1,
-			StepUpOne=2
+			StepUpOne=2,
+			CheckAllFromClose = 3
 		};
 
 		struct cmp
@@ -46,6 +50,10 @@ namespace CIFem
 		Element3dChecks _checks;
 		bool _allowRotation;
 		SectionChangeType _sectionChangeType;
+
+		double _minUtil;
+		double _maxUtil;
+
 	public:
 		Element3dOptProp();
 		Element3dOptProp(Element3dChecks checks);
@@ -53,6 +61,8 @@ namespace CIFem
 		Element3dOptProp(Element3dChecks checks, bool allowRotation);
 		Element3dOptProp(bool allowRotation, int changeType);
 		Element3dOptProp(Element3dChecks checks, bool allowRotation, int changeType);
+		Element3dOptProp(bool allowRotation, int changeType, double minUtil, double maxUtil);
+		Element3dOptProp(Element3dChecks checks, bool allowRotation, int changeType, double minUtil, double maxUtil);
 		~Element3dOptProp();
 
 		void Add(std::shared_ptr<CIFem::ICrossSection> crossSection);
@@ -64,16 +74,18 @@ namespace CIFem
 		bool UpdateCrossSection(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection> & updatedCrossSection);
 
 
-		bool UpdateCrossSectionCheckAll(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection> & updatedCrossSection);
 		bool UpdateCrossSection(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection> & updatedCrossSection, std::string loadCase);
-
-
-		bool CIFem::Element3dOptProp::UpdateCrossSectionClosePosition(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection>& updatedCrossSection);
-		bool CIFem::Element3dOptProp::UpdateCrossSectionStepOne(std::shared_ptr<CIFem::ICrossSection>& updatedCrossSection);
 
 
 		bool UpdateCrossSection(double N, double Vy, double Vz, double My, double Mz, double T, double fu, std::shared_ptr<CIFem::ICrossSection> & updatedCrossSection);
 
+	private:
+
+
+		bool UpdateCrossSectionCheckAllClose(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection> & updatedCrossSection);
+		bool UpdateCrossSectionCheckAll(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection> & updatedCrossSection);
+		bool UpdateCrossSectionClosePosition(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection>& updatedCrossSection);
+		bool UpdateCrossSectionStepOne(std::shared_ptr<CIFem::ICrossSection>& updatedCrossSection);
 
 	};
 

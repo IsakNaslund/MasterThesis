@@ -65,14 +65,14 @@ void StandardSectionSizer::AddLoadCombination(LoadCombination comb)
 bool StandardSectionSizer::CheckUtilization()
 {
 
+	if (_structure->CalcAndGetMaxUtilization() < 1)
+		return false;
+
 	bool updated = false;
 	for (int i = 0; i < _structure->ElementCount(); i++)
 	{
-		if (_structure->GetElements()[i]->CalcAndGetMaxUtil().GetUtil()>1)
-		{
-			if(_structure->GetElements()[i]->UpdateElement())
-				updated = true;
-		}
+		if (_structure->GetElements()[i]->UpdateElement())
+			updated = true;
 	}
 
 	return updated;

@@ -81,6 +81,21 @@ int CIFem::Structure::ElementCount()
 }
 
 
+// Counts the number of free dofs in the structure
+int CIFem::Structure::FreeDOFCount()
+{
+	std::set<std::shared_ptr<CIFem::DOF>> dofs = GetDofs();
+
+	int i = 0;
+
+	for (std::set<std::shared_ptr<CIFem::DOF>>::iterator it = dofs.begin(); it != dofs.end(); ++it)
+		if (!it->get()->HasSetTranslation())
+			i++;
+
+	return i;
+}
+
+
 // Not implemented!
 CIFem::Structure CIFem::Structure::Copy()
 {
@@ -186,7 +201,7 @@ void CIFem::Structure::GetUniqueElementDofs(std::set<std::shared_ptr<CIFem::DOF>
 		std::vector<std::shared_ptr<CIFem::DOF>> eDofs = _elements[i]->GetDofs();
 		for (int j = 0; j < eDofs.size(); j++)
 		{
-			//a set can only hold one unique instance, hence no check needs to be done prior insertion. The dof will only be inserted if it it does not allready
+			//a set can only hold one unique instance, hence no check needs to be done prior insertion. The dof will only be inserted if it it does not already
 			//exist in the set.
 			dofs.insert(eDofs[j]);
 		}

@@ -31,6 +31,7 @@ namespace CIFem
 		double GetWeight() const;
 		int NodeCount();
 		int ElementCount();
+		int FreeDOFCount();
 
 		// Not implemented, probably shouldnt be either....?
 		Structure Copy();

@@ -8,13 +8,14 @@ using Grasshopper;
 using Grasshopper.Kernel;
 
 using CIFem_wrapper;
+using System.Drawing;
 
 namespace CIFem_grasshopper
 {
     public class BeamReleaseComponent : GH_Component
     {
         public BeamReleaseComponent(): base("Beam release", "BR", 
-            "Construct a beam release. Note that all releases are in <b>global</b> coordinates.", "CIFem", "Elements")
+            "Construct a beam release. Note that all releases are in global coordinates.", "CIFem", "Elements")
         { }
 
 
@@ -69,7 +70,14 @@ namespace CIFem_grasshopper
             WR_ReleaseBeam3d rel = new WR_ReleaseBeam3d(x, y, z, xx, yy, zz);
 
             DA.SetData(0, rel);
+        }
 
+        protected override Bitmap Icon
+        {
+            get
+            {
+                return CIFem_grasshopper.Properties.Resources.BeamReleaseIcon;
+            }
         }
     }
 }

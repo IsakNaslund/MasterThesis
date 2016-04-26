@@ -34,6 +34,7 @@ namespace CIFem_grasshopper
             pManager.AddParameter(new StructureParam(), "Structure", "Str", "The structure to solve", GH_ParamAccess.item);
             pManager.AddParameter(new LoadCombParameter(), "Load Combinations", "LC", "Diffrent loadcombinations for the structure", GH_ParamAccess.list);
             pManager.AddBooleanParameter("Solve", "Go", "Toggle the solver", GH_ParamAccess.item);
+            pManager.AddBooleanParameter("Check structure", "Ch", "A boolean that toggles if the structure is checked before calculation. May be turned off to improve speed.", GH_ParamAccess.item, true);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -51,10 +52,12 @@ namespace CIFem_grasshopper
             WR_Structure structure = null;
             List<WR_LoadCombination> loadCombinations = new List<WR_LoadCombination>();
             bool go = false;
+            bool check = true;
 
             if (!DA.GetData(0, ref structure)) { return; }
             if (!DA.GetDataList(1, loadCombinations)) { return; }
             if (!DA.GetData(2, ref go)) { return; }
+            if (!DA.GetData(3, ref check)) { return; }
 
             if (go)
             {
@@ -69,9 +72,12 @@ namespace CIFem_grasshopper
                 }
 
                 // Check structure
-                solver.CheckStructure();
-                if (!structure.IsValidForLinearSolver())
-                    return;
+                if (check)
+                {
+                    solver.CheckStructure();
+                    if (!structure.IsValidForLinearSolver())
+                        return;
+                }
 
                 // Solve
                 try

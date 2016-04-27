@@ -9,10 +9,11 @@ using Grasshopper.Kernel;
 
 using CIFem_wrapper;
 using Grasshopper.Kernel.Types;
+using Rhino.Geometry;
 
 namespace CIFem_grasshopper
 {
-    public class BeamGoo : Grasshopper.Kernel.Types.GH_Goo<WR_Elem3dRcp>
+    public class BeamGoo : Grasshopper.Kernel.Types.GH_Goo<WR_Elem3dRcp>, IGH_PreviewData
     {
 
         public BeamGoo()
@@ -98,5 +99,27 @@ namespace CIFem_grasshopper
         }
 
         #endregion
+
+
+        public BoundingBox ClippingBox
+        {
+            get
+            {
+                WR_XYZ sPos = Value.GetStartPos();
+
+                return new BoundingBox(
+            }
+        }
+
+        public void DrawViewportWires(GH_PreviewWireArgs args)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DrawViewportMeshes(GH_PreviewMeshArgs args)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

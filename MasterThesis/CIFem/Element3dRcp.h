@@ -33,6 +33,10 @@ namespace CIFem
 
 
 		std::vector<std::shared_ptr<CIFem::IElement>> CreateElement(std::vector<std::shared_ptr<INode>> & systemNodes);
+		std::string & GetXSecString();
+		const XYZ & GetStartPos() override;
+		const XYZ & GetEndPos() override;
+		const Vector3d & GetNormal();
 		~Element3dRcp();
 
 	private:

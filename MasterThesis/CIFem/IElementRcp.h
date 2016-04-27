@@ -14,6 +14,10 @@ namespace CIFem
 		virtual ~IElementRcp();
 
 		virtual std::vector<std::shared_ptr<CIFem::IElement>> CreateElement(std::vector<std::shared_ptr<INode>> & systemNodes) = 0;
+		virtual std::string & GetXSecString() = 0;
+
+		virtual const XYZ & GetStartPos() = 0;
+		virtual const XYZ & GetEndPos() = 0;
 	};
 }
 

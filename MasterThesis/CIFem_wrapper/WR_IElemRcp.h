@@ -10,6 +10,7 @@ namespace CIFem_wrapper
 
 	public:
 		virtual std::shared_ptr<CIFem::IElementRcp> GetRecipe()= 0;
+		virtual System::String ^ GetSectionString() = 0;
 	};
 
 }

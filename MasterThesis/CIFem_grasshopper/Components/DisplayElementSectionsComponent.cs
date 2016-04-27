@@ -190,9 +190,8 @@ namespace CIFem_grasshopper
                     }
 
                     // Cap sections
-                    List<List<Curve>> caps = new List<List<Curve>> { sCap, eCap };
-                    if (!CapSections(caps))
-                        throw new Exception("Error in the drawing of element sections");
+                    _breps.Add(Utilities.CapSections(sCap));
+                    _breps.Add(Utilities.CapSections(eCap));
                 }
             }
 
@@ -201,30 +200,6 @@ namespace CIFem_grasshopper
             return true;
         }
 
-
-        private bool CapSections(List<List<Curve>> capCrvs)
-        {
-            for (int i = 0; i < capCrvs.Count; i++)
-            {
-                Brep cap = new Brep();
-
-                // For one curve, i.e. solid sections
-                if (capCrvs[i].Count == 1)
-                    cap = Brep.CreatePlanarBreps(capCrvs[i][0])[0];
-
-                // For two curves, i.e. hollow sections
-                else if (capCrvs[i].Count == 2)
-                    cap = Brep.CreatePlanarBreps(capCrvs[i])[0];
-
-                // Error handling (for development)
-                else
-                    return false;
-
-                _breps.Add(cap);
-            }
-
-            return true;
-        }
 
         public Point3d CalcDeformedPosition(ResultElement re, int pos, string loadComb, double sFac)
         {

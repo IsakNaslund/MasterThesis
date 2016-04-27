@@ -165,6 +165,33 @@ std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Element3dRcp::CreateElement
 	return newElements;
 }
 
+std::string & CIFem::Element3dRcp::GetXSecString()
+{
+	return _xSec->ToString();
+}
+
+const XYZ & CIFem::Element3dRcp::GetStartPos()
+{
+	return _stPos;
+}
+
+const XYZ & CIFem::Element3dRcp::GetEndPos()
+{
+	return _enPos;
+}
+
+const Vector3d & CIFem::Element3dRcp::GetNormal()
+{
+	try
+	{
+		return Vector3d(_normal[0], _normal[1], _normal[2]);
+	}
+	catch (const std::out_of_range& oor)
+	{
+		throw exception("Normal vector not set / set incorrectly");
+	}
+}
+
 Element3dRcp::~Element3dRcp()
 {
 	_xSec.reset();

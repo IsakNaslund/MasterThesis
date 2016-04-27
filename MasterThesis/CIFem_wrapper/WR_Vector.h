@@ -3,6 +3,7 @@
 #include <vector>
 #include "Vector3d.h"
 #include "m_shared_ptr.h"
+#include "WR_XYZ.h"
 
 public ref class WR_Vector
 {

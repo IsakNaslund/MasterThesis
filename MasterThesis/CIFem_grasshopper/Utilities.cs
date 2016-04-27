@@ -86,5 +86,90 @@ namespace CIFem_grasshopper
             return factor;
         }
 
+
+        static public List<List<Brep>> CreateSectionSweeps(List<WR_Elem3dRcp> elemsRcp)
+        {
+            List<List<Brep>> sBreps = new List<List<Brep>>();
+
+            foreach (WR_Elem3dRcp er in elemsRcp)
+            {
+                List<Curve> crvs;
+                List<Brep> eSBreps = new List<Brep>();
+
+                // Start and end caps
+                List<Curve> sCap = new List<Curve>();
+                List<Curve> eCap = new List<Curve>();
+
+                if (CrossSectionCasts.GetSectionPropertyCrvs(er.GetSectionString(), out crvs))
+                {
+                    // Get x vector
+                    WR_XYZ sPos = er.GetStartPos();
+                    WR_XYZ ePos = er.GetEndPos();
+                    Vector3d elX = new Vector3d(ePos.X - sPos.X, ePos.Y - sPos.Y, ePos.Z - sPos.Z);
+
+                    // Get normal (z vector)
+                    WR_Vector elWrZ = er.GetElementNormal();
+                    Vector3d elZ = new Vector3d(elWrZ.X, elWrZ.Y, elWrZ.Z);
+
+                    // Get y vector
+                    Vector3d elY = Vector3d.CrossProduct(elZ, elX);
+
+                    // Rotation to local coordinates
+                    Transform rotTrans = Transform.Rotation(Vector3d.XAxis, Vector3d.YAxis, Vector3d.ZAxis, elX, elY, elZ);
+
+                    // Add start and end point to a list
+                    List<Point3d> endPts = new List<Point3d> { new Point3d(sPos.X, sPos.Y, sPos.Z), new Point3d(sPos.X, sPos.Y, sPos.Z) };
+
+                    foreach (Curve crv in crvs)
+                    {
+                        // Rotate to local coordinates
+                        crv.Transform(rotTrans);
+
+                        // Create and add extrusion
+                        Brep extrusion = Extrusion.CreateExtrusion(crv, elX).ToBrep();
+                        eSBreps.Add(extrusion);
+
+                        // Add curve to cap list
+                        sCap.Add(crv);
+
+                        Curve eCrv = (Curve)crv.Duplicate();
+                        eCrv.Translate(elX);
+                    }
+
+                    // Cap sections
+                    eSBreps.Add(CapSections(sCap));
+
+                    // Add breps to list of list of breps
+                    sBreps.Add(eSBreps);
+                }
+            }
+
+            return sBreps;
+        }
+
+
+        /// <summary>
+        /// Caps planar curves
+        /// </summary>
+        /// <param name="capCrvs">A list of planar curves (can be one or several) to cap</param>
+        /// <returns>A brep</returns>
+        static public Brep CapSections(List<Curve> capCrvs)
+        {
+            Brep cap = new Brep();
+
+            // For one curve, i.e. solid sections
+            if (capCrvs.Count == 1)
+                cap = Brep.CreatePlanarBreps(capCrvs[0])[0];
+
+            // For two curves, i.e. hollow sections
+            else if (capCrvs.Count == 2)
+                cap = Brep.CreatePlanarBreps(capCrvs)[0];
+
+            // Error handling (for development)
+            else
+                throw new NotImplementedException("Capping of sections consisting of other than 1 or 2 curves not implemented.");
+
+            return cap;
+        }
     }
 }

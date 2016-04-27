@@ -30,6 +30,11 @@ namespace CIFem_wrapper
 		WR_Elem3dRcp(WR_XYZ^ stPos, WR_XYZ^ enPos, WR_ReleaseBeam3d^ stRel, WR_ReleaseBeam3d^ enRel, WR_IXSec^ xSec, WR_Material^ mat, WR_Vector^ normal, WR_Element3dOptProp ^ elemOptimizationProp);
 		WR_Elem3dRcp^ Copy();
 		virtual std::shared_ptr<CIFem::IElementRcp> GetRecipe() override;
+
+		System::String ^ GetSectionString() override;
+		WR_XYZ ^ GetStartPos();
+		WR_XYZ ^ GetEndPos();
+		WR_Vector ^ GetElementNormal();
 	};
 
 }

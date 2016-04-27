@@ -54,4 +54,26 @@ std::shared_ptr<CIFem::IElementRcp> CIFem_wrapper::WR_Elem3dRcp::GetRecipe()
 	return *_eleRcp.share();
 }
 
+System::String ^ CIFem_wrapper::WR_Elem3dRcp::GetSectionString()
+{
+	return Utilities::ConvertToSystemString(_eleRcp.operator std::shared_ptr<CIFem::Element3dRcp>()->GetXSecString());
+}
+
+WR_XYZ ^ CIFem_wrapper::WR_Elem3dRcp::GetStartPos()
+{
+	XYZ sPos = _eleRcp.operator std::shared_ptr<CIFem::Element3dRcp>()->GetStartPos();
+	return gcnew WR_XYZ(sPos.GetX(), sPos.GetY(), sPos.GetZ());
+}
+
+WR_XYZ ^ WR_Elem3dRcp::GetEndPos()
+{
+	XYZ ePos = _eleRcp.operator std::shared_ptr<CIFem::Element3dRcp>()->GetEndPos();
+	return gcnew WR_XYZ(ePos.GetX(), ePos.GetY(), ePos.GetZ());
+}
+
+WR_Vector ^ WR_Elem3dRcp::GetElementNormal()
+{
+	CIFem::Vector3d v = _eleRcp.operator std::shared_ptr<CIFem::Element3dRcp>()->GetNormal();
+	return gcnew WR_Vector(v.GetX(), v.GetY(), v.GetZ());
+}
 

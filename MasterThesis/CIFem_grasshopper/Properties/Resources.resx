@@ -118,10 +118,28 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="BeamIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ComponentIcons\BeamIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="BeamPropertiesIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ComponentIcons\BeamPropertiesIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BeamReleaseIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ComponentIcons\BeamReleaseIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="BeamSpringReleaseIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ComponentIcons\BeamSpringReleaseIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LoadCombinationIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ComponentIcons\LoadCombinationIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MaterialIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ComponentIcons\MaterialIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PointLoadIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ComponentIcons\PointLoadIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RestraintNodeIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ComponentIcons\RestraintNodeIcon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

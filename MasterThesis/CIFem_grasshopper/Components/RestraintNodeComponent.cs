@@ -8,12 +8,13 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 
 using CIFem_wrapper;
+using System.Drawing;
 
 namespace CIFem_grasshopper
 {
-    public class NodeComponent : GH_Component
+    public class RestraintNodeComponent : GH_Component
     {
-        public NodeComponent(): base("RestraintNode", "RNode", "Creates restraint nodes", "CIFem", "Nodes")
+        public RestraintNodeComponent(): base("Restraint node", "RN", "Creates restraint nodes", "CIFem", "Nodes")
         {
         }
 
@@ -27,20 +28,16 @@ namespace CIFem_grasshopper
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddPointParameter("Position", "P", "Node position", GH_ParamAccess.item);
-            pManager.AddBooleanParameter("Releases", "R", "Releases for the restraint. Should be a list of 6 bools. True = Fixed, False = Free", GH_ParamAccess.list);
-            pManager.AddVectorParameter("Point Load", "P", "Point load on the node in Newtons [N]", GH_ParamAccess.item);
-            pManager.AddVectorParameter("Point Moment", "M", "Point moment on the node in Newton meter [Nm]", GH_ParamAccess.item);
-            pManager.AddPlaneParameter("Orientation", "Pl", "Add an optional plane for node restraints", GH_ParamAccess.item, Plane.WorldXY);
+            List<bool> allFixed = new List<bool> { true, true, true, true, true, true };
 
-            pManager[1].Optional = true;
-            pManager[2].Optional = true;
-            pManager[3].Optional = true;
+            pManager.AddPointParameter("Position", "P", "Node position", GH_ParamAccess.item);
+            pManager.AddBooleanParameter("Releases", "R", "Releases for the restraint. Should be a list of 6 bools. True = Fixed, False = Free. Defaults as all fixed.", GH_ParamAccess.list, allFixed);
+            pManager.AddPlaneParameter("Orientation", "Pl", "Add an optional plane for node restraints", GH_ParamAccess.item, Plane.WorldXY);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddParameter(new NodeParam(), "Node", "N", "Loaded or restrained node", GH_ParamAccess.item);
+            pManager.AddParameter(new NodeParam(), "Restraint node", "RN", "A restrained node", GH_ParamAccess.item);
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -48,8 +45,6 @@ namespace CIFem_grasshopper
             ///// INPUTS /////
             Point3d pt = Point3d.Unset;
             List<bool> rels = new List<bool>();
-            Vector3d ptLoad = Vector3d.Zero;
-            Vector3d ptMoment = Vector3d.Zero;
             Plane pl = Plane.Unset;
 
             if (!DA.GetData(0, ref pt)) { return; }
@@ -69,24 +64,7 @@ namespace CIFem_grasshopper
                 return;
             }
 
-            //If no data is provided zero vectors will be used
-            DA.GetData(2, ref ptLoad);
-            DA.GetData(3, ref ptMoment);
-
-            if(!ptLoad.IsValid)
-            {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Invalid point load provided");
-                return;
-            }
-
-            if (!ptMoment.IsValid)
-            {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Invalid point moment provided");
-                return;
-            }
-
-
-            if (!DA.GetData(4, ref pl))
+            if (!DA.GetData(2, ref pl))
             {
                 // If no plane submitted, use global XY plane
                 pl = new Rhino.Geometry.Plane(new Rhino.Geometry.Point3d(0,0,0), 
@@ -106,13 +84,7 @@ namespace CIFem_grasshopper
             WR_Plane wrPl = new WR_Plane(wrX, wrY, wrZ, wrXYZ);
             WR_Restraint rest = new WR_Restraint(wrPl, rels[0], rels[1], rels[2], rels[3], rels[4], rels[5]);
 
-            WR_Vector ptL = new WR_Vector(ptLoad.X, ptLoad.Y, ptLoad.Z);
-            WR_Vector ptM = new WR_Vector(ptMoment.X, ptMoment.Y, ptMoment.Z);
-
-            
-
-
-            WR_INode node = new WR_Node3d(pt.X * factor, pt.Y * factor, pt.Z * factor, rest, ptL, ptM);
+            WR_INode node = new WR_Node3d(pt.X * factor, pt.Y * factor, pt.Z * factor, rest);
 
             ///// OUTPUTS /////
             DA.SetData(0, node);
@@ -123,6 +95,15 @@ namespace CIFem_grasshopper
         {
             rhVec.Unitize();
             return new WR_Vector(rhVec.X, rhVec.Y, rhVec.Z);
+        }
+
+
+        protected override Bitmap Icon
+        {
+            get
+            {
+                return Properties.Resources.RestraintNodeIcon;
+            }
         }
     }
 }

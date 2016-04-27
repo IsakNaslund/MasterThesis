@@ -154,6 +154,7 @@
     <ClInclude Include="CombAxialBendingCheck.h" />
     <ClInclude Include="CombinedSectionSizer.h" />
     <ClInclude Include="DebugClass.h" />
+    <ClInclude Include="DebugUtilities.h" />
     <ClInclude Include="EigenSolver.h" />
     <ClInclude Include="Element3dChecks.h" />
     <ClInclude Include="Element3dState.h" />
@@ -208,6 +209,7 @@
     <ClCompile Include="CombAxialBendingCheck.cpp" />
     <ClCompile Include="CombinedSectionSizer.cpp" />
     <ClCompile Include="DebugClass.cpp" />
+    <ClCompile Include="DebugUtilities.cpp" />
     <ClCompile Include="EigenSolver.cpp" />
     <ClCompile Include="Element3dChecks.cpp" />
     <ClCompile Include="Element3dState.cpp" />

@@ -1,5 +1,5 @@
 #include "LinearSolver.h"
-
+#include "DebugUtilities.h"
 
 
 CIFem::LinearSolver::LinearSolver()
@@ -195,9 +195,8 @@ void CIFem::LinearSolver::LinEqSolve(arma::mat & K, arma::colvec & a, arma::colv
 	arma::colvec fa(fDof.size());
 
 	// Solve deformations
-
 	arma::mat f_fsolved = f(ufDof) - K(ufDof, upDof) * a(upDof);
-	//fa = arma::spsolve(Kff, f_fsolved);
+
 	try
 	{
 		fa = arma::solve(K(ufDof, ufDof), f_fsolved);
@@ -219,7 +218,9 @@ bool CIFem::LinearSolver::CheckGlobalRestraints()
 	EigenSolver es(_structure);
 	es.Solve();
 
-	std::vector<double> eigVals = es.GetEigenValues(6); // Could generate some small error, but the 6 lowest eigenvalues should be enough for now.
+	int fDofs = _structure->FreeDOFCount();
+
+	std::vector<double> eigVals = es.GetEigenValues(fDofs);
 
 	// Count number of eigenvalues with a value less than 1e-6
 	int n = 0;

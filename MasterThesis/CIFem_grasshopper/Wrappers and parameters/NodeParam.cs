@@ -10,7 +10,7 @@ namespace CIFem_grasshopper
 {
     public class NodeParam : GH_Param<NodeGoo>
     {
-        public NodeParam():base(new GH_InstanceDescription("Node", "N", "Node (3d)", "CIFem", "Nodes"))
+        public NodeParam():base(new GH_InstanceDescription("Node", "N", "Node (3d)", "CIFem", "Parameters"))
         { }
 
 

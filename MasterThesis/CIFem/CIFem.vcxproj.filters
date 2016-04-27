@@ -55,6 +55,9 @@
     <Filter Include="Header Files\Opimizers">
       <UniqueIdentifier>{6e3292ab-7a74-491b-bcbe-fc926fe1deb6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{1ed80922-890b-471e-aff1-dc9b6cb12a01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XYZ.h">
@@ -213,11 +216,14 @@
     <ClInclude Include="Element3dOptProp.h">
       <Filter>Header Files\Elements\Cross sections</Filter>
     </ClInclude>
-    <ClInclude Include="DebugClass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CombinedSectionSizer.h">
       <Filter>Header Files\Opimizers</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugUtilities.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugClass.h">
+      <Filter>Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -369,6 +375,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CombinedSectionSizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugUtilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

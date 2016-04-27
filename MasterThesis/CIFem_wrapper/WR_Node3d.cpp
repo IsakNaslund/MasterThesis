@@ -33,11 +33,6 @@ CIFem_wrapper::WR_Node3d::WR_Node3d(const double x, const double y, const double
 	_node = gcnew m_shared_ptr<CIFem::INode>(new CIFem::Node3d(CIFem::XYZ(x, y, z), *wr_Rest->GetRestraint()));
 }
 
-CIFem_wrapper::WR_Node3d::WR_Node3d(const double x, const double y, const double z, WR_Restraint ^ wr_Rest, WR_Vector^ ptLoad, WR_Vector^ ptMoment)
-{
-	_node = gcnew m_shared_ptr<CIFem::INode>(new CIFem::Node3d(CIFem::XYZ(x, y, z), *wr_Rest->GetRestraint(), ptLoad->GetAsVector3d(), ptMoment->GetAsVector3d()));
-}
-
 WR_Node3d::~WR_Node3d()
 {
 

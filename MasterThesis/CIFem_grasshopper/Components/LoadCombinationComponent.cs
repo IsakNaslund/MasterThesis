@@ -9,6 +9,7 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 
 using CIFem_wrapper;
+using System.Drawing;
 
 namespace CIFem_grasshopper
 {
@@ -76,6 +77,15 @@ namespace CIFem_grasshopper
 
             DA.SetData(0, loadComb);
 
+        }
+
+
+        protected override Bitmap Icon
+        {
+            get
+            {
+                return Properties.Resources.LoadCombinationIcon;
+            }
         }
     }
 }

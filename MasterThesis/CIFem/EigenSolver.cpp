@@ -66,6 +66,7 @@ std::vector<double> CIFem::EigenSolver::GetEigenValues(int n)
 			eigVals.push_back(_eigenValues[i]);
 	else
 	{
+		// Should now never happen. CH
 		std::string msg = "Structure contains less degrees of freedom than the amount requested. Number requested: " + std::to_string(n) + "";
 		std::exception e(msg.c_str());
 		throw e;

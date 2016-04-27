@@ -64,14 +64,14 @@ namespace CIFem_grasshopper
             DA.SetDataList(1, _breps);
         }
 
-        public override BoundingBox ClippingBox
+        /*public override BoundingBox ClippingBox
         {
             get
             {
                 //return base.ClippingBox;
                 return _bb;
             }
-        }
+        }*/
 
         // Not really sure about this, but testing. /C
         public override bool IsPreviewCapable

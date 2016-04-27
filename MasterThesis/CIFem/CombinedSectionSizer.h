@@ -2,6 +2,7 @@
 #include "CIFem_dll.h"
 #include "ModeShapeOptimizer.h"
 #include "StandardSectionSizer.h"
+#include "Structure.h"
 
 namespace CIFem
 {
@@ -9,6 +10,10 @@ namespace CIFem
 	{
 		ModeShapeOptimizer _modeShapeOptimizer;
 		StandardSectionSizer _secSizer;
+		std::shared_ptr<Structure> _structure;
+
+		void ClearResults(int mode);
+
 	public:
 		CombinedSectionSizer();
 		CombinedSectionSizer(std::shared_ptr<Structure> structure);

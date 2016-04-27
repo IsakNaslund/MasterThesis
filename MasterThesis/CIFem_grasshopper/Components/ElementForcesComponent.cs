@@ -11,7 +11,6 @@ namespace CIFem_grasshopper
 {
     public class ElementForcesComponent : GH_Component
     {
-        private int pos { get; set; }
 
         public ElementForcesComponent() : base("Element forces", "eForce", "Extracts element forces in the previously given evaluation points", "CIFem", "Results")
         {

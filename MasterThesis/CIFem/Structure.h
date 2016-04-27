@@ -60,6 +60,7 @@ namespace CIFem
 		bool IsValidForLinearCalculation() { return _validForLinearSolve; };
 
 		double CalcAndGetMaxUtilization();
+		void ClearLoadCombination(std::string loadComb);
 
 	private:		
 		void GetNodeDofs(std::set<std::shared_ptr<CIFem::DOF>> & dofs);

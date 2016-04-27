@@ -180,6 +180,14 @@ double CIFem::Structure::CalcAndGetMaxUtilization()
 	return maxUtil;
 }
 
+void CIFem::Structure::ClearLoadCombination(std::string loadComb)
+{
+	for (int i = 0; i < _elements.size(); i++)
+	{
+		_elements[i]->ClearResults(loadComb);
+	}
+}
+
 void CIFem::Structure::GetNodeDofs(std::set<std::shared_ptr<CIFem::DOF>>& dofs)
 {
 

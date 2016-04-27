@@ -343,10 +343,11 @@ void CIFem::Element3d::UpdateNormal(Vector3d newNormal)
 
 bool CIFem::Element3d::UpdateCrossSection()
 {
-	if (_results._maxUtil.GetUtil() > _optimizationProperties->_maxUtil || _results._maxUtil.GetUtil() < _optimizationProperties->_minUtil)
+	bool overUtilized = _results._maxUtil.GetUtil() > _optimizationProperties->_maxUtil;
+	if (overUtilized || _results._maxUtil.GetUtil() < _optimizationProperties->_minUtil)
 	{
 		std::shared_ptr<ICrossSection> newSec = _crossSection;
-		bool success = _optimizationProperties->UpdateCrossSection(_mat, _results, newSec);
+		bool success = _optimizationProperties->UpdateCrossSection(_mat, _results, newSec, overUtilized);
 
 		//Should the cross section be updated if no match found? Doing it anyway for now....
 
@@ -426,6 +427,11 @@ bool CIFem::Element3d::GetNewNormal(Vector3d & newNormal)
 void CIFem::Element3d::ScaleResults(std::string loadComb, double sFac)
 {
 	_results.ScaleForcesAndDeformations(loadComb, sFac);
+}
+
+void CIFem::Element3d::ClearResults(std::string loadComb)
+{
+	_results.ClearLoadComb(loadComb);
 }
 
 

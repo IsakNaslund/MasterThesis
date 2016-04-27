@@ -67,30 +67,31 @@ namespace CIFem_grasshopper
                 // Solve
                 _solver = new WR_EigenSolver(structure);
                 _solver.Solve();
-            }
-
-            if (_solver != null && structure != null)
-            {
-
-                _eigVals = new List<double>();
-                foreach (int mode in modes)
-                {
-                    _eigVals.Add(_solver.SetResultsToMode(mode));
-                }
 
 
-                // Extract results
-                List<WR_IElement> elems = structure.GetAllElements();
-                resElems.Clear();
-
-                for (int i = 0; i < elems.Count; i++)
+                if (_solver != null && structure != null)
                 {
 
-                    if (elems[i] is WR_Element3d)
+                    _eigVals = new List<double>();
+                    foreach (int mode in modes)
                     {
-                        WR_Element3d el3d = (WR_Element3d)elems[i];
-                        ResultElement re = new ResultElement(el3d);
-                        resElems.Add(re);
+                        _eigVals.Add(_solver.SetResultsToMode(mode));
+                    }
+
+
+                    // Extract results
+                    List<WR_IElement> elems = structure.GetAllElements();
+                    resElems.Clear();
+
+                    for (int i = 0; i < elems.Count; i++)
+                    {
+
+                        if (elems[i] is WR_Element3d)
+                        {
+                            WR_Element3d el3d = (WR_Element3d)elems[i];
+                            ResultElement re = new ResultElement(el3d);
+                            resElems.Add(re);
+                        }
                     }
                 }
             }

@@ -53,6 +53,7 @@ namespace CIFem
 		virtual bool SetToState(std::string state) { return false; }
 		virtual void SetMaxState() {  }
 		virtual void SetMinState() {  }
+		virtual void ClearResults(std::string loadComb) {  }
 	};
 }
 

@@ -428,6 +428,11 @@ void CIFem::Element3d::ScaleResults(std::string loadComb, double sFac)
 	_results.ScaleForcesAndDeformations(loadComb, sFac);
 }
 
+void CIFem::Element3d::ClearResults(std::string loadComb)
+{
+	_results.ClearLoadComb(loadComb);
+}
+
 
 
 

@@ -30,6 +30,7 @@ namespace CIFem
 		Utilisation _maxUtil;
 
 		void SetUpLoadComb(std::string name);
+		void ClearLoadComb(std::string name);
 
 		void CalcMaxUtil();
 

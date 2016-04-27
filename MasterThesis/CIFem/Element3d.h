@@ -145,6 +145,7 @@ namespace CIFem
 
 
 		void ScaleResults(std::string loadComb, double sFac);
+		void ClearResults(std::string loadComb);
 
 
 	private:

@@ -9,6 +9,7 @@ using CIFem_wrapper;
 
 using Grasshopper;
 using Grasshopper.Kernel;
+using Rhino.Geometry;
 
 namespace CIFem_grasshopper
 {
@@ -42,14 +43,21 @@ namespace CIFem_grasshopper
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             BeamProperties prop = null;
-            Rhino.Geometry.Line ln = Rhino.Geometry.Line.Unset;
-            Rhino.Geometry.Vector3d norm = Rhino.Geometry.Vector3d.Unset;
+            Line ln = Line.Unset;
+            Vector3d norm = Vector3d.Unset;
 
             if (!DA.GetData(0, ref ln)) { return; }
             if (!DA.GetData(1, ref prop)) { return; }
             if (!DA.GetData(2, ref norm)) { return; }
 
             norm.Unitize();
+
+            //Check if angle between tangent and normal is less than 1 degree
+            if(Vector3d.VectorAngle(norm, ln.UnitTangent) < 0.0174 || Vector3d.VectorAngle(-norm, ln.UnitTangent) < 0.0174)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The given normal is within 1 degree of the tangent of the centre line. Please adjust normal");
+                return;
+            }
 
             double factor = Utilities.GetScalingFactorFromRhino();
 

@@ -79,6 +79,62 @@ namespace CIFem
 
 	}
 
+	void ElementResults3d::ClearLoadComb(std::string name)
+	{
+		// Remove loadcase if found
+		if (_N.find(name) != _N.end())
+			_N.erase(name);
+
+		// Remove loadcase if found
+		if (_Vy.find(name) != _Vy.end())
+			_Vy.erase(name);
+
+		// Remove loadcase if found
+		if (_Vz.find(name) != _Vz.end())
+			_Vz.erase(name);
+
+		// Remove loadcase if found
+		if (_T.find(name) != _T.end())
+			_T.erase(name);
+
+		// Remove loadcase if found
+		if (_Mz.find(name) != _Mz.end())
+			_Mz.erase(name);
+
+		// Remove loadcase if found
+		if (_My.find(name) != _My.end())
+			_My.erase(name);
+
+
+		// Remove loadcase if found
+		if (_u.find(name) != _u.end())
+			_u.erase(name);
+
+		// Remove loadcase if found
+		if (_v.find(name) != _v.end())
+			_v.erase(name);
+
+		// Remove loadcase if found
+		if (_w.find(name) != _w.end())
+			_w.erase(name);
+
+		// Remove loadcase if found
+		if (_fi.find(name) != _fi.end())
+			_fi.erase(name);
+
+
+		// Remove loadcase if found
+		if (_util.find(name) != _util.end())
+			_util.erase(name);
+
+		std::vector<std::string>::iterator iter = std::find(_loadCases.begin(), _loadCases.end(), name);
+
+		if (iter != _loadCases.end())
+		{
+			_loadCases.erase(iter);
+		}
+	}
+
 	void ElementResults3d::CalcMaxUtil()
 	{
 		_maxUtil.Reset();

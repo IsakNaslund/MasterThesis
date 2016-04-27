@@ -15,6 +15,8 @@ namespace CIFem_grasshopper
 {
     public class BeamGoo : Grasshopper.Kernel.Types.GH_Goo<WR_Elem3dRcp>, IGH_PreviewData
     {
+        private Brep _extrusion;
+        private Mesh _mesh;
 
         public BeamGoo()
         {
@@ -24,6 +26,23 @@ namespace CIFem_grasshopper
         public BeamGoo(WR_Elem3dRcp value)
         {
             this.Value = value;
+
+            _extrusion = null;
+        }
+
+        public override WR_Elem3dRcp Value
+        {
+            get
+            {
+                return base.Value;
+            }
+
+            set
+            {
+                base.Value = value;
+                _mesh = null;
+                _extrusion = null;
+            }
         }
 
         public override bool IsValid
@@ -105,21 +124,64 @@ namespace CIFem_grasshopper
         {
             get
             {
-                WR_XYZ sPos = Value.GetStartPos();
-
-                return new BoundingBox(
+                return new BoundingBox(Value.GetStartPos().ConvertToRhinoPoint(), Value.GetEndPos().ConvertToRhinoPoint());
             }
         }
 
         public void DrawViewportWires(GH_PreviewWireArgs args)
         {
-            throw new NotImplementedException();
+            // do nothing
+
+            //throw new NotImplementedException();
         }
 
         public void DrawViewportMeshes(GH_PreviewMeshArgs args)
         {
-            throw new NotImplementedException();
+            if (args.Pipeline.SupportsShading)
+            {
+                if (this._mesh == null)
+                {
+                    if (this.m_value == null)
+                    {
+                        return;
+                    }
+                    MeshingParameters @params = args.MeshingParameters;
+                    if (@params == null)
+                    {
+                        return;
+                    }
+                    if (this._extrusion == null)
+                    {
+                        // Set extrusion
+                        List<Brep> breps = Utilities.CreateSectionSweeps(new List<WR_Elem3dRcp> { this.Value })[0];
+                        _extrusion = Brep.JoinBreps(breps, Rhino.RhinoDoc.ActiveDoc.ModelAbsoluteTolerance)[0];
+                    }
+                    Mesh[] rc = Mesh.CreateFromBrep(this._extrusion, @params);
+                    if (rc == null)
+                    {
+                        this._mesh = new Mesh();
+                    }
+                    else if (rc.Length == 1)
+                    {
+                        this._mesh = rc[0];
+                    }
+                    else
+                    {
+                        this._mesh = new Mesh();
+                        Mesh[] array = rc;
+                        for (int j = 0; j < array.Length; j++)
+                        {
+                            Mesh i = array[j];
+                            this._mesh.Append(i);
+                        }
+                    }
+                }
+                if (this._mesh == null)
+                {
+                    return;
+                }
+                args.Pipeline.DrawMeshShaded(this._mesh, args.Material);
+            }
         }
-
     }
 }

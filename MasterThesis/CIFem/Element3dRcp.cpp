@@ -165,7 +165,7 @@ std::vector<std::shared_ptr<CIFem::IElement>> CIFem::Element3dRcp::CreateElement
 	return newElements;
 }
 
-std::string & CIFem::Element3dRcp::GetXSecString()
+std::string CIFem::Element3dRcp::GetXSecString()
 {
 	return _xSec->ToString();
 }
@@ -180,7 +180,7 @@ const XYZ & CIFem::Element3dRcp::GetEndPos()
 	return _enPos;
 }
 
-const Vector3d & CIFem::Element3dRcp::GetNormal()
+const Vector3d CIFem::Element3dRcp::GetNormal()
 {
 	try
 	{

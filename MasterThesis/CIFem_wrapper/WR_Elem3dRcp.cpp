@@ -56,7 +56,8 @@ std::shared_ptr<CIFem::IElementRcp> CIFem_wrapper::WR_Elem3dRcp::GetRecipe()
 
 System::String ^ CIFem_wrapper::WR_Elem3dRcp::GetSectionString()
 {
-	return Utilities::ConvertToSystemString(_eleRcp.operator std::shared_ptr<CIFem::Element3dRcp>()->GetXSecString());
+	std::string s = _eleRcp.operator std::shared_ptr<CIFem::Element3dRcp>()->GetXSecString();
+	return Utilities::ConvertToSystemString(s);
 }
 
 WR_XYZ ^ CIFem_wrapper::WR_Elem3dRcp::GetStartPos()

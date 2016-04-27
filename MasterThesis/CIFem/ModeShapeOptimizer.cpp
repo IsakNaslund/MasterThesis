@@ -21,9 +21,9 @@ double CIFem::ModeShapeOptimizer::FindLowestUtilisation(int mode)
 	for (int i = 0; i < _structure->GetElements().size(); i++)
 	{
 		double util = _structure->GetElements()[i]->Utilisations(modeName).MaxUtil().GetUtil();
-		if (util > 0 && util < minUtil)
+		if (util > 0.0001 && util < minUtil)
 		{
-			minUtil = util;
+			minUtil = std::max(util,0.01);
 		}
 	}
 
@@ -113,6 +113,11 @@ void CIFem::ModeShapeOptimizer::Run(double eigValRatio)
 
 void CIFem::ModeShapeOptimizer::Run(std::set<int> modes)
 {
+	Run(modes, 1);
+}
+
+void CIFem::ModeShapeOptimizer::Run(std::set<int> modes, double externalScaleFactor)
+{
 	//Solve for initial eigenvalues
 	_eigSolver.Solve();
 
@@ -136,7 +141,7 @@ void CIFem::ModeShapeOptimizer::Run(std::set<int> modes)
 		double minUtil = FindLowestUtilisation(n);
 
 		//Scale factor to scale all loads with
-		double sFac = 1 / minUtil * 1 / ratio;
+		double sFac = externalScaleFactor / minUtil * 1 / ratio;
 
 		//Scale all element sectionforces and utilisations for the mode loadcase. Normalized to the lowest = 1;
 		ScaleElementSectionForces(n, sFac);
@@ -150,6 +155,5 @@ void CIFem::ModeShapeOptimizer::Run(std::set<int> modes)
 
 	//Set elements to worst state
 	SetElementToWorstState();
-
 }
 

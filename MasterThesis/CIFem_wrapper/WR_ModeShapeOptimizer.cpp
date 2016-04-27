@@ -31,3 +31,8 @@ void CIFem_wrapper::WR_ModeShapeOptimizer::Run(System::Collections::Generic::Lis
 {
 	_optimizer->Run(Utilities::GetSetFromList(modes));
 }
+
+void CIFem_wrapper::WR_ModeShapeOptimizer::Run(System::Collections::Generic::List<int>^ modes, double externalScaleFactor)
+{
+	_optimizer->Run(Utilities::GetSetFromList(modes), externalScaleFactor);
+}

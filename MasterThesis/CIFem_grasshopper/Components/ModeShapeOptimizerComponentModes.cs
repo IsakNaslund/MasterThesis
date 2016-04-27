@@ -32,6 +32,7 @@ namespace CIFem_grasshopper
             pManager.AddParameter(new StructureParam(), "Structure", "Str", "The structure to solve", GH_ParamAccess.item);
             pManager.AddBooleanParameter("Solve", "Go", "Toggle the solver", GH_ParamAccess.item);
             pManager.AddIntegerParameter("Modes", "m", "The modes to optimize for", GH_ParamAccess.list);
+            pManager.AddNumberParameter("Scale factor", "sFac", "Optional scale factor. Scales all forces based on this value. Deafaults to 1", GH_ParamAccess.item, 1);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -49,10 +50,12 @@ namespace CIFem_grasshopper
             WR_Structure structure = null;
             bool go = false;
             List<int> modes = new List<int>();
+            double sFac = 0;
 
             if (!DA.GetData(0, ref structure)) { return; }
             if (!DA.GetData(1, ref go)) { return; }
             if (!DA.GetDataList(2, modes)) { return; }
+            if (!DA.GetData(3, ref sFac)) { return; }
 
 
             if (go)
@@ -62,7 +65,7 @@ namespace CIFem_grasshopper
                 // Solve
                 WR_ModeShapeOptimizer optimizer = new WR_ModeShapeOptimizer(structure);
 
-                optimizer.Run(modes);
+                optimizer.Run(modes, sFac);
 
                 // Extract results
                 List<WR_IElement> elems = structure.GetAllElements();

@@ -17,6 +17,7 @@ namespace CIFem_wrapper
 		void Run();
 		void Run(double maxRatio);
 		void Run(System::Collections::Generic::List<int>^ modes);
+		void Run(System::Collections::Generic::List<int>^ modes, double externalScaleFactor);
 
 	};
 }

@@ -86,5 +86,15 @@ namespace CIFem_grasshopper
             return factor;
         }
 
+        public static Point3d ConvertToRhinoPoint(this WR_XYZ wrPt)
+        {
+            return new Point3d(wrPt.X, wrPt.Y, wrPt.Z);
+        }
+
+        public static WR_XYZ ConvertToWrapperPoint(this Point3d rPt)
+        {
+            return new WR_XYZ(rPt.X, rPt.Y, rPt.Z);
+        }
+
     }
 }

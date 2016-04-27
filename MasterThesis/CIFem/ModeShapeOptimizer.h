@@ -32,6 +32,7 @@ namespace CIFem
 		void Run(double eigValRatio);
 		void Run() { Run(10); }
 		void Run(std::set<int> modes);
+		void Run(std::set<int> modes, double externalScaleFactor);
 
 	};
 }

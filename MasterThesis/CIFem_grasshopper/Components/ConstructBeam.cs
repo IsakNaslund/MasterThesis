@@ -58,7 +58,7 @@ namespace CIFem_grasshopper
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The given normal is within 1 degree of the tangent of the centre line. Please adjust normal");
                 return;
             }
-
+            
             double factor = Utilities.GetScalingFactorFromRhino();
 
             WR_Vector wrNorm = new WR_Vector(norm.X, norm.Y, norm.Z);

@@ -34,7 +34,8 @@ namespace CIFem_grasshopper.Components
         {
             pManager.AddParameter(new CrossSectionParameter(), "Cross Sections", "XS", "Cross sections to group. Used in optimisations procedures", GH_ParamAccess.list);
             pManager.AddBooleanParameter("Allow Rotation", "R", "Boolean to set if rotation of the section around its own axis should be alowed or not", GH_ParamAccess.item);
-            pManager.AddIntegerParameter("Section Chooser Procedure", "SCP", "Choose wich method to use in sectionsizer. 0= check all, bottom up, 1= choose between one bigger and smaller, 2 = step up one", GH_ParamAccess.item, 0);
+            pManager.AddIntegerParameter("Section Chooser Procedure", "SCP", "Choose wich method to use in sectionsizer." +
+                " \n 0= check all, bottom up. Allways checks smallest to largest\n, 1 = Step to one larger when overutilized \n 2= Sted up if overutilized, down if underutilized. \n 3 = Search all from current ", GH_ParamAccess.item, 0);
             pManager.AddNumberParameter("Minimum Utilization", "minU", "The minimum utilization allowed before the elementis set to converged in optimization", GH_ParamAccess.item, 0.8);
             pManager.AddNumberParameter("Maximum Utilization", "maxU", "The maximum utilization allowed before the elementis set to converged in optimization", GH_ParamAccess.item, 1);
         }

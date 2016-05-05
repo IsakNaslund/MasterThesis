@@ -59,7 +59,7 @@ bool CIFem::Element3dOptProp::UpdateCrossSection(std::shared_ptr<Material> mat, 
 	case CIFem::Element3dOptProp::CheckAll:
 		return UpdateCrossSectionCheckAll(mat, results, updatedCrossSection);
 	case CIFem::Element3dOptProp::CheckClose:
-		return UpdateCrossSectionClosePosition(mat, results, updatedCrossSection);
+		return UpdateCrossSectionClosePosition(mat, results, updatedCrossSection, overUtilized);
 	case CIFem::Element3dOptProp::StepUpOne:
 		return UpdateCrossSectionStepOne(updatedCrossSection, overUtilized);
 	case CIFem::Element3dOptProp::CheckAllFromClose:
@@ -102,23 +102,66 @@ bool CIFem::Element3dOptProp::UpdateCrossSectionCheckAllClose(std::shared_ptr<Ma
 
 bool CIFem::Element3dOptProp::UpdateCrossSectionCheckAll(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection>& updatedCrossSection)
 {
+
+	std::set<std::shared_ptr<CIFem::ICrossSection>>::iterator prevIter = _crossSections.find(updatedCrossSection);
+
 	for each (std::shared_ptr<CIFem::ICrossSection> xSec in _crossSections)
 	{
 		if (_checks.CheckUtilUntilFail(xSec, mat, results))
 		{
-			updatedCrossSection = xSec;
-			return true;
+			if (*prevIter != xSec)
+			{
+				updatedCrossSection = xSec;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
+
+	std::set<std::shared_ptr<CIFem::ICrossSection>>::iterator iter = _crossSections.lower_bound(updatedCrossSection);
+
+	if (is_last(prevIter, _crossSections))
+		return false;
+
 	//No found that holds.Sets to last in set, assumeing thats the strongest one, which ofc is not neccecary true...
 	updatedCrossSection = *_crossSections.rbegin();
 
-	return false;
+	return true;
 }
 
-bool CIFem::Element3dOptProp::UpdateCrossSectionClosePosition(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection>& updatedCrossSection)
+bool CIFem::Element3dOptProp::UpdateCrossSectionClosePosition(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection>& updatedCrossSection, bool overUlized)
 {
 	std::set<std::shared_ptr<CIFem::ICrossSection>>::iterator iter = _crossSections.lower_bound(updatedCrossSection);
+
+	if (overUlized)
+	{
+		if (is_last(iter, _crossSections))
+			return false;
+		
+		iter++;
+
+		updatedCrossSection = *iter;
+		return true;
+	}
+	else
+	{
+		if (iter == _crossSections.begin())
+			return false;
+		iter--;
+
+		if (_checks.CheckUtilUntilFail(*iter, mat, results))
+		{
+			updatedCrossSection = *iter;
+			return true;
+		}
+
+		return false;
+	}
+
+	/*std::set<std::shared_ptr<CIFem::ICrossSection>>::iterator iter = _crossSections.lower_bound(updatedCrossSection);
 	if(iter!=_crossSections.begin())
 		iter--;
 	int n = 0;
@@ -146,7 +189,7 @@ bool CIFem::Element3dOptProp::UpdateCrossSectionClosePosition(std::shared_ptr<Ma
 
 	updatedCrossSection = *iter;
 
-	return true;
+	return true;*/
 }
 
 bool CIFem::Element3dOptProp::UpdateCrossSectionStepOne(std::shared_ptr<CIFem::ICrossSection>& updatedCrossSection, bool overUtilizaed)
@@ -157,8 +200,10 @@ bool CIFem::Element3dOptProp::UpdateCrossSectionStepOne(std::shared_ptr<CIFem::I
 	//Step to next section in the sectionlist
 	std::set<std::shared_ptr<CIFem::ICrossSection>>::iterator iter = _crossSections.lower_bound(updatedCrossSection);
 	
-	if(!is_last(iter, _crossSections))
-		iter++;
+	if (is_last(iter, _crossSections))
+		return false;
+
+	iter++;
 
 	updatedCrossSection = *iter;
 	return true;

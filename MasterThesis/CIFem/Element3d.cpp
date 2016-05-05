@@ -347,13 +347,13 @@ bool CIFem::Element3d::UpdateCrossSection()
 	if (overUtilized || _results._maxUtil.GetUtil() < _optimizationProperties->_minUtil)
 	{
 		std::shared_ptr<ICrossSection> newSec = _crossSection;
-		bool success = _optimizationProperties->UpdateCrossSection(_mat, _results, newSec, overUtilized);
 
-		//Should the cross section be updated if no match found? Doing it anyway for now....
+		if (_optimizationProperties->UpdateCrossSection(_mat, _results, newSec, overUtilized))
+		{
+			UpdateCrossSection(newSec);
+			return true;
+		}
 
-		UpdateCrossSection(newSec);
-
-		return success;
 	}
 	return false;
 }
@@ -388,7 +388,7 @@ bool CIFem::Element3d::GetNewNormal(Vector3d & newNormal)
 		return false;
 
 
-	//Assuming that max moments will e dominating to rotate the normal vector
+	//Assuming that max moments will be dominating to rotate the normal vector
 	double maxMy = 0;
 	double maxMz = 0;
 

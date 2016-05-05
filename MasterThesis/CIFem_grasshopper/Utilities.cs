@@ -98,71 +98,67 @@ namespace CIFem_grasshopper
             return new WR_XYZ(rPt.X*sfac, rPt.Y*sfac, rPt.Z*sfac);
         }
 
-        static public List<List<Brep>> CreateSectionSweeps(List<WR_Elem3dRcp> elemsRcp)
+        static public List<Brep> CreateSectionSweeps(WR_Elem3dRcp er)
         {
-            List<List<Brep>> sBreps = new List<List<Brep>>();
 
-            foreach (WR_Elem3dRcp er in elemsRcp)
+
+            List<Curve> crvs;
+            List<Brep> eSBreps = new List<Brep>();
+
+            // Start and end caps
+            List<Curve> sCap = new List<Curve>();
+            List<Curve> eCap = new List<Curve>();
+
+            if (CrossSectionCasts.GetSectionPropertyCrvs(er.GetSectionString(), out crvs))
             {
-                List<Curve> crvs;
-                List<Brep> eSBreps = new List<Brep>();
+                // Get x vector
+                Point3d sPos = er.GetStartPos().ConvertToRhinoPoint();
+                Point3d ePos = er.GetEndPos().ConvertToRhinoPoint();
+                Vector3d elX = new Vector3d(ePos.X - sPos.X, ePos.Y - sPos.Y, ePos.Z - sPos.Z);
+                double elLength = elX.Length;
+                elX.Unitize();
+                Vector3d move = elX * elLength;
 
-                // Start and end caps
-                List<Curve> sCap = new List<Curve>();
-                List<Curve> eCap = new List<Curve>();
+                // Get normal (z vector)
+                WR_Vector elWrZ = er.GetElementNormal();
+                Vector3d elZ = new Vector3d(elWrZ.X, elWrZ.Y, elWrZ.Z);
 
-                if (CrossSectionCasts.GetSectionPropertyCrvs(er.GetSectionString(), out crvs))
+                // Get y vector
+                Vector3d elY = Vector3d.CrossProduct(elZ, elX);
+
+                // Rotation to local coordinates
+                Transform rotTrans = Transform.Rotation(Vector3d.XAxis, Vector3d.YAxis, Vector3d.ZAxis, elX, elY, elZ);
+
+                // Add start and end point to a list
+                List<Point3d> endPts = new List<Point3d> { sPos, ePos };
+
+                foreach (Curve crv in crvs)
                 {
-                    // Get x vector
-                    Point3d sPos = er.GetStartPos().ConvertToRhinoPoint();
-                    Point3d ePos = er.GetEndPos().ConvertToRhinoPoint();
-                    Vector3d elX = new Vector3d(ePos.X - sPos.X, ePos.Y - sPos.Y, ePos.Z - sPos.Z);
-                    double elLength = elX.Length;
-                    elX.Unitize();
-                    Vector3d move = elX * elLength;
+                    // Rotate to local coordinates
+                    crv.Transform(rotTrans);
+                    crv.Translate((Vector3d)sPos);
 
-                    // Get normal (z vector)
-                    WR_Vector elWrZ = er.GetElementNormal();
-                    Vector3d elZ = new Vector3d(elWrZ.X, elWrZ.Y, elWrZ.Z);
+                    // Create and add extrusion
+                    Brep extrusion = Extrusion.CreateExtrusion(crv, move).ToBrep();
+                    eSBreps.Add(extrusion);
 
-                    // Get y vector
-                    Vector3d elY = Vector3d.CrossProduct(elZ, elX);
+                    // Add curve to cap list
+                    sCap.Add(crv);
 
-                    // Rotation to local coordinates
-                    Transform rotTrans = Transform.Rotation(Vector3d.XAxis, Vector3d.YAxis, Vector3d.ZAxis, elX, elY, elZ);
-
-                    // Add start and end point to a list
-                    List<Point3d> endPts = new List<Point3d> { sPos, ePos };
-
-                    foreach (Curve crv in crvs)
-                    {
-                        // Rotate to local coordinates
-                        crv.Transform(rotTrans);
-                        crv.Translate((Vector3d)sPos);
-
-                        // Create and add extrusion
-                        Brep extrusion = Extrusion.CreateExtrusion(crv, move).ToBrep();
-                        eSBreps.Add(extrusion);
-
-                        // Add curve to cap list
-                        sCap.Add(crv);
-
-                        // Move to end and add
-                        Curve eCrv = (Curve)crv.Duplicate();
-                        eCrv.Translate(move);
-                        eCap.Add(eCrv);
-                    }
-
-                    // Cap sections
-                    eSBreps.Add(CapSections(sCap));
-                    eSBreps.Add(CapSections(eCap));
-
-                    // Add breps to list of list of breps
-                    sBreps.Add(eSBreps);
+                    // Move to end and add
+                    Curve eCrv = (Curve)crv.Duplicate();
+                    eCrv.Translate(move);
+                    eCap.Add(eCrv);
                 }
+
+                // Cap sections
+                eSBreps.Add(CapSections(sCap));
+                eSBreps.Add(CapSections(eCap));
+
             }
 
-            return sBreps;
+
+            return eSBreps;
         }
 
 

@@ -48,7 +48,9 @@ int StandardSectionSizer::Run(int maxIterations)
 
 		if (_updateSection)
 		{
-			_linSolver.Solve();
+			if(run)
+				_linSolver.Solve();
+
 			run = CheckUtilization() || run;
 		}
 
@@ -64,9 +66,13 @@ void StandardSectionSizer::AddLoadCombination(LoadCombination comb)
 
 bool StandardSectionSizer::CheckUtilization()
 {
+	//TODO: Change this to make checks internaly. Need to check if maximum utilisation is below maximum allowed and not 1
+	//if (_structure->CalcAndGetMaxUtilization() < 1)
+	//	return false;
 
-	if (_structure->CalcAndGetMaxUtilization() < 1)
-		return false;
+	//Calculate max utilisation for all elements
+	_structure->CalcAndGetMaxUtilization();
+
 
 	bool updated = false;
 	for (int i = 0; i < _structure->ElementCount(); i++)

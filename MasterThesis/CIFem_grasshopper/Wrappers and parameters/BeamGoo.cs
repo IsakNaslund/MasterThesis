@@ -153,7 +153,7 @@ namespace CIFem_grasshopper
                     if (this._extrusion == null)
                     {
                         // Set extrusion
-                        List<Brep> breps = Utilities.CreateSectionSweeps(new List<WR_Elem3dRcp> { this.Value })[0];
+                        List<Brep> breps = Utilities.CreateSectionSweeps(this.Value);
                         _extrusion = Brep.JoinBreps(breps, Rhino.RhinoDoc.ActiveDoc.ModelAbsoluteTolerance)[0];
                     }
                     Mesh[] rc = Mesh.CreateFromBrep(this._extrusion, @params);

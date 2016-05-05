@@ -18,8 +18,8 @@ namespace CIFem
 		enum SectionChangeType
 		{
 			CheckAll=0,
-			CheckClose=1,
-			StepUpOne=2,
+			StepUpOne = 1,
+			CheckClose=2,
 			CheckAllFromClose = 3
 		};
 
@@ -84,7 +84,7 @@ namespace CIFem
 
 		bool UpdateCrossSectionCheckAllClose(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection> & updatedCrossSection, bool overUtilized);
 		bool UpdateCrossSectionCheckAll(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection> & updatedCrossSection);
-		bool UpdateCrossSectionClosePosition(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection>& updatedCrossSection);
+		bool UpdateCrossSectionClosePosition(std::shared_ptr<Material> mat, ElementResults3d & results, std::shared_ptr<CIFem::ICrossSection>& updatedCrossSection, bool overUtilized);
 		bool UpdateCrossSectionStepOne(std::shared_ptr<CIFem::ICrossSection>& updatedCrossSection, bool overUtilizaed);
 
 	};

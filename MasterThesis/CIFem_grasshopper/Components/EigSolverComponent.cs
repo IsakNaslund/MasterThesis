@@ -13,14 +13,14 @@ namespace CIFem_grasshopper
 {
     public class EigSolverComponent : GH_Component
     {
-        public List<string> log { get; set; }
-        private List<ResultElement> resElems { get; set; }
+        public List<string> _log;
+        private List<ResultElement> _resElems;
         private WR_EigenSolver _solver;
         List<double> _eigVals;
 
         public EigSolverComponent(): base("Eigen Solver", "EigSlv", "A eigenmode solver of a structure", "CIFem", "Solvers")
         {
-            log = new List<string>();
+            _log = new List<string>();
             _eigVals = new List<double>();
         }
 
@@ -55,6 +55,8 @@ namespace CIFem_grasshopper
             bool go = false;
             WR_Structure structure = null;
             List<int> modes = new List<int>();
+            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+
 
             if (!DA.GetData(0, ref structure)) { return; }
             if (!DA.GetDataList(1, modes)) { return; }
@@ -62,15 +64,24 @@ namespace CIFem_grasshopper
 
             if (go)
             {
-                resElems = new List<ResultElement>();
+                _resElems = new List<ResultElement>();
+                _log.Clear();
+                watch.Restart();
 
                 // Solve
                 _solver = new WR_EigenSolver(structure);
                 _solver.Solve();
 
+                watch.Stop();
+
+                _log.Add(String.Format("Solve system: {0}ms", watch.ElapsedMilliseconds));
+
+                watch.Restart();
+
 
                 if (_solver != null && structure != null)
                 {
+
 
                     _eigVals = new List<double>();
                     foreach (int mode in modes)
@@ -78,10 +89,16 @@ namespace CIFem_grasshopper
                         _eigVals.Add(_solver.SetResultsToMode(mode));
                     }
 
+                    watch.Stop();
+
+                    _log.Add(String.Format("Analyse modes: {0}ms", watch.ElapsedMilliseconds));
+
+                    watch.Restart();
+
 
                     // Extract results
                     List<WR_IElement> elems = structure.GetAllElements();
-                    resElems.Clear();
+                    _resElems.Clear();
 
                     for (int i = 0; i < elems.Count; i++)
                     {
@@ -90,17 +107,23 @@ namespace CIFem_grasshopper
                         {
                             WR_Element3d el3d = (WR_Element3d)elems[i];
                             ResultElement re = new ResultElement(el3d);
-                            resElems.Add(re);
+                            _resElems.Add(re);
                         }
                     }
+
+                    watch.Stop();
+
+                    _log.Add(String.Format("Extract results: {0}ms", watch.ElapsedMilliseconds));
+
+
                 }
             }
 
 
 
 
-            DA.SetData(0, log);
-            DA.SetDataList(1, resElems);
+            DA.SetDataList(0, _log);
+            DA.SetDataList(1, _resElems);
             DA.SetDataList(2, _eigVals);
 
         }

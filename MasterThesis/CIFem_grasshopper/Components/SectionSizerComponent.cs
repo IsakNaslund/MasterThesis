@@ -10,13 +10,13 @@ namespace CIFem_grasshopper
 {
     public class SectionSizerComponent : GH_Component
     {
-        public List<string> log { get; set; }
-        private List<ResultElement> resElems { get; set; }
+        public List<string> _log;
+        private List<ResultElement> _resElems;
         private int _nbIterations;
 
         public SectionSizerComponent(): base("Section sizer", "SecSize", "A simple section sizer based on a linear solver.", "CIFem", "Optimizers")
         {
-            log = new List<string>();
+            _log = new List<string>();
             _nbIterations = 0;
         }
 
@@ -54,6 +54,7 @@ namespace CIFem_grasshopper
             List<WR_LoadCombination> loadCombinations = new List<WR_LoadCombination>();
             bool go = false;
             int maxIter = 0;
+            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
 
             if (!DA.GetData(0, ref structure)) { return; }
             if (!DA.GetDataList(1, loadCombinations)) { return; }
@@ -63,7 +64,11 @@ namespace CIFem_grasshopper
 
             if (go)
             {
-                resElems = new List<ResultElement>();
+                _log.Clear();
+                watch.Reset();
+                watch.Start();
+
+                _resElems = new List<ResultElement>();
 
                 // Solve
                 WR_StandardSectionSizer secSizer = new WR_StandardSectionSizer(structure);
@@ -73,8 +78,21 @@ namespace CIFem_grasshopper
                     secSizer.AddLoadCombination(lc);
                 }
 
+
+                watch.Stop();
+
+                _log.Add(String.Format("Initialising: {0}ms", watch.ElapsedMilliseconds));
+
+                watch.Restart();
+
                 _nbIterations= secSizer.Run(maxIter);
 
+
+                watch.Stop();
+
+                _log.Add(String.Format("Run section sizer: {0}ms", watch.ElapsedMilliseconds));
+
+                watch.Restart();
 
                 // Extract results
                 List<WR_IElement> elems = structure.GetAllElements();
@@ -85,12 +103,19 @@ namespace CIFem_grasshopper
                     {
                         WR_Element3d el3d = (WR_Element3d)elems[i];
                         ResultElement re = new ResultElement(el3d);
-                        resElems.Add(re);
+                        _resElems.Add(re);
                     }
                 }
+
+
+                watch.Stop();
+
+                _log.Add(String.Format("Extract results: {0}ms", watch.ElapsedMilliseconds));
+
+
             }
-            DA.SetDataList(0, log);
-            DA.SetDataList(1, resElems);
+            DA.SetDataList(0, _log);
+            DA.SetDataList(1, _resElems);
             DA.SetData(2, _nbIterations);
 
         }

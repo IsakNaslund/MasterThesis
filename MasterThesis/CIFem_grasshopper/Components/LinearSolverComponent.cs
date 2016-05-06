@@ -12,12 +12,12 @@ namespace CIFem_grasshopper
 {
     public class LinearSolverComponent : GH_Component
     {
-        public List<string> log { get; set; }
-        private List<ResultElement> resElems { get; set; }
+        public List<string> _log;
+        private List<ResultElement> _resElems;
 
         public LinearSolverComponent(): base("Linear Solver", "LinSlv", "A Linear solver of a structure", "CIFem", "Solvers")
         {
-            log = new List<string>();
+            _log = new List<string>();
         }
 
         public override Guid ComponentGuid
@@ -53,6 +53,7 @@ namespace CIFem_grasshopper
             List<WR_LoadCombination> loadCombinations = new List<WR_LoadCombination>();
             bool go = false;
             bool check = true;
+            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
 
             if (!DA.GetData(0, ref structure)) { return; }
             if (!DA.GetDataList(1, loadCombinations)) { return; }
@@ -61,7 +62,10 @@ namespace CIFem_grasshopper
 
             if (go)
             {
-                resElems = new List<ResultElement>();
+                _resElems = new List<ResultElement>();
+                _log.Clear();
+                watch.Restart();
+
 
                 // Solve
                 WR_LinearSolver solver = new WR_LinearSolver(structure);
@@ -71,6 +75,13 @@ namespace CIFem_grasshopper
                     solver.AddLoadCombination(lc);
                 }
 
+
+                watch.Stop();
+
+                _log.Add(String.Format("Initialising: {0}ms", watch.ElapsedMilliseconds));
+
+                watch.Restart();
+
                 // Check structure
                 if (check)
                 {
@@ -78,6 +89,13 @@ namespace CIFem_grasshopper
                     if (!structure.IsValidForLinearSolver())
                         return;
                 }
+
+
+                watch.Stop();
+
+                _log.Add(String.Format("Check of structure: {0}ms", watch.ElapsedMilliseconds));
+
+                watch.Restart();
 
                 // Solve
                 try
@@ -91,6 +109,12 @@ namespace CIFem_grasshopper
                 }
 
 
+                watch.Stop();
+
+                _log.Add(String.Format("Solve system: {0}ms", watch.ElapsedMilliseconds));
+
+                watch.Restart();
+
                 // Extract results
                 List<WR_IElement> elems = structure.GetAllElements();
                 for (int i = 0; i < elems.Count; i++)
@@ -100,12 +124,17 @@ namespace CIFem_grasshopper
                     {
                         WR_Element3d el3d = (WR_Element3d)elems[i];
                         ResultElement re = new ResultElement(el3d);
-                        resElems.Add(re);
+                        _resElems.Add(re);
                     }
                 }
+
+                watch.Stop();
+
+                _log.Add(String.Format("Extract results: {0}ms", watch.ElapsedMilliseconds));
+
             }
-            DA.SetDataList(0, log);
-            DA.SetDataList(1, resElems);
+            DA.SetDataList(0, _log);
+            DA.SetDataList(1, _resElems);
 
         }
     }

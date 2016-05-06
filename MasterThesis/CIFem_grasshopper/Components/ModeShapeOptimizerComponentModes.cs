@@ -10,12 +10,12 @@ namespace CIFem_grasshopper
 {
     public class ModeShapeOptimizerComponentModes : GH_Component
     {
-        public List<string> log { get; set; }
-        private List<ResultElement> resElems { get; set; }
+        public List<string> _log;
+        private List<ResultElement> _resElems;
 
         public ModeShapeOptimizerComponentModes(): base("Mode shape optimizer", "ModeSize", "Section sizer sizing elements based on mode shapes", "CIFem", "Optimizers")
         {
-            log = new List<string>();
+            _log = new List<string>();
         }
 
         public override Guid ComponentGuid
@@ -52,6 +52,9 @@ namespace CIFem_grasshopper
             List<int> modes = new List<int>();
             double sFac = 0;
 
+            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+
+
             if (!DA.GetData(0, ref structure)) { return; }
             if (!DA.GetData(1, ref go)) { return; }
             if (!DA.GetDataList(2, modes)) { return; }
@@ -60,12 +63,29 @@ namespace CIFem_grasshopper
 
             if (go)
             {
-                resElems = new List<ResultElement>();
+                _resElems = new List<ResultElement>();
+                _log.Clear();
+                watch.Restart();
+
 
                 // Solve
                 WR_ModeShapeOptimizer optimizer = new WR_ModeShapeOptimizer(structure);
 
+                watch.Stop();
+
+                _log.Add(String.Format("Initialising: {0}ms", watch.ElapsedMilliseconds));
+
+                watch.Restart();
+
+                //Run
                 optimizer.Run(modes, sFac);
+
+
+                watch.Stop();
+
+                _log.Add(String.Format("Run mode shape optimization: {0}ms", watch.ElapsedMilliseconds));
+
+                watch.Restart();
 
                 // Extract results
                 List<WR_IElement> elems = structure.GetAllElements();
@@ -76,12 +96,18 @@ namespace CIFem_grasshopper
                     {
                         WR_Element3d el3d = (WR_Element3d)elems[i];
                         ResultElement re = new ResultElement(el3d);
-                        resElems.Add(re);
+                        _resElems.Add(re);
                     }
                 }
+
+                watch.Stop();
+
+                _log.Add(String.Format("Extract results: {0}ms", watch.ElapsedMilliseconds));
+
+
             }
-            DA.SetDataList(0, log);
-            DA.SetDataList(1, resElems);
+            DA.SetDataList(0, _log);
+            DA.SetDataList(1, _resElems);
 
         }
     }

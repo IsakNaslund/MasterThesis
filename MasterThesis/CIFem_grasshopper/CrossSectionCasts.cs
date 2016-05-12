@@ -20,6 +20,9 @@ namespace CIFem_grasshopper
             Invalid,
         }
 
+
+
+
         /// <summary>
         /// Read a string and returns an enum of the CrossSectionType
         /// </summary>
@@ -41,6 +44,7 @@ namespace CIFem_grasshopper
 
             return CrossSectionType.Invalid;
         }
+
 
         static internal bool CrossSectionFormString(string section, out WR_IXSec xSec)
         {
@@ -68,6 +72,42 @@ namespace CIFem_grasshopper
                     }
             }
         }
+
+
+        /// <summary>
+        /// Takes a section property string in meters and transforms it to mm
+        /// </summary>
+        /// <param name="section"></param>
+        /// <returns></returns>
+        static internal string GetRhinoString(string section)
+        {
+            // Find index of first number
+            string id = "";
+            char[] n = "0123456789".ToCharArray();
+            int i = section.IndexOfAny(n);
+
+            // Get start of string
+            if (i > 0)
+                id = section.Substring(0, i);
+
+            // Get and multiply numbers
+            double sfac = 1000;
+            List<string> numbers = System.Text.RegularExpressions.Regex.Split(section, @"[^0-9\.]+").Where(c => c != "." && c.Trim() != "").ToList();
+
+            double dim = double.NaN;
+
+            // Add first number
+            if (double.TryParse(numbers[0], out dim))
+                id = id + dim * sfac;
+            
+            // Add all other numbers
+            for (i = 1; i < numbers.Count; i++)
+                if (double.TryParse(numbers[i], out dim))
+                    id = id + "x" + dim * sfac;
+
+            return id;
+        }
+
 
         static private bool RHSCrossSection(string section, out WR_IXSec xSec)
         {
@@ -172,6 +212,7 @@ namespace CIFem_grasshopper
 
             return true;
         }
+
 
         static private bool GetDimensionsCHS(string section, out double radius, out double thickness)
         {

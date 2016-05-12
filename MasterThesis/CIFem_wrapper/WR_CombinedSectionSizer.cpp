@@ -17,9 +17,9 @@ CIFem_wrapper::WR_CombinedSectionSizer::~WR_CombinedSectionSizer()
 	_sectionSizer = 0;
 }
 
-void CIFem_wrapper::WR_CombinedSectionSizer::Run(System::Collections::Generic::List<int>^ modes, int maxIter)
+int CIFem_wrapper::WR_CombinedSectionSizer::Run(System::Collections::Generic::List<int>^ modes, int maxIter)
 {
-	_sectionSizer->Run(Utilities::GetSetFromList(modes), maxIter);
+	return _sectionSizer->Run(Utilities::GetSetFromList(modes), maxIter);
 }
 
 void CIFem_wrapper::WR_CombinedSectionSizer::AddLoadCombination(WR_LoadCombination ^ comb)

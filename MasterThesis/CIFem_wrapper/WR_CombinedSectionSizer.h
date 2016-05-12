@@ -14,7 +14,7 @@ namespace CIFem_wrapper
 		WR_CombinedSectionSizer(WR_Structure ^structure);
 		~WR_CombinedSectionSizer();
 
-		void Run(System::Collections::Generic::List<int>^ modes, int maxIter);
+		int Run(System::Collections::Generic::List<int>^ modes, int maxIter);
 		void AddLoadCombination(WR_LoadCombination^ comb);
 	};
 }

@@ -12,10 +12,12 @@ namespace CIFem_grasshopper
     {
         public List<string> _log;
         private List<ResultElement> _resElems;
+        private int _iterations;
 
         public CombinedSectionSizerComponent(): base("Combined optimizer", "CombSize", "Section sizer sizing elements based on mode shapes as initial input", "CIFem", "Optimizers")
         {
             _log = new List<string>();
+            _iterations = 0;
         }
 
         public override Guid ComponentGuid
@@ -94,7 +96,7 @@ namespace CIFem_grasshopper
 
 
                 //Run
-                optimizer.Run(modes, maxIterations);
+                _iterations = optimizer.Run(modes, maxIterations);
 
 
                 watch.Stop();
@@ -124,6 +126,7 @@ namespace CIFem_grasshopper
             }
             DA.SetDataList(0, _log);
             DA.SetDataList(1, _resElems);
+            DA.SetData(2, _iterations);
 
         }
     }

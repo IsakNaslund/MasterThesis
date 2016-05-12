@@ -27,7 +27,8 @@ double CIFem::ModeShapeOptimizer::FindLowestUtilisation(int mode)
 		}
 	}
 
-	return minUtil;
+	//To ensure that the lowest utilisation will be below one after multiplied by scale factor it is increased by 1/1000;
+	return minUtil*1.001;
 }
 
 void CIFem::ModeShapeOptimizer::ScaleElementSectionForces(int mode, double sFac)

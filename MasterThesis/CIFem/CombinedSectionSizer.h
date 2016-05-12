@@ -20,7 +20,7 @@ namespace CIFem
 		~CombinedSectionSizer();
 
 
-		void Run(std::set<int> modes, int maxIter);
+		int Run(std::set<int> modes, int maxIter);
 		//Add load combination
 		void AddLoadCombination(LoadCombination comb);
 	};

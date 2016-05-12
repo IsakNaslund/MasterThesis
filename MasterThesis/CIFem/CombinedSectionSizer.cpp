@@ -26,7 +26,7 @@ void CIFem::CombinedSectionSizer::ClearResults(int mode)
 }
 
 
-void CIFem::CombinedSectionSizer::Run(std::set<int> modes, int maxIter)
+int CIFem::CombinedSectionSizer::Run(std::set<int> modes, int maxIter)
 {
 	_modeShapeOptimizer.Run(modes);
 
@@ -36,7 +36,7 @@ void CIFem::CombinedSectionSizer::Run(std::set<int> modes, int maxIter)
 	}
 
 
-	_secSizer.Run(maxIter);
+	return _secSizer.Run(maxIter);
 }
 
 void CIFem::CombinedSectionSizer::AddLoadCombination(LoadCombination comb)

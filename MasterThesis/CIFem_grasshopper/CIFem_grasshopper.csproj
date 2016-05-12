@@ -65,6 +65,7 @@
     <Compile Include="Components\DeconstructResultElements.cs" />
     <Compile Include="Components\DisplayElementSectionsComponent.cs" />
     <Compile Include="Components\DisplayResultElementsComponent.cs" />
+    <Compile Include="Components\DisplayThickVectors.cs" />
     <Compile Include="Components\ElementDeformationsComponent.cs" />
     <Compile Include="Components\ElementForcesComponent.cs" />
     <Compile Include="Components\ModeLoadCaseComponent.cs" />

@@ -46,7 +46,7 @@ namespace CIFem_grasshopper
             if (!DA.GetData(0, ref res)) { return; }
 
             DA.SetData(0, new Line(res.sPos, res.ePos));
-            DA.SetData(1, res.SectionPropertyString);
+            DA.SetData(1, CrossSectionCasts.GetRhinoString(res.SectionPropertyString));
             DA.SetData(2, res.elNormal);
         }
 

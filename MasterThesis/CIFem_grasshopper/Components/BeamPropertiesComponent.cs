@@ -26,7 +26,7 @@ namespace CIFem_grasshopper
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddParameter(new CrossSectionParameter(),"Cross section", "XS", "Cross section for the beam. Can be provided as a full cross section or as a string in correct format. "+
-                "String formats:\nRectangular solid: REC[H]x[W]\nRectangular hollow: RHS[H]x[W]x[t]\nCircular solid: CSS[r]\nCircular hollow: CHS[r]x[t]", GH_ParamAccess.item);
+                "String formats:\nRectangular solid: REC[H]x[W]\nRectangular hollow: RHS[H]x[W]x[t]\nCircular solid: CSS[r]\nCircular hollow: CHS[r]x[t]\nUnits are taken as the same units used in the rhino document.", GH_ParamAccess.item);
             pManager.AddParameter(new BeamReleaseParameter(), "Start Release", "SR", "Release at the start point fo the beam", GH_ParamAccess.item);
             pManager.AddParameter(new BeamReleaseParameter(), "End Release", "ER", "Release at the end point fo the beam", GH_ParamAccess.item);
             pManager.AddParameter(new MaterialParam(), "Material", "M", "Material to use in the beam", GH_ParamAccess.item);

@@ -8,7 +8,7 @@ using Grasshopper.Kernel;
 
 namespace CIFem_grasshopper.Debug
 {
-    public class DebugClassComponent : GH_Component
+    class DebugClassComponent : GH_Component
     {
         public DebugClassComponent(): base("Debug Class component", "Debug", "A component used for debugging", "CIFem", "Debug")
         { }

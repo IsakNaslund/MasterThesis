@@ -61,6 +61,7 @@
     <Compile Include="Components\CombinedSectionSizerComponent.cs" />
     <Compile Include="Components\BeamPropertiesComponent.cs" />
     <Compile Include="Components\BeamSpringReleaseComponent.cs" />
+    <Compile Include="Components\CrossSectionPropertiesComponent.cs" />
     <Compile Include="Components\Debug\DebugClassComponent.cs" />
     <Compile Include="Components\DeconstructResultElements.cs" />
     <Compile Include="Components\DisplayElementSectionsComponent.cs" />
@@ -157,7 +158,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>SET user=carlh
+    <PostBuildEvent>SET user=isakn
 
 copy /Y "$(TargetDir)$(ProjectName).dll" "C:\Users\%25user%25\AppData\Roaming\Grasshopper\Libraries\$(ProjectName).gha"
 copy /Y "$(SolutionDir)x64\Debug\CIFem.dll" "C:\Users\%25user%25\AppData\Roaming\Grasshopper\Libraries\CIFem.dll"

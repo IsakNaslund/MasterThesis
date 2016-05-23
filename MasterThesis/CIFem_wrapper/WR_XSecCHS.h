@@ -17,6 +17,8 @@ namespace CIFem_wrapper
 		virtual std::shared_ptr<CIFem::ICrossSection> GetCrossSection() override;
 		double GetRadius() { return _radius; };
 		double GetThickness() { return _thickness; };
+
+
 	};
 }
 

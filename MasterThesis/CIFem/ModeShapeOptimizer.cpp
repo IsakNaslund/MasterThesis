@@ -126,14 +126,15 @@ void CIFem::ModeShapeOptimizer::Run(std::set<int> modes, double externalScaleFac
 	double firstEigVal = _eigSolver.EigenValues()[*modes.begin()];
 	int nbVals = _eigSolver.EigenValues().size();
 
-	//Initial setup values to use in iteration
-	double ratio = 1;
 
 	for each (int n in modes)
 	{
 
 		if (n > nbVals)
 			break;
+
+		//Calculate ratio 
+		double ratio = _eigSolver.EigenValues()[n] / firstEigVal;
 
 		//Calculate element forces and utilizations for a specific mode
 		_eigSolver.SetResultsToMode(n);
@@ -150,8 +151,6 @@ void CIFem::ModeShapeOptimizer::Run(std::set<int> modes, double externalScaleFac
 		//Update crosssection-state to the lowest suitable
 		UpdateSectionCrossSection(n);
 
-		//Update ratio 
-		ratio = _eigSolver.EigenValues()[n] / firstEigVal;
 	}
 
 	//Set elements to worst state

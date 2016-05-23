@@ -33,6 +33,9 @@ namespace CIFem
 		bool DirectionDependant() { return true; }
 
 		std::string ToString() override;
+
+		bool RoundCornerRectangleProperties(double h, double b, double r, double & A, double & Iy, double & Iz);
+
 	};
 }
 

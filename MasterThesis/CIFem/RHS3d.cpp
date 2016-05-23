@@ -28,11 +28,25 @@ void CIFem::RHS3d::CalcSectionProperties()
 {
 	double area, iy, iz, kv;
 	
-	area = 2 * (_height + _width)*_thickness;
-	iy = 2 * (_thickness*pow(_height, 3) / 12 + (_width - _thickness)*pow(_thickness, 3) / 12 + (_width - _thickness)*_thickness*pow(((_height - _thickness) / 2), 2));
-	iz = 2 * (_thickness*pow(_width, 3) / 12 + (_height - _thickness)*pow(_thickness, 3) / 12 + (_height - _thickness)*_thickness*pow(((_width - _thickness) / 2), 2));
+	double ai, ao, iyi, iyo, izi, izo;
+
+	RoundCornerRectangleProperties(_height, _width, _thickness*1.5, ao, iyo, izo);
+	RoundCornerRectangleProperties(_height-_thickness*2, _width-_thickness * 2, _thickness, ai, iyi, izi);
+
+	//double cornerArea = pow(_thickness, 2)*(5*M_PI / 16 + 7 / 4);
+
+
+	//area = 2 * (_height + _width - 8 * _thickness)*_thickness + 4 * cornerArea;
+	//iy = 2 * (_thickness*pow((_height - 2 * _thickness), 3) / 12 + (_width)*pow(_thickness, 3) / 12 + (_width)*_thickness*pow(((_height - _thickness) / 2), 2));
+	//iz = 2 * (_thickness*pow(_width - 2 * _thickness, 3) / 12 + (_height)*pow(_thickness, 3) / 12 + (_height)*_thickness*pow(((_width - _thickness) / 2), 2));
+
+	area = ao - ai;
+	iy = iyo - iyi;
+	iz = izo - izi;
 
 	_secProp= SectionProperties(area, iy, iz, CalcStVenantsTorsionConstant());
+
+	//_secProp = SectionProperties(ao-ai, iyo-iyi, izo-izi, CalcStVenantsTorsionConstant());
 
 	_Nmax = area;
 	double hw = _width - _thickness;
@@ -123,4 +137,27 @@ double CIFem::RHS3d::CalcStVenantsTorsionConstant()
 std::string CIFem::RHS3d::ToString()
 {
 	return "RHS" + std::to_string(_height) + "x" + std::to_string(_width) + "x" + std::to_string(_thickness);
+}
+
+bool CIFem::RHS3d::RoundCornerRectangleProperties(double h, double b, double r, double & A, double & Iy, double & Iz)
+{
+
+	double hi = h - 2*r;
+	double bi = b - 2*r;
+
+	A = h*bi + hi*r * 2 + M_PI*pow(r, 2);
+
+	double aint = M_PI / 16 - 4 / (9 * M_PI);
+
+	Iy = bi*pow(h, 3) / 12 + r*pow(hi, 3) / 6;
+	Iy += 4 * aint*pow(r, 4);
+	Iy += pow(r, 2)*M_PI*pow((4 * r / (3 * M_PI) + hi / 2),2);
+
+
+	Iz = hi*pow(b, 3) / 12 + r*pow(bi, 3) / 6;
+	Iz += 4 * aint*pow(r, 4) + pow(r, 2)*M_PI*pow((4 * r / (3 * M_PI) + bi / 2),2);
+
+
+
+	return true;
 }
